@@ -1,4 +1,4 @@
-namespace edu_institutional_management;
+namespace edu_institutional_management.Server.Models;
 
 public class Institution {
   public Guid Id { get; set; }
