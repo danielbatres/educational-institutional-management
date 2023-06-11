@@ -1,1 +1,1 @@
-# educational-institutional-management
+# Educational Institutional Management
