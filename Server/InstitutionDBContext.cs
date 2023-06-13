@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 namespace edu_institutional_management.Server;
 
 public class InstitutionDBContext : DbContext {
-    public DbSet<User> Users { get; set; }
-    public DbSet<Institution> Institutions { get; set; }
-
     public InstitutionDBContext(DbContextOptions<InstitutionDBContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
