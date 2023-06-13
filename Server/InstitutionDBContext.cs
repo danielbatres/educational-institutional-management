@@ -8,7 +8,6 @@ public class InstitutionDBContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Institution>(institution => {
-            institution.ToTable("Institution");
             institution.HasKey(x => x.Id);
             institution.Property(x => x.Name);
             institution.Property(x => x.Address);
@@ -16,7 +15,6 @@ public class InstitutionDBContext : DbContext {
         });
 
         modelBuilder.Entity<User>(user => {
-            user.ToTable("User");
             user.HasKey(x => x.Id);
             user.Property(x => x.Name);
             user.Property(x => x.LastName);
@@ -24,7 +22,6 @@ public class InstitutionDBContext : DbContext {
         });
 
         modelBuilder.Entity<Register>(register => {
-            register.ToTable("Register");
             register.HasKey(x => x.Id);
             register.Property(x => x.Email);
             register.Property(x => x.Password);
@@ -32,7 +29,6 @@ public class InstitutionDBContext : DbContext {
         });
 
         modelBuilder.Entity<OnlineStatus>(onlineStatus => {
-            onlineStatus.ToTable("OnlineStatus");
             onlineStatus.HasKey(x => x.Id);
             onlineStatus.Property(x => x.LastConnection);
             onlineStatus.Property(x => x.Status);
