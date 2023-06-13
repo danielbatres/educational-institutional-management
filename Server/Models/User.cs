@@ -6,7 +6,7 @@ public class User {
   public string? LastName { get; set; }
   public DateTime BirthDate { get; set; }
   public int Age { get; set; }
-  public Institution Institution { get; set; }
-  public OnlineStatus OnlineStatus { get; set; }
-  public Register Register { get; set; }
+  public Institution? Institution { get; set; }
+  public OnlineStatus? OnlineStatus { get; set; }
+  public Register? Register { get; set; }
 }
