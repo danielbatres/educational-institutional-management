@@ -3,6 +3,10 @@
     justify-content: center;
     min-height: 90vh;
     width: 100%;
+    background-image: url("https://i.ibb.co/BVPLF1h/Slide-16-9-8-1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .home-content {
@@ -26,16 +30,26 @@
     width: 40%;
 }
 
+.girl-image {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-image: url("https://i.ibb.co/yNTYgSd/Group-23.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .info {
     display: flex;
 }
 
 .info p {
     font-size: 1.2rem;
-    background: rgb(214, 207, 255);
+    background: #D9DFFF;
     padding: 5px 20px;
     border-radius: 10px;
-    color: rgb(80, 53, 255);
+    color: #4361EE;
 }
 
 h3 {
@@ -49,7 +63,7 @@ p {
 }
 
 h3 span {
-    color: rgb(80, 53, 255);
+    color: #4361EE;
 }
 
 button {
@@ -61,15 +75,17 @@ button {
     border-radius: 10px;
     border: 1px solid #fff;
     cursor: pointer;
+    font-family: "Outfit", "sans-serif";
+    font-weight: 300;
 }
 
 .buttons button:first-child {
-    background: rgb(80, 53, 255);
+    background: #4361EE;
     color: #fff;
 }
 
 .buttons button:last-child {
     background: none;
-    border: 1px solid rgb(80, 53, 255);
-    color: rgb(80, 53, 255);
+    border: 1px solid #4361EE;
+    color: #4361EE;
 }

@@ -1,6 +1,43 @@
 @page "/login"
+@inject Context Context
+
+<NavBar HideButtons="true"/>
+
+<div>
+  <h3>¡Bienvenido de vuelta!</h3>
+  <p>Ingresa tu infromaci&oacute;n para ingresar.</p>
+  
+  @if (Context.Equals("User")) { 
+    <button>
+      <span></span>
+      <p>Ingresar con Google</p>
+    </button>
+      <div>
+      <span></span>
+      <p>o</p>
+      <span></span>
+    </div>
+  }
+
+  <div>
+    <ul>
+      <li>
+        <button type="button"></button>
+        <p>Recuerdame</p>
+      </li>
+      <li>
+        <a href="#">¿Olvidaste tu contrase&ntilde;a?</a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <button type="button">
+      <a href="#">Iniciar sesi&oacute;n</a>
+    </button>
+  </div>
+</div>
 
 @code {
-
+  [Parameter]
+  public bool IsUser { get; set; } = false;
 }
-

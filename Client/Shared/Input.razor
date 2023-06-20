@@ -5,7 +5,12 @@
 </div>
 
 @code {
-  private string InputName = "default";
-  private string Placeholder = "placeholder";
-  private string IconRoute = "";
+  [Parameter]
+  [EditorRequired]
+  public string InputName { get; set; } = "default";
+  [Parameter]
+  [EditorRequired]
+  public string Placeholder { get; set; } = "placeholder";
+  [Parameter]
+  public string IconRoute { get; set; } = "";
 }

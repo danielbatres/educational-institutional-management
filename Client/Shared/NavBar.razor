@@ -8,7 +8,7 @@
     <div class="navigation">
       <ul>
         <li>
-          <p>Inicio</p>
+          <p @onclick="@(() => NavigationManager.NavigateTo("/"))">Inicio</p>
         </li>
         <li>
           <p>Informaci&oacute;n</p>
@@ -17,14 +17,22 @@
           <p>Planes</p>
         </li>
       </ul>
-      <div class="buttons">
-        <button type="button">
-          Iniciar sesi&oacute;n
-        </button>
-        <button type="button">
-          Registrarse
-        </button>
-      </div>
+      @if (!HideButtons) {
+        <div class="buttons">
+          <button type="button" @onclick="@(() => NavigationManager.NavigateTo("/login"))">
+            Iniciar sesi&oacute;n
+          </button>
+          <button type="button" @onclick="@(() => NavigationManager.NavigateTo("/register"))">
+            Registrarse
+          </button>
+        </div>
+      }
     </div>
   </div>
 </div>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public bool HideButtons { get; set; } = false;
+}
