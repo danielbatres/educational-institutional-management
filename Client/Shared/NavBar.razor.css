@@ -1,0 +1,63 @@
+.navbar-container {
+    min-height: 10vh;
+    width: 100%;
+    border-bottom: 1px solid #dfdfdf;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.navbar-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+}
+
+.navbar-content div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.buttons {
+    gap: 10px;
+}
+
+button {
+    min-width: 190px;
+    max-width: 288px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+.buttons button:last-child {
+    background: rgb(80, 53, 255);
+    color: #fff;
+}
+
+.buttons button:first-child {
+    background: none;
+    border: 1px solid rgb(80, 53, 255);
+    color: rgb(80, 53, 255);
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 60px;
+    margin-right: 60px;
+}
+
+li p:hover {
+    color: rgb(80, 53, 255);
+}

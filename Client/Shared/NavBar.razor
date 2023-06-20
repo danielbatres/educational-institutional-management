@@ -1,25 +1,30 @@
+@inject NavigationManager NavigationManager
+
 <div class="navbar-container">
   <div class="navbar-content">
     <div>
-      <a href="/">Logo</a>
+      <p @onclick="@(() => NavigationManager.NavigateTo("/"))">Logo</p>
     </div>
-    <div>
+    <div class="navigation">
       <ul>
         <li>
-          <a href="">Inicio</a>
+          <p>Inicio</p>
         </li>
         <li>
-          <a href="">Informaci&oacute;n</a>
+          <p>Informaci&oacute;n</p>
+        </li>
+        <li>
+          <p>Planes</p>
         </li>
       </ul>
-    </div>
-    <div>
-      <button type="button">
-        <a href="">Iniciar sesi&oacute;n</a>
-      </button>
-      <button type="button">
-        <a href="">Registrarse</a>
-      </button>
+      <div class="buttons">
+        <button type="button">
+          Iniciar sesi&oacute;n
+        </button>
+        <button type="button">
+          Registrarse
+        </button>
+      </div>
     </div>
   </div>
 </div>

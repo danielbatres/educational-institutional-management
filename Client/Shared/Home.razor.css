@@ -1,0 +1,75 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    min-height: 90vh;
+    width: 100%;
+}
+
+.home-content {
+    display: flex;
+    min-height: 90vh;
+    width: 85%;
+}
+
+.home-content section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.home-content section:first-child {
+    width: 60%;
+}
+
+.home-content section:last-child {
+    width: 40%;
+}
+
+.info {
+    display: flex;
+}
+
+.info p {
+    font-size: 1.2rem;
+    background: rgb(214, 207, 255);
+    padding: 5px 20px;
+    border-radius: 10px;
+    color: rgb(80, 53, 255);
+}
+
+h3 {
+    font-size: 3.2rem;
+    color: #000;
+}
+
+p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+h3 span {
+    color: rgb(80, 53, 255);
+}
+
+button {
+    min-width: 190px;
+    max-width: 288px;
+    padding: 14px 20px;
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+.buttons button:first-child {
+    background: rgb(80, 53, 255);
+    color: #fff;
+}
+
+.buttons button:last-child {
+    background: none;
+    border: 1px solid rgb(80, 53, 255);
+    color: rgb(80, 53, 255);
+}
