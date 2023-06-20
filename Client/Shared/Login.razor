@@ -16,8 +16,6 @@
     </div>
   }
 
-  <Input></Input>
-  <Input></Input>
   <div>
     <ul>
       <li>
@@ -37,5 +35,6 @@
 </div>
 
 @code {
-  private bool IsUser = false;
+  [Parameter]
+  public bool IsUser { get; set; } = false;
 }
