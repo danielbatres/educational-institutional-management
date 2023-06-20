@@ -1,0 +1,56 @@
+h3 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    min-height: 90vh;
+}
+
+.login-content {
+    min-width: 300px;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ul li:first-child {
+    display: flex;
+}
+
+.login-button button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 300;
+    font-family: "Outfit", "sans-serif";
+    border-radius: 10px;
+    border: 1px solid #4361EE;
+    color: #fff;
+    background: #4361EE;
+}
+
+input {
+    min-width: 288px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.login-form-content p {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #000;
+    font-size: 1.2rem;
+}

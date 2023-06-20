@@ -1,0 +1,41 @@
+@inject Context Context
+
+<div class="login-container">
+  <div class="login-content">
+    <h3>¡Bienvenido de vuelta!</h3>
+    <p>Ingresa tu infromaci&oacute;n para ingresar.</p>
+
+    @if (Context.Equals("User")) { 
+      <EnterGoogle />
+    }
+
+    <div class="login-form">
+      <div class="login-form-content">
+        <span></span>
+        <p>Correo electr&oacute;nico</p>
+        <input type="text" placeholder="Ingresar correo electr&oacute;nico">
+        <span></span>
+        <p>Contrase&ntilde;a</p>
+        <input type="text" placeholder="Ingresa contrase&ntilde;a">
+      </div>
+      <ul>
+        <li>
+          <button type="button"></button>
+          <p>Recuerdame</p>
+        </li>
+        <li>
+          <a href="#">¿Olvidaste tu contrase&ntilde;a?</a>
+        </li>
+      </ul>
+    </div>
+    <div class="login-button">
+      <button type="button">
+        Iniciar sesi&oacute;n
+      </button>
+    </div>
+  </div>
+</div>
+
+@code {
+  public bool IsUser { get; set; } = false;
+}

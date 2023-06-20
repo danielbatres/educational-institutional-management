@@ -1,0 +1,15 @@
+.login-process-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.login-process-content {
+    width: 85%;
+}
+
+section {
+    width: 50%;
+}
