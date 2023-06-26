@@ -7,6 +7,7 @@ public class User {
   public DateTime BirthDate { get; set; }
   public int Age { get; set; }
   public Institution Institution { get; set; }
+  public Guid InstitutionId { get; set; }
   public OnlineStatus OnlineStatus { get; set; }
   public Register Register { get; set; }
 }
