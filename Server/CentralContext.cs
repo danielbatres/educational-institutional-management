@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server;
 
-public class InstitutionDBContext : DbContext {
-    public InstitutionDBContext(DbContextOptions<InstitutionDBContext> options) : base(options) {}
+public class CentralContext : DbContext {
+    public DbSet<User> Users { get; set; }
+    
+    public CentralContext(DbContextOptions<CentralContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Institution>(institution => {
@@ -16,9 +18,10 @@ public class InstitutionDBContext : DbContext {
 
         modelBuilder.Entity<User>(user => {
             user.HasKey(x => x.Id);
-            user.Property(x => x.Name);
+            user.Property(x => x.Name).HasMaxLength(100);
             user.Property(x => x.LastName);
             user.Property(x => x.BirthDate);
+            user.HasOne(x => x.Register).WithOne(register => register.User).HasForeignKey<Register>(register => register.UserId);
         });
 
         modelBuilder.Entity<Register>(register => {
