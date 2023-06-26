@@ -1,0 +1,23 @@
+section {
+  width: 240px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: wrap;
+  border-right: 1px solid var(--light-color);
+}
+
+.logo {
+  width: 100%;
+  height: 90px;
+}
+
+
+
+.settings {
+  width: 100%;
+  height: 90px;
+  border-top: 1px solid var(--light-color);
+}
