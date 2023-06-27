@@ -40,7 +40,25 @@
     justify-content: center;
     align-content: center;
     height: 100%;
-    padding: 0px 30px;
+    padding-right: 30px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0px 20px;
+}
+
+.icons div {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: 1px solid var(--light-color);
+    cursor: pointer;
 }
 
 .user-info div:last-child {
