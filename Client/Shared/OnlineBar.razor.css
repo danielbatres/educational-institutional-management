@@ -35,10 +35,21 @@ h5 {
 }
 
 .user-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     align-self: center;
     width: 40px;
     height: 40px;
     background-color: var(--light-color);
     margin-right: 10px;
     border-radius: 100%;
+}
+
+.green-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background: var(--success-color);
+    position: relative;
 }
