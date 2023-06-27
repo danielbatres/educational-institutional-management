@@ -28,7 +28,7 @@ p {
 
 span::selection, p::selection, h5::selection {
     color: var(--white);
-    background: var(--dark-color);
+    background: var(--primary-color);
 }
 
 ul {
@@ -45,5 +45,5 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: var(--primary-color);
 }

@@ -16,6 +16,14 @@ h5 {
 .user-info {
     display: flex;
     padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-info:hover {
+    background: #f3f3f3;
 }
 
 .username {
@@ -27,11 +35,10 @@ h5 {
 }
 
 .user-image {
-    margin-left: 6px;
     align-self: center;
     width: 40px;
     height: 40px;
     background-color: var(--light-color);
-    margin-right: 15px;
+    margin-right: 10px;
     border-radius: 100%;
 }
