@@ -1,0 +1,37 @@
+section {
+    min-width: 260px;
+    max-width: 260px;
+    height: 100%;
+    border-left: 1px solid var(--light-color);
+}
+
+h5 {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    margin-left: 16px;
+    font-weight: 300;
+    font-size: 0.7rem;
+}
+
+.user-info {
+    display: flex;
+    padding: 10px;
+}
+
+.username {
+    font-size: 1rem;
+}
+
+.useremail {
+    font-size: 0.9rem;
+}
+
+.user-image {
+    margin-left: 6px;
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--light-color);
+    margin-right: 15px;
+    border-radius: 100%;
+}
