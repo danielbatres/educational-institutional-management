@@ -1,5 +1,5 @@
 .navbar-container {
-    height: 90px;
+    height: 65px;
     width: 100%;
     border-bottom: 1px solid #dfdfdf;
     display: flex;
@@ -22,6 +22,10 @@
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
+}
+
+p {
+    font-size: 1.2rem;
 }
 
 .buttons {

@@ -2,23 +2,56 @@
   <div>
     <div class="logo"></div>
     <div class="navigation-container">
-      <span>MENU PRINCIPAL</span>
+      <h5>
+        MENU PRINCIPAL
+      </h5>
       <ul>
         <li>
           <span></span>
           <p>Dashboard</p>
         </li>
-        <li>Estudiantes</li>
-        <li>Cursos</li>
-        <li>Estad&iacute;sticas</li>
-        <li>Pagos</li>
+        <li>
+          <span></span>
+          <p>Estudiantes</p>
+        </li>
+        <li>
+          <span></span>
+          <p>Cursos</p>
+        </li>
+        <li>
+          <span></span>
+          <p>Estad&iacute;sticas</p>
+        </li>
+        <li>
+          <span></span>
+          <p>Pagos</p>
+        </li>
       </ul>
-      <span>MENU SECUNDARIO</span>
+      <h5>
+        MENU SECUNDARIO
+      </h5>
       <ul>
-        <li>Eventos</li>
-        <li>Actividad</li>
+        <li>
+          <span></span>
+          <p>Eventos</p>
+        </li>
+        <li>
+          <span></span>
+          <p>Actividades</p>
+        </li>
       </ul>
     </div>
   </div>
-  <div class="settings"></div>
+  <div class="settings">
+    <span></span>
+    <p>Configuraciones</p>
+  </div>
 </section>
+
+@code {
+  public string classSelection { get; set; } = "selection";
+
+  public string Selection() {
+    return classSelection;
+  }
+}

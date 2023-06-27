@@ -1,9 +1,13 @@
 :root {
+    --white: #FFFFFF;
     --primary-color: #4361EE;
     --dark-color: #0E1116;
     --text-color: #56575D;
+    --light-text-color: #C2C2C2;
     --light-color: #D6D8D9;
+    --light-blue: #D9DFFF;
     --font-size-medium: 1.4rem;
+    --font-family: 'Outfit', sans-serif
 }
 
 * {
@@ -12,14 +16,19 @@
 }
 
 html, body {
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
+    font-family: var(--font-family);
+    font-size: 14px;
 }
 
 p {
     font-size: var(--font-size-medium);
     color: #56575D;
     font-weight: 300;
+}
+
+span::selection, p::selection, h5::selection {
+    color: var(--white);
+    background: var(--dark-color);
 }
 
 ul {
