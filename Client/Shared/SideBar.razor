@@ -2,47 +2,18 @@
   <div>
     <div class="logo"></div>
     <div class="navigation-container">
-      <h5>
-        MENU PRINCIPAL
-      </h5>
-      <ul>
-        <li>
-          <div>
-            <span></span>
-            <p>Dashboard</p>
+      <h5>MENU PRINCIPAL</h5>
+      <div>
+        @for (int i = 0; i < 4; i++) {
+          <div class="button-container">
+            <BarButton
+              ClassName = "@MenuOptions[i][1]"
+              Content="@MenuOptions[i][0]"
+            />
           </div>
-          <div></div>
-        </li>
-        <li>
-          <span></span>
-          <p>Estudiantes</p>
-        </li>
-        <li>
-          <span></span>
-          <p>Cursos</p>
-        </li>
-        <li>
-          <span></span>
-          <p>Estad&iacute;sticas</p>
-        </li>
-        <li>
-          <span></span>
-          <p>Pagos</p>
-        </li>
-      </ul>
-      <h5>
-        MENU SECUNDARIO
-      </h5>
-      <ul>
-        <li>
-          <span></span>
-          <p>Eventos</p>
-        </li>
-        <li>
-          <span></span>
-          <p>Actividades</p>
-        </li>
-      </ul>
+          }
+      </div>
+      <h5>MENU SECUNDARIO</h5>
     </div>
   </div>
   <div class="settings">
@@ -54,9 +25,13 @@
 </section>
 
 @code {
-  public string classSelection { get; set; } = "selection";
-
-  public string Selection() {
-    return classSelection;
+  public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
+  protected override void OnParametersSet() {
+    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6" }); 
+    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark" }); 
+    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck" }); 
+    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal" });
+    MenuOptions.Add(new List<string>() { "Eventos", "" }); 
+    MenuOptions.Add(new List<string>() { "Actividad", "" });
   }
-}
+} 

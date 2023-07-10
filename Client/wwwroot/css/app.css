@@ -48,3 +48,12 @@ h1:focus {
 a, .btn-link {
     color: var(--primary-color);
 }
+
+i {
+    color: var(--dark-color);
+    font-size: 1rem;
+}
+
+.icon:hover {
+    color: var(--primary-color);
+}

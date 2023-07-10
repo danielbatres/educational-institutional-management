@@ -32,23 +32,30 @@ section {
   font-weight: 300;
 }
 
-ul li {
+.button-container:hover {
+  background: var(--light-blue);
+}
+
+.button-containerhover p,
+.button-container:hover i {
+  color: var(--primary-color);
+}
+
+.button-container {
+  display: flex;
   padding: 12px;
   margin-bottom: 2px;
   border-radius: 10px;
   cursor: pointer;
 }
 
-ul li p {
-  font-size: 1rem;
+.selected-item {
+  background: var(--primary-color);
 }
 
-ul li:hover {
-  background: var(--light-blue);
-}
-
-ul li:hover p {
-  color: var(--primary-color);
+.selected-item p,
+.selected-item i {
+  color: var(--white);
 }
 
 .settings {

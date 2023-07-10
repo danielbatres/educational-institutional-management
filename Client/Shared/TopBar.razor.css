@@ -54,6 +54,9 @@
 }
 
 .icons div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
     width: 35px;
     height: 35px;
     border-radius: 100%;

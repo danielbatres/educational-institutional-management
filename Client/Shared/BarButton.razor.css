@@ -1,0 +1,31 @@
+.button-container {
+  display: flex;
+  padding: 12px;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+p {
+  font-size: 1rem;
+}
+
+.button-container i {
+  margin-right: 10px;
+}
+
+.button-container:hover {
+  background: var(--light-blue);
+}
+
+.button-container:hover p, .button-container:hover i {
+  color: var(--primary-color);
+}
+
+.true {
+  background: var(--primary-color);
+}
+
+.true p, .true i {
+  color: var(--white);
+}
