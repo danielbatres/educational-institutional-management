@@ -28,33 +28,6 @@ p {
     font-size: 1.2rem;
 }
 
-.buttons {
-    gap: 10px;
-}
-
-button {
-    min-width: 190px;
-    max-width: 288px;
-    padding: 14px 20px;
-    border-radius: 10px;
-    border: 1px solid #fff;
-    cursor: pointer;
-    font-family: "Outfit", "sans-serif";
-    font-weight: 300;
-    font-size: 1.2rem;
-}
-
-.buttons button:last-child {
-    background: #4361EE;
-    color: #fff;
-}
-
-.buttons button:first-child {
-    background: none;
-    border: 1px solid #4361EE;
-    color: #4361EE;
-}
-
 ul {
     display: flex;
     flex-direction: row;

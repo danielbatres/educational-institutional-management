@@ -19,10 +19,10 @@
       </ul>
       @if (!HideButtons) {
         <div class="buttons">
-          <button type="button" @onclick="@(() => NavigationManager.NavigateTo("/login"))">
+          <button type="button" class="transparent-button" @onclick="@(() => NavigationManager.NavigateTo("/login"))">
             Iniciar sesi&oacute;n
           </button>
-          <button type="button" @onclick="@(() => NavigationManager.NavigateTo("/register"))">
+          <button type="button" class="primary-background-button" @onclick="@(() => NavigationManager.NavigateTo("/register"))">
             Registrarse
           </button>
         </div>
