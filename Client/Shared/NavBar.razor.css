@@ -9,6 +9,13 @@
     flex-wrap: wrap;
 }
 
+.logo {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
 .navbar-content {
     display: flex;
     flex-direction: row;
