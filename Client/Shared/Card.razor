@@ -1,0 +1,32 @@
+<div class="card-container">
+  <h3>@Title</h3>
+  <p>@Details[0]</p>
+  <h4>$</h4>
+  <p>@Details[1]</p>
+  <button type="button" class="general-button-styles">Comencemos</button>
+  <h5>@SubTitle</h5>
+  @foreach (var benefit in BenefitsDetails) {
+    <div>
+      <div><i class="@benefit[1]"></i></div>
+      <p>@benefit[0]</p>
+    </div>
+  }
+</div>
+
+@code {
+  [EditorRequired]
+  [Parameter]
+  public string? Title { get; set; }
+  [EditorRequired]
+  [Parameter]
+  public string[] Details { get; set; } = {};
+  [EditorRequired]
+  [Parameter]
+  public string? Price { get; set; }
+  [EditorRequired]
+  [Parameter]
+  public string? SubTitle { get; set; }
+  [EditorRequired]
+  [Parameter]
+  public string[] BenefitsDetails { get; set; } = {};
+}

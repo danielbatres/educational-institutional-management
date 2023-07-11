@@ -1,0 +1,20 @@
+.title-container {
+  height: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.line-over-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0px;
+}

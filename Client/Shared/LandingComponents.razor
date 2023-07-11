@@ -1,0 +1,16 @@
+<div class="container-lc" style="background-image: url(@BackgroundUrl); height: @Height; background: @BackgroundColor">
+    <div class="content-lc">@ChildContent</div>
+</div>
+
+@code {
+  [EditorRequired]
+  [Parameter] 
+  public RenderFragment? ChildContent { get; set; }
+  [Parameter]
+  public string? BackgroundUrl { get; set; }
+  [Parameter]
+  public string? BackgroundColor { get; set; }
+  [Parameter]
+  [EditorRequired]
+  public string? Height { get; set; }
+} 

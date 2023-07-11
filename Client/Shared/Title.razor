@@ -1,0 +1,17 @@
+<div class="title-container">
+  <div class="line-over-container">
+    <div class="line-over-title"></div>
+  </div>
+  <h3 class="mid-title">
+    @TitleSent
+  </h3>
+  <p>@Text</p>
+</div>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public string TitleSent { get; set; } = "";
+  [Parameter]
+  public string Text { get; set; } = "";
+}

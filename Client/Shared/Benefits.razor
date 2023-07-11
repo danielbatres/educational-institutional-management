@@ -1,0 +1,28 @@
+<LandingComponents BackgroundUrl="" Height="600px">
+  <section class="centered-container-columns">
+    @foreach (var benefit in BenefitsList) {
+      <div class="benefit">
+        <div class="centered-container">
+          <i class="@benefit[2]"></i>
+          </div>
+        <div>
+          <h5 class="sm-title">@benefit[0]</h5>
+          <p>@benefit[1]</p>
+        </div>
+      </div>
+    }
+  </section>
+  <section></section>
+</LandingComponents>
+
+@code {
+  public List<string[]> BenefitsList = new List<string[]>();
+
+  protected override void OnInitialized()
+  {
+    BenefitsList.Add(new string[] { "Manejo de estudiantes", "LLeva el control de todos los estudiantes de tu institucion y personaliza la informacion necesaria", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Personaliza los cursos", "Crea los cursos y asigna sus materias y profesores", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Manejo de notas", "Genera listados de notas de cada curso y de cualquier materia que desees", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Genera estadisticos", "Podras crear todos los estadisticos que quieras con la informacion que desees", "fi fi-tr-badge-check"});
+  }
+}

@@ -1,33 +1,15 @@
-.home-container {
-    display: flex;
-    justify-content: center;
-    height: 720px;
-    width: 100%;
-    background-image: url("https://i.ibb.co/BVPLF1h/Slide-16-9-8-1.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.home-content {
-    display: flex;
-    height: 100%;
-    width: 1280px;
-    padding: 0px 40px;
-}
-
-.home-content section {
+section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
 }
 
-.home-content section:first-child {
+section:first-child {
     width: 60%;
 }
 
-.home-content section:last-child {
+section:last-child {
     width: 40%;
 }
 
@@ -35,7 +17,7 @@
     align-self: center;
     width: 90%;
     height: 90%;
-    background-image: url("https://i.ibb.co/yNTYgSd/Group-23.png");
+    background-image: url("");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

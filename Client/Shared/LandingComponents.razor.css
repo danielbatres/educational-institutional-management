@@ -1,0 +1,22 @@
+.container-lc {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content-lc {
+  display: flex;
+  height: 100%;
+  width: 1280px;
+  padding: 0px 40px;
+}
+
+
+@media (max-width: 767px) {
+  .content-lc {
+    flex-wrap: wrap;
+  }
+}
