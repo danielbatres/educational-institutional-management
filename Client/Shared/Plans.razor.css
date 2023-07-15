@@ -4,11 +4,11 @@ section {
   justify-content: space-evenly;
   align-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 34px;
 }
 
 .card-container {
-  min-width: 280px;
+  min-width: 240px;
   max-width: 340px;
   height: 600px;
   border: 1px solid var(--light-color);
@@ -59,12 +59,12 @@ h5 {
   min-width: 30px;
   height: 30px;
   border-radius: 10px;
-  background: var(--primary-color);
+  background: var(--light-blue);
   margin-right: 20px;
 }
 
 i {
-  color: var(--white);
+  color: var(--primary-color);
 }
 
 .button {

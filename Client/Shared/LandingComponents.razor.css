@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 100%;
+  min-width: 300px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -9,9 +11,11 @@
 
 .content-lc {
   display: flex;
-  height: 100%;
-  width: 1280px;
-  padding: 0px 40px;
+  min-height: 100%;
+  width: 100%;
+  max-width: 1280px;
+  min-width: 300px;
+  padding: 30px 40px;
 }
 
 

@@ -1,26 +1,18 @@
 section {
+    margin-top: 40px;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-content: center;
 }
 
 section:first-child {
-    width: 60%;
+    min-width: 60%;
 }
 
 section:last-child {
-    width: 40%;
-}
-
-.girl-image {
-    align-self: center;
-    width: 90%;
-    height: 90%;
-    background-image: url("");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    min-width: 40%;
 }
 
 .info {
@@ -36,8 +28,12 @@ section:last-child {
 }
 
 h3 {
-    font-size: 3.2rem;
+    font-size: 2.6rem;
     color: #000;
+}
+
+.buttons {
+    margin-top: 20px;
 }
 
 p {
@@ -47,4 +43,10 @@ p {
 
 h3 span {
     color: #4361EE;
+}
+
+@media (max-width: 767px) {
+    button {
+        width: 100%;
+    }
 }

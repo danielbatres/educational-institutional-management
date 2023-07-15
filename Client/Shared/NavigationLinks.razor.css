@@ -1,0 +1,20 @@
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 60px;
+  margin-right: 60px;
+}
+
+li p:hover {
+  color: #4361EE;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  ul {
+    visibility: hidden;
+  }
+}

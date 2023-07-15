@@ -1,4 +1,4 @@
-<div class="container-lc" style="background-image: url(@BackgroundUrl); height: @Height; background: @BackgroundColor">
+<div class="container-lc" style="@BackgroundUrl @MinHeight @BackgroundColor" id="@IdSection">
     <div class="content-lc">@ChildContent</div>
 </div>
 
@@ -12,5 +12,7 @@
   public string? BackgroundColor { get; set; }
   [Parameter]
   [EditorRequired]
-  public string? Height { get; set; }
+  public string? MinHeight { get; set; }
+  [Parameter]
+  public string? IdSection { get; set; }
 } 

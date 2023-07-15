@@ -3,20 +3,10 @@
 <div class="navbar-container">
   <div class="navbar-content">
     <div>
-      <p class="logo" @onclick="@(() => NavigationManager.NavigateTo("/"))">Dicamy</p>
+      <p class="logo" @onclick="@(() => NavigationManager.NavigateTo("/"))">Landing</p>
     </div>
     <div class="navigation">
-      <ul>
-        <li>
-          <p @onclick="@(() => NavigationManager.NavigateTo("/"))">Inicio</p>
-        </li>
-        <li>
-          <p>Informaci&oacute;n</p>
-        </li>
-        <li>
-          <p>Planes</p>
-        </li>
-      </ul>
+      <NavigationLinks />
       @if (!HideButtons) {
         <div class="buttons">
           <button type="button" class="transparent-button" @onclick="@(() => NavigationManager.NavigateTo("/login"))">
