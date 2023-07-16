@@ -1,0 +1,19 @@
+<div class="access-container">
+  <div class="access-title">
+    <h3>@Title</h3>
+    <p>@Description</p>
+  </div>
+  <div class="access-content">
+    @ChildContent
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public RenderFragment? ChildContent { get; set; }
+  [Parameter]
+  public string? Title { get; set; } = string.Empty;
+  [Parameter]
+  public string? Description { get; set; } = string.Empty;
+}

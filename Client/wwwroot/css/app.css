@@ -168,3 +168,11 @@ i {
     font-family: var(--font-family);
     color: var(--text-color);
 }
+
+.sectioned-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 50%;
+}
