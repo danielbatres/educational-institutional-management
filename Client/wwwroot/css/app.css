@@ -137,11 +137,12 @@ i {
     transition: border, color 200ms ease-in-out 0.01s;
 }
 
-/*
 .not-enable-button {
-
+    background: var(--light-color);
+    color: var(--text-color);
+    border: 1px solid var(--light-color);
+    cursor: not-allowed;
 }
-*/
 
 .line-over-title {
     width: 200px;

@@ -1,5 +1,6 @@
 h3 {
   font-size: 2rem;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
@@ -12,15 +13,10 @@ h3 {
 .access-container {
   width: 100%;
   min-width: 288px;
-  max-width: 400px;
 }
 
 p {
   font-size: 1.2rem;
-}
-
-.access-content {
-  max-width: 400px;
 }
 
 .access-content p {

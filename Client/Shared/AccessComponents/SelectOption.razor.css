@@ -1,0 +1,61 @@
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 1rem;
+}
+
+article {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 110px;
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  padding: 20px;
+}
+
+article.selected {
+  background: var(--light-blue);
+  border: 1px solid var(--primary-color);
+}
+
+.icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: var(--light-blue);
+  margin-right: 14px;
+}
+
+.icon-container i {
+  color: var(--primary-color);
+}
+
+.selected-icon {
+  background: var(--primary-color);
+}
+
+.selected-icon i {
+  color: var(--white);
+}
+
+i {
+  font-size: 1.4rem;
+}
+
+.button {
+  width: 100%;
+  margin-top: 30px;
+}

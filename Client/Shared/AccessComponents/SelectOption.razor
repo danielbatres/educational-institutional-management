@@ -1,17 +1,55 @@
-<AccessComponent Title="Hola, vamos a comenzar" Description="Seleciona una de las opciones para continuar">
-  <div>
-    <article>
-      <div>
-        <div></div>
-        <div>
-          <h4></h4>
-          <p></p>
-        </div>
-      </div>
-      <div></div>
-    </article>
-    <article>
+@inject NavigationManager NavigationManager
 
+<AccessComponent Title="Hola, vamos a comenzar" Description="Seleciona una de las opciones para continuar" MaxWidth="max-width: 500px;">
+  <div class="options-container">
+    <article
+      class="@(selectedContainer == 1 ? "selected" : "")"
+    @onclick="() => SelectContainer(1)"
+    >
+      <div class="@(selectedContainer == 1 ? "selected-icon" : "") icon-container centered-container">
+        <i class="fi fi-tr-users-gear"></i>
+      </div>
+      <div>
+        <h4>Formo parte de un equipo</h4>
+        <p>Ingresar como usuario normal o como parte de un equipo</p>
+      </div>
+    </article>
+    <article
+      class="@(selectedContainer == 2 ? "selected" : "")"
+    @onclick="() => SelectContainer(2)">
+    <div class="@(selectedContainer == 2 ? "selected-icon" : "") icon-container centered-container">
+      <i class="fi fi-tr-images-user"></i>
+    </div>
+      <div>
+        <h4>Soy estudiante o encargado</h4>
+        <p>Ingresar como estudiante o encargado</p>
+      </div>
     </article>
   </div>
+  <button type="button" class="@(selectedContainer == 0 ? "not-enable-button" : "primary-background-button") button" @onclick="@SetNavigation">
+    Continuar
+  </button>
 </AccessComponent>
+
+@code {
+  int selectedContainer = 0;
+
+  private void SelectContainer(int containerNumber) {
+    if (selectedContainer == containerNumber) {
+      selectedContainer = 0;
+    }
+    else {
+      selectedContainer = containerNumber;
+    }
+  }
+
+  private void SetNavigation() {
+    switch (selectedContainer) {
+      case 1:
+        NavigationManager.NavigateTo("/access/login");
+        break;
+      case 2:
+        break;
+    }
+  }
+}

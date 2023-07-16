@@ -1,9 +1,9 @@
-<div class="access-container">
+<div class="access-container" style="@MaxWidth">
   <div class="access-title">
     <h3>@Title</h3>
     <p>@Description</p>
   </div>
-  <div class="access-content">
+  <div class="access-content" style="@MaxWidth">
     @ChildContent
   </div>
 </div>
@@ -16,4 +16,6 @@
   public string? Title { get; set; } = string.Empty;
   [Parameter]
   public string? Description { get; set; } = string.Empty;
+  [Parameter]
+  public string? MaxWidth { get; set; } = string.Empty;
 }
