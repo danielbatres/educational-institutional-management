@@ -9,6 +9,7 @@
     flex-wrap: wrap;
     position: fixed;
     background: var(--white);
+    z-index: 10;
 }
 
 .logo {

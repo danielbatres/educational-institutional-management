@@ -1,11 +1,8 @@
 ul {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
   flex-wrap: wrap;
+  align-content: center;
   gap: 60px;
-  margin-right: 60px;
 }
 
 li p:hover {
@@ -14,7 +11,7 @@ li p:hover {
 }
 
 @media (max-width: 767px) {
-  ul {
+  .hide-on-mobile {
     visibility: hidden;
   }
 }

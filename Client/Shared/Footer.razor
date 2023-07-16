@@ -1,5 +1,14 @@
-<LandingComponents MinHeight="min-height: 200px;" BackgroundColor="background: #17191A;" IdSection="footer">
-  <section>
+@inject NavigationManager NavigationManager
 
+<LandingComponents MinHeight="min-height: 160px;" BackgroundColor="background: #17191A;" IdSection="footer">
+  <section>
+    <h3 @onclick="@(() => NavigationManager.NavigateTo("/"))">Landing</h3>
+    <p>Para instituciones educativas</p>
+  </section>
+  <section>
+    <NavigationLinks Styles="justify-content: right;"/>
   </section>
 </LandingComponents>
+<div class="bottom centered-container">
+  <p>Informaci&oacute;n del footer</p>
+</div>

@@ -8,6 +8,14 @@ section {
   min-width: 50%;
 }
 
+section:last-child div {
+  min-height: 100%;
+  width: 100%;
+  background-image: url("https://i.ibb.co/9WcDg4B/screen.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .benefit div:first-child {
   min-width: 50px;
   max-width: 50px;

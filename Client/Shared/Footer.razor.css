@@ -1,0 +1,36 @@
+section {
+  min-width: 50%;
+}
+
+section:first-child {
+  padding-bottom: 40px;
+}
+
+section:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+}
+
+h3 {
+  cursor: pointer;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+.bottom {
+  background: #17191A;
+  height: 40px;
+  border-top: 1px solid hsl(0, 0%, 21%);
+  text-align: center;
+}
+
+.bottom p {
+  font-size: 1rem;
+}

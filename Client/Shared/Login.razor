@@ -1,41 +1,45 @@
 @inject Context Context
 
 <div class="login-container">
-  <div class="login-content">
+  <div class="login-title">
     <h3>¡Bienvenido de vuelta!</h3>
-    <p>Ingresa tu infromaci&oacute;n para ingresar.</p>
+    <p>Ingresa tu informaci&oacute;n para ingresar.</p>
+  </div>
 
-    @if (Context.Equals("User")) { 
-      <EnterGoogle />
-    }
-
-    <div class="login-form">
-      <div class="login-form-content">
-        <span></span>
-        <p>Correo electr&oacute;nico</p>
-        <input type="text" placeholder="Ingresar correo electr&oacute;nico">
-        <span></span>
-        <p>Contrase&ntilde;a</p>
-        <input type="text" placeholder="Ingresa contrase&ntilde;a">
+  <div class="login-form">
+    <div class="login-form-content">
+      <div class="label">
+        <i class="fi fi-tr-at"></i>
+        <label for="email">Correo electr&oacute;nico</label>
       </div>
-      <ul>
-        <li>
-          <button type="button"></button>
-          <p>Recuerdame</p>
-        </li>
-        <li>
-          <a href="#">¿Olvidaste tu contrase&ntilde;a?</a>
-        </li>
-      </ul>
+      <input class="input" type="email" placeholder="Ingresar correo electr&oacute;nico" id="email">
+      <div class="label">
+        <i class="fi fi-tr-vault"></i>
+        <label for="password">Contrase&ntilde;a</label>
+      </div>
+      <div class="input-container">
+        <input type="password" class="input" placeholder="Ingresa contrase&ntilde;a" id="password" >
+        <span class="input-icon">
+          <i class="fi fi-tr-low-vision eye"></i>
+        </span>
+      </div>
     </div>
-    <div class="login-button">
-      <button type="button">
-        Iniciar sesi&oacute;n
-      </button>
-    </div>
+    <ul>
+      <li>
+        <input type="checkbox" class="checkbox" >
+        <p class="sm-text">Recuerdame</p>
+      </li>
+      <li>
+        <p class="password">¿Olvidaste tu contrase&ntilde;a?</p>
+      </li>
+    </ul>
+  </div>
+  <div class="login-button">
+    <button type="button" class="button primary-background-button">
+      Iniciar sesi&oacute;n
+    </button>
+    <p>
+      ¿No tienes una cuenta? <b>Reg&iacute;strate</b>
+    </p>
   </div>
 </div>
-
-@code {
-  public bool IsUser { get; set; } = false;
-}

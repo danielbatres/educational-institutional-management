@@ -4,16 +4,17 @@ section {
   justify-content: space-evenly;
   align-content: center;
   flex-wrap: wrap;
-  gap: 34px;
+  gap: 54px;
 }
 
 .card-container {
+  position: relative;
   min-width: 240px;
   max-width: 340px;
-  height: 600px;
+  height: 550px;
   border: 1px solid var(--light-color);
   border-radius: 10px;
-  padding:18px;
+  padding: 45px 18px 18px 18px;
 }
 
 .benefits-c {
@@ -29,9 +30,8 @@ p {
 }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 500;
-  margin: 14px 0px 10px 0px;
 }
 
 h4 {
@@ -70,4 +70,17 @@ i {
 .button {
   width: 100%;
   margin: 20px 0px;
+}
+
+.card-name {
+  position: absolute;
+  top: -30px;
+  left: calc(24%);
+  width: 190px;
+  background: var(--white);
+  border: 1px solid var(--primary-color);
+  text-align: center;
+  color: var(--primary-color);
+  border-radius: 10px;
+  padding: 10px 0px;
 }

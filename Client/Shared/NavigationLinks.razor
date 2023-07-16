@@ -1,6 +1,6 @@
 @inject NavigationManager NavigationManager
 
-<ul>
+<ul class="@HideOnMobile" style="@Styles">
   <li>
     <p @onclick="@(() => NavigationManager.NavigateTo("/application"))">Inicio</p>
   </li>
@@ -13,3 +13,11 @@
     <p>Planes</p>
   </li>
 </ul>
+
+
+@code {
+  [Parameter]
+  public string HideOnMobile { get; set; } = "";
+  [Parameter]
+  public string Styles { get; set; } = "flex-direction: row;";
+}

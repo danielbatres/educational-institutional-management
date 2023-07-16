@@ -1,19 +1,22 @@
 h3 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
-.login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-    min-height: 90vh;
+.login-title {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--light-color);
 }
 
-.login-content {
-    min-width: 300px;
+.login-container {
+    width: 100%;
+    min-width: 288px;
+    max-width: 400px;
+}
+
+p {
+    font-size: 1.2rem;
 }
 
 ul {
@@ -27,25 +30,8 @@ ul li:first-child {
     display: flex;
 }
 
-.login-button button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: 300;
-    font-family: "Outfit", "sans-serif";
-    border-radius: 10px;
-    border: 1px solid #4361EE;
-    color: #fff;
-    background: #4361EE;
-}
-
-input {
-    min-width: 288px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 10px;
+.login-form {
+    max-width: 400px;
 }
 
 .login-form-content p {
@@ -53,4 +39,88 @@ input {
     margin-bottom: 10px;
     color: #000;
     font-size: 1.2rem;
+}
+
+.checkbox {
+    all: unset;
+    width: 15px;
+    margin-right: 10px;
+    border: 1px solid var(--light-color);
+    border-radius: 10px;
+}
+
+.checkbox:checked {
+    background: var(--primary-color);
+}
+
+.sm-text {
+    font-size: 1rem;
+}
+
+.button {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.password {
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.password:hover {
+    text-decoration: underline;
+}
+
+.label {
+    display: flex;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
+    font-weight: 300;
+    color: var(--dark-color);
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.input {
+    width: 100%;
+}
+
+.eye {
+    font-size: 1.4rem;
+}
+
+i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+.login-button p {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 1rem;
+}
+
+.login-button p b {
+    font-weight: 300;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.login-button p b:hover {
+    text-decoration: underline;
 }

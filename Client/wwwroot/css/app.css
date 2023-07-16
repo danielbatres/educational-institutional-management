@@ -14,6 +14,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -98,7 +99,7 @@ i {
     gap: 10px;
 }
 
-button {
+.button {
     min-width: 190px;
     padding: 14px 20px;
     border-radius: 10px;
@@ -136,13 +137,34 @@ button {
     transition: border, color 200ms ease-in-out 0.01s;
 }
 
+/*
 .not-enable-button {
 
 }
+*/
 
 .line-over-title {
     width: 200px;
     height: 3px;
     background: var(--primary-color);
     border-radius: 10px;
+}
+
+.input {
+    all: unset;
+    min-width: 100px;
+    max-width: 100%;
+    padding: 15px 0px 15px 10px;
+    border: 1px solid var(--light-color);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    font-weight: 300;
+    box-sizing: border-box;
+}
+
+.input::placeholder {
+    font-family: var(--font-family);
+    color: var(--text-color);
 }

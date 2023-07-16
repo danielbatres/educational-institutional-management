@@ -1,0 +1,17 @@
+<div class="form-container">
+  <div class="form-content">
+    @ChildContent
+  </div>
+  <div class="background-container">
+    <section></section>
+    <section style="@BackgroundImage"></section>
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public RenderFragment? ChildContent { get; set; }
+  [Parameter]
+  public string? BackgroundImage { get; set; }
+}
