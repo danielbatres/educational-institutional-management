@@ -7,7 +7,7 @@
     --light-color: #ECECEC;
     --light-blue: #D9DFFF;
     --success-color: #3DC13C;
-    --font-size-medium: 1.4rem;
+    --font-size-medium: 1.3rem;
     --font-family: 'Be Vietnam Pro', sans-serif;
 }
 
@@ -15,6 +15,37 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width:12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar-button {
+    height: 16px;
+}
+
+::-webkit-scrollbar-button:start:decrement {
+    background-color: var(--text-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-button:end:increment {
+    background-color: var(--text-color);
+    border-radius: 10px;
 }
 
 html, body {
@@ -101,7 +132,7 @@ i {
 
 .button {
     min-width: 190px;
-    padding: 14px 20px;
+    padding: 12px 20px;
     border-radius: 10px;
     cursor: pointer;
     font-family: var(--font-family);
@@ -155,7 +186,7 @@ i {
     all: unset;
     min-width: 100px;
     max-width: 100%;
-    padding: 15px 0px 15px 10px;
+    padding: 12px 0px 12px 10px;
     border: 1px solid var(--light-color);
     border-radius: 10px;
     font-size: 1.2rem;

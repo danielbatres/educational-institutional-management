@@ -1,26 +1,37 @@
 @inject NavigationManager NavigationManager
 
 <AccessComponent Title="Selecciona la institucion" Description="Selecciona la institucion de la que eres parte" MaxWidth="max-width: 400px;">
-  <div>
-    <input class="input" type="text" placeholder="Buscar institucion" @oninput="@SetValues">
-    <ul class="combo-list">
+  <div class="combo-container">
+    <div class="input-container">
+      <input class="input" type="text" placeholder="Buscar institucion" @bind="@SearchValue" @oninput="@SetValues">
+      <i class="fi fi-tr-chevron-double-down" @onclick="@(() => ShowList = !ShowList)"></i>
+    </div>
+    <ul class="combo-list" style="@(!ShowList ? "visibility: hidden;" : "")">
       @foreach (string institution in SearchedInstitutions) {
-        <li>@institution</li>
+        <li @onclick="@(() => SearchValue = @institution)">@institution</li>
       }
     </ul>
   </div>
+  <button type="button" class="button primary-background-button">
+    Continuar
+  </button>
 </AccessComponent>
 
 @code {
   private List<string> Insitutions = new();
   private List<string> SearchedInstitutions = new();
   private string SearchValue = string.Empty;
+  private bool ShowList = false;
 
   private void SetValues(ChangeEventArgs e) {
     SearchValue = e.Value?.ToString() ?? string.Empty;
 
+    ShowList = !ShowList;
+
     if (!SearchValue.Equals(string.Empty)) {
-      SearchedInstitutions = Insitutions.Where(x => x.Equals(SearchValue)).ToList();
+      SearchedInstitutions = Insitutions.Where(x => x.ToLower().Contains(SearchValue.ToLower())).ToList();
+
+      if (SearchedInstitutions.Count.Equals(0)) ShowList = false;
     } else {
       SearchedInstitutions = Insitutions;
     }
@@ -30,9 +41,13 @@
     Insitutions.Add("One");
     Insitutions.Add("Two");
     Insitutions.Add("Three");
+    Insitutions.Add("Four");
+    Insitutions.Add("Five");
+    Insitutions.Add("Six");
   }
 
   protected override void OnInitialized() {
     AddInstitutions();
+    SearchedInstitutions = Insitutions;
   }
 }
