@@ -1,0 +1,38 @@
+@inject NavigationManager NavigationManager
+
+<AccessComponent Title="Selecciona la institucion" Description="Selecciona la institucion de la que eres parte" MaxWidth="max-width: 400px;">
+  <div>
+    <input class="input" type="text" placeholder="Buscar institucion" @oninput="@SetValues">
+    <ul class="combo-list">
+      @foreach (string institution in SearchedInstitutions) {
+        <li>@institution</li>
+      }
+    </ul>
+  </div>
+</AccessComponent>
+
+@code {
+  private List<string> Insitutions = new();
+  private List<string> SearchedInstitutions = new();
+  private string SearchValue = string.Empty;
+
+  private void SetValues(ChangeEventArgs e) {
+    SearchValue = e.Value?.ToString() ?? string.Empty;
+
+    if (!SearchValue.Equals(string.Empty)) {
+      SearchedInstitutions = Insitutions.Where(x => x.Equals(SearchValue)).ToList();
+    } else {
+      SearchedInstitutions = Insitutions;
+    }
+  }
+
+  private void AddInstitutions() {
+    Insitutions.Add("One");
+    Insitutions.Add("Two");
+    Insitutions.Add("Three");
+  }
+
+  protected override void OnInitialized() {
+    AddInstitutions();
+  }
+}
