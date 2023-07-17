@@ -4,7 +4,7 @@
   </div>
   <div class="background-container">
     <section></section>
-    <section style="@BackgroundImage"></section>
+    <section style="@BackgroundImage @Border"></section>
   </div>
 </div>
 
@@ -14,4 +14,6 @@
   public RenderFragment? ChildContent { get; set; }
   [Parameter]
   public string? BackgroundImage { get; set; }
+  [Parameter]
+  public string? Border { get; set; }
 }

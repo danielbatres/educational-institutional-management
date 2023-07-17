@@ -1,3 +1,5 @@
+@inject NavigationManager NavigationManager
+
 <LandingComponents MinHeight="min-height: 800px;" IdSection="plans">
   <section>
     <div class="card-container">
@@ -7,13 +9,12 @@
       <p>Perfecto para comenzar</p>
       <h4>$100.00</h4>
       <p>Pago anual recurrente</p>
-      <button type="button" class="general-button-styles primary-background-button button">Comencemos</button>
+      <button type="button" class="general-button-styles primary-background-button button" @onclick="@(() => NavigationManager.NavigateTo("/register-institution"))">Comencemos</button>
       <div class="includes">
         <h5>¿Que incluye?</h5>
       </div>
       <div class="benefits-c">
-      @foreach (string[] benefit in BenefitsDetails)
-      {
+      @foreach (string[] benefit in BenefitsDetails) {
         <div class="centered-container-rows benefits-container">
           <div class="icon-box centered-container"><i class="@benefit[1]"></i></div>
           <p class="sm">@benefit[0]</p>
@@ -28,13 +29,12 @@
       <p>Perfecto para comenzar</p>
       <h4>$100.00</h4>
       <p>Pago anual recurrente</p>
-      <button type="button" class="general-button-styles primary-background-button button">Comencemos</button>
+      <button type="button" class="general-button-styles primary-background-button button" @onclick="@(() => NavigationManager.NavigateTo("/register-institution"))">Comencemos</button>
       <div class="includes">
         <h5>¿Que incluye?</h5>
       </div>
       <div class="benefits-c">
-      @foreach (string[] benefit in BenefitsDetails)
-      {
+      @foreach (string[] benefit in BenefitsDetails) {
         <div class="centered-container-rows benefits-container">
           <div class="icon-box centered-container"><i class="@benefit[1]"></i></div>
           <p class="sm">@benefit[0]</p>
@@ -49,13 +49,12 @@
       <p>Perfecto para comenzar</p>
       <h4>$100.00</h4>
       <p>Pago anual recurrente</p>
-      <button type="button" class="general-button-styles primary-background-button button">Comencemos</button>
+      <button type="button" class="general-button-styles primary-background-button button" @onclick="@(() => NavigationManager.NavigateTo("/register-institution"))">Comencemos</button>
       <div class="includes">
         <h5>¿Que incluye?</h5>
       </div>
       <div class="benefits-c">
-      @foreach (string[] benefit in BenefitsDetails)
-      {
+      @foreach (string[] benefit in BenefitsDetails) {
         <div class="centered-container-rows benefits-container">
           <div class="icon-box centered-container"><i class="@benefit[1]"></i></div>
           <p class="sm">@benefit[0]</p>

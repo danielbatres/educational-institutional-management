@@ -11,7 +11,7 @@ i {
   font-size: 1.2rem;
   color: var(--text-color);
   position: absolute;
-  top: 20px;
+  top: 16px;
   right: 18px;
   cursor: pointer;
 }
