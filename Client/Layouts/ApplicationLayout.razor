@@ -4,7 +4,6 @@
   <div class="application-container">
     <div
       class="left-container"
-      style="@ChildValue"
     >
       <SideBar />
     </div>
@@ -18,9 +17,4 @@
 </div>
 
 @code {
-  private string? ChildValue { get; set; }
-
-  private void SetWidthValue(string value) {
-    ChildValue = value;
-  }
 }

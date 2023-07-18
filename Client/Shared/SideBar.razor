@@ -1,5 +1,5 @@
 <section>
-  <i class="fi fi-tr-bars-sort icon" @onclick="@HandleValueChange"></i>
+  <i class="fi fi-tr-bars-sort icon" @onclick="@(() => Toggle = !Toggle)"></i>
   <div class="sidebar">
     <div>
       <div class="logo"></div>
@@ -31,11 +31,6 @@
   private bool Toggle { get; set;} 
   
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
-
-  private async Task HandleValueChange() {
-    Toggle = !Toggle;
-    await OnValueChange.InvokeAsync(Toggle ? "width: 100%" : "width: 40%");
-  }
 
   protected override void OnInitialized() {
     Toggle = false;
