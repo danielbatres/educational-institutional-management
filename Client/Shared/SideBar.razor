@@ -1,21 +1,24 @@
 <section>
-  <i class="fi fi-tr-bars-sort icon" @onclick="@(() => Toggle = !Toggle)"></i>
   <div class="sidebar">
-    <div>
+    <div class="sidebar-container">
       <div class="logo"></div>
       <div class="navigation-container">
-        <h5>MENU PRINCIPAL</h5>
+        @if (Toggle) {
+          <h5>MENU PRINCIPAL</h5>
+        }
         <div>
           @for (int i = 0; i < 4; i++) {
             <div class="button-container">
               <i class="@MenuOptions[i][1]"></i>
-              @if (!Toggle) {
+              @if (Toggle) {
                 <p>@MenuOptions[i][0]</p> 
               }
             </div>
             }
         </div>
-        <h5>MENU SECUNDARIO</h5>
+        @if (Toggle) {
+          <h5>MENU SECUNDARIO</h5>
+        }
       </div>
     </div>
     <div class="settings">
@@ -27,14 +30,13 @@
   </div>
 </section>
 
-@code {
-  private bool Toggle { get; set;} 
-  
+@code {  
+  [CascadingParameter(Name="Toggle")]
+  public bool Toggle { get; set; }
+  private uint SelectedContainer { get; set; }
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
 
-  protected override void OnInitialized() {
-    Toggle = false;
-  }
+  
 
   protected override void OnParametersSet() {
     MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6" }); 

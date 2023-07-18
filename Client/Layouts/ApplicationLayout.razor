@@ -2,10 +2,11 @@
 
 <div class="page">
   <div class="application-container">
-    <div
-      class="left-container"
-    >
-      <SideBar />
+    <div class="left-container" style="@(Toggle ? "width: 280px;" : "width: 100px;")">
+      <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
+      <CascadingValue Value="@Toggle" Name="Toggle">
+        <SideBar />
+      </CascadingValue>
     </div>
     <div class="right-container">
       <TopBar />
@@ -17,4 +18,9 @@
 </div>
 
 @code {
+  public bool Toggle { get; set; }
+
+  protected override void OnInitialized() {
+    Toggle = false;
+  }
 }

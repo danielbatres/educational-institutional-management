@@ -4,14 +4,6 @@ section {
   transition: width 0.2s ease-in-out;
 }
 
-.icon {
-  font-size: 1.6rem;
-  position: absolute;
-  right: -45px;
-  top: 20px;
-  cursor: pointer;
-}
-
 .sidebar {
   height: 100%;
   display: flex;
@@ -19,6 +11,10 @@ section {
   justify-content: space-between;
   align-content: center;
   border-right: 1px solid var(--light-color);
+}
+
+.sidebar-container p {
+  font-size: 1rem;
 }
 
 .logo {
