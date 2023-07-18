@@ -1,5 +1,5 @@
-<section style="width: @(Toggle ? "225px" : "20%");">
-  <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
+<section>
+  <i class="fi fi-tr-bars-sort icon" @onclick="@HandleValueChange"></i>
   <div class="sidebar">
     <div>
       <div class="logo"></div>
@@ -9,7 +9,9 @@
           @for (int i = 0; i < 4; i++) {
             <div class="button-container">
               <i class="@MenuOptions[i][1]"></i>
-              <p style="@(!Toggle ? "visibility: hidden" : "")">@MenuOptions[i][0]</p>
+              @if (!Toggle) {
+                <p>@MenuOptions[i][0]</p> 
+              }
             </div>
             }
         </div>
@@ -26,9 +28,14 @@
 </section>
 
 @code {
-  public bool Toggle { get; set;} 
-
+  private bool Toggle { get; set;} 
+  
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
+
+  private async Task HandleValueChange() {
+    Toggle = !Toggle;
+    await OnValueChange.InvokeAsync(Toggle ? "width: 100%" : "width: 40%");
+  }
 
   protected override void OnInitialized() {
     Toggle = false;
