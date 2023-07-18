@@ -1,31 +1,39 @@
-<section>
-  <div>
-    <div class="logo"></div>
-    <div class="navigation-container">
-      <h5>MENU PRINCIPAL</h5>
-      <div>
-        @for (int i = 0; i < 4; i++) {
-          <div class="button-container">
-            <BarButton
-              ClassName = "@MenuOptions[i][1]"
-              Content="@MenuOptions[i][0]"
-            />
-          </div>
-          }
-      </div>
-      <h5>MENU SECUNDARIO</h5>
-    </div>
-  </div>
-  <div class="settings">
+<section style="width: @(Toggle ? "225px" : "20%");">
+  <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
+  <div class="sidebar">
     <div>
-      <span></span>
-      <p>Configuraciones</p>
+      <div class="logo"></div>
+      <div class="navigation-container">
+        <h5>MENU PRINCIPAL</h5>
+        <div>
+          @for (int i = 0; i < 4; i++) {
+            <div class="button-container">
+              <i class="@MenuOptions[i][1]"></i>
+              <p style="@(!Toggle ? "visibility: hidden" : "")">@MenuOptions[i][0]</p>
+            </div>
+            }
+        </div>
+        <h5>MENU SECUNDARIO</h5>
+      </div>
+    </div>
+    <div class="settings">
+      <div>
+        <span></span>
+        <p>Configuraciones</p>
+      </div>
     </div>
   </div>
 </section>
 
 @code {
+  public bool Toggle { get; set;} 
+
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
+
+  protected override void OnInitialized() {
+    Toggle = false;
+  }
+
   protected override void OnParametersSet() {
     MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6" }); 
     MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark" }); 

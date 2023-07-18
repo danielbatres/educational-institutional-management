@@ -6,6 +6,10 @@
     border-bottom: 1px solid var(--light-color);
 }
 
+h3 {
+    margin-left: 50px;
+}
+
 .right-side-container {
     display: flex;
 }
