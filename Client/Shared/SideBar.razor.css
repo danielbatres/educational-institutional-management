@@ -24,8 +24,7 @@ section {
 }
 
 .navigation-container {
-  padding-left: 25px;
-  padding-right: 10px;
+  padding: 0px 20px;
 }
 
 .navigation-container p {
@@ -54,9 +53,9 @@ section {
 
 .button-container {
   display: flex;
-  padding: 12px;
-  margin-bottom: 2px;
+  padding: 10px 0px 10px 12px;
   border-radius: 10px;
+  margin: 1px;
   cursor: pointer;
 }
 
@@ -77,6 +76,14 @@ section {
   align-content: center;
   border-top: 1px solid var(--light-color);
   font-size: 1rem;
+}
+
+.no-padding-sides {
+  padding: 10px 0px;
+}
+
+.padding-sides {
+  padding: 0px 25px;
 }
 
 .selected p, .selected i {

@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-container">
       <div class="logo"></div>
-      <div class="navigation-container">
+      <div class="@(!Toggle ? "padding-sides" : "") navigation-container">
         @if (Toggle) {
           <h5>MENU PRINCIPAL</h5>
         }
@@ -10,7 +10,7 @@
           @for (int i = 0; i < 4; i++) {
             int index = i;
             <div
-              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") button-container"
+              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") @(!Toggle ? "centered-container no-padding-sides" : "") button-container"
             @onclick="(() => selectedContainer = MenuOptions[index][2])">
               <i class="@MenuOptions[i][1]"></i>
               @if (Toggle) {

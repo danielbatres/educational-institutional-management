@@ -32,3 +32,9 @@ main {
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 1050px) {
+  .left-container {
+    display: none;
+  }
+}
