@@ -24,10 +24,12 @@
         }
       </div>
     </div>
-    <div class="settings">
-      <div>
-        <span></span>
-        <p>Configuraciones</p>
+    <div class="settings padding-sides">
+      <div class="button-container @(!Toggle ? "centered-container no-padding-sides" : "")">
+        <i class="fi fi-tr-gears"></i>
+        @if (Toggle) {
+          <p>Configuraciones</p>
+        }
       </div>
     </div>
   </div>
