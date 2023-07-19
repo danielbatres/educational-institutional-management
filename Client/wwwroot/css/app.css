@@ -208,3 +208,8 @@ i {
     align-items: center;
     min-width: 50%;
 }
+
+.selected {
+    background: var(--light-blue);
+    border: 1px solid var(--primary-color);
+}

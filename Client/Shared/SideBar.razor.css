@@ -15,6 +15,7 @@ section {
 
 .sidebar-container p {
   font-size: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .logo {
@@ -28,6 +29,7 @@ section {
 }
 
 .navigation-container p {
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -38,10 +40,7 @@ section {
   margin-bottom: 20px;
   color: var(--light-text-color);
   font-weight: 300;
-}
-
-.button-container i {
-  margin-right: 10px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .button-container:hover {
@@ -78,4 +77,18 @@ section {
   align-content: center;
   border-top: 1px solid var(--light-color);
   font-size: 1rem;
+}
+
+.selected p, .selected i {
+  color: var(--primary-color);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

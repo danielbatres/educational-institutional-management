@@ -8,10 +8,13 @@
         }
         <div>
           @for (int i = 0; i < 4; i++) {
-            <div class="button-container">
+            int index = i;
+            <div
+              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") button-container"
+            @onclick="(() => selectedContainer = MenuOptions[index][2])">
               <i class="@MenuOptions[i][1]"></i>
               @if (Toggle) {
-                <p>@MenuOptions[i][0]</p> 
+                <p>@MenuOptions[i][0]</p>
               }
             </div>
             }
@@ -33,16 +36,14 @@
 @code {  
   [CascadingParameter(Name="Toggle")]
   public bool Toggle { get; set; }
-  private uint SelectedContainer { get; set; }
+  private string selectedContainer = "0";
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
 
-  
-
   protected override void OnParametersSet() {
-    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6" }); 
-    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark" }); 
-    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck" }); 
-    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal" });
+    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6", "0" }); 
+    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark", "1" }); 
+    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck", "2" }); 
+    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3" });
     MenuOptions.Add(new List<string>() { "Eventos", "" }); 
     MenuOptions.Add(new List<string>() { "Actividad", "" });
   }
