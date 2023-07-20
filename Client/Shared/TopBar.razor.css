@@ -10,10 +10,6 @@ h3 {
     margin-left: 50px;
 }
 
-.right-side-container {
-    display: flex;
-}
-
 .left-side-container {
     display: flex;
     justify-content: center;
@@ -26,50 +22,87 @@ h3 {
     padding: 0px 20px;
 }
 
+.right-side-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
 .search {
+    position: relative;
     align-self: center;
 }
 
-.search input {
-    width: 200px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--light-color);
-    font-family: var(--font-family);
+.search i {
+    position: absolute;
+    top: 9px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
     color: var(--text-color);
 }
 
+.search input {
+    width: 240px;
+    font-size: 1rem;
+}
+
 .user-info {
-    display: flex;
-    justify-content: center;
-    align-content: center;
     height: 100%;
-    padding-right: 30px;
+}
+
+.user-info-data {
+    align-self: center;
+}
+
+.user-info-data p:first-child {
+    font-size: 1rem;
+}
+
+.user-info-data p:last-child {
+    font-size: 0.8rem;
+}
+.user-info div:last-child {
+    align-self: center;
+}
+
+.select-profile-options {
+    position: relative;
+}
+
+.select-profile-options i {
+    font-size: 1.4rem;
+    align-self: center;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.profile-options {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: -170px;
+    width: 200px;
+    height: 150px;
+    background: var(--white);
+    border: 1px solid var(--light-color);
+    border-radius: 10px;
 }
 
 .icons {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
     gap: 10px;
     margin: 0px 20px;
 }
 
 .icons div {
-    display: flex;
-    justify-content: center;
-    align-content: center;
     width: 35px;
     height: 35px;
     border-radius: 100%;
     border: 1px solid var(--light-color);
     cursor: pointer;
-}
-
-.user-info div:last-child {
-    align-self: center;
 }
 
 .user-image {
@@ -81,10 +114,8 @@ h3 {
     border-radius: 100%;
 }
 
-.user-info div:last-child p {
-    font-size: 1rem;
-}
-
-.user-info div:last-child p:last-child {
-    font-size: 0.9rem;
+@media (max-width: 1050px) {
+    .search {
+        display: none;
+    }
 }
