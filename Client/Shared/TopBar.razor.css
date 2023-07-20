@@ -8,6 +8,12 @@
 
 h3 {
     margin-left: 50px;
+    font-weight: 400;
+}
+
+.route {
+    align-self: center;
+    font-size: 0.9rem;
 }
 
 .left-side-container {
@@ -57,7 +63,10 @@ h3 {
 }
 
 .user-info-data p:first-child {
+    color: var(--dark-color);
+    font-weight: 400;
     font-size: 1rem;
+    margin-bottom: 4px;
 }
 
 .user-info-data p:last-child {
@@ -115,7 +124,13 @@ h3 {
 }
 
 @media (max-width: 1050px) {
-    .search {
+    h3 {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 765px) {
+    .search, .icons, .user-info, .route {
         display: none;
     }
 }

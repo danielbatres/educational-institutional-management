@@ -12,7 +12,7 @@
 .left-container {
   position: relative;
   min-width: 100px;
-  max-width: 220px;
+  max-width: 200px;
   transition: width 0.2s ease-in-out;
 }
 
