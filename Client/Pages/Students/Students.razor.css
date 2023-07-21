@@ -1,0 +1,141 @@
+section {
+  width: 100%;
+  height: 100%;
+}
+
+section article:last-child {
+  height: 728px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.students-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 90px;
+  background: var(--light-background-color);
+  padding: 0px 20px;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.search-input {
+  width: 350px;
+}
+
+.inputs {
+  gap: 12px;
+}
+
+.students-list-container {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.students-list {
+  width: 100%;
+  min-width: 300px;
+  max-width: 1600px;
+  height: 100%;
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+  background: var(--light-background-color);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.students-actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background: var(--light-background-color);
+  border-bottom: 1px solid var(--light-color);
+  padding: 0px 20px;
+}
+
+.students-fields {
+  width: 100%;
+  height: 38px;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.students-fields ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.students-fields ul li p {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.students {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+  gap: 10px;
+}
+
+.student-target {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--light-color);
+  transition: background 0.1s ease-in-out;
+}
+
+.student-target:hover {
+  background: var(--light-color);
+}
+
+.student-target ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-image {
+  width: 40px;
+  height: 40px;
+  background: var(--light-color);
+  border-radius: 100%;
+}
+
+.student-target ul li {
+  padding: 14px;
+}
+
+.student-target ul li p {
+  color: var(--dark-color);
+}
+
+.action {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.students-list-options {
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  background: var(--light-background-color);
+  border-top: 1px solid var(--light-color);
+}
+
+h5 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--dark-color);
+}

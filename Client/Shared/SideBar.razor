@@ -1,3 +1,5 @@
+@inject NavigationManager NavigationManager
+
 <section>
   <div class="sidebar">
     <div class="sidebar-container">
@@ -11,7 +13,7 @@
             int index = i;
             <div
               class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") @(!Toggle ? "centered-container no-padding-sides" : "") button-container"
-            @onclick="(() => selectedContainer = MenuOptions[index][2])">
+            @onclick="(() => SetSelectedValues(MenuOptions[index][3], MenuOptions[index][2]))">
               <i class="@MenuOptions[i][1]"></i>
               @if (Toggle) {
                 <p>@MenuOptions[i][0]</p>
@@ -22,10 +24,26 @@
         @if (Toggle) {
           <h5>MENU SECUNDARIO</h5>
         }
+        <div>
+          @for (int i = 4; i < 6; i++) {
+            int index = i;
+            <div
+              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") @(!Toggle ? "centered-container no-padding-sides" : "") button-container"
+            @onclick="(() => SetSelectedValues(MenuOptions[index][3], MenuOptions[index][2]))">
+              <i class="@MenuOptions[i][1]"></i>
+              @if (Toggle) {
+                <p>@MenuOptions[i][0]</p>
+              }
+            </div>
+            }
+        </div>
+        @if (Toggle) {
+          <h5>ESPACIO DE TRABAJO</h5>
+        }
       </div>
     </div>
     <div class="settings padding-sides">
-      <div class="button-container @(!Toggle ? "centered-container no-padding-sides" : "")">
+      <div class="button-container @(!Toggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => NavigationManager.NavigateTo("/application/settings"))">
         <i class="fi fi-tr-gears"></i>
         @if (Toggle) {
           <p>Configuraciones</p>
@@ -41,12 +59,17 @@
   private string selectedContainer = "0";
   public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
 
+  public void SetSelectedValues(string navigateTo, string selected) {
+    selectedContainer = selected;
+    NavigationManager.NavigateTo(navigateTo);
+  }
+
   protected override void OnParametersSet() {
-    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6", "0" }); 
-    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark", "1" }); 
-    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck", "2" }); 
-    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3" });
-    MenuOptions.Add(new List<string>() { "Eventos", "" }); 
-    MenuOptions.Add(new List<string>() { "Actividad", "" });
+    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6", "0", "/application" }); 
+    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark", "1", "/application/students" }); 
+    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck", "2", "/application/courses" }); 
+    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application" });
+    MenuOptions.Add(new List<string>() { "Eventos", "fi fi-tr-calendar-day", "4", "/application" }); 
+    MenuOptions.Add(new List<string>() { "Actividad", "fi fi-tr-book-copy", "5", "/application" });
   }
 } 

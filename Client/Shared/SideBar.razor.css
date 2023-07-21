@@ -2,6 +2,7 @@ section {
   height: 100%;
   position: relative;
   transition: width 0.2s ease-in-out;
+  background: var(--light-background-color);
 }
 
 .sidebar {
@@ -34,7 +35,7 @@ section {
 }
 
 .button-container:hover {
-  background: var(--light-blue);
+  background: var(--light-primary-color);
 }
 
 .button-container:hover p,
@@ -51,6 +52,7 @@ section {
 }
 
 .button-container p {
+  color: var(--text-color);
   font-size: 1rem;
   margin-left: 15px;
   cursor: pointer;
@@ -88,7 +90,7 @@ section {
 }
 
 .selected p, .selected i {
-  color: var(--primary-color);
+  color: var(--dark-color);
 }
 
 @keyframes fadeIn {

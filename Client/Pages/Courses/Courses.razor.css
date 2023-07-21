@@ -1,0 +1,175 @@
+section {
+  width: 100%;
+  height: 100%;
+}
+
+section article:first-child {
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--light-background-color);
+  border-bottom: 1px solid var(--light-color);
+  padding: 0px 20px;
+}
+
+section article:last-child {
+  display: flex;
+  justify-content: center;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  min-width: 300px;
+  max-width: 1700px;
+  margin: 20px;
+  gap: 25px;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 300px;
+  max-width: 395px;
+  padding: 10px 24px 24px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--light-color);
+  background: var(--light-background-color);
+}
+
+.course-name {
+  display: flex;
+  justify-content: space-between;
+  color: var(--dark-color);
+  padding: 10px 0px;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.course-name p {
+  color: var(--dark-color);
+  font-size: 1.4rem;
+}
+
+.course-name h4 {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.course-guide {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border: 1px solid var(--light-color);
+  border-radius: 10px;
+}
+
+.course-guide div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.course-guide div p {
+  margin-left: 10px;
+} 
+
+.course-guide div:first-child p:first-child {
+  font-size: 1.1rem;
+  color: var(--dark-color);
+}
+
+.course-guide div:first-child p:last-child {
+  font-size: 1rem;
+}
+
+.guide-image {
+  width: 40px;
+  height: 40px;
+  background: var(--light-color);
+  border-radius: 100%;
+}
+
+.course-guide-option {
+  width: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--light-color);
+  cursor: pointer;
+}
+
+.course-guide-option:hover {
+  background: var(--light-color);
+}
+
+.course-guide-option i {
+  font-size: 1.2rem;
+}
+
+.subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0px;
+}
+
+.subjects div {
+  background: var(--light-color);
+  padding: 5px 12px;
+  border-radius: 10px;
+}
+
+.subjects div p {
+  font-size: 1.1rem;
+  color: var(--dark-color);
+}
+
+.course-students {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--light-color);
+  margin-top: 18px;
+  padding-top: 15px;
+}
+
+.students-images {
+  display: flex;
+}
+
+.student-image {
+  width: 35px;
+  height: 35px;
+  background: var(--light-color);
+  border: 1px solid var(--light-background-color);
+  border-radius: 100%;
+}
+
+.students-quantity i {
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+h5 {
+  font-size: 0.7rem;
+  color: var(--light-text-color);
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 14px 0px;
+}
+
+input {
+  width: 300px;
+  margin-right: 14px;
+}

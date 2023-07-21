@@ -1,4 +1,17 @@
 @inherits LayoutComponentBase
+@using edu_institutional_management.Shared;
+
+<style>
+  :root {
+    --primary-color: @SelectedPalette.PrimaryColor;
+    --background-color: @SelectedPalette.BackgroundColor;
+    --light-background-color: @SelectedPalette.LightBackgroundColor;
+    --light-color: @SelectedPalette.LightColor;
+    --text-color: @SelectedPalette.TextColor;
+    --dark-color: @SelectedPalette.DarkColor;
+    --light-primary-color: @SelectedPalette.LightPrimaryColor;
+  }
+</style>
 
 <div class="page">
   <div class="application-container">
@@ -19,6 +32,7 @@
 
 @code {
   public bool Toggle { get; set; }
+  private Palette SelectedPalette { get; set; } = Theme.LightTheme;
 
   protected override void OnInitialized() {
     Toggle = true;
