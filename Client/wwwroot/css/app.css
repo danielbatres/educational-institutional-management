@@ -7,7 +7,7 @@
     --light-color: #ECECEC;
     --light-primary-color: #D9DFFF;
     --success-color: #3DC13C;
-    --font-size-medium: 1.2rem;
+    --regular-text: 1.2rem;
     --font-family: 'Be Vietnam Pro', sans-serif;
 }
 
@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    font-size: var(--font-size-medium);
+    font-size: var(--regular-text);
     color: #56575D;
     font-weight: 300;
 }
@@ -75,7 +75,7 @@ ul {
 
 a, ul {
     text-decoration: none;
-    font-size: var(--font-size-medium);
+    font-size: var(--regular-text);
 }
 
 h1:focus {
@@ -140,7 +140,7 @@ i {
     cursor: pointer;
     font-family: var(--font-family);
     font-weight: 300;
-    font-size: 1.2rem;
+    font-size: var(--regular-text);
 }
 
 .primary-background-button {
@@ -192,7 +192,7 @@ i {
     padding: 8px 0px 8px 10px;
     border: 1px solid var(--light-color);
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: var(--regular-text);
     font-family: var(--font-family);
     color: var(--text-color);
     font-weight: 300;

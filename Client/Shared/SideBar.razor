@@ -3,7 +3,11 @@
 <section>
   <div class="sidebar">
     <div class="sidebar-container">
-      <div class="logo"></div>
+      <div class="logo centered-container">
+        <h4>
+          Application
+        </h4>
+      </div>
       <div class="@(!Toggle ? "padding-sides" : "") navigation-container">
         @if (Toggle) {
           <h5>MENU PRINCIPAL</h5>
@@ -68,8 +72,8 @@
     MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6", "0", "/application" }); 
     MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark", "1", "/application/students" }); 
     MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck", "2", "/application/courses" }); 
-    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application" });
-    MenuOptions.Add(new List<string>() { "Eventos", "fi fi-tr-calendar-day", "4", "/application" }); 
-    MenuOptions.Add(new List<string>() { "Actividad", "fi fi-tr-book-copy", "5", "/application" });
+    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application/statistics" });
+    MenuOptions.Add(new List<string>() { "Eventos", "fi fi-tr-calendar-day", "4", "/application/events" }); 
+    MenuOptions.Add(new List<string>() { "Actividad", "fi fi-tr-book-copy", "5", "/application/activity" });
   }
 } 

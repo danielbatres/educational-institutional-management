@@ -20,6 +20,11 @@ section {
   border-bottom: 1px solid var(--light-color);
 }
 
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 .navigation-container {
   padding: 0px 14px;
 }
