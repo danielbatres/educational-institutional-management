@@ -1,22 +1,31 @@
 section {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+}
+
+section article:first-child {
+  height: 8%;
 }
 
 section article:last-child {
-  height: 728px;
+  height: 92%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
 }
 
+input {
+  background: var(--primary-color);
+}
+
 .students-info {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 90px;
+  height: 100%;
   background: var(--light-background-color);
   padding: 0px 20px;
   border-bottom: 1px solid var(--light-color);
@@ -32,7 +41,7 @@ section article:last-child {
 
 .students-list-container {
   width: 100%;
-  height: 100%;
+  height: 92%;
   padding: 20px;
 }
 
@@ -43,7 +52,7 @@ section article:last-child {
   height: 100%;
   border: 1px solid var(--light-color);
   border-radius: 10px;
-  background: var(--light-background-color);
+  background: var(--background-color);
   padding: 20px;
   overflow-y: auto;
 }
@@ -81,14 +90,14 @@ section article:last-child {
   display: flex;
   flex-direction: column;
   padding: 10px 0px;
-  gap: 10px;
 }
 
 .student-target {
   width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--light-color);
+  border-bottom: 1px solid var(--light-color);
   transition: background 0.1s ease-in-out;
+  padding: 6px 6px 10px;
+  margin-bottom: 10px;
 }
 
 .student-target:hover {
@@ -108,17 +117,19 @@ section article:last-child {
   border-radius: 100%;
 }
 
-.student-target ul li {
-  padding: 14px;
+#filter {
+  min-width: 20px;
+  max-width: 20px;
+  background: var(--primary-color);  
 }
 
 .student-target ul li p {
-  color: var(--dark-color);
+  color: var(--text-color);
 }
 
 .action {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 10px;
   background: var(--primary-color);
   cursor: pointer;
@@ -126,16 +137,10 @@ section article:last-child {
 
 .students-list-options {
   display: flex;
-  height: 60px;
+  height: 8%;
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px;
   background: var(--light-background-color);
   border-top: 1px solid var(--light-color);
-}
-
-h5 {
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--dark-color);
 }

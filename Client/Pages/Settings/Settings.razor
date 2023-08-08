@@ -1,4 +1,79 @@
-@page "/application/settings"
+@using edu_institutional_management.Shared.DTO
+@page "/application/settings/{Direction}"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Configuraciones</PageTitle>
+
+<section>
+  <Bar IsToggle=@false Menu=@Menu Styles="min-width: 5%; max-width: 18%;"/>
+  <div class="settings-content">
+      @switch (Direction) {
+        case "my-account":
+          <UserProfile />
+          break;
+        case "roles":
+          <Roles />
+          break;
+      }
+  </div>
+</section>
+
+@code {
+  [Parameter]
+  public string Direction { get; set; } = string.Empty;
+  private UserDto User = new();
+
+  private readonly Menu Menu = new Menu() {
+    MenuLabels = new List<string>() {
+      "configuraciones de usuario", "configuraciones de aplicacion", "configuraciones de estudiantes", "configuraciones de institucion"
+    },
+    MenuItems = new List<List<List<string>>>() {
+      new() {
+        new() {
+          "Mi cuenta", "fi fi-tr-circle-user", "0", "/application/settings/my-account"
+        }
+      },
+      new() {
+        new() {
+          "Apariencia", "fi fi-tr-swatchbook", "1", "/application/settings/appearance"
+        },
+        new() {
+          "Usuarios", "fi fi-tr-users-medical", "2", "/application/settings/users" 
+        },
+        new() { 
+          "Roles", "fi fi-tr-rectangle-list", "3", "/application/settings/roles" 
+        }
+      },
+      new() {
+        new() { 
+          "Estudiantes", "fi fi-tr-book-bookmark", "4", "/application/settings/students" 
+        },
+        new() { 
+          "Cursos", "fi fi-tr-hockey-puck", "5", "/application/settings/courses" 
+        },
+        new() {
+          "Pagos", "fi fi-tr-wallet", "6", "/application/settings/payments"
+        }
+      }, 
+      new() {
+        new() {
+          "Insitucion", "fi fi-tr-house-chimney", "7", "/application/settings/institution"
+        },
+        new() {
+          "Plan de pago", "fi fi-tr-money-check", "8", "/application/settings/payment-plan"
+        }
+      }
+    },
+    LastOption = new() {
+      "Cerrar sesion", "fi fi-tr-arrow-to-right", "9", "/"
+    }
+  };
+
+  private void SubmitValue() {
+
+  }
+
+  protected override void OnInitialized() {
+
+  }
+}

@@ -11,8 +11,8 @@
     --dark-color: @SelectedPalette.DarkColor;
     --light-primary-color: @SelectedPalette.LightPrimaryColor;
     --sm-text: 0.6rem;
-    --regular-text: 1rem;
-    --title: 1.2rem;
+    --regular-text: 0.95rem;
+    --title: 1.1rem;
   }
 </style>
 
@@ -21,7 +21,7 @@
     <div class="left-container" style="@(Toggle ? "width: 280px;" : "width: 100px;")">
       <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
       <CascadingValue Value="@Toggle" Name="Toggle">
-        <SideBar />
+        <Bar IsToggle=@true Menu=@SideBarMenu Styles="max-width: 100%" />
       </CascadingValue>
     </div>
     <div class="right-container">
@@ -36,8 +36,42 @@
 @code {
   public bool Toggle { get; set; }
   private Palette SelectedPalette { get; set; } = Theme.DarkTheme;
+  private Menu SideBarMenu = new();
 
   protected override void OnInitialized() {
     Toggle = true;
+
+    SideBarMenu = new() {
+      MenuLabels = new List<string>() {
+      "menu principal", "menu de actividades"
+    },
+    MenuItems = new List<List<List<string>>>() {
+      new() {
+        new() {
+          "Dashboard", "fi fi-tr-dice-d6", "0", "/application"
+        },
+        new() {
+          "Estudiantes", "fi fi-tr-book-bookmark", "1", "/application/students" 
+        },
+        new() {
+          "Cursos", "fi fi-tr-hockey-puck", "2", "/application/courses"
+        },
+        new() { 
+          "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application/statistics"
+        }
+      },
+      new() {
+        new() { 
+          "Eventos", "fi fi-tr-calendar-day", "4", "/application/events"
+        },
+        new() { 
+          "Actividad", "fi fi-tr-book-copy", "5", "/application/activity" 
+        },
+      }
+    },
+    LastOption = new() {
+      "Configuraciones", "fi fi-tr-gears", "6", "/application/settings/my-account"
+    }
+  };
   }
 }

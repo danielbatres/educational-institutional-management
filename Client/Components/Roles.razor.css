@@ -1,0 +1,43 @@
+section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.roles-settings-container {
+  padding: 34px;
+  width: 100%;
+  min-width: 288px;
+  max-width: 1400px;
+}
+
+.roles-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 24px 0px;
+  margin: 10px 0px;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.roles-actions input {
+  width: 69%;
+}
+
+.roles-actions button {
+  width: 30%;
+}
+
+.roles-settings-container article:last-child {
+  margin: 8px 0px 33px;
+}
+
+.roles-list {
+  padding: 20px;
+  background: var(--background-color);
+  border-radius: 10px;
+}

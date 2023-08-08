@@ -1,5 +1,3 @@
-@inject NavigationManager NavigationManager
-
 <section>
   <div class="sidebar">
     <div class="sidebar-container">
@@ -8,72 +6,6 @@
           Application
         </h4>
       </div>
-      <div class="@(!Toggle ? "padding-sides" : "") navigation-container">
-        @if (Toggle) {
-          <h5>MENU PRINCIPAL</h5>
-        }
-        <div>
-          @for (int i = 0; i < 4; i++) {
-            int index = i;
-            <div
-              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") @(!Toggle ? "centered-container no-padding-sides" : "") button-container"
-            @onclick="(() => SetSelectedValues(MenuOptions[index][3], MenuOptions[index][2]))">
-              <i class="@MenuOptions[i][1]"></i>
-              @if (Toggle) {
-                <p>@MenuOptions[i][0]</p>
-              }
-            </div>
-            }
-        </div>
-        @if (Toggle) {
-          <h5>MENU SECUNDARIO</h5>
-        }
-        <div>
-          @for (int i = 4; i < 6; i++) {
-            int index = i;
-            <div
-              class="@(selectedContainer == MenuOptions[i][2] ? "selected" : "") @(!Toggle ? "centered-container no-padding-sides" : "") button-container"
-            @onclick="(() => SetSelectedValues(MenuOptions[index][3], MenuOptions[index][2]))">
-              <i class="@MenuOptions[i][1]"></i>
-              @if (Toggle) {
-                <p>@MenuOptions[i][0]</p>
-              }
-            </div>
-            }
-        </div>
-        @if (Toggle) {
-          <h5>ESPACIO DE TRABAJO</h5>
-        }
-      </div>
-    </div>
-    <div class="settings padding-sides">
-      <div class="button-container @(!Toggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => NavigationManager.NavigateTo("/application/settings"))">
-        <i class="fi fi-tr-gears"></i>
-        @if (Toggle) {
-          <p>Configuraciones</p>
-        }
-      </div>
     </div>
   </div>
 </section>
-
-@code {  
-  [CascadingParameter(Name="Toggle")]
-  public bool Toggle { get; set; }
-  private string selectedContainer = "0";
-  public List<List<string>> MenuOptions { get; set; } = new List<List<string>>();
-
-  public void SetSelectedValues(string navigateTo, string selected) {
-    selectedContainer = selected;
-    NavigationManager.NavigateTo(navigateTo);
-  }
-
-  protected override void OnParametersSet() {
-    MenuOptions.Add(new List<string>() { "Dashboard", "fi fi-tr-dice-d6", "0", "/application" }); 
-    MenuOptions.Add(new List<string>() { "Estudiantes", "fi fi-tr-book-bookmark", "1", "/application/students" }); 
-    MenuOptions.Add(new List<string>() { "Cursos", "fi fi-tr-hockey-puck", "2", "/application/courses" }); 
-    MenuOptions.Add(new List<string>() { "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application/statistics" });
-    MenuOptions.Add(new List<string>() { "Eventos", "fi fi-tr-calendar-day", "4", "/application/events" }); 
-    MenuOptions.Add(new List<string>() { "Actividad", "fi fi-tr-book-copy", "5", "/application/activity" });
-  }
-} 

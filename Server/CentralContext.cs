@@ -5,6 +5,9 @@ namespace edu_institutional_management.Server;
 
 public class CentralContext : DbContext {
     public DbSet<User> Users { get; set; }
+    public DbSet<Institution> Institutions { get; set; }
+    public DbSet<Register> Registers { get; set; }
+    public DbSet<OnlineStatus> OnlineStatuses { get; set; }
 
     public CentralContext(DbContextOptions<CentralContext> options) : base(options) {}
 

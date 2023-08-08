@@ -5,7 +5,7 @@ section {
 
 section article:first-child {
   width: 100%;
-  min-height: 100px;
+  min-height: 8%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -18,7 +18,7 @@ section article:first-child {
 section article:last-child {
   display: flex;
   justify-content: center;
-  max-height: 100%;
+  max-height: 92%;
   overflow-y: auto;
 }
 
@@ -30,20 +30,21 @@ section article:last-child {
   width: 100%;
   min-width: 300px;
   max-width: 1700px;
+  height: 100%;
   margin: 20px;
-  gap: 25px;
+  gap: 20px;
 }
 
 .course-card {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 300px;
-  max-width: 395px;
+  min-width: 288px;
+  max-width: 32%;
   padding: 10px 24px 24px 24px;
   border-radius: 10px;
   border: 1px solid var(--light-color);
-  background: var(--light-background-color);
+  background: var(--background-color);
 }
 
 .course-name {
@@ -56,11 +57,11 @@ section article:last-child {
 
 .course-name p {
   color: var(--dark-color);
-  font-size: 1.4rem;
+  font-size: var(--title);
 }
 
 .course-name h4 {
-  font-size: 1.3rem;
+  font-size: var(--title);
   font-weight: 400;
 }
 
@@ -82,12 +83,12 @@ section article:last-child {
 } 
 
 .course-guide div:first-child p:first-child {
-  font-size: 1.1rem;
+  font-size: var(--regular-text);
   color: var(--dark-color);
 }
 
 .course-guide div:first-child p:last-child {
-  font-size: 1rem;
+  font-size: var(--regular-text);
 }
 
 .guide-image {
@@ -126,7 +127,7 @@ section article:last-child {
 }
 
 .subjects div p {
-  font-size: 1.1rem;
+  font-size: var(--regular-text);
   color: var(--dark-color);
 }
 
@@ -153,20 +154,6 @@ section article:last-child {
 .students-quantity i {
   font-size: 1.3rem;
   margin-right: 10px;
-}
-
-h4 {
-  font-size: 1.4rem;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-h5 {
-  font-size: 0.7rem;
-  color: var(--light-text-color);
-  font-weight: 400;
-  text-transform: uppercase;
-  margin: 14px 0px;
 }
 
 input {

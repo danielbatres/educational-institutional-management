@@ -41,7 +41,7 @@ h4 {
   width: 100%;
   min-width: 288px;
   max-width: 500px;
-  background: var(--light-background-color);
+  background: var(--background-color);
   padding: 20px;
   border: 1px solid var(--light-color);
   border-radius: 10px;

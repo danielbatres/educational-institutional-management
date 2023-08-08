@@ -1,0 +1,53 @@
+<section style="@Styles">
+  <div class="sidebar">
+    <div class="sidebar-container">
+      <div class="@(!Toggle && IsToggle ? "padding-sides" : "") navigation-container">
+        @for (byte i = 0; i < Menu.MenuLabels?.Count(); i++) { 
+          @if (i != 0) {
+            <div class="line-over" style="@(!Toggle && IsToggle ? "margin: 20px 0px;" : "")"></div>
+          }
+
+          @if (IsToggle) {
+            if (Toggle) {
+              <h5>@Menu.MenuLabels?[0].ToUpper()</h5>
+            }
+          }
+          else {
+            <h5>@Menu.MenuLabels?[0].ToUpper()</h5>
+          }
+
+            @for (int j = 0; j < Menu.MenuItems[i].Count(); j++) {
+              int ListIndex = i;
+              int Index = j;
+
+              <div
+                class="@(selectedContainer == Menu.MenuItems[i][j][2] ? "selected" : "") @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "") button-container"
+              @onclick="(() => SetSelectedValues(Menu.MenuItems[ListIndex][Index][3], Menu.MenuItems[ListIndex][Index][2]))"
+              >
+                <i class="@Menu.MenuItems[i][j][1]"></i>
+                @if(IsToggle) {
+                  @if (Toggle) {
+                    <p>@Menu.MenuItems[i][j][0]</p>
+                  } 
+                } else {
+                  <p>@Menu.MenuItems[i][j][0]</p>
+                }
+              </div>
+            }
+        }
+      </div>
+    </div>
+    <div class="settings padding-sides">
+      <div class="@(selectedContainer == Menu.LastOption[2] ? "selected" : "") button-container @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => SetSelectedValues(Menu.LastOption[3], Menu.LastOption[2]))">
+        <i class="@Menu.LastOption[1]"></i>
+        @if (IsToggle) {
+          @if (Toggle) {
+            <p>@Menu.LastOption[0]</p>
+          }
+        } else {
+          <p>@Menu.LastOption[0]</p>
+        }
+      </div>
+    </div>
+  </div>
+</section>

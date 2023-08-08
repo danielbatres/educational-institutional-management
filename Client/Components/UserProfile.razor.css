@@ -1,0 +1,178 @@
+.user {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.user-container {
+  display: flex;
+  width: 100%;
+  min-width: 288px;
+  max-width: 1400px;
+  background: var(--light-background-color);
+  border-radius: 10px;
+  padding: 15px 15px 150px;
+}
+
+.user-content {
+  width: 100%;
+}
+
+.user-selected-color {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  background: var(--primary-color)
+}
+
+.edit-color {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  min-width: 26px;
+  min-height: 26px;
+  border-radius: 10px;
+  background: var(--light-background-color);
+  opacity: .6;
+  cursor: pointer;
+  transition: opacity .1s ease-in-out;
+}
+
+.edit-color:hover {
+  opacity: .8;
+}
+
+.user-main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  position: relative;
+  padding: 16px;
+}
+
+.user-photo-container {
+  width: 160px;
+  height: 70px;
+}
+
+.user-profile-photo {
+  position: absolute;
+  min-width: 130px;
+  min-height: 130px;
+  background-color: var(--light-background-color);
+  border-radius: 100%;
+  top: -50px;
+  left: 20px;
+}
+
+.user-photo {
+  min-width: 110px;
+  min-height: 110px;
+  border-radius: 100%;
+  background: var(--background-color);
+}
+
+.user-name-email p:first-child {
+  color: var(--dark-color);
+  font-size: var(--title);
+}
+
+.user-form {
+  padding: 0px 20px;
+  width: 100%;
+}
+
+.user-information {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  justify-content: right;
+}
+
+label {
+  color: var(--dark-color);
+  font-size: var(--regular-text);
+}
+
+h4 {
+  font-size: var(--title);
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+input {
+  background: var(--primary-color);
+  width: 100%;
+  max-width: 500px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0px 0px;
+}
+
+.inputs-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 1px solid var(--light-color);
+  border-top: 1px solid var(--light-color);
+  padding: 14px 0px;
+}
+
+.inputs-block div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.roles {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rol-box {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+.rol-box p {
+  color: var(--text-color);
+}
+
+.rol-color {
+  min-width: 20px;
+  min-height: 20px;
+  background: var(--light-color);
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+article:last-child {
+  min-width: 18%;
+  background: var(--light-background-color);
+  border-left: 1px solid var(--light-color);
+  overflow-y: auto;
+}
+
+article {
+  height: 100%;
+}

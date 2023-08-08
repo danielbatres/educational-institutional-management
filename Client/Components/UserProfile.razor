@@ -1,0 +1,89 @@
+@using edu_institutional_management.Shared.DTO
+
+<article class="user">
+  <div class="user-container">
+    <div class="user-content">
+      <div class="user-selected-color">
+        <div class="edit-color centered-container">
+          <i class="fi fi-tr-pen-circle"></i>
+        </div>
+      </div>
+      <div class="user-main-info">
+        <div class="user-info">
+          <div class="user-photo-container">
+            <div class="user-profile-photo centered-container">
+              <div class="user-photo"></div>
+            </div>
+          </div>
+          <div class="user-name-email">
+            <p>Nombre completo del usuario</p>
+            <p>correoelectronico@usuario.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="user-form">
+        <div class="user-information">
+          <div>
+            <h4>Informaci&oacute;n de tu cuenta</h4>
+            <p>Informaci&oacute;n de tu perfil, modifica el campo que desees para realizar cambios</p>
+          </div>
+          <div class="buttons">
+            <button type="button" class="transparent-button button">Cancelar</button>
+            <button type="button" class="primary-background-button button">Guardar</button>
+          </div>
+        </div>
+        <div class="edit-form">
+          <EditForm Model="@User" OnSubmit="@SubmitValue">
+            <div class="inputs-block">
+              <div>
+                <label for="user-name">Nombres*</label>
+                <input id="user-name" type="text" required @bind-value="User.Name" placeholder="Ingresa tu nombre" class="input">
+              </div>
+              <div>
+                <label for="user-last-name">Apellidos*</label>
+                <input id="user-last-name" type="text" required @bind-value="User.LastName" placeholder="Ingresa tu apellido" class="input">
+              </div>
+            </div>
+            <div class="inputs-block">
+              <div>
+                <label for="user-email">Correo electr&oacute;nico*</label>
+                <input id="user-email" type="text" required @bind-value="User.Register.Email" placeholder="Ingresa tu correo electronico" class="input">
+              </div>
+            </div>
+            <div class="inputs-block">
+              <div>
+                <label for="user-phone">Tel&eacute;fono</label>
+                <input id="user-phone" type="text" required @bind-value="User.PhoneNumber" placeholder="Ingresa tu telefono" class="input">
+              </div>
+              <div>
+                <label for="user-bio">Biograf&iacute;a</label>
+                <input id="user-bio" type="text" required @bind-value="User.Bio" placeholder="Ingresa tu biografia" class="input">
+              </div>
+            </div>
+          </EditForm>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+<article>
+  <div>
+    <h5>Roles asignados</h5>
+    <div class="roles">
+      @for (byte i = 0; i < 10; i++) {
+        <div class="rol-box">
+          <div class="rol-color"></div>
+          <p>Rol asignado</p>
+        </div>
+      }
+    </div>
+  </div>
+</article>
+
+@code {
+  private UserDto User = new UserDto();
+
+  private void SubmitValue() {
+    
+  }
+}

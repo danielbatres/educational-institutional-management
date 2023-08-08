@@ -5,6 +5,10 @@
 }
 
 .right-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   min-height: 100%;
   max-height: 100vh;
@@ -12,8 +16,8 @@
 
 .left-container {
   position: relative;
-  min-width: 100px;
-  max-width: 200px;
+  min-width: 10px;
+  max-width: 14%;
   transition: width 0.2s ease-in-out;
 }
 
@@ -21,16 +25,16 @@
   font-size: 1.4rem;
   position: absolute;
   right: -45px;
-  top: 22px;
+  top: 18px;
   cursor: pointer;
 }
 
 main {
   width: 100%;
-  height: 100%;
+  height: 92%;
   display: flex;
   flex-direction: column;
-  background: var(--background-color);
+  background: var(--light-background-color);
 }
 
 @media (max-width: 1050px) {

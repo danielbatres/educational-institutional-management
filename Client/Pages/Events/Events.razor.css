@@ -59,7 +59,7 @@ section article:last-child {
   width: 100%;
   min-width: 288px;
   max-width: 1400px;
-  background: var(--light-background-color);
+  background: var(--background-color);
   border: 1px solid var(--light-color);
   border-radius: 10px;
   padding: 20px;

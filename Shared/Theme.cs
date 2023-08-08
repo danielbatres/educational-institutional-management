@@ -11,12 +11,12 @@ public class Theme {
     LightPrimaryColor = "#D9DFFF"
   };
   public static Palette DarkTheme { get; set; } = new() {
-    PrimaryColor = "#4361EE",
-    BackgroundColor = "#0F1112",
-    LightBackgroundColor = "#1E1E1E",
-    LightColor = "#2C2C2C",
-    TextColor = "#828A91",
+    PrimaryColor = "#242424",
+    BackgroundColor = "#262626",
+    LightBackgroundColor = "#1c1c1c",
+    LightColor = "#38393d",
+    TextColor = "#959595",
     DarkColor = "#FFFFFF",
-    LightPrimaryColor = "#4361EE"
+    LightPrimaryColor = "#292929"
   };
 }
