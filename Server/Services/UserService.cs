@@ -1,19 +1,19 @@
-using edu_institutional_management.Server.Models;
+using edu_institutional_management.Shared.DTO;
 
 namespace edu_institutional_management.Server.Services;
 
 public class UserService : IUserService {
-  private readonly CentralContext context;
+  private readonly MainContext context;
 
-  public UserService(CentralContext dbContext) {
+  public UserService(MainContext dbContext) {
     context = dbContext;
   }
 
-  public IEnumerable<User> Get() {
+  public IEnumerable<UserDto> Get() {
     return context.Users;
   }
 }
 
 public interface IUserService {
-  IEnumerable<User> Get();
+  IEnumerable<UserDto> Get();
 }

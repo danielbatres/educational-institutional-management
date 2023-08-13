@@ -1,1 +1,11 @@
-
+:root {
+  --white: #FFFFFF;
+  --primary-color: #4361EE;
+  --dark-color: #0E1116;
+  --text-color: #828A91;
+  --light-text-color: #C2C2C2;
+  --light-color: #ECECEC;
+  --light-primary-color: #D9DFFF;
+  --success-color: #3DC13C;
+  --font-family: 'Be Vietnam Pro', sans-serif;
+}

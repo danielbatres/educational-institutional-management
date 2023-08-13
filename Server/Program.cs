@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddSqlServer<CentralContext>(builder.Configuration.GetConnectionString("cnCentral"));
+builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 
 var app = builder.Build();
 

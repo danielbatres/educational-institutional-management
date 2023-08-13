@@ -20,7 +20,7 @@ section:last-child {
 }
 
 .info p {
-    font-size: 1.2rem;
+    font-size: var(--regular-text);
     background: #D9DFFF;
     padding: 5px 20px;
     border-radius: 10px;

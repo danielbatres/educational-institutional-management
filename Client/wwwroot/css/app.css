@@ -1,13 +1,7 @@
 :root {
-    --white: #FFFFFF;
-    --primary-color: #4361EE;
-    --dark-color: #0E1116;
-    --text-color: #828A91;
-    --light-text-color: #C2C2C2;
-    --light-color: #ECECEC;
-    --light-primary-color: #D9DFFF;
-    --success-color: #3DC13C;
-    --regular-text: 1.2rem;
+    --sm-text: 0.6rem;
+    --regular-text: 0.95rem;
+    --title: 1.1rem;
     --font-family: 'Be Vietnam Pro', sans-serif;
 }
 
@@ -61,7 +55,6 @@ h1, h2, h3, h4, h5, h6 {
 h3 {
     font-size: var(--title);
     font-weight: 400;
-    margin-bottom: 10px;
 }
 
 h5 {
@@ -81,7 +74,7 @@ p {
 }
 
 span::selection, p::selection, h5::selection {
-    color: var(--white);
+    color: var(--dark-color);
     background: var(--primary-color);
 }
 
@@ -161,7 +154,7 @@ i {
 
 .primary-background-button {
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--dark-color);
     border: 1px solid transparent;
     transition: background-color 200ms ease-in-out 0.01s;
 }
@@ -229,6 +222,18 @@ i {
 }
 
 .selected {
-    background: var(--light-primary-color);
+    background: var(--primary-color);
     border: 1px solid var(--primary-color);
+}
+
+.user-no-photo-container {
+    background-image: var("https://i.ibb.co/QM1z09q/circulo-de-usuario-1-2.png");
+}
+
+@media (max-width: 1440px) {
+    :root {
+        --sm-text: 0.6rem;
+        --regular-text: 0.74rem;
+        --title: 0.9rem;
+    }
 }

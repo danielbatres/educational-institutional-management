@@ -1,23 +1,21 @@
-using edu_institutional_management.Server.Models;
+using edu_institutional_management.Shared.DTO;
 
 namespace edu_institutional_management.Server.Services;
 
-public class InstitutionService : IInstitutionService
-{
-  private readonly CentralContext context;
+public class InstitutionService : IInstitutionService {
+  private readonly MainContext context;
 
-  public InstitutionService(CentralContext dbContext)
+  public InstitutionService(MainContext dbContext)
   {
     context = dbContext;
   }
 
-  public IEnumerable<Institution> Get()
+  public IEnumerable<InstitutionDto> Get()
   {
     return context.Institutions;
   }
 }
 
-public interface IInstitutionService
-{
-  IEnumerable<Institution> Get();
+public interface IInstitutionService {
+  IEnumerable<InstitutionDto> Get();
 }

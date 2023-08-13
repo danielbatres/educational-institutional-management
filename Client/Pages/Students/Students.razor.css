@@ -41,7 +41,7 @@ input {
 
 .students-list-container {
   width: 100%;
-  height: 92%;
+  height: 90%;
   padding: 20px;
 }
 
@@ -50,10 +50,7 @@ input {
   min-width: 300px;
   max-width: 1600px;
   height: 100%;
-  border: 1px solid var(--light-color);
   border-radius: 10px;
-  background: var(--background-color);
-  padding: 20px;
   overflow-y: auto;
 }
 
@@ -123,8 +120,27 @@ input {
   background: var(--primary-color);  
 }
 
+.student-target ul li, .students-fields ul li {
+  display: flex;
+  width: 8.5714%;
+}
+
+.student-target ul li:last-child, .students-fields ul li:last-child {
+  justify-content: right;
+}
+
+.student-target .special-width, .students-fields .special-width {
+  width: 20%;
+}
+
 .student-target ul li p {
   color: var(--text-color);
+}
+
+.course {
+  padding: 5px;
+  border-radius: 10px;
+  background: var(--light-color);
 }
 
 .action {
@@ -137,10 +153,20 @@ input {
 
 .students-list-options {
   display: flex;
-  height: 8%;
+  height: 10%;
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px;
   background: var(--light-background-color);
   border-top: 1px solid var(--light-color);
+}
+
+@media (max-width: 1440px) {
+  section article:first-child {
+    height: 12%;
+  }
+
+  section article:last-child {
+    height: 88%;
+  }
 }

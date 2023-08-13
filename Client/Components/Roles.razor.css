@@ -25,7 +25,7 @@ section {
 }
 
 .roles-actions input {
-  width: 69%;
+  width: 68%;
 }
 
 .roles-actions button {
@@ -37,7 +37,24 @@ section {
 }
 
 .roles-list {
-  padding: 20px;
+  padding: 18px;
   background: var(--background-color);
   border-radius: 10px;
+}
+
+.tags {
+  display: flex;
+  background: var(--primary-color);
+  border-radius: 10px;
+  padding: 0px 10px;
+}
+
+.tags li, .rol-element li {
+  width: 20%;
+}
+
+.rol-element {
+  display: flex;
+  justify-content: space-between;
+  padding:  14px 10px;
 }

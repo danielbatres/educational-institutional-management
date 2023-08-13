@@ -1,0 +1,38 @@
+<section>
+  <article>
+
+  </article>
+  <article class="dashboard-side-bar">
+    <div class="online-users">
+      @for (int i = 0; i < 6; i++) {
+        <div>
+          <h5>Nombre del rol - 3</h5>
+            @for (int j = 0; j < 3; j++) {
+              <div class="user-card" @onclick="@(() => IsSelected = !IsSelected)">
+                  <div class="user-target-information" style="@(IsSelected ? "display: flex;" : "display: none;")">
+                    <div class="user-preferred-color"></div>
+                    <div>
+
+                    </div>
+                  </div>
+                <div class="user-information">
+                  <div class="user-image">
+                    <div class="green-state"></div>
+                  </div>
+                  <div class="user-info">
+                    <p>Nombre completo de usuario</p>
+                    <p>correoelectronico@email.com</p>
+                  </div>
+                </div>
+              </div>
+            }
+        </div>
+      }
+    </div>
+  </article>
+</section>
+
+@code {
+  private uint SelectedContainer = 0;
+  private bool IsSelected = false;
+}

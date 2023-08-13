@@ -1,5 +1,5 @@
 .top-container {
-    min-height: 8%;
+    min-height: 6%;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -14,7 +14,7 @@ h3 {
 
 .route {
     align-self: center;
-    font-size: 0.9rem;
+    font-size: var(--regular-text);
 }
 
 .left-side-container {
@@ -46,13 +46,12 @@ h3 {
     top: 9px;
     right: 10px;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: var(--title);
     color: var(--text-color);
 }
 
 .search input {
     width: 240px;
-    font-size: 1rem;
     background: var(--primary-color);
 }
 
@@ -67,7 +66,7 @@ h3 {
 .user-info-data p:first-child {
     color: var(--dark-color);
     font-weight: 400;
-    font-size: 1rem;
+    font-size: var(--regular-text);
     margin-bottom: 4px;
 }
 
@@ -96,7 +95,7 @@ h3 {
     left: -170px;
     width: 200px;
     height: 150px;
-    background: var(--white);
+    background: var(--dark-color);
     border: 1px solid var(--light-color);
     border-radius: 10px;
 }
@@ -125,9 +124,13 @@ h3 {
     border-radius: 100%;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1440px) {
     h3 {
         margin-left: 10px;
+    }
+    
+    .top-container {
+        min-height: 10%;
     }
 }
 
