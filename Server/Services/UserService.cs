@@ -12,8 +12,16 @@ public class UserService : IUserService {
   public IEnumerable<UserDto> Get() {
     return context.Users;
   }
+
+  public async Task Create(UserDto userDto) {
+    context.Add(userDto);
+
+    await context.SaveChangesAsync();
+  }
 }
 
-public interface IUserService {
+public interface IUserService
+{
   IEnumerable<UserDto> Get();
+  Task Create(UserDto userDto);
 }

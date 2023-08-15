@@ -1,9 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
+<style>
+    :root {
+        --white: #FFFFFF;
+        --primary-color: #4361EE;
+        --dark-color: #0E1116;
+        --text-color: #424f6d;
+        --light-text-color: #C2C2C2;
+        --light-color: #ECECEC;
+        --light-primary-color: #D9DFFF;
+        --success-color: #3DC13C;
+        --danger-color: #F13637;
+        --smaller-text: 0.8rem;
+        --small-text: 1rem;
+        --regular-text: 1.2rem;
+        --title: 1.4rem;
+    }
+
+    .primary-background-button {
+        padding: 12px;
+        color: var(--white);
+    }
+</style>
+
 <div class="page">
     <main>
         <article class="content px-4">
-            @Body
+            <NavBar HideButtons=@HideButtons />
+            <CascadingValue Value=@HideButtons>
+                @Body
+            </CascadingValue>
+            <Footer />
         </article>
     </main>   
 </div>
+
+@code {
+    public bool HideButtons { get; set; } = false;
+}

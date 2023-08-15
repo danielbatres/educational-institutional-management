@@ -1,3 +1,83 @@
+<style>
+  label {
+    font-size: 1rem;
+  }
+
+  .label {
+    display: flex;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--dark-color);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  .password {
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primary-color);
+  }
+
+  .password:hover {
+    text-decoration: underline;
+  }
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-right: 5px;
+  }
+
+  .input {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+
+  .input-container {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+  .eye {
+    font-size: 1.4rem;
+  }
+
+  strong {
+    color: var(--danger-color);
+  }
+
+  .lgn-button {
+    width: 100%;
+    margin-top: 25px;
+  }
+
+  .login-button p {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  .login-button p b {
+    font-weight: 300;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+
+  .login-button p b:hover {
+    text-decoration: underline;
+  }
+</style>
+
 <div class="form-container">
   <div class="form-content">
     @ChildContent
@@ -9,6 +89,8 @@
 </div>
 
 @code {
+  [CascadingParameter] 
+  public bool HideButtons { get; set; }
   [Parameter]
   [EditorRequired]
   public RenderFragment? ChildContent { get; set; }
@@ -16,4 +98,8 @@
   public string? BackgroundImage { get; set; }
   [Parameter]
   public string? Border { get; set; }
+
+  protected override void OnParametersSet() {
+    HideButtons = true;
+  }
 }

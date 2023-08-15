@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using edu_institutional_management.Client.Models;
+
 namespace edu_institutional_management.Client.Components;
 
 public partial class Bar {
