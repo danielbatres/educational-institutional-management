@@ -1,6 +1,6 @@
-namespace edu_institutional_management.Shared.DTO;
+namespace edu_institutional_management.Shared.Models;
 
-public class StatisticDto {
+public class Statistic {
   public Guid Id { get; set; }
   public string StatisticType { get; set; }
   public string Title { get; set; }

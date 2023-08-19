@@ -26,7 +26,7 @@
 <div class="page">
     <main>
         <article class="content px-4">
-            <NavBar HideButtons=@HideButtons />
+            <NavBar HideButtons=@HideButtons IsActiveUser=@true />
             <CascadingValue Value=@HideButtons>
                 @Body
             </CascadingValue>
@@ -36,5 +36,5 @@
 </div>
 
 @code {
-    public bool HideButtons { get; set; } = false;
+    public bool HideButtons { get; set; }
 }

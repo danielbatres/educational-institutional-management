@@ -1,4 +1,4 @@
-using edu_institutional_management.Shared.DTO;
+using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Server.Services;
 
@@ -10,12 +10,12 @@ public class InstitutionService : IInstitutionService {
     context = dbContext;
   }
 
-  public IEnumerable<InstitutionDto> Get()
+  public IEnumerable<Institution> Get()
   {
     return context.Institutions;
   }
 }
 
 public interface IInstitutionService {
-  IEnumerable<InstitutionDto> Get();
+  IEnumerable<Institution> Get();
 }

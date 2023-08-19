@@ -1,27 +1,28 @@
-using edu_institutional_management.Shared.DTO;
+using edu_institutional_management.Client;
+using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Server.Services;
 
 public class UserService : IUserService {
-  private readonly MainContext context;
+  private readonly MainContext _context;
 
   public UserService(MainContext dbContext) {
-    context = dbContext;
+    _context = dbContext;
   }
 
-  public IEnumerable<UserDto> Get() {
-    return context.Users;
+  public IEnumerable<User> Get() {
+    return _context.Users;
   }
 
-  public async Task Create(UserDto userDto) {
-    context.Add(userDto);
+  public async Task Create(User user) {
+    _context.Users.Add(user);
 
-    await context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
   }
 }
 
 public interface IUserService
 {
-  IEnumerable<UserDto> Get();
-  Task Create(UserDto userDto);
+  IEnumerable<User> Get();
+  Task Create(User user);
 }

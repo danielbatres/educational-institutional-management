@@ -1,4 +1,3 @@
-@using edu_institutional_management.Shared.DTO
 @page "/application/settings/{Direction}"
 @layout ApplicationLayout
 
@@ -21,7 +20,7 @@
 @code {
   [Parameter]
   public string Direction { get; set; } = string.Empty;
-  private UserDto User = new();
+  private User User = new();
 
   private readonly Menu Menu = new Menu() {
     MenuLabels = new List<string>() {

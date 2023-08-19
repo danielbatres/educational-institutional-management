@@ -1,6 +1,6 @@
-namespace edu_institutional_management.Shared.DTO;
+namespace edu_institutional_management.Shared.Models;
 
-public class StudentDto {
+public class Student {
   public Guid Id { get; set; }
   public string Name { get; set; }
   public string LastName { get; set; }

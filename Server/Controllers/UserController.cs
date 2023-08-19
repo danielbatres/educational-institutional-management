@@ -1,5 +1,5 @@
 using edu_institutional_management.Server.Services;
-using edu_institutional_management.Shared.DTO;
+using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace edu_institutional_management.Server.Controllers;
@@ -21,8 +21,8 @@ public class UserController : ControllerBase {
 
   [HttpPost]
   [Route("create")]
-  public async Task<IActionResult> Post([FromBody] UserDto userDto) {
-    await userService.Create(userDto);
+  public async Task<IActionResult> Post([FromBody] User user) {
+    await userService.Create(user);
 
     return Ok();
   }

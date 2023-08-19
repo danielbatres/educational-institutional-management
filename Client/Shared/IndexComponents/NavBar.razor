@@ -10,7 +10,7 @@
         HideOnMobile="hide-on-mobile"
         Styles="margin-right: 60px; justify-content: center;"
       />
-      @if (!HideButtons) {
+      @if (!HideButtons || !IsActiveUser) {
         <div class="buttons">
           <button type="button" class="button transparent-button" @onclick="@(() => NavigationManager.NavigateTo("/access"))">
             Iniciar sesi&oacute;n
@@ -28,4 +28,6 @@
   [Parameter]
   [EditorRequired]
   public bool HideButtons { get; set; }
+  [Parameter]
+  public bool IsActiveUser { get; set; }
 }

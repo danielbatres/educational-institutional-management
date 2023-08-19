@@ -1,4 +1,4 @@
-namespace edu_institutional_management.Shared.DTO;
+namespace edu_institutional_management.Shared.Models;
 
 public class PaymentDto {
   public Guid Id { get; set; }
