@@ -3,22 +3,44 @@
 <div class="navbar-container">
   <div class="navbar-content">
     <div>
-      <p class="logo" @onclick="@(() => NavigationManager.NavigateTo("/"))">Landing</p>
+      <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
     </div>
     <div class="navigation">
       <NavigationLinks
         HideOnMobile="hide-on-mobile"
         Styles="margin-right: 60px; justify-content: center;"
       />
-      @if (!HideButtons || !IsActiveUser) {
-        <div class="buttons">
-          <button type="button" class="button transparent-button" @onclick="@(() => NavigationManager.NavigateTo("/access"))">
-            Iniciar sesi&oacute;n
-          </button>
-          <button type="button" class="button primary-background-button" @onclick="@(() => NavigationManager.NavigateTo("/access/register"))">
-            Registrarse
-          </button>
-        </div>
+      @if (!HideButtons) {
+        @if (IsActiveUser) {
+          <div class="user-info centered-container">
+            <div class="user-image"></div>
+            <div class="user-info-data">
+              <p>@(() => $"{UserContext.User.Name} {UserContext.User.LastName}")</p>
+              <p>@(() => $"{UserContext.User.Register.Email}")</p>
+            </div>
+            <div class="select-profile-options">
+              <i class="fi fi-tr-angle-double-small-down"></i>
+              <div class="profile-options"></div>
+            </div>
+          </div>
+        } else {
+          <div class="buttons">
+            <button
+              type="button"
+              class="button transparent-button"
+            @onclick="@(() => OnNavigation("/access", true))"
+            >
+              Iniciar sesi&oacute;n
+            </button>
+            <button
+              type="button"
+              class="button primary-background-button"
+            @onclick="@(() => OnNavigation("/access/register", true))"
+            >
+              Registrarse
+            </button>
+          </div>
+        }
       }
     </div>
   </div>
@@ -30,4 +52,12 @@
   public bool HideButtons { get; set; }
   [Parameter]
   public bool IsActiveUser { get; set; }
+  [Inject]
+  public UserContext UserContext { get; set; }
+
+  private void OnNavigation(string route, bool hide) {
+    HideButtons = hide;
+
+    NavigationManager.NavigateTo(route);
+  }
 }

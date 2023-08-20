@@ -3,13 +3,13 @@
     <i class="fi fi-tr-at"></i>
     <label for="email">Correo electr&oacute;nico</label>
   </div>
-  <input class="input" type="email" placeholder="Ingresar correo electr&oacute;nico" id="email">
+  <input @bind="@User.Register.Email" class="input" type="email" placeholder="Ingresar correo electrónico" id="email">
   <div class="label">
     <i class="fi fi-tr-vault"></i>
     <label for="password">Contrase&ntilde;a</label>
   </div>
   <div class="input-container">
-    <input type="password" class="input" placeholder="Ingresa contrase&ntilde;a" id="password" >
+    <input @bind="@User.Register.Password" type="password" class="input" placeholder="Ingresa contraseña" id="password" >
     <span class="input-icon">
       <i class="fi fi-tr-low-vision eye"></i>
     </span>
@@ -24,7 +24,7 @@
     </li>
   </ul>
   <div class="login-button">
-    <button type="button" class="lgn-button button primary-background-button">
+    <button type="button" class="lgn-button button primary-background-button" @onclick="@CheckUser">
       Iniciar sesi&oacute;n
     </button>
     <p>
@@ -32,3 +32,46 @@
     </p>
   </div>
 </AccessComponent>
+
+@code {
+  [Inject]
+  private NavigationManager NavigationManager { get; set;}
+  [Inject]
+  private UserContext UserContext { get; set;}
+  [Inject]
+  private HttpClient HttpClient { get; set; }
+  private readonly System.Text.Json.JsonSerializerOptions Options = new() {
+    PropertyNameCaseInsensitive = true
+  };
+  private User User { get; set; } = new() {
+    Register = new() {
+      Email = string.Empty,
+      Password = string.Empty
+    }
+  };
+
+  private async Task CheckUser() {
+    var response = await HttpClient.GetAsync("api/user");
+    var content = await response.Content.ReadAsStringAsync();
+
+    if (!response.IsSuccessStatusCode) {
+        throw new ApplicationException(content);
+    }
+
+    List<User> Users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(content, Options) ?? new();
+
+    if (Users.Count != 0) {
+    Users = Users.Where(x => x.Register.Email.Equals(User.Register.Email) && x.Register.Password.Equals(User.Register.Password)).ToList();
+
+    if (Users.Count == 1) {
+      UserContext.User = Users[0];
+
+      UserContext.SetIsActiveUser();
+
+      NavigationManager.NavigateTo("/");
+    } else {
+      Console.WriteLine("No se encontro el usuario");
+    }
+    }
+  }
+}

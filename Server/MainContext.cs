@@ -10,7 +10,9 @@ namespace edu_institutional_management.Server
         public DbSet<Register> Registers { get; set; }
         public DbSet<OnlineStatus> OnlineStatuses { get; set; }
 
-        public MainContext(DbContextOptions<MainContext> options) : base(options) { }
+        public MainContext(DbContextOptions<MainContext> options) : base(options) {
+            ChangeTracker.LazyLoadingEnabled = true;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Institution>(institution => {
@@ -41,16 +43,6 @@ namespace edu_institutional_management.Server
                 user.HasOne(u => u.Register).WithOne(r => r.User).HasForeignKey<Register>(r => r.UserId);
                 user.HasOne(u => u.Institution).WithMany(i => i.Users).HasForeignKey(u => u.InstitutionId);
                 user.HasOne(u => u.OnlineStatus).WithOne(e => e.User).HasForeignKey<OnlineStatus>(e => e.UserId);
-                user.HasData(new User {
-                    Id = Guid.NewGuid(),
-                    Name = "First user",
-                    LastName = "Last name",
-                    Age = 25,
-                    BirthDate = DateTime.Now,
-                    Bio = "Bio",
-                    PhoneNumber = "",
-                    InstitutionId = null
-                });
             });
 
             base.OnModelCreating(modelBuilder);

@@ -1,5 +1,6 @@
-using edu_institutional_management.Client;
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace edu_institutional_management.Server.Services;
 
@@ -11,7 +12,7 @@ public class UserService : IUserService {
   }
 
   public IEnumerable<User> Get() {
-    return _context.Users;
+    return _context.Users.Include(u => u.Register);
   }
 
   public async Task Create(User user) {

@@ -26,15 +26,17 @@
 <div class="page">
     <main>
         <article class="content px-4">
-            <NavBar HideButtons=@HideButtons IsActiveUser=@true />
-            <CascadingValue Value=@HideButtons>
+            <NavBar HideButtons=@HideButtons IsActiveUser=@UserContext.IsActiveUser />
+            <CascadingValue Value=@HideButtons Name="HideButtons">
                 @Body
             </CascadingValue>
             <Footer />
         </article>
-    </main>   
+    </main>
 </div>
 
 @code {
     public bool HideButtons { get; set; }
+    [Inject]
+    private UserContext UserContext { get; set; }
 }
