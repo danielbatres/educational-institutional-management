@@ -1,5 +1,5 @@
 h3 {
-  font-size: 2rem;
+  font-size: var(--title);
   font-weight: 600;
   margin-bottom: 10px;
 }

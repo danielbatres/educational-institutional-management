@@ -1,0 +1,28 @@
+<AccessComponent Title="Información de contacto" Description="Ingresa la información de contacto" MaxWidth="max-width: 400px;">
+  <div class="label">
+    <label for="phone-number">Tel&eacute;fono de la instituci&oacute;n <strong>*</strong></label>
+  </div>
+  <input class="input" type="tel" placeholder="Ingresar teléfono de la institución" id="phone-number">
+  <div class="label">
+    <label for="email">Correo electr&oacute;nico de la instituci&oacute;n <strong>*</strong></label>
+  </div>
+  <input type="text" class="input" placeholder="Ingresar el correo electrónico de la institución" id="email" >
+  <div class="label">
+    <label for="website">Sitio web</label>
+  </div>
+  <input type="text" class="input" placeholder="Ingresar el sitio web de la institución" id="website">
+  <div class="login-button">
+      <button type="button" class="lgn-button button primary-background-button" @onclick="@(() => SetSelected(2))">
+        Continuar
+      </button>
+    </div>
+</AccessComponent>
+
+@code {
+  [Inject] 
+  public RegisterInstitutionContext InstitutionContext { get; set; }
+
+  private void SetSelected(int selected) {
+    InstitutionContext.SetSelection((RegisterInstitutionSelection) selected);
+  }
+}

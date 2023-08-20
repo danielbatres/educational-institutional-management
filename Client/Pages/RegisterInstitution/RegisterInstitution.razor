@@ -2,33 +2,47 @@
 
 <PageTitle>Landing | Registrar nueva instituci&oacute;n</PageTitle>
 
-<FormProcess Border="border-left: 1px solid var(--light-color)">
+<FormProcess Border="border-left: 1px solid var(--light-color);">
   <section class="sectioned-container">
+    <div class="@(InstitutionContext.Selection == 0 ? "" : "is-not-selected") sectioned-content">
+      <AddressInfo />
+    </div>
+    <div class="@(InstitutionContext.Selection == 1 ? "" : "is-not-selected") sectioned-content">
+      <ContactInfo />
+    </div>
+    <div class="@(InstitutionContext.Selection == 2 ? "" : "is-not-selected") sectioned-content">
+      <PaymentDetails />
+    </div>
+    <div class="navigation-form">
+      <div class="circles">
+        <div class="line-behind"></div>
+        <div class="extension">
+          @for (byte i = 0; i < 3; i++) {
+            byte index = i;
 
-  </section>
-  <section class="sectioned-container">
-    <div class="steps">
-      <div class="step-container">
-        <i class="fi fi-tr-badge-check"></i>
-        <div>
-          <h3>Detalles de la instituci&oacute;n</h3>
-          <p>Ingresa la informaci&oacute;n de registro de tu instituci&oacute;n</p>
+            <div class="circle">
+              <button type="button" class="@(InstitutionContext.Selection == i ? "selected-option" : "")" @onclick="@(() => SetSelected((int) index))"></button>
+            </div>
+          }
         </div>
       </div>
-      <div class="step-container">
-        <i class="fi fi-tr-badge-check"></i>
-        <div>
-          <h3>Detalles de la instituci&oacute;n</h3>
-          <p>Ingresa la informaci&oacute;n de registro de tu instituci&oacute;n</p>
-        </div>
-      </div>
-      <div class="step-container">
-        <i class="fi fi-tr-badge-check"></i>
-        <div>
-          <h3>Detalles de la instituci&oacute;n</h3>
-          <p>Ingresa la informaci&oacute;n de registro de tu instituci&oacute;n</p>
-        </div>
+      <div class="extension options">
+        <p>Direcci&oacute;n</p>
+        <p>Contacto</p>
+        <p>Pago</p>
       </div>
     </div>
   </section>
+  <section class="sectioned-container">
+    
+  </section>
 </FormProcess>
+
+@code {
+  [Inject] 
+  public RegisterInstitutionContext InstitutionContext { get; set; }
+
+  private void SetSelected(int selected) {
+    InstitutionContext.SetSelection((RegisterInstitutionSelection) selected);
+  }
+}

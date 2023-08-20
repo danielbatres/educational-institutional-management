@@ -1,0 +1,29 @@
+<AccessComponent Title="Detalles de pago" Description="Ingresa los detalles de pago" MaxWidth="max-width: 400px;">
+  <div class="label">
+    <label for="target-number">N&uacute;mero de tarjeta <strong>*</strong></label>
+  </div>
+  <input class="input" type="text" placeholder="XXXX XXXX XXXX XXXX" id="target-number">
+  <div style="display: flex; gap: 15px;">
+    <div>
+      <div class="label">
+    <label for="expiration-date">Fecha de expiraci&oacute;n <strong>*</strong></label>
+  </div>
+  <input type="text" class="input" placeholder="mm/yy" id="expiration-date" >
+    </div>
+    <div>
+      <div class="label">
+    <label for="cvv">CVV <strong>*</strong></label>
+  </div>
+  <input type="text" class="input" placeholder="XXX" id="cvv" >
+    </div>
+  </div>
+  <div class="label">
+    <label for="owner-name">Nombre del titular <strong>*</strong></label>
+  </div>
+  <input type="text" class="input" placeholder="Ingresar nombre del titular" id="owner-name">
+  <div class="login-button">
+      <button type="button" class="lgn-button button primary-background-button">
+        Realizar pago
+      </button>
+    </div>
+</AccessComponent>

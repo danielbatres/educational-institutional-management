@@ -3,21 +3,21 @@
 
 <AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
     <div class="label">
-      <label for="name">Nombre<strong>*</strong></label>
+      <label for="name">Nombre <strong>*</strong></label>
     </div>
     <input @bind="User.Name" class="input" type="text" placeholder="Ingresa tu nombre" id="name">
     <div class="label">
-      <label for="last-name">Apellido<strong>*</strong></label>
+      <label for="last-name">Apellido <strong>*</strong></label>
     </div>
     <input @bind="User.LastName" type="text" class="input" placeholder="Ingresa tu apellido">
     <div class="label">
       <i class="fi fi-tr-at"></i>
-      <label for="email">Correo electr&oacute;nico<strong>*</strong></label>
+      <label for="email">Correo electr&oacute;nico <strong>*</strong></label>
     </div>
     <input @bind="Register.Email" class="input" type="email" placeholder="Ingresar correo electrónico" id="email">
     <div class="label">
       <i class="fi fi-tr-vault"></i>
-      <label for="password">Contrase&ntilde;a<strong>*</strong></label>
+      <label for="password">Contrase&ntilde;a <strong>*</strong></label>
     </div>
     <div class="input-container">
       <input @bind="Register.Password" type="password" class="input" placeholder="Ingresa tu nueva contraseña" id="password" >
