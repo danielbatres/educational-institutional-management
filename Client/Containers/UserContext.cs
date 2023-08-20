@@ -1,17 +1,14 @@
 using edu_institutional_management.Shared.Models;
 
-namespace edu_institutional_management.Client;
+namespace edu_institutional_management.Client.Containers;
 
-public class UserContext {
+public class UserContext : BaseContainer {
   public User User { get; set; }
   public bool IsActiveUser { get; set; } = false;
-  public event Action OnChange;
 
   public void SetIsActiveUser() {
     IsActiveUser = !IsActiveUser;
 
     NotifyStateChanged();
   }
-
-  private void NotifyStateChanged() => OnChange?.Invoke();
 }

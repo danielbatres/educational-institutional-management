@@ -11,25 +11,23 @@ section {
 section:last-child div {
   min-height: 100%;
   width: 100%;
-  background-image: url("https://i.ibb.co/9WcDg4B/screen.png");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .benefit div:first-child {
-  min-width: 50px;
-  max-width: 50px;
-  height: 50px;
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
   border-radius: 10px;
-  background: var(--light-blue);
+  background: var(--dark-color);
   margin-right:25px;
 }
 
 .benefit div:first-child i {
   font-size: 1.4rem;
-  color: var(--primary-color);
+  color: var(--white);
 }
 
-h5 {
+h4 {
+  font-size: var(--title);
   margin-bottom: 10px;
 }

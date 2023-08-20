@@ -1,17 +1,16 @@
 ul {
   display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  gap: 60px;
+  align-items: center;
+  gap: 40px;
 }
 
 li p:hover {
-  color: #4361EE;
+  color: var(--primary-color);
   cursor: pointer;
 }
 
 @media (max-width: 767px) {
   .hide-on-mobile {
-    visibility: hidden;
+    display: none;
   }
 }

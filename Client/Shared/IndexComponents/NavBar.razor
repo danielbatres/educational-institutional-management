@@ -8,9 +8,9 @@
     <div class="navigation">
       <NavigationLinks
         HideOnMobile="hide-on-mobile"
-        Styles="margin-right: 60px; justify-content: center;"
+        Styles="margin-right: 40px; justify-content: center;"
       />
-      @if (!HideButtons) {
+      @if (!NavBarContext.HideButtons) {
         @if (IsActiveUser) {
           <div class="user-info centered-container">
             <div class="user-image"></div>
@@ -37,7 +37,7 @@
               class="button primary-background-button"
             @onclick="@(() => OnNavigation("/access/register", true))"
             >
-              Registrarse
+              Registrarme
             </button>
           </div>
         }
@@ -48,15 +48,14 @@
 
 @code {
   [Parameter]
-  [EditorRequired]
-  public bool HideButtons { get; set; }
-  [Parameter]
   public bool IsActiveUser { get; set; }
   [Inject]
   public UserContext UserContext { get; set; }
+  [Inject]
+  public NavBarContext NavBarContext { get; set; }
 
   private void OnNavigation(string route, bool hide) {
-    HideButtons = hide;
+    NavBarContext.ChangeHideButtons(hide);
 
     NavigationManager.NavigateTo(route);
   }

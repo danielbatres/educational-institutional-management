@@ -24,7 +24,7 @@
     </li>
   </ul>
   <div class="login-button">
-    <button type="button" class="lgn-button button primary-background-button" @onclick="@CheckUser">
+    <button type="button" class="lgn-button button primary-background-button" @onclick="@AuthUser">
       Iniciar sesi&oacute;n
     </button>
     <p>
@@ -39,10 +39,9 @@
   [Inject]
   private UserContext UserContext { get; set;}
   [Inject]
-  private HttpClient HttpClient { get; set; }
-  private readonly System.Text.Json.JsonSerializerOptions Options = new() {
-    PropertyNameCaseInsensitive = true
-  };
+  private IUserService UserService { get; set;}
+  private List<User> Users;
+
   private User User { get; set; } = new() {
     Register = new() {
       Email = string.Empty,
@@ -50,28 +49,20 @@
     }
   };
 
-  private async Task CheckUser() {
-    var response = await HttpClient.GetAsync("api/user");
-    var content = await response.Content.ReadAsStringAsync();
-
-    if (!response.IsSuccessStatusCode) {
-        throw new ApplicationException(content);
-    }
-
-    List<User> Users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(content, Options) ?? new();
+  private async Task AuthUser() {
+    Users = await UserService.GetUsers();
 
     if (Users.Count != 0) {
-    Users = Users.Where(x => x.Register.Email.Equals(User.Register.Email) && x.Register.Password.Equals(User.Register.Password)).ToList();
+      Users = Users.Where(x => x.Register.Email.Equals(User.Register.Email) && x.Register.Password.Equals(User.Register.Password)).ToList();
 
-    if (Users.Count == 1) {
-      UserContext.User = Users[0];
+      if (Users.Count == 1) {
+        UserContext.User = Users[0];
 
-      UserContext.SetIsActiveUser();
-
-      NavigationManager.NavigateTo("/");
-    } else {
-      Console.WriteLine("No se encontro el usuario");
-    }
+        UserContext.SetIsActiveUser();
+        NavigationManager.NavigateTo("/");
+      } else {
+        Console.WriteLine("No se encontro el usuario");
+      }
     }
   }
 }

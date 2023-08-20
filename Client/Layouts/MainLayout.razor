@@ -5,7 +5,7 @@
         --white: #FFFFFF;
         --primary-color: #4361EE;
         --dark-color: #0E1116;
-        --text-color: #424f6d;
+        --text-color: #7f8084;
         --light-text-color: #C2C2C2;
         --light-color: #ECECEC;
         --light-primary-color: #D9DFFF;
@@ -16,27 +16,19 @@
         --regular-text: 1.2rem;
         --title: 1.4rem;
     }
-
-    .primary-background-button {
-        padding: 12px;
-        color: var(--white);
-    }
 </style>
 
 <div class="page">
     <main>
         <article class="content px-4">
-            <NavBar HideButtons=@HideButtons IsActiveUser=@UserContext.IsActiveUser />
-            <CascadingValue Value=@HideButtons Name="HideButtons">
-                @Body
-            </CascadingValue>
+            <NavBar IsActiveUser=@UserContext.IsActiveUser />
+            @Body
             <Footer />
         </article>
     </main>
 </div>
 
 @code {
-    public bool HideButtons { get; set; }
     [Inject]
     private UserContext UserContext { get; set; }
 }

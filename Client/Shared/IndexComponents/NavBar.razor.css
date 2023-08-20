@@ -10,13 +10,13 @@
     position: fixed;
     background: var(--white);
     z-index: 10;
-    box-shadow: 0 2px 10px var(--light-color);
+    box-shadow: 0 2px 1px var(--light-color);
 }
 
 .logo {
     font-weight: 600;
     font-size: 1.8rem;
-    color: var(--primary-color);
+    color: var(--dark-color);
     cursor: pointer;
 }
 
@@ -92,6 +92,21 @@ p {
     border-radius: 100%;
 }
 
+
+.primary-background-button {
+    background: var(--dark-color);
+}
+
+.primary-background-button:hover {
+    color: var(--dark-color);
+    background: var(--white);
+    border: 1px solid var(--dark-color);
+}
+
+.transparent-button {
+    color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+}
 
 
 @media (max-width: 767px) {

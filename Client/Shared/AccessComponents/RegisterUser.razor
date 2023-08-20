@@ -38,11 +38,9 @@
 
 @code {
   [Inject]
-  private IUserService _userService { get; set; }
+  private IUserService UserService { get; set; }
   public User User { get; set; } = new();
-  public Register Register { get; set; } = new() {
-    Id = Guid.NewGuid()
-  };
+  public Register Register { get; set; } = new();
 
   private void AssignUserData() {
     User.Id = Guid.NewGuid();
@@ -65,7 +63,7 @@
   private void CreateNewUser() {
     AssignUserData();
 
-    _userService.Register(User);
+    UserService.Register(User);
 
     NavigationManager.NavigateTo("/");
   }

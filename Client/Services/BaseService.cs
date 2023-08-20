@@ -12,4 +12,22 @@ public class BaseService {
       PropertyNameCaseInsensitive = true
     };
   }
+
+  public async Task CheckResponse(HttpResponseMessage response) {
+    var content = await response.Content.ReadAsStringAsync();
+
+    if (!response.IsSuccessStatusCode) {
+      throw new ApplicationException(content);
+    }
+  }
+
+  public async Task<string> CheckResponseContent(HttpResponseMessage response) {
+    var content = await response.Content.ReadAsStringAsync();
+
+    if (!response.IsSuccessStatusCode) {
+      throw new ApplicationException(content);
+    }
+
+    return content;
+  }
 }

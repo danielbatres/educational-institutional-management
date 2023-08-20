@@ -89,8 +89,8 @@ h1:focus {
 }
 
 .mid-title {
-    font-size: 1.8rem;
-    font-weight: 500;
+    font-size: var(--title);
+    font-weight: 400;
 }
 
 .sm-title {
@@ -151,7 +151,7 @@ i {
 
 .primary-background-button {
     background: var(--primary-color);
-    color: var(--dark-color);
+    color: var(--white);
     border: 1px solid transparent;
     transition: background-color 200ms ease-in-out 0.01s;
 }
@@ -173,7 +173,7 @@ i {
 .transparent-button:hover {
     background: none;
     color: var(--text-color);
-    border: 1px solid var(--text-color);
+    border: 1px solid var(--light-primary-color);
     transition: border, color 200ms ease-in-out 0.01s;
 }
 
