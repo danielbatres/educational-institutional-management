@@ -73,7 +73,103 @@
   font-weight: 400;
 }
 
+.invoice-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 288px;
+  max-width: 500px;
+  width: 100%;
+  padding: 10px;
+}
 
+.invoice-content-border {
+  border-radius: 10px;
+  border: var(--light-border);
+  padding: 18px;
+}
+
+.invoice-info {
+  width: 100%;
+  border: var(--light-border);
+}
+
+.invoice-content {
+  width: 100%;
+}
+
+.invoice-message, .invoice-info-message {
+  padding-bottom: 16px;
+  border-bottom: var(--light-border);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: var(--light-border);
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 0px;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ul li p {
+  font-size: var(--small-text);
+}
+
+.sm-circle {
+  min-width: 10px;
+  min-height: 10px;
+  max-width: 10px;
+  max-height: 10px;
+  border-radius: 100%;
+  background: var(--primary-color);
+}
+
+.date-content {
+  display: flex;
+  gap: 20px;
+  border-top: var(--light-border);
+  padding-top: 10px;
+}
+
+.date-info div {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.date-info div p {
+  color: var(--text-color);
+  font-size: var(--smaller-text);
+}
+
+.date-info p, .date-info div i {
+  color: var(--dark-color);
+  font-size: var(--small-text);
+  margin: 0px;
+}
+
+.date-info .renovation-info {
+  color: var(--danger-color);
+  cursor: pointer;
+}
+
+h4 {
+  font-size: var(--title);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 
 i {
   font-size: 1.8rem;
