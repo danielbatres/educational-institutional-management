@@ -15,11 +15,19 @@ namespace edu_institutional_management.Server
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<InstitutionRegister>(institutionRegister => {
+                institutionRegister.HasKey(i => i.Id);
+                institutionRegister.Property(i => i.RegisterDate);
+                institutionRegister.Property(i => i.EndDate);
+                institutionRegister.HasOne(i => i.User).WithOne(u => u.InstitutionRegister).HasForeignKey<User>(u => u.InstitutionRegisterId);
+            });
+            
             modelBuilder.Entity<Institution>(institution => {
                 institution.HasKey(x => x.Id);
                 institution.Property(x => x.Name);
                 institution.Property(x => x.Address);
                 institution.Property(x => x.PhoneNumber);
+                institution.HasOne(x => x.InstitutionRegister).WithOne(i => i.Institution).HasForeignKey<InstitutionRegister>(x => x.InstitutionId);
             });
 
             modelBuilder.Entity<Register>(register => {
@@ -38,7 +46,7 @@ namespace edu_institutional_management.Server
             modelBuilder.Entity<User>(user => {
                 user.HasKey(x => x.Id);
                 user.Property(x => x.Name).HasMaxLength(100);
-                user.Property(x => x.LastName);
+                user.Property(x => x.LastName).HasMaxLength(100);
                 user.Property(x => x.BirthDate);
                 user.HasOne(u => u.Register).WithOne(r => r.User).HasForeignKey<Register>(r => r.UserId);
                 user.HasOne(u => u.Institution).WithMany(i => i.Users).HasForeignKey(u => u.InstitutionId);

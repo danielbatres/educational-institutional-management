@@ -14,4 +14,6 @@ public class User {
   public virtual Institution? Institution { get; set; }
   public virtual OnlineStatus OnlineStatus { get; set; }
   public virtual Register Register { get; set; }
+  public Guid? InstitutionRegisterId { get; set; }
+  public virtual InstitutionRegister? InstitutionRegister { get; set;}
 }
