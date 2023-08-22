@@ -91,16 +91,129 @@ i {
 
 .plan-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
   border: 1px solid var(--light-color);
   border-radius: 10px;
+  background-image: url("https://i.ibb.co/XsfwQ7R/payment.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.plan-container div {
-  width: 50%;
+.plan-container p, .plan-container h3, .plan-container h6 {
+  color: var(--white);
+}
+
+.plan-container h3 {
+  font-size: 1.7rem;
+  margin-bottom: 4px;
+}
+
+.plan-container h6 {
+  font-size: 1.1rem;
+  font-weight: 400;
+
+}
+
+.plan-container article {
+  min-width: 50%;
+  max-width: 50%;
   height: 100%;
+  padding: 40px;
+}
+
+.plan-name {
+  margin-bottom: 12px;
+}
+
+.plan-container p {
+  font-size: var(--regular-text);
+}
+
+.price {
+  text-align: end;
+}
+
+h4 {
+  font-size: 2.4rem;
+  color: var(--white);
+  margin: 4px 0px;
+}
+
+.button-content {
+  align-self: self-end;
+}
+
+.get-plan {
+  min-width: 250px;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 500;
+  align-self: flex-end;
+  padding: 10px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 14px 0px 14px 6px;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ul li p {
+  font-size: var(--small-text);
+}
+
+.sm-circle {
+  min-width: 10px;
+  min-height: 10px;
+  max-width: 10px;
+  max-height: 10px;
+  border-radius: 100%;
+  background: var(--white);
+}
+
+.plan-container article:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.metallic-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.metallic-button::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -100%;
+  width: 200%;
+  height: calc(100% + 20px);
+  background: linear-gradient(120deg, transparent, transparent, transparent, transparent, transparent, rgb(176, 196, 255));
+  opacity: 0.5;
+  animation: move-glow 2s alternate infinite;
+}
+
+@keyframes move-glow {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }

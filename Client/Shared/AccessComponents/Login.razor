@@ -49,6 +49,8 @@
     }
   };
 
+  
+
   private async Task AuthUser() {
     Users = await UserService.GetUsers();
 
@@ -58,7 +60,7 @@
       if (Users.Count == 1) {
         UserContext.User = Users[0];
 
-        UserContext.SetIsActiveUser();
+        UserContext.SetIsActiveUser(true);
         NavigationManager.NavigateTo("/");
       } else {
         Console.WriteLine("No se encontro el usuario");

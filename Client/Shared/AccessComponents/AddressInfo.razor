@@ -1,26 +1,36 @@
 <AccessComponent Title="Direccion de facturación" Description="Ingresa la dirección de tu institución" MaxWidth="max-width: 400px;">
-  <div class="label">
-    <label for="name">Nombre de la instituci&oacute;n <strong>*</strong></label>
-  </div>
-  <input class="input" type="text" placeholder="Ingresar nombre de la institución" id="name">
-  <div class="label">
-    <label for="country">Pais <strong>*</strong></label>
-  </div>
-  <input type="text" class="input" placeholder="Ingresar el pais" id="country" >
-  <div class="label">
-    <label for="address">Direcci&oacute;n f&iacute;sica <strong>*</strong></label>
-  </div>
-  <input type="text" class="input" placeholder="Ingresar la dirección física" id="address">
-  <div class="login-button">
+  <form>
+    <div class="label">
+      <label for="name">Nombre de la instituci&oacute;n <strong>*</strong></label>
+    </div>
+    <input @bind="@InstitutionContext.Institution.Name" class="input" type="text" placeholder="Ingresar nombre de la institución" id="name">
+    <div class="label">
+      <label for="country">Pais <strong>*</strong></label>
+    </div>
+    <input @bind="@InstitutionContext.Institution.Country" type="text" class="input" placeholder="Ingresar el pais" id="country" >
+    <div class="label">
+      <label for="address">Direcci&oacute;n f&iacute;sica <strong>*</strong></label>
+    </div>
+    <input @bind="@InstitutionContext.Institution.Address" type="text" class="input" placeholder="Ingresar la dirección física" id="address">
+    <div class="login-button">
       <button type="button" class="lgn-button button primary-background-button" @onclick="@(() => SetSelected(1))">
         Continuar
       </button>
     </div>
+  </form>
 </AccessComponent>
 
 @code {
-  [Inject] 
+  [Inject]
   public RegisterInstitutionContext InstitutionContext { get; set; }
+
+  protected override void OnInitialized() {
+    InstitutionContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
 
   private void SetSelected(int selected) {
     InstitutionContext.SetSelection((RegisterInstitutionSelection) selected);

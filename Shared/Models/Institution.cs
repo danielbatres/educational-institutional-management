@@ -9,6 +9,7 @@ public class Institution {
   public string PhoneNumber { get; set; }
   public string Email { get; set; }
   public string WebSite { get; set; }
+  public string Country { get; set; }
   public InstitutionRegister InstitutionRegister { get; set; }
   public virtual ICollection<User>? Users { get; set; }
 }

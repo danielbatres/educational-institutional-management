@@ -2,6 +2,8 @@
 @inject NavigationManager NavigationManager
 
 <AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
+
+  <form>
     <div class="label">
       <label for="name">Nombre <strong>*</strong></label>
     </div>
@@ -33,10 +35,12 @@
         ¿Ya tienes una cuenta? <b>Iniciar sesi&oacute;n</b>
       </p>
     </div>
-  
+  </form>
 </AccessComponent>
 
 @code {
+  [Inject]
+  private NavBarContext NavBarContext { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
   public User User { get; set; } = new();
@@ -65,6 +69,7 @@
 
     UserService.Register(User);
 
+    NavBarContext.ChangeHideButtons(false);
     NavigationManager.NavigateTo("/");
   }
  }

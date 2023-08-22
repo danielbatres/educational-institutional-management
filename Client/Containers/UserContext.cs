@@ -6,8 +6,8 @@ public class UserContext : BaseContainer {
   public User User { get; set; }
   public bool IsActiveUser { get; set; } = false;
 
-  public void SetIsActiveUser() {
-    IsActiveUser = !IsActiveUser;
+  public void SetIsActiveUser(bool isActiveUser) {
+    IsActiveUser = isActiveUser;
 
     NotifyStateChanged();
   }

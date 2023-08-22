@@ -11,19 +11,121 @@
         --light-primary-color: #D9DFFF;
         --success-color: #3DC13C;
         --danger-color: #F13637;
+        --light-danger-color: #f1363638;
         --warning-color: #F3BB1B;
         --light-border: 1px solid var(--light-color);
         --smaller-text: 0.85rem;
-        --small-text: 1rem;
-        --regular-text: 1.2rem;
+        --small-text: 0.9rem;
+        --regular-text: 1rem;
         --title: 1.4rem;
+    }
+
+    .content {
+        position: relative;
+    }
+
+    .content .hide-modal {
+        display: none;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        z-index: 2000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 200px;
+        max-width: 400px;
+        width: 100%;
+        min-height: 250px;
+        border-radius: 10px;
+        background: var(--white);
+        padding: 20px;
+        text-align: center;
+    }
+
+    .modal h3 {
+        font-weight: 400;
+    }
+
+    .cross {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .cross i {
+        font-size: 1.4rem;
+        cursor: pointer;
+        color: var(--danger-color)
+    }
+
+    .warning-circle {
+        position: relative;
+        margin: 16px 0px;
+        width: 54px;
+        height: 54px;
+        border-radius: 100%;
+        background: var(--light-danger-color);
+    }
+
+    .warning-circle i {
+        position: absolute;
+        top: 14px;
+        color: var(--danger-color);
+        font-size: 2rem;
+    }
+
+    .buttons-modal {
+        display: flex;
+        gap: 10px;
+        margin: 30px 0px 0px;
+    }
+
+    .buttons-modal button {
+        border: none;
+        background: var(--dark-color);
+        color: var(--white);
+    }
+
+    .modal h3 {
+        margin-bottom: 10px;
     }
 </style>
 
 <div class="page">
     <main>
         <article class="content px-4">
-            <NavBar IsActiveUser=@UserContext.IsActiveUser />
+            <div class="modal-overlay @(!InstitutionContext.ShowRegisterModal ? "hide-modal" : "")">
+                <div class="modal">
+                    <div class="cross">
+                        <i class="fi fi-tr-circle-xmark" @onclick="@(() => ExitModal(false))"></i>
+                    </div>
+                    <div class="warning-circle centered-container">
+                        <i class="fi fi-tr-circle-user"></i>
+                    </div>
+                    <h3>
+                        Antes de continuar
+                    </h3>
+                    <p>Primero debes de estar registrado para poder comprar un plan de servicio</p>
+                    <div class="buttons-modal">
+                        <button type="button" class="button" @onclick="@(() => ExitModal(true))">Registrarme</button>
+                        <button type="button" class="button" @onclick="@(() => ExitModal(false))">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <NavBar />
             @Body
             <Footer />
         </article>
@@ -32,5 +134,30 @@
 
 @code {
     [Inject]
+    private NavigationManager NavigationManager { get; set;}
+    [Inject]
     private UserContext UserContext { get; set; }
+    [Inject]
+    private RegisterInstitutionContext InstitutionContext { get; set; }
+    [Inject]
+    private NavBarContext NavBarContext { get; set; }
+
+    protected override void OnInitialized() {
+        InstitutionContext.OnChange += HandleStateChange;
+        UserContext.OnChange += HandleStateChange;
+    }
+
+    private void ExitModal(bool goRegister) {
+        InstitutionContext.SetShowRegisterModal(false);
+
+        if (goRegister) {
+            NavigationManager.NavigateTo("/access/register");
+
+            NavBarContext.ChangeHideButtons(true);
+        }
+    }
+
+    private void HandleStateChange() {
+        StateHasChanged();
+    }
 }

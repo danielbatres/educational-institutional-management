@@ -11,12 +11,12 @@
         Styles="margin-right: 40px; justify-content: center;"
       />
       @if (!NavBarContext.HideButtons) {
-        @if (IsActiveUser) {
+        @if (UserContext.IsActiveUser) {
           <div class="user-info centered-container">
             <div class="user-image"></div>
             <div class="user-info-data">
-              <p>@(() => $"{UserContext.User.Name} {UserContext.User.LastName}")</p>
-              <p>@(() => $"{UserContext.User.Register.Email}")</p>
+              <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
+              <p>@($"{UserContext.User.Register.Email}")</p>
             </div>
             <div class="select-profile-options">
               <i class="fi fi-tr-angle-double-small-down"></i>
@@ -47,16 +47,22 @@
 </div>
 
 @code {
-  [Parameter]
-  public bool IsActiveUser { get; set; }
   [Inject]
   public UserContext UserContext { get; set; }
   [Inject]
   public NavBarContext NavBarContext { get; set; }
+
+  protected override void OnInitialized() {
+    NavBarContext.OnChange += HandleStateChange;
+    UserContext.OnChange += HandleStateChange;
+  }
 
   private void OnNavigation(string route, bool hide) {
     NavBarContext.ChangeHideButtons(hide);
 
     NavigationManager.NavigateTo(route);
   }
+
+  private void HandleStateChange() {
+     StateHasChanged(); }
 }

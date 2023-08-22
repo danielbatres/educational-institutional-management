@@ -147,6 +147,7 @@ i {
     font-family: var(--font-family);
     font-weight: 300;
     font-size: var(--regular-text);
+    box-shadow: 5px 5px 25px var(--light-color);
 }
 
 .primary-background-button {
