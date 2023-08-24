@@ -52,19 +52,10 @@
   
 
   private async Task AuthUser() {
-    Users = await UserService.GetUsers();
+    bool loginState = await UserService.LoginUser();
 
-    if (Users.Count != 0) {
-      Users = Users.Where(x => x.Register.Email.Equals(User.Register.Email) && x.Register.Password.Equals(User.Register.Password)).ToList();
-
-      if (Users.Count == 1) {
-        UserContext.User = Users[0];
-
-        UserContext.SetIsActiveUser(true);
-        NavigationManager.NavigateTo("/");
-      } else {
-        Console.WriteLine("No se encontro el usuario");
-      }
+    if (!loginState) {
+      Console.WriteLine("No se encontro el usuario");
     }
   }
 }
