@@ -2,6 +2,10 @@
 
 <div class="navbar-container">
   <div class="navbar-content">
+    <div class="user-options @(!ShowUserOptions ? "hide" : "")">
+
+    </div>
+
     <div>
       <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
     </div>
@@ -12,7 +16,7 @@
       />
       @if (!NavBarContext.HideButtons) {
         @if (UserContext.IsActiveUser) {
-          <div class="user-info centered-container">
+          <div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
             <div class="user-image"></div>
             <div class="user-info-data">
               <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
@@ -51,6 +55,7 @@
   public UserContext UserContext { get; set; }
   [Inject]
   public NavBarContext NavBarContext { get; set; }
+  private bool ShowUserOptions { get; set; } = false;
 
   protected override void OnInitialized() {
     NavBarContext.OnChange += HandleStateChange;
