@@ -4,6 +4,8 @@ using edu_institutional_management.Shared.Models;
 using edu_institutional_management.Client.Containers;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Microsoft.AspNetCore.Components;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace edu_institutional_management.Client.Services;
 
@@ -17,6 +19,8 @@ public class UserService : BaseService, IUserService {
   }
 
   public async Task Register(User user) {
+    user.Register.Password = HashPassword(user.Register.Password);
+
     var response = await HttpClient.PostAsJsonAsync("api/user/create", user);
 
     await CheckResponse(response);
@@ -33,7 +37,7 @@ public class UserService : BaseService, IUserService {
     List<User> Users = await GetUsers();
 
     if (Users.Count != 0) {
-      Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && x.Register.Password.Equals(user.Register.Password)).ToList();
+      Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
         UserContext.User = Users[0];
@@ -44,6 +48,43 @@ public class UserService : BaseService, IUserService {
     }
 
     return false;
+  }
+
+  private string HashPassword(string password) {
+    using var sha256 = SHA256.Create();
+    byte[] saltBytes = new byte[16];
+    using (var rng = RandomNumberGenerator.Create()) {
+        rng.GetBytes(saltBytes);
+    }
+
+    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+    byte[] combinedBytes = new byte[passwordBytes.Length + saltBytes.Length];
+    Buffer.BlockCopy(passwordBytes, 0, combinedBytes, 0, passwordBytes.Length);
+    Buffer.BlockCopy(saltBytes, 0, combinedBytes, passwordBytes.Length, saltBytes.Length);
+    byte[] hashedBytes = sha256.ComputeHash(combinedBytes);
+
+    string hashedPassword = Convert.ToBase64String(hashedBytes);
+    string salt = Convert.ToBase64String(saltBytes);
+
+    return $"{hashedPassword}:{salt}";
+  }
+
+  private bool VerifyPassword(string storedPassword, string passwordAttempt) {
+    string[] parts = storedPassword.Split(':');
+    if (parts.Length != 2)
+      return false;
+
+    byte[] saltBytes = Convert.FromBase64String(parts[1]);
+    byte[] passwordAttemptBytes = Encoding.UTF8.GetBytes(passwordAttempt);
+    byte[] combinedBytes = new byte[passwordAttemptBytes.Length + saltBytes.Length];
+    Buffer.BlockCopy(passwordAttemptBytes, 0, combinedBytes, 0, passwordAttemptBytes.Length);
+    Buffer.BlockCopy(saltBytes, 0, combinedBytes, passwordAttemptBytes.Length, saltBytes.Length);
+
+    using var sha256 = SHA256.Create();
+    byte[] hashedAttemptBytes = sha256.ComputeHash(combinedBytes);
+    string hashedAttempt = Convert.ToBase64String(hashedAttemptBytes);
+
+    return parts[0] == hashedAttempt;
   }
 }
 

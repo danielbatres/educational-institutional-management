@@ -22,11 +22,12 @@
       <label for="password">Contrase&ntilde;a <strong>*</strong></label>
     </div>
     <div class="input-container">
-      <input @bind="Register.Password" type="password" class="input" placeholder="Ingresa tu nueva contraseña" id="password" >
+      <input @bind="Register.Password" type="password" class="input" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@ValidatePassword">
       <span class="input-icon">
         <i class="fi fi-tr-low-vision eye"></i>
       </span>
     </div>
+    <p class="password-message"></p>
     <div class="login-button">
       <button type="button" class="lgn-button button primary-background-button" @onclick="@CreateNewUser">
         Registrarme
@@ -45,6 +46,7 @@
   private IUserService UserService { get; set; }
   public User User { get; set; } = new();
   public Register Register { get; set; } = new();
+  private string PasswordMessage { get; set; }
 
   private void AssignUserData() {
     User.Id = Guid.NewGuid();
@@ -71,5 +73,9 @@
 
     NavBarContext.ChangeHideButtons(false);
     NavigationManager.NavigateTo("/");
+  }
+
+  private void ValidatePassword() {
+
   }
  }

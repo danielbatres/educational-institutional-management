@@ -32,9 +32,10 @@ namespace edu_institutional_management.Server
 
             modelBuilder.Entity<Register>(register => {
                 register.HasKey(x => x.Id);
-                register.Property(x => x.Email);
+                register.Property(x => x.Email).IsRequired();
                 register.Property(x => x.Password);
                 register.Property(x => x.AuthenticationMethod);
+                register.HasIndex(x => x.Email).IsUnique();
             });
 
             modelBuilder.Entity<OnlineStatus>(onlineStatus => {
