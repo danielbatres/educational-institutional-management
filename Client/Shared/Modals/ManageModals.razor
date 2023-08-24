@@ -1,0 +1,24 @@
+@if (LoadingContext.ShowLoading) { <Loading /> }
+
+@if (LoginContext.ShowLoginStateModal) { <LoginState /> }
+
+@if (InstitutionContext.ShowRegisterModal) { <NotRegistered /> }
+
+@code{
+  [Inject]
+  private LoginContext LoginContext { get; set; }
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
+  [Inject]
+  private RegisterInstitutionContext InstitutionContext { get; set; }
+
+  protected override void OnInitialized() {
+    LoadingContext.OnChange += HandleStateChange;
+    LoginContext.OnChange += HandleStateChange;
+    InstitutionContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+}

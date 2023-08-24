@@ -40,6 +40,10 @@
   private UserContext UserContext { get; set;}
   [Inject]
   private IUserService UserService { get; set;}
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
+  [Inject]
+  private LoginContext LoginContext { get; set; }
   private List<User> Users;
 
   private User User { get; set; } = new() {
@@ -49,13 +53,21 @@
     }
   };
 
-  
-
   private async Task AuthUser() {
-    bool loginState = await UserService.LoginUser();
+    LoadingContext.SetLoading(true);
+    LoadingContext.SetLoadingMessage("Buscando tu usuario...");
+
+    bool loginState = await UserService.LoginUser(User);
+    
+    LoadingContext.SetLoading(false);
 
     if (!loginState) {
-      Console.WriteLine("No se encontro el usuario");
+      LoginContext.SetState(false);
+      LoginContext.SetShowLoginStateModal(true, "No se encontro el usuario", "Fallo al inciar sesión");
+    } else {
+      LoginContext.SetState(true);
+      LoginContext.SetShowLoginStateModal(true, "Usuario autenticado correctamente", "¡Inicio de sesión exitoso!");
+      NavigationManager.NavigateTo("/");
     }
   }
 }

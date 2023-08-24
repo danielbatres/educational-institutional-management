@@ -232,10 +232,6 @@ i {
     position: relative;
 }
 
-.content .hide-modal {
-    display: none;
-}
-
 .modal-overlay {
     position: fixed;
     width: 100%;
@@ -253,14 +249,15 @@ i {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 200px;
+    min-width: 180px;
     max-width: 400px;
     width: 100%;
-    min-height: 250px;
+    min-height: 200px;
     border-radius: 10px;
     background: var(--white);
     padding: 20px;
     text-align: center;
+    margin: 0px 20px;
 }
 
 .modal h3 {
@@ -280,18 +277,36 @@ i {
 }
 
 .warning-circle {
+    background: var(--light-danger-color);
+}
+
+.warning-circle i {
+    color: var(--danger-color);
+}
+
+.state-circle {
     position: relative;
     margin: 16px 0px;
     width: 54px;
     height: 54px;
     border-radius: 100%;
-    background: var(--light-danger-color);
 }
 
-.warning-circle i {
+.state-circle i {
+    margin: 0px;
+}
+
+.success-circle i {
+    color: var(--success-color);
+}
+
+.success-circle {
+    background: var(--light-success-color);
+}
+
+.state-circle i {
     position: absolute;
     top: 14px;
-    color: var(--danger-color);
     font-size: 2rem;
 }
 

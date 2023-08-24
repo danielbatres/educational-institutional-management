@@ -7,6 +7,9 @@
   [Parameter]
   public string? BackgroundUrl { get; set; }
   [Parameter]
+  [EditorRequired]
+  public RenderFragment? ChildContent { get; set; }
+  [Parameter]
   public string? BackgroundColor { get; set; }
   [Parameter]
   [EditorRequired]

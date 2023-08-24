@@ -1,3 +1,17 @@
-<ModalBase>
-    <div></div>
-</ModalBase>
+<div class="modal-overlay">
+    <div class="modal">
+        <div class="spinner"></div>
+        <h4>@LoadingContext.LoadingMessage</h4>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    private LoadingContext LoadingContext { get; set; }
+
+    protected override void OnInitialized() {
+        LoadingContext.OnChange += HandleStateChange;
+    }
+
+    private void HandleStateChange() { StateHasChanged(); }
+}

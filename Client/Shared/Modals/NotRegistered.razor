@@ -1,0 +1,40 @@
+<div class="modal-overlay" >
+  <div class="modal">
+    <div class="cross">
+      <i class="fi fi-tr-circle-xmark" @onclick="@(() => ExitModal(false))"></i>
+    </div>
+    <div class="state-circle warning-circle centered-container">
+      <i class="fi fi-tr-circle-user"></i>
+    </div>
+    <h3>Antes de continuar</h3>
+    <p>
+      Primero debes de estar registrado para poder comprar un plan de servicio
+    </p>
+    <div class="buttons-modal">
+      <button type="button" class="button" @onclick="@(() => ExitModal(true))">
+        Registrarme
+      </button>
+      <button type="button" class="button" @onclick="@(() => ExitModal(false))">
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private RegisterInstitutionContext InstitutionContext { get; set; }
+  [Inject] 
+  private NavBarContext NavBarContext { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+
+  private void ExitModal(bool goRegister) {
+    InstitutionContext.SetShowRegisterModal(false); 
+    
+    if (goRegister) {
+      NavigationManager.NavigateTo("/access/register");
+      NavBarContext.ChangeHideButtons(true);
+    }
+  }
+}

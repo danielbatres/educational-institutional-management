@@ -24,24 +24,7 @@
 <div class="page">
     <main>
         <article class="content px-4">
-            <div class="modal-overlay @(!InstitutionContext.ShowRegisterModal ? "hide-modal" : "")">
-                <div class="modal">
-                    <div class="cross">
-                        <i class="fi fi-tr-circle-xmark" @onclick="@(() => ExitModal(false))"></i>
-                    </div>
-                    <div class="warning-circle centered-container">
-                        <i class="fi fi-tr-circle-user"></i>
-                    </div>
-                    <h3>
-                        Antes de continuar
-                    </h3>
-                    <p>Primero debes de estar registrado para poder comprar un plan de servicio</p>
-                    <div class="buttons-modal">
-                        <button type="button" class="button" @onclick="@(() => ExitModal(true))">Registrarme</button>
-                        <button type="button" class="button" @onclick="@(() => ExitModal(false))">Aceptar</button>
-                    </div>
-                </div>
-            </div>
+            <ManageModals />
             <NavBar />
             @Body
             <Footer />
@@ -51,28 +34,13 @@
 
 @code {
     [Inject]
-    private NavigationManager NavigationManager { get; set;}
-    [Inject]
     private UserContext UserContext { get; set; }
-    [Inject]
-    private RegisterInstitutionContext InstitutionContext { get; set; }
-    [Inject]
-    private NavBarContext NavBarContext { get; set; }
 
     protected override void OnInitialized() {
-        InstitutionContext.OnChange += HandleStateChange;
         UserContext.OnChange += HandleStateChange;
     }
 
-    private void ExitModal(bool goRegister) {
-        InstitutionContext.SetShowRegisterModal(false);
-
-        if (goRegister) {
-            NavigationManager.NavigateTo("/access/register");
-
-            NavBarContext.ChangeHideButtons(true);
-        }
-    }
+    
 
     private void HandleStateChange() {
         StateHasChanged();

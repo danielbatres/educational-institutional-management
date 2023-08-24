@@ -39,8 +39,6 @@ public class UserService : BaseService, IUserService {
         UserContext.User = Users[0];
 
         UserContext.SetIsActiveUser(true);
-        NavigationManager.NavigateTo("/");
-
         return true;
       }
     }
@@ -52,5 +50,5 @@ public class UserService : BaseService, IUserService {
 public interface IUserService {
   Task Register(User user);
   Task<List<User>> GetUsers();
-  Task<bool> LoginUser();
+  Task<bool> LoginUser(User user);
 }

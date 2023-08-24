@@ -3,9 +3,19 @@
 <div class="navbar-container">
   <div class="navbar-content">
     <div class="user-options @(!ShowUserOptions ? "hide" : "")">
-
+      <ul>
+        <li>
+          <i class="fi fi-tr-arrow-up-right-from-square"></i>
+          <p>Ir a mi perfil</p>
+        </li>
+        <li @onclick="@Exit">
+          <i class="fi fi-tr-address-card"></i>
+          <p>
+            Cerrar sesi&oacute;n
+          </p>
+        </li>
+      </ul>
     </div>
-
     <div>
       <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
     </div>
@@ -62,13 +72,24 @@
     UserContext.OnChange += HandleStateChange;
   }
 
+  protected override async Task OnInitializedAsync() {
+    UserContext.OnChange += HandleStateChange;
+  }
+
   private void OnNavigation(string route, bool hide) {
     NavBarContext.ChangeHideButtons(hide);
 
     NavigationManager.NavigateTo(route);
   }
 
+  private void Exit() {
+    UserContext.User = null;
+
+    UserContext.SetIsActiveUser(false);
+    ShowUserOptions = false;
+  }
+
   private void HandleStateChange() {
-     StateHasChanged(); 
+    StateHasChanged(); 
   }
 }

@@ -1,5 +1,35 @@
-<ModalBase>
-    <div>
-        
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="state-circle @(LoginContext.IsSuccess ? "success-circle" : "warning-circle") centered-container">
+        @if (LoginContext.IsSuccess) {
+          <i class="fi fi-tr-badge-check"></i>
+        } else {
+          <i class="fi fi-tr-circle-xmark"></i>
+        }
     </div>
-</ModalBase>
+    <h3>@LoginContext.LoginStateTitle</h3>
+    <p>
+      @LoginContext.LoginStateMessage
+    </p>
+  </div>
+</div>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+    [Inject]
+    private LoginContext LoginContext { get; set; }
+
+    protected override void OnInitialized() {
+        LoginContext.OnChange += HandleStateChange;
+    }
+
+    protected override async Task OnInitializedAsync() {
+        await Task.Delay(1500);
+        LoginContext.ShutLoginState();
+    }
+
+    private void HandleStateChange() {
+        StateHasChanged();
+    }
+}
