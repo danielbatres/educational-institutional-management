@@ -1,0 +1,9 @@
+.button {
+  padding: 12px 20px;
+}
+
+.left-button {
+  color: var(--dark-color);
+  background: var(--white);
+  border: 1px solid var(--text-color);
+}

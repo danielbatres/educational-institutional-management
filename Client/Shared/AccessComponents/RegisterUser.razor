@@ -1,33 +1,35 @@
-@inject HttpClient HttpClient
-@inject NavigationManager NavigationManager
-
 <AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
-
   <form>
     <div class="label">
       <label for="name">Nombre <strong>*</strong></label>
     </div>
     <input @bind="User.Name" class="input" type="text" placeholder="Ingresa tu nombre" id="name">
-    <div class="label">
+    <div class="label" required>
       <label for="last-name">Apellido <strong>*</strong></label>
     </div>
-    <input @bind="User.LastName" type="text" class="input" placeholder="Ingresa tu apellido">
+    <input @bind="User.LastName" type="text" class="input" placeholder="Ingresa tu apellido" required>
     <div class="label">
-      <i class="fi fi-tr-at"></i>
-      <label for="email">Correo electr&oacute;nico <strong>*</strong></label>
+      <div>
+        <i class="fi fi-tr-at"></i>
+        <label for="email">Correo electr&oacute;nico <strong>*</strong></label>
+      </div>
+      <p class="password-message danger-text">@Warnings[2][0]</p>
     </div>
-    <input @bind="Register.Email" class="input" type="email" placeholder="Ingresar correo electrónico" id="email">
+    <input value="@Email" class="input @((bool) Warnings[2][1] ? "input-error" : "")" type="email" placeholder="Ingresar correo electrónico" id="email" @oninput="@UpdateEmail" required>
     <div class="label">
-      <i class="fi fi-tr-vault"></i>
-      <label for="password">Contrase&ntilde;a <strong>*</strong></label>
+      <div>
+        <i class="fi fi-tr-vault"></i>
+        <label for="password">Contrase&ntilde;a <strong>*</strong></label>
+      </div>
+      <p class="password-message @PasswordClass">@Warnings[3][0]</p>
     </div>
     <div class="input-container">
-      <input @bind="Register.Password" type="password" class="input" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@ValidatePassword">
+      <input value="@Password" type="@(!ShowPassword ? "password" : "text")" class="input @((bool) Warnings[3][1] ? "input-error" : "")" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@UpdatePassword" required>
       <span class="input-icon">
-        <i class="fi fi-tr-low-vision eye"></i>
+        <i class="fi fi-tr-low-vision eye" @onclick="@(() => ShowPassword = !ShowPassword)"></i>
       </span>
     </div>
-    <p class="password-message"></p>
+    
     <div class="login-button">
       <button type="button" class="lgn-button button primary-background-button" @onclick="@CreateNewUser">
         Registrarme
@@ -38,44 +40,3 @@
     </div>
   </form>
 </AccessComponent>
-
-@code {
-  [Inject]
-  private NavBarContext NavBarContext { get; set; }
-  [Inject]
-  private IUserService UserService { get; set; }
-  public User User { get; set; } = new();
-  public Register Register { get; set; } = new();
-  private string PasswordMessage { get; set; }
-
-  private void AssignUserData() {
-    User.Id = Guid.NewGuid();
-    User.Register = new Register {
-        Id = Guid.NewGuid(),
-        AuthenticationMethod = "EmailAndPassword",
-        Email = Register.Email,
-        Password = Register.Password,
-        UserId = User.Id
-    };
-
-    User.OnlineStatus = new OnlineStatus {
-        Id = Guid.NewGuid(),
-        Status = true,
-        LastConnection = DateTime.Now,
-        UserId = User.Id
-    };
-  }
-
-  private void CreateNewUser() {
-    AssignUserData();
-
-    UserService.Register(User);
-
-    NavBarContext.ChangeHideButtons(false);
-    NavigationManager.NavigateTo("/");
-  }
-
-  private void ValidatePassword() {
-
-  }
- }

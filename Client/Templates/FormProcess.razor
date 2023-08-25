@@ -5,12 +5,29 @@
 
   .label {
     display: flex;
+    justify-content: space-between;
     font-size: 1.2rem;
     font-family: var(--font-family);
     font-weight: 400;
     color: var(--dark-color);
     margin-top: 20px;
     margin-bottom: 12px;
+  }
+
+  .label div:first-child {
+    display: flex; 
+  }
+
+  .warning-text {
+    color: var(--warning-color);
+  }
+
+  .danger-text {
+    color: var(--danger-color);
+  }
+
+  .success-text {
+    color: var(--success-color);
   }
 
   .password {
@@ -37,6 +54,11 @@
     padding: 11px;
   }
 
+  .input-error {
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+  }
+
   .input-container {
     position: relative;
   }
@@ -50,6 +72,11 @@
 
   .eye {
     font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .eye:hover {
+    color: var(--light-text-color)
   }
 
   strong {

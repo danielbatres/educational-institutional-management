@@ -17,7 +17,7 @@ public class Validators {
     }
 
     public bool IsValidEmail(string email) {
-        string pattern = @"^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})$";
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
         return Regex.IsMatch(email, pattern);
     }
@@ -27,30 +27,22 @@ public class Validators {
 
         if (password.Length >= 8) score++;
 
-        if (HasUpperCaseLetter(password) && HasLowerCaseLetter(password)) score++;
+        if (HasUpperCaseLetter(password)) score++;
 
         if (HasDigit(password)) score++;
 
         if (HasSpecialCharacter(password)) score++;
 
-        if (score < 2)
-            return PasswordStrength.VeryWeak;
-        else if (score < 3)
+        if (score <= 1)
             return PasswordStrength.Weak;
-        else if (score < 4)
+        else if (score < 3)
             return PasswordStrength.Moderate;
-        else if (score < 5)
-            return PasswordStrength.Strong;
         else
-            return PasswordStrength.VeryStrong;
+            return PasswordStrength.Strong;
     }
 
     private bool HasUpperCaseLetter(string password) {
         return !string.IsNullOrEmpty(password) && password.Any(char.IsUpper);
-    }
-
-    private bool HasLowerCaseLetter(string password) {
-        return !string.IsNullOrEmpty(password) && password.Any(char.IsLower);
     }
 
     private bool HasDigit(string password) {
