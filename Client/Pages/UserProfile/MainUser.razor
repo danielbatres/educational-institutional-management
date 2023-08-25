@@ -1,2 +1,90 @@
 @page "/user-profile/{UserId}"
 
+<PageTitle>Landing | Perfil de usuario</PageTitle>
+
+<LandingComponents MinHeight="min-height: 100vh;">
+  <section>
+    <article class="sidebar-user-profile">
+      <div class="sidebar-user">
+        <h5>
+          Configuraciones de usuario
+        </h5>
+        <ul>
+          <li>
+            <p>Mi cuenta</p>
+          </li>
+        </ul>
+      </div>
+    </article>
+    <article class="user-form">
+      <div class="user-selected-color">
+        <div class="edit-color centered-container">
+          <i class="fi fi-tr-pen-circle"></i>
+        </div>
+      </div>
+      <div class="user-main-info">
+        <div class="user-info">
+          <div class="user-photo-container">
+            <div class="user-profile-photo centered-container">
+              <div class="user-photo"></div>
+            </div>
+          </div>
+          <div class="user-name-email">
+            <h3>@($"{UserContext.User.Name} {UserContext.User.LastName}")</h3>
+            <p>@UserContext.User.Register.Email</p>
+          </div>
+        </div>
+      </div>
+      <div class="user-information">
+        <div>
+          <h4>Informaci&oacute;n de tu cuenta</h4>
+          <p>
+            Informaci&oacute;n de tu perfil, modifica el campo que desees para
+            realizar cambios
+          </p>
+        </div>
+        <div class="buttons">
+          <button type="button" class="transparent-button button">
+            Cancelar
+          </button>
+          <button type="button" class="primary-background-button button">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </article>
+  </section>
+</LandingComponents>
+
+@code {
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+  [Parameter]
+  public String UserId { get; set; } = string.Empty;
+
+  protected override void OnInitialized() {
+    UserContext.OnChange += HandleStateChange;
+  }
+
+  protected override void OnParametersSet() {
+    if (UserContext.User == null) {
+      NavigationManager.NavigateTo("/");
+    }
+
+    string Id = UserContext.User?.Id.ToString() ?? string.Empty;
+
+    if (!UserId.Equals(Id)) {
+      NavigationManager.NavigateTo("/");
+    }
+  }
+
+  private void HandleStateChange() {
+    if (UserContext.User == null) {
+      NavigationManager.NavigateTo("/");
+    }
+
+    StateHasChanged();
+  }
+}

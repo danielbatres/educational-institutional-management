@@ -326,6 +326,80 @@ i {
     margin-bottom: 10px;
 }
 
+.user-form {
+    width: 100%;
+}
+
+.user-selected-color {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    background: var(--light-color)
+}
+
+.edit-color {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    min-width: 26px;
+    min-height: 26px;
+    border-radius: 10px;
+    background: var(--light-color);
+    opacity: .6;
+    cursor: pointer;
+    transition: opacity .1s ease-in-out;
+}
+
+.edit-color:hover {
+    opacity: .8;
+}
+
+.user-main-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    position: relative;
+    padding: 16px;
+}
+
+.user-photo-container {
+    width: 160px;
+    height: 70px;
+}
+
+.user-profile-photo {
+    position: absolute;
+    min-width: 130px;
+    min-height: 130px;
+    background-color: var(--white);
+    border-radius: 100%;
+    top: -50px;
+    left: 20px;
+}
+
+.user-photo {
+    min-width: 110px;
+    min-height: 110px;
+    border-radius: 100%;
+    background: var(--text-color);
+}
+
+.user-name-email p:first-child {
+    color: var(--dark-color);
+    font-size: var(--title);
+}
+
+.user-information {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1440px) {
     :root {
         --sm-text: 0.6rem;

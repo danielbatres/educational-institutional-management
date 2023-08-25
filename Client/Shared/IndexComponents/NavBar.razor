@@ -4,7 +4,7 @@
   <div class="navbar-content">
     <div class="user-options @(!ShowUserOptions ? "hide" : "")">
       <ul>
-        <li>
+        <li @onclick="@GoToProfile" >
           <i class="fi fi-tr-arrow-up-right-from-square"></i>
           <p>Ir a mi perfil</p>
         </li>
@@ -24,8 +24,7 @@
         HideOnMobile="hide-on-mobile"
         Styles="margin-right: 40px; justify-content: center;"
       />
-      @if (!NavBarContext.HideButtons) {
-        @if (UserContext.IsActiveUser) {
+      @if (UserContext.IsActiveUser) {
           <div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
             <div class="user-image"></div>
             <div class="user-info-data">
@@ -37,25 +36,26 @@
               <div class="profile-options"></div>
             </div>
           </div>
-        } else {
-          <div class="buttons">
-            <button
-              type="button"
-              class="button transparent-button"
-            @onclick="@(() => OnNavigation("/access", true))"
-            >
-              Iniciar sesi&oacute;n
-            </button>
-            <button
-              type="button"
-              class="button primary-background-button"
-            @onclick="@(() => OnNavigation("/access/register", true))"
-            >
-              Registrarme
-            </button>
-          </div>
         }
+      @if (!NavBarContext.HideButtons && !UserContext.IsActiveUser) {
+        <div class="buttons">
+          <button
+            type="button"
+            class="button transparent-button"
+          @onclick="@(() => OnNavigation("/access", true))"
+          >
+            Iniciar sesi&oacute;n
+          </button>
+          <button
+            type="button"
+            class="button primary-background-button"
+          @onclick="@(() => OnNavigation("/access/register", true))"
+          >
+            Registrarme
+          </button>
+        </div>
       }
+      
     </div>
   </div>
 </div>
@@ -79,13 +79,19 @@
   }
 
   private void Exit() {
-    UserContext.User = null;
+    UserContext.SetUser(null);
 
     UserContext.SetIsActiveUser(false);
     ShowUserOptions = false;
+    NavBarContext.ChangeHideButtons(false);
+  }
+
+  private void GoToProfile() {
+    ShowUserOptions = !ShowUserOptions;
+    NavigationManager.NavigateTo($"/user-profile/{UserContext.User.Id}");
   }
 
   private void HandleStateChange() {
-    StateHasChanged(); 
+    StateHasChanged();
   }
 }

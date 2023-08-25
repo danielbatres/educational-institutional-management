@@ -25,8 +25,6 @@ public partial class RegisterUser {
       Email = string.Empty
     }
   };
-  private string Password { get; set; } = string.Empty;
-  private string Email { get; set; } = string.Empty;
   private string PasswordClass { get; set; } = string.Empty;
   private bool ShowPassword { get; set; } = false;
   private List<List<object>> Warnings { get; set; } = new List<List<object>>() { 

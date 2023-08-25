@@ -15,14 +15,14 @@
     <p class="danger-text">@LoginInfo[1][0]</p>
   </div>
   <div class="input-container">
-    <input @bind="@User.Register.Password" type="password" class="input  @(!(bool) LoginInfo[1][1] ? "input-error" : "")" placeholder="Ingresa contraseña" id="password" >
+    <input @bind="@User.Register.Password" type="@(!ShowPassword ? "password" : "text")" class="input  @(!(bool) LoginInfo[1][1] ? "input-error" : "")" placeholder="Ingresa contraseña" id="password" >
     <span class="input-icon">
-      <i class="fi fi-tr-low-vision eye"></i>
+      <i class="fi fi-tr-low-vision eye" @onclick="@(() => ShowPassword = !ShowPassword)"></i>
     </span>
   </div>
   <ul>
     <li>
-      <input type="checkbox" class="checkbox" >
+      <input type="checkbox" class="checkbox">
       <p class="sm-text">Recuerdame</p>
     </li>
     <li>
@@ -54,13 +54,13 @@
     new List<object> { "", true },
     new List<object> { "", true }
   };
-
   private User User { get; set; } = new() {
     Register = new() {
       Email = string.Empty,
       Password = string.Empty
     }
   };
+  private bool ShowPassword { get; set; } = false;
 
   private async Task AuthUser() {
     LoadingContext.SetLoading(true);

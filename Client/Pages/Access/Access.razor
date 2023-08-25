@@ -8,3 +8,12 @@
   </section>
   <section class="sectioned-container"></section>
 </FormProcess>
+
+@code {
+  [Inject]
+  private NavBarContext NavBarContext { get; set;}
+
+  protected override void OnInitialized() {
+    NavBarContext.ChangeHideButtons(true);
+  }
+}

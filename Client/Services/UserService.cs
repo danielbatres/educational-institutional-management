@@ -46,17 +46,17 @@ public class UserService : BaseService, IUserService {
       foreach (var userItem in Users) {
         if (userItem.Register.Email.Equals(user.Register.Email)) {
           SetLoginInfo(0);
-        }
 
-        if (VerifyPassword(userItem.Register.Password, user.Register.Password)) {
-          SetLoginInfo(1);
+          if (VerifyPassword(userItem.Register.Password, user.Register.Password)) {
+            SetLoginInfo(1);
+          }
         }
       }
 
       Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
-        UserContext.User = Users[0];
+        UserContext.SetUser(Users[0]);
 
         UserContext.SetIsActiveUser(true);
       }

@@ -32,17 +32,3 @@
     </main>
 </div>
 
-@code {
-    [Inject]
-    private UserContext UserContext { get; set; }
-
-    protected override void OnInitialized() {
-        UserContext.OnChange += HandleStateChange;
-    }
-
-    
-
-    private void HandleStateChange() {
-        StateHasChanged();
-    }
-}
