@@ -62,17 +62,13 @@
 
 @code {
   [Inject]
-  public UserContext UserContext { get; set; }
+  private UserContext UserContext { get; set; }
   [Inject]
-  public NavBarContext NavBarContext { get; set; }
+  private NavBarContext NavBarContext { get; set; }
   private bool ShowUserOptions { get; set; } = false;
 
   protected override void OnInitialized() {
     NavBarContext.OnChange += HandleStateChange;
-    UserContext.OnChange += HandleStateChange;
-  }
-
-  protected override async Task OnInitializedAsync() {
     UserContext.OnChange += HandleStateChange;
   }
 

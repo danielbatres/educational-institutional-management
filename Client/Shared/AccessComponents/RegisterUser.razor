@@ -2,20 +2,22 @@
   <form>
     <div class="label">
       <label for="name">Nombre <strong>*</strong></label>
+      <p class="danger-text">@Warnings[0][0]</p>
     </div>
-    <input @bind="User.Name" class="input" type="text" placeholder="Ingresa tu nombre" id="name">
-    <div class="label" required>
+    <input value="@User.Name" class="input @((bool) Warnings[0][1] ? "input-error" : "")" type="text" placeholder="Ingresa tu nombre" id="name" @oninput="@UpdateName" required>
+    <div class="label">
       <label for="last-name">Apellido <strong>*</strong></label>
+      <p class="danger-text">@Warnings[1][0]</p>
     </div>
-    <input @bind="User.LastName" type="text" class="input" placeholder="Ingresa tu apellido" required>
+    <input value="@User.LastName" type="text" class="input @((bool) Warnings[1][1] ? "input-error" : "")" placeholder="Ingresa tu apellido" @oninput="@UpdateLastName" required>
     <div class="label">
       <div>
         <i class="fi fi-tr-at"></i>
         <label for="email">Correo electr&oacute;nico <strong>*</strong></label>
       </div>
-      <p class="password-message danger-text">@Warnings[2][0]</p>
+      <p class="danger-text">@Warnings[2][0]</p>
     </div>
-    <input value="@Email" class="input @((bool) Warnings[2][1] ? "input-error" : "")" type="email" placeholder="Ingresar correo electrónico" id="email" @oninput="@UpdateEmail" required>
+    <input value="@User.Register.Email" class="input @((bool) Warnings[2][1] ? "input-error" : "")" type="email" placeholder="Ingresar correo electrónico" id="email" @oninput="@UpdateEmail" required>
     <div class="label">
       <div>
         <i class="fi fi-tr-vault"></i>
@@ -24,7 +26,7 @@
       <p class="password-message @PasswordClass">@Warnings[3][0]</p>
     </div>
     <div class="input-container">
-      <input value="@Password" type="@(!ShowPassword ? "password" : "text")" class="input @((bool) Warnings[3][1] ? "input-error" : "")" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@UpdatePassword" required>
+      <input value="@User.Register.Password" type="@(!ShowPassword ? "password" : "text")" class="input @((bool) Warnings[3][1] ? "input-error" : "")" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@UpdatePassword" required>
       <span class="input-icon">
         <i class="fi fi-tr-low-vision eye" @onclick="@(() => ShowPassword = !ShowPassword)"></i>
       </span>
@@ -35,7 +37,7 @@
         Registrarme
       </button>
       <p>
-        ¿Ya tienes una cuenta? <b>Iniciar sesi&oacute;n</b>
+        ¿Ya tienes una cuenta? <b @onclick="@(() => NavigationManager.NavigateTo("/access"))">Iniciar sesi&oacute;n</b>
       </p>
     </div>
   </form>

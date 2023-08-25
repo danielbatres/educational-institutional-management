@@ -1,15 +1,21 @@
 <AccessComponent Title="¡Bienvenido de vuelta!" Description="Ingresa tu informacion para ingresar" MaxWidth="max-width: 400px;">
   <div class="label">
-    <i class="fi fi-tr-at"></i>
-    <label for="email">Correo electr&oacute;nico</label>
+    <div>
+      <i class="fi fi-tr-at"></i>
+      <label for="email">Correo electr&oacute;nico</label>
+    </div>
+    <p class="danger-text">@LoginInfo[0][0]</p>
   </div>
-  <input @bind="@User.Register.Email" class="input" type="email" placeholder="Ingresar correo electrónico" id="email">
+  <input @bind="@User.Register.Email" class="input @(!(bool) LoginInfo[0][1] ? "input-error" : "")" type="email" placeholder="Ingresar correo electrónico" id="email">
   <div class="label">
-    <i class="fi fi-tr-vault"></i>
-    <label for="password">Contrase&ntilde;a</label>
+    <div>
+      <i class="fi fi-tr-vault"></i>
+      <label for="password">Contrase&ntilde;a</label>
+    </div>
+    <p class="danger-text">@LoginInfo[1][0]</p>
   </div>
   <div class="input-container">
-    <input @bind="@User.Register.Password" type="password" class="input" placeholder="Ingresa contraseña" id="password" >
+    <input @bind="@User.Register.Password" type="password" class="input  @(!(bool) LoginInfo[1][1] ? "input-error" : "")" placeholder="Ingresa contraseña" id="password" >
     <span class="input-icon">
       <i class="fi fi-tr-low-vision eye"></i>
     </span>
@@ -28,7 +34,7 @@
       Iniciar sesi&oacute;n
     </button>
     <p>
-      ¿No tienes una cuenta? <b>Reg&iacute;strate</b>
+      ¿No tienes una cuenta? <b @onclick="@(() => NavigationManager.NavigateTo("/access/register"))">Reg&iacute;strate</b>
     </p>
   </div>
 </AccessComponent>
@@ -44,7 +50,10 @@
   private LoadingContext LoadingContext { get; set; }
   [Inject]
   private LoginContext LoginContext { get; set; }
-  private List<User> Users;
+  private List<List<object>> LoginInfo { get; set; } = new() {
+    new List<object> { "", true },
+    new List<object> { "", true }
+  };
 
   private User User { get; set; } = new() {
     Register = new() {
@@ -57,11 +66,11 @@
     LoadingContext.SetLoading(true);
     LoadingContext.SetLoadingMessage("Buscando tu usuario...");
 
-    bool loginState = await UserService.LoginUser(User);
+    LoginInfo = await UserService.LoginUser(User);
     
     LoadingContext.SetLoading(false);
 
-    if (!loginState) {
+    if (!((bool) LoginInfo[0][1]) || !((bool) LoginInfo[1][1])) {
       LoginContext.SetState(false);
       LoginContext.SetShowLoginStateModal(true, "No se encontro el usuario", "Fallo al inciar sesión");
     } else {

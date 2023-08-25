@@ -2,20 +2,17 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using edu_institutional_management.Shared.Models;
 using edu_institutional_management.Client.Containers;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.AspNetCore.Components;
 using System.Security.Cryptography;
 using System.Text;
+using edu_institutional_management.Client.Shared.AccessComponents;
 
 namespace edu_institutional_management.Client.Services;
 
 public class UserService : BaseService, IUserService {
   private UserContext UserContext { get; set; }
-  private NavigationManager NavigationManager { get; set; }
 
-  public UserService(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager) : base(httpClient) {
+  public UserService(HttpClient httpClient, UserContext userContext) : base(httpClient) {
     UserContext = userContext;
-    NavigationManager = navigationManager;
   }
 
   public async Task Register(User user) {
@@ -33,21 +30,39 @@ public class UserService : BaseService, IUserService {
     return JsonSerializer.Deserialize<List<User>>(content, JsonOptions) ?? new();
   }
 
-  public async Task<bool> LoginUser(User user) {
+  public async Task<List<List<object>>> LoginUser(User user) {
     List<User> Users = await GetUsers();
+    List<List<object>> LoginInfo = new() { 
+      new List<object> { "Correo electrónico invalido", false }, 
+      new List<object> { "Contraseña incorrecta", false } 
+    };
+
+    void SetLoginInfo(int index) {
+      LoginInfo[index][0] = string.Empty;
+      LoginInfo[index][1] = true;
+    }
 
     if (Users.Count != 0) {
+      foreach (var userItem in Users) {
+        if (userItem.Register.Email.Equals(user.Register.Email)) {
+          SetLoginInfo(0);
+        }
+
+        if (VerifyPassword(userItem.Register.Password, user.Register.Password)) {
+          SetLoginInfo(1);
+        }
+      }
+
       Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
         UserContext.User = Users[0];
 
         UserContext.SetIsActiveUser(true);
-        return true;
       }
     }
 
-    return false;
+    return LoginInfo;
   }
 
   private string HashPassword(string password) {
@@ -91,5 +106,5 @@ public class UserService : BaseService, IUserService {
 public interface IUserService {
   Task Register(User user);
   Task<List<User>> GetUsers();
-  Task<bool> LoginUser(User user);
+  Task<List<List<object>>> LoginUser(User user);
 }

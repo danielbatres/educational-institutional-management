@@ -15,7 +15,16 @@ public partial class RegisterUser {
   private IUserService UserService { get; set; }
   [Inject]
   private Validators Validators { get; set; }
-  public User User { get; set; } = new();
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
+  public User User { get; set; } = new() {
+    Name = string.Empty,
+    LastName = string.Empty,
+    Register = new() {
+      Password = string.Empty,
+      Email = string.Empty
+    }
+  };
   private string Password { get; set; } = string.Empty;
   private string Email { get; set; } = string.Empty;
   private string PasswordClass { get; set; } = string.Empty;
@@ -27,11 +36,12 @@ public partial class RegisterUser {
     new List<object> { "", false } 
   };
   private int ErrorsQuantity { get; set; } = 0;
+  private string CharactersMessage { get; set; } = "Caracteres permitidos 2 - 40";
   
   private void ValidatePassword() {
     Warnings[3][1] = false;
 
-      switch (Validators.IsValidPassword(Password)) {
+      switch (Validators.IsValidPassword(User.Register.Password)) {
         case PasswordStrength.Weak:
           Warnings[3][0] = "Contraseña debil";
           Warnings[3][1] = true;
@@ -50,6 +60,7 @@ public partial class RegisterUser {
           break;
         default:
           Warnings[3][0] = string.Empty;
+          Warnings[3][1] = true;
           ErrorsQuantity++;
           break;
     }
@@ -59,24 +70,37 @@ public partial class RegisterUser {
     Warnings[2][0] = string.Empty;
     Warnings[2][1] = false;
 
-    if (!Validators.IsValidEmail(Email)) {
+    if (!Validators.IsValidEmail(User.Register.Email)) {
       Warnings[2][0] = "Correo electrónico invalido";
       Warnings[2][1] = true;
       ErrorsQuantity++;
-    } else {
+    }
+  }
+
+  private void ValidateName() {
+    SetCharacters(ValidateText(User.Name), 0);
+  }
+
+  private void ValidateLastName() {
+    SetCharacters(ValidateText(User.LastName), 1);
+  }
+
+  private void SetCharacters(bool set, int index) {
+    Warnings[index][0] = string.Empty;
+    Warnings[index][1] = false;
+
+    if (set) {
+      Warnings[index][0] = CharactersMessage;
+      Warnings[index][1] = true;
       ErrorsQuantity++;
     }
   }
 
   private void AssignUserData() {
     User.Id = Guid.NewGuid();
-    User.Register = new Register {
-      Id = Guid.NewGuid(),
-      AuthenticationMethod = "EmailAndPassword",
-      Email = Email,
-      Password = Password,
-      UserId = User.Id
-    };
+    User.Register.Id = Guid.NewGuid();
+    User.Register.AuthenticationMethod = "EmailAndPassword";
+    User.Register.UserId = User.Id;
 
     User.OnlineStatus = new OnlineStatus {
       Id = Guid.NewGuid(),
@@ -86,36 +110,52 @@ public partial class RegisterUser {
     };
   }
 
-  private void CreateNewUser() {
+  private async Task CreateNewUser() {
+    LoadingContext.SetLoading(true);
+    LoadingContext.SetLoadingMessage("Registrando tu usuario...");
+
     MakeValidations();
 
     if (ErrorsQuantity == 0) {
       AssignUserData();
-      UserService.Register(User);
 
+      await UserService.Register(User);
       NavBarContext.ChangeHideButtons(false);
       NavigationManager.NavigateTo("/");
     }
 
-    ErrorsQuantity = 0;
+    LoadingContext.SetLoading(false);
+  }
+
+  private void UpdateName(ChangeEventArgs e) {
+    User.Name = e.Value.ToString();
+    ValidateName();
+  }
+
+  private void UpdateLastName(ChangeEventArgs e) {
+    User.LastName = e.Value.ToString();
+    ValidateLastName();
   }
 
   private void UpdatePassword(ChangeEventArgs e) {
-    Password = e.Value.ToString();
+    User.Register.Password = e.Value.ToString();
     ValidatePassword();
   }
 
   private void UpdateEmail(ChangeEventArgs e) {
-    Email = e.Value.ToString();
+    User.Register.Email = e.Value.ToString();
     ValidateEmail();
   }
 
-  private void ValidateText(string text) {
-    Validators.MaxMinLength(text, 3, "min");
-    Validators.MaxMinLength(text, 14, "max");
+  private bool ValidateText(string text) {
+    return Validators.MaxMinLength(text, 2, "min") || Validators.MaxMinLength(text, 40, "max");
   }
 
   private void MakeValidations() {
+    ErrorsQuantity = 0;
+
+    ValidateName();
+    ValidateLastName();
     ValidateEmail();
     ValidatePassword();
   }
