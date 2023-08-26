@@ -6,14 +6,31 @@
   <section>
     <article class="sidebar-user-profile">
       <div class="sidebar-user">
-        <h5>
-          Configuraciones de usuario
-        </h5>
-        <ul>
-          <li>
-            <p>Mi cuenta</p>
-          </li>
-        </ul>
+        <div>
+          <h5>
+            Configuraciones de usuario
+          </h5>
+          <ul>
+            <li>
+              <p>Mi cuenta</p>
+            </li>
+          </ul>
+          <h5>
+            Acceso de trabajo
+          </h5>
+          <ul>
+            <li>
+              <p>Solicitudes de ingreso</p>
+            </li>
+          </ul>
+        </div>
+        <div class="exit-sesion">
+          <ul>
+            <li>
+              <p>Cerrar sesi&oacute;n</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </article>
     <article class="user-form">
@@ -52,6 +69,71 @@
           </button>
         </div>
       </div>
+      <form class="user-form-inputs">
+        <fieldset>
+          <div class="label">
+            <label for="name">Nombre <strong>*</strong></label>
+          </div>
+          <input value="@UserContext.User.Name" type="text" class="input" placeholder="Ingresa tu nombre" id="name">
+          <p class="recommendation-message">Te recomendamos utilizar tu nombre real</p>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="last-name">Apellido <strong>*</strong></label>
+          </div>
+          <input value="@UserContext.User.LastName" type="text" class="input" placeholder="Ingresa tu apellido" id="last-name">
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="nickname">Username <strong>*</strong></label>
+          </div>
+          <input type="text" class="input" placeholder="Ingresa tu username" id="nickname">
+          <p class="recommendation-message">Tu username es &uacute;nico</p>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="name">Fecha de nacimiento</label>
+          </div>
+          <div class="birth-date-inputs">
+            <input type="text" maxlength="2" class="input" placeholder="dd">
+            <input type="text" maxlength="2" class="input" placeholder="mm">
+            <input type="text" maxlength="4" class="input" placeholder="yyyy">
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="phone-number">N&uacute;mero de tel&eacute;no</label>
+          </div>
+          <input value="@UserContext.User.PhoneNumber" id="phone-number" type="text" class="input" placeholder="Ingresar número de teléfono">
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="email">Correo electr&oacute;nico <strong>*</strong></label>
+          </div>
+          <input value="@UserContext.User.Register.Email" id="email" type="email" class="input" placeholder="Ingresar correo eletrónico">
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="bio">Biograf&iacute;a</label>
+            <p>1024</p>
+          </div>
+          <textarea value="@UserContext.User.Bio" name="biography" id="bio" maxlength="1024" placeholder="Ingresa tu biografía"></textarea>
+          <p class="recommendation-message">Una descripci&oacute;n breve para tu perfil</p>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="location">Ubicaci&oacute;n </label>
+          </div>
+          <input value="@UserContext.User.Location" id="location" type="text" class="input" placeholder="Ingresar ubicación">
+          <p class="recommendation-message">Cuentanos de donde eres</p>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="change-password">Contrase&ntilde;a</label>
+          </div>
+          <button id="change-password" type="button" class="button primary-background-button">Cambiar contrase&ntilde;a</button>
+        </fieldset>
+      </form>
     </article>
   </section>
 </LandingComponents>

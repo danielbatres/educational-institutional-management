@@ -10,6 +10,7 @@ public class User {
   public int Age { get; set; }
   public string? PhoneNumber { get; set; }
   public string? Bio { get; set; }
+  public string? Location { get; set; }
   public Guid? InstitutionId { get; set; }
   public virtual Institution? Institution { get; set; }
   public virtual OnlineStatus OnlineStatus { get; set; }

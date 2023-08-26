@@ -26,7 +26,7 @@
       <p class="password-message @PasswordClass">@Warnings[3][0]</p>
     </div>
     <div class="input-container">
-      <input value="@User.Register.Password" type="@(!ShowPassword ? "password" : "text")" class="input @((bool) Warnings[3][1] ? "input-error" : "")" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@UpdatePassword" required>
+      <input value="@User.Register.Password" type="@(!ShowPassword ? "password" : "text")" class="input @((bool) Warnings[3][1] ? "input-error" : "")" placeholder="Ingresa tu nueva contraseña" id="password" @oninput="@UpdatePassword" @onkeydown="HandleKeyPress" required>
       <span class="input-icon">
         <i class="fi fi-tr-low-vision eye" @onclick="@(() => ShowPassword = !ShowPassword)"></i>
       </span>

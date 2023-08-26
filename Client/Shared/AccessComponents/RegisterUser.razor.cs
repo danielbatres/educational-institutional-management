@@ -3,6 +3,7 @@ using edu_institutional_management.Client.Containers;
 using edu_institutional_management.Client.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace edu_institutional_management.Client.Shared.AccessComponents;
 
@@ -147,6 +148,10 @@ public partial class RegisterUser {
 
   private bool ValidateText(string text) {
     return Validators.MaxMinLength(text, 2, "min") || Validators.MaxMinLength(text, 40, "max");
+  }
+
+  private async Task HandleKeyPress(KeyboardEventArgs e) {
+    if (e.Key == "Enter") await CreateNewUser();
   }
 
   private void MakeValidations() {

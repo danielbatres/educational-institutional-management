@@ -14,10 +14,26 @@ section {
 }
 
 .sidebar-user {
-  background: var(--light-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--lightest-color);
   height: 100%;
   border-radius: 10px;
   margin: 10px;
+}
+
+.exit-sesion {
+  margin-bottom: 16px;
+}
+
+.exit-sesion ul li {
+  background: var(--light-danger-color);
+  color: var(--danger-color);
+}
+
+.exit-sesion ul li p {
+  color: var(--danger-color);
 }
 
 h5 {
@@ -43,10 +59,13 @@ ul {
 
 ul li {
   background: var(--dark-color);
-  color: var(--white);
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
+}
+
+ul li p {
+  color: var(--white);
 }
 
 .primary-background-button {
@@ -65,4 +84,61 @@ ul li {
 .user-information {
   padding: 0px 20px 20px;
   border-bottom: var(--light-border);
+}
+
+.user-form-inputs {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recommendation-message {
+  margin-top: 6px;
+  font-size: var(--small-text);
+}
+
+.birth-date-inputs {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+fieldset {
+  border: none;
+  max-width: 50%;
+  width: 100%;
+  padding: 4px 8px 18px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.label div:first-child {
+  display: flex;
+}
+
+.input {
+  width: 100%;
+}
+
+textarea {
+  font-family: var(--font-family);
+  font-size: var(--regular-text);
+  font-weight: 300;
+  min-height: 100px;
+  width: 100%;
+  border: var(--light-border);
+  resize: vertical;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  outline: none;
+}
+
+strong {
+  color: var(--danger-color);
 }
