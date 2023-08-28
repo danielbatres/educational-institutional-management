@@ -66,6 +66,10 @@ public class UserService : BaseService, IUserService {
       Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
+        //var response = await HttpClient.GetAsync("api/user/login-user");
+        //var content = await CheckResponseContent(response);
+
+        //UserContext.SetUser(JsonSerializer.Deserialize<User>(content, JsonOptions) ?? new());
         UserContext.SetUser(Users[0]);
 
         UserContext.SetIsActiveUser(true);

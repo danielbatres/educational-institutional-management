@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -19,6 +20,22 @@ public class UserController : ControllerBase {
   [HttpGet]
   public IActionResult Get() {
     return Ok(userService.Get());
+  }
+
+  [HttpGet]
+  [Route("login-user")]
+  public async Task<ActionResult<User>> LoginUser(User user) {
+    User loggedInUser = userService.LoginUser(user);
+
+    if (loggedInUser != null) {
+      var claim = new Claim(ClaimTypes.Name, loggedInUser.Register.Email);
+      var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
+      var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+      await HttpContext.SignInAsync(claimsPrincipal);
+    }
+
+    return Ok(loggedInUser);
   }
 
   [HttpPost]

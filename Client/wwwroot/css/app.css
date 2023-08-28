@@ -185,6 +185,29 @@ i {
     cursor: not-allowed;
 }
 
+.google-button {
+    width: 100%;
+    background: none;
+    border: var(--light-border);
+    color: var(--text-color);
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 0px;
+    margin: 30px 0px 20px;
+}
+
+.google-logo {
+    min-width: 25px;
+    min-height: 25px;
+    background-image: url("https://i.ibb.co/0mzL0dq/7123025-logo-google-g-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 8px;
+}
+
 .line-over-title {
     width: 200px;
     height: 3px;
