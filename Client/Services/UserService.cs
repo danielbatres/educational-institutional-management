@@ -23,6 +23,16 @@ public class UserService : BaseService, IUserService {
     await CheckResponse(response);
   }
 
+  public async Task Update(User user) {
+    if (user != null) {
+      var response = await HttpClient.PutAsJsonAsync("api/user/update", user);
+
+      await CheckResponse(response);
+
+      UserContext.SetUser(user);
+    }
+  }
+
   public async Task<List<User>> GetUsers() {
     var response = await HttpClient.GetAsync("api/user");
     var content = await CheckResponseContent(response);
@@ -105,6 +115,7 @@ public class UserService : BaseService, IUserService {
 
 public interface IUserService {
   Task Register(User user);
+  Task Update(User user);
   Task<List<User>> GetUsers();
   Task<List<List<object>>> LoginUser(User user);
 }

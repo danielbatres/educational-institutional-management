@@ -1,5 +1,9 @@
 @inject NavigationManager NavigationManager
 
+<div
+  class="navigation-mobile @(ShowMobileNavigation ? "show-mobile" : "")"
+@onclick="@(() => ShowMobileNavigation = !ShowMobileNavigation)"></div>
+
 <div class="navbar-container">
   <div class="navbar-content">
     <div class="user-options @(!ShowUserOptions ? "hide" : "")">
@@ -18,6 +22,9 @@
     </div>
     <div>
       <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
+    </div>
+    <div class="nav-mobile">
+      <i class="fi fi-tr-bars-staggered" @onclick="@(() => ShowMobileNavigation = !ShowMobileNavigation)"></i>
     </div>
     <div class="navigation">
       <NavigationLinks
@@ -66,6 +73,7 @@
   [Inject]
   private NavBarContext NavBarContext { get; set; }
   private bool ShowUserOptions { get; set; } = false;
+  private bool ShowMobileNavigation { get; set; } = false;
 
   protected override void OnInitialized() {
     NavBarContext.OnChange += HandleStateChange;

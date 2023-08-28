@@ -1,5 +1,6 @@
 <AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
   <form>
+    <button type="button" class="button" @onclick="@GoogleSignIn">Registrarme con Google</button>
     <div class="label">
       <label for="name">Nombre <strong>*</strong></label>
       <p class="danger-text">@Warnings[0][0]</p>

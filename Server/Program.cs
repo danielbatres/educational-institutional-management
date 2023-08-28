@@ -1,5 +1,6 @@
 using edu_institutional_management.Server;
 using edu_institutional_management.Server.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
+
+builder.Services.AddAuthentication(options => {
+  options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie().AddGoogle(googleOptions => {
+  googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
+  googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
+});
 
 var app = builder.Build();
 

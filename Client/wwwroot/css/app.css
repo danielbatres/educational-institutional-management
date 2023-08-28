@@ -178,10 +178,10 @@ i {
     transition: border, color 200ms ease-in-out 0.01s;
 }
 
-.not-enable-button {
-    background: var(--light-color);
-    color: var(--text-color);
-    border: 1px solid var(--light-color);
+.not-enabled-button {
+    background: var(--light-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--light-color) !important;
     cursor: not-allowed;
 }
 

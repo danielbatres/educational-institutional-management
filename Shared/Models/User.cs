@@ -17,4 +17,23 @@ public class User {
   public virtual Register Register { get; set; }
   public Guid? InstitutionRegisterId { get; set; }
   public virtual InstitutionRegister? InstitutionRegister { get; set;}
+
+  public User Clone() {
+    return new User() {
+      Id = Id, 
+      Name = Name, 
+      LastName = LastName, 
+      Age = Age,
+      Bio = Bio,
+      PhoneNumber = PhoneNumber,
+      BirthDate = BirthDate,
+      Location = Location,
+      Institution = Institution,
+      InstitutionId = InstitutionId,
+      InstitutionRegister = InstitutionRegister,
+      InstitutionRegisterId = InstitutionRegisterId,
+      OnlineStatus = OnlineStatus,
+      Register = Register
+    };
+  }
 }

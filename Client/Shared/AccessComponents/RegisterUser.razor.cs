@@ -36,6 +36,10 @@ public partial class RegisterUser {
   };
   private int ErrorsQuantity { get; set; } = 0;
   private string CharactersMessage { get; set; } = "Caracteres permitidos 2 - 40";
+
+  private void GoogleSignIn() {
+    NavigationManager.NavigateTo("/api/user/GoogleSignIn", true);
+  }
   
   private void ValidatePassword() {
     Warnings[3][1] = false;

@@ -54,6 +54,21 @@
     background: var(--white);
 }
 
+.navbar-content .nav-mobile {
+    display: none;
+}
+
+.navigation-mobile {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    background: var(--white);
+    border-left: var(--light-border);
+    z-index: 1000;
+    transition: right 0.4s ease-in-out;
+    right: -80%;
+}
+
 .user-options ul, .user-options ul li {
     width: 100%;
 }
@@ -153,7 +168,19 @@
         padding: 0px 30px;
     }
     
-    .buttons {
-        visibility: hidden;
+    .navbar-content .nav-mobile {
+        display: flex;
+    }
+
+    .navbar-content .buttons {
+        display: none;
+    }
+
+    .show-mobile {
+        right: 0px;
+    }
+
+    .navbar-content .navigation {
+        display: none;
     }
 }
