@@ -4,7 +4,6 @@ using edu_institutional_management.Shared.Models;
 using edu_institutional_management.Client.Containers;
 using System.Security.Cryptography;
 using System.Text;
-using edu_institutional_management.Client.Shared.AccessComponents;
 
 namespace edu_institutional_management.Client.Services;
 
@@ -66,7 +65,7 @@ public class UserService : BaseService, IUserService {
       Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
-        //var response = await HttpClient.GetAsync("api/user/login-user");
+        var response = await HttpClient.PostAsJsonAsync("api/user/login-user", Users[0]);
         //var content = await CheckResponseContent(response);
 
         //UserContext.SetUser(JsonSerializer.Deserialize<User>(content, JsonOptions) ?? new());

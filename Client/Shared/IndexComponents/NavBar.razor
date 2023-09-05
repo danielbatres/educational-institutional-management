@@ -31,38 +31,43 @@
         HideOnMobile="hide-on-mobile"
         Styles="margin-right: 40px; justify-content: center;"
       />
-      @if (UserContext.IsActiveUser) {
-          <div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
-            <div class="user-image"></div>
-            <div class="user-info-data">
-              <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
-              <p>@($"{UserContext.User.Register.Email}")</p>
+      <AuthorizeView Policy="MyPolicy">
+        <Authorized>
+          @if (UserContext.IsActiveUser) {
+            <div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
+              <div class="user-image"></div>
+              <div class="user-info-data">
+                <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
+                <p>@($"{UserContext.User.Register.Email}")</p>
+              </div>
+              <div class="select-profile-options">
+                <i class="fi fi-tr-angle-double-small-down"></i>
+                <div class="profile-options"></div>
+              </div>
             </div>
-            <div class="select-profile-options">
-              <i class="fi fi-tr-angle-double-small-down"></i>
-              <div class="profile-options"></div>
+          }
+        </Authorized>
+        <NotAuthorized>
+          @if (!NavBarContext.HideButtons && !UserContext.IsActiveUser) {
+            <div class="buttons">
+              <button
+                type="button"
+                class="button transparent-button"
+              @onclick="@(() => OnNavigation("/access", true))"
+              >
+                Iniciar sesi&oacute;n
+              </button>
+              <button
+                type="button"
+                class="button primary-background-button"
+              @onclick="@(() => OnNavigation("/access/register", true))"
+              >
+                Registrarme
+              </button>
             </div>
-          </div>
-        }
-      @if (!NavBarContext.HideButtons && !UserContext.IsActiveUser) {
-        <div class="buttons">
-          <button
-            type="button"
-            class="button transparent-button"
-          @onclick="@(() => OnNavigation("/access", true))"
-          >
-            Iniciar sesi&oacute;n
-          </button>
-          <button
-            type="button"
-            class="button primary-background-button"
-          @onclick="@(() => OnNavigation("/access/register", true))"
-          >
-            Registrarme
-          </button>
-        </div>
-      }
-      
+          }
+        </NotAuthorized>
+      </AuthorizeView>
     </div>
   </div>
 </div>
