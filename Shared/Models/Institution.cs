@@ -10,6 +10,7 @@ public class Institution {
   public string Email { get; set; }
   public string WebSite { get; set; }
   public string Country { get; set; }
+  public string DataBaseConnectionName { get; set; }
   public InstitutionRegister InstitutionRegister { get; set; }
   public virtual ICollection<User>? Users { get; set; }
 }
