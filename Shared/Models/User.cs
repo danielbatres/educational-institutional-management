@@ -4,6 +4,7 @@ namespace edu_institutional_management.Shared.Models;
 
 public class User {
   public Guid Id { get; set; }
+  public string UserName { get; set; }
   public string? Name { get; set; }
   public string? LastName { get; set; }
   public DateTime? BirthDate { get; set; }
@@ -15,8 +16,7 @@ public class User {
   public virtual Institution? Institution { get; set; }
   public virtual OnlineStatus OnlineStatus { get; set; }
   public virtual Register Register { get; set; }
-  public Guid? InstitutionRegisterId { get; set; }
-  public virtual InstitutionRegister? InstitutionRegister { get; set;}
+  public virtual Payment? Payment { get; set; }
 
   public User Clone() {
     return new User() {
@@ -30,8 +30,6 @@ public class User {
       Location = Location,
       Institution = Institution,
       InstitutionId = InstitutionId,
-      InstitutionRegister = InstitutionRegister,
-      InstitutionRegisterId = InstitutionRegisterId,
       OnlineStatus = OnlineStatus,
       Register = Register
     };

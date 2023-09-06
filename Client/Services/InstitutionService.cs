@@ -17,9 +17,7 @@ public class InstitutionService : BaseService, IInstitutionService {
     var response = await HttpClient.PostAsJsonAsync("api/institution/create", institution);
 
     await CheckResponse(response);
-
-    Console.WriteLine(CheckResponse(response));
-  }´k
+  }
 }
 
 public interface IInstitutionService {

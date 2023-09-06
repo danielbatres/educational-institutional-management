@@ -44,13 +44,13 @@
 
   protected override void OnInitialized() {
     InstitutionContext.OnChange += HandleStateChange;
-  } 
+  }
 
   private void CreateNewInstitution() {
-    InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
+    InstitutionContext.Institution.DataBaseConnectionName = $"db_{InstitutionContext.Institution.Id}";
 
     UserContext.User.Institution = InstitutionContext.Institution;
-    UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
+    UserContext.User.Payment = new ();
 
     UserService.Update(UserContext.User);
 

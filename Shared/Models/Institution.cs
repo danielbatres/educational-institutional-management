@@ -11,6 +11,7 @@ public class Institution {
   public string WebSite { get; set; }
   public string Country { get; set; }
   public string DataBaseConnectionName { get; set; }
-  public InstitutionRegister InstitutionRegister { get; set; }
+  public bool IsActive { get; set; }
+  public DateTime RegisteredDate { get; set; }
   public virtual ICollection<User>? Users { get; set; }
 }

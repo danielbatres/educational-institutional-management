@@ -1,4 +1,5 @@
 using System.Data.Common;
+using System.Linq.Expressions;
 using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Client.Containers;
@@ -22,11 +23,8 @@ public class RegisterInstitutionContext : BaseContainer {
       Name = string.Empty,
       PhoneNumber = string.Empty,
       Country = string.Empty,
-      InstitutionRegister = new() {
-        Id = Guid.NewGuid(),
-        RegisterDate = DateTime.Now,
-        EndDate = DateTime.Now
-      }
+      IsActive = true,
+      RegisteredDate = DateTime.Now
     };
 
     NotifyStateChanged();

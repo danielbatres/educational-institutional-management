@@ -9,25 +9,23 @@ namespace edu_institutional_management.Server
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Register> Registers { get; set; }
         public DbSet<OnlineStatus> OnlineStatuses { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public MainContext(DbContextOptions<MainContext> options) : base(options) {
             ChangeTracker.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<InstitutionRegister>(institutionRegister => {
-                institutionRegister.HasKey(i => i.Id);
-                institutionRegister.Property(i => i.RegisterDate);
-                institutionRegister.Property(i => i.EndDate);
-                institutionRegister.HasOne(i => i.User).WithOne(u => u.InstitutionRegister).HasForeignKey<User>(u => u.InstitutionRegisterId);
-            });
-            
             modelBuilder.Entity<Institution>(institution => {
                 institution.HasKey(x => x.Id);
                 institution.Property(x => x.Name);
                 institution.Property(x => x.Address);
                 institution.Property(x => x.PhoneNumber);
-                institution.HasOne(x => x.InstitutionRegister).WithOne(i => i.Institution).HasForeignKey<InstitutionRegister>(x => x.InstitutionId);
+                institution.Property(x => x.IsActive);
+                institution.Property(x => x.RegisteredDate);
+                institution.Property(x => x.DataBaseConnectionName);
+                institution.Property(x => x.WebSite);
             });
 
             modelBuilder.Entity<Register>(register => {
@@ -44,8 +42,31 @@ namespace edu_institutional_management.Server
                 onlineStatus.Property(x => x.Status);
             });
 
+            modelBuilder.Entity<PaymentType>(paymentType => {
+                paymentType.HasKey(x => x.Id);
+                paymentType.Property(x => x.Name);
+                paymentType.Property(x => x.Description);
+                paymentType.Property(x => x.Amount);
+                paymentType.HasMany(pt => pt.Payments)
+                    .WithOne(p => p.PaymentType)
+                    .HasForeignKey(p => p.PaymentTypeId)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Payment>(payment => {
+                payment.HasKey(x => x.Id);
+                payment.Property(x => x.RegisterDate);
+                payment.Property(x => x.EndDate);
+                payment.HasOne(p => p.PaymentType)
+                    .WithMany(pt => pt.Payments)
+                    .IsRequired();
+                payment.HasOne(p => p.User).WithOne(u => u.Payment).HasForeignKey<Payment>(p => p.UserId).IsRequired(false);
+            });
+
             modelBuilder.Entity<User>(user => {
                 user.HasKey(x => x.Id);
+                user.Property(x => x.UserName).IsRequired().HasMaxLength(100);
+                user.HasIndex(x => x.UserName).IsUnique();
                 user.Property(x => x.Name).HasMaxLength(100);
                 user.Property(x => x.LastName).HasMaxLength(100);
                 user.Property(x => x.BirthDate);
