@@ -14,10 +14,12 @@ public class InstitutionService : BaseService, IInstitutionService {
   public async Task RegisterNewInstitution(Institution institution) {
     institution.DataBaseConnectionName = $"db_{institution.Id}";
 
-    var response = await HttpClient.PatchAsJsonAsync("api/institution/create", institution);
+    var response = await HttpClient.PostAsJsonAsync("api/institution/create", institution);
 
     await CheckResponse(response);
-  }
+
+    Console.WriteLine(CheckResponse(response));
+  }´k
 }
 
 public interface IInstitutionService {

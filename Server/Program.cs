@@ -11,6 +11,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 
 builder.Services.AddAuthentication(options => {

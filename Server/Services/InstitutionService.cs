@@ -12,6 +12,8 @@ public class InstitutionService : IInstitutionService {
 
   public async Task Create(Institution institution) {
     _context.Institutions.Add(institution);
+    
+    Console.WriteLine("Guarda");
 
     await _context.SaveChangesAsync();
   }
