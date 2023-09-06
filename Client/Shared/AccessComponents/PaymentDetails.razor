@@ -23,9 +23,41 @@
     </div>
     <input type="text" class="input" placeholder="Ingresar nombre del titular" id="owner-name">
     <div class="login-button">
-      <button type="button" class="lgn-button button primary-background-button">
+      <button type="button" class="lgn-button button primary-background-button" @onclick="@CreateNewInstitution">
         Realizar pago
       </button>
     </div>
   </form>
 </AccessComponent>
+
+@code {
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+  [Inject]
+  private IInstitutionService InstitutionService { get; set; }
+  [Inject]
+  private RegisterInstitutionContext InstitutionContext { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private IUserService UserService { get; set; }
+
+  protected override void OnInitialized() {
+    InstitutionContext.OnChange += HandleStateChange;
+  } 
+
+  private void CreateNewInstitution() {
+    InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
+
+    UserContext.User.Institution = InstitutionContext.Institution;
+    UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
+
+    UserService.Update(UserContext.User);
+
+    NavigationManager.NavigateTo("/");
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+}

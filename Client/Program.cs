@@ -25,6 +25,7 @@ builder.Services.AddSingleton<LoadingContext>();
 builder.Services.AddSingleton<Validators>();
 builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();
