@@ -1,4 +1,4 @@
-namespace edu_institutional_management.Shared;
+namespace edu_institutional_management.Client.Containers;
 
 public class Theme {
   public static Palette LightTheme { get; set; } = new () {

@@ -13,5 +13,6 @@ public class Institution {
   public string DataBaseConnectionName { get; set; }
   public bool IsActive { get; set; }
   public DateTime RegisteredDate { get; set; }
+  [JsonIgnore]
   public virtual ICollection<User>? Users { get; set; }
 }

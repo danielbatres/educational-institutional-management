@@ -4,6 +4,7 @@ using edu_institutional_management.Shared.Models;
 using edu_institutional_management.Client.Containers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Globalization;
 
 namespace edu_institutional_management.Client.Services;
 
@@ -16,6 +17,7 @@ public class UserService : BaseService, IUserService {
 
   public async Task Register(User user) {
     user.Register.Password = HashPassword(user.Register.Password);
+    user.UserName = "newUser" + Guid.NewGuid();
 
     var response = await HttpClient.PostAsJsonAsync("api/user/create", user);
 

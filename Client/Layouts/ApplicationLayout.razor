@@ -1,5 +1,4 @@
 @inherits LayoutComponentBase
-@using edu_institutional_management.Shared;
 
 <style>
   :root {
@@ -36,7 +35,7 @@
 
 @code {
   public bool Toggle { get; set; }
-  private Palette SelectedPalette { get; set; } = Theme.DarkTheme;
+  private Palette SelectedPalette { get; set; } = Theme.LightTheme;
   private Menu SideBarMenu = new();
 
   protected override void OnInitialized() {

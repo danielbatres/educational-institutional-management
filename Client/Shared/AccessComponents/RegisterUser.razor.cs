@@ -29,10 +29,10 @@ public partial class RegisterUser {
   private string PasswordClass { get; set; } = string.Empty;
   private bool ShowPassword { get; set; } = false;
   private List<List<object>> Warnings { get; set; } = new List<List<object>>() { 
-    new List<object> { "", false }, 
-    new List<object> { "", false }, 
-    new List<object> { "", false }, 
-    new List<object> { "", false } 
+    new() { "", false }, 
+    new() { "", false }, 
+    new() { "", false }, 
+    new() { "", false } 
   };
   private int ErrorsQuantity { get; set; } = 0;
   private string CharactersMessage { get; set; } = "Caracteres permitidos 2 - 40";

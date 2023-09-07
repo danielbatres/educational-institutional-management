@@ -9,16 +9,23 @@ namespace edu_institutional_management.Client;
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
 
   private readonly HttpClient _httpClient;
+  private readonly UserContext _userContext;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext) {
     _httpClient = httpClient;
+    _userContext = userContext;
   }
   public async override Task<AuthenticationState> GetAuthenticationStateAsync()
   {
     User currentUser = await _httpClient.GetFromJsonAsync<User>("api/user/get-current-user");
 
-    if (currentUser != null && currentUser.Register != null && currentUser.Register.Email != null) {
-      var claim = new Claim(ClaimTypes.Name, currentUser.Register.Email);
+    if (!currentUser.Id.Equals(Guid.Empty)) {
+      _userContext.SetUser(currentUser);
+      _userContext.SetIsActiveUser(true);
+    }
+
+    if (currentUser != null) {
+      var claim = new Claim(ClaimTypes.Name, currentUser.Id.ToString());
       var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
       var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 

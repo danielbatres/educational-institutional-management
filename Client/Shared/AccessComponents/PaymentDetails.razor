@@ -47,10 +47,9 @@
   }
 
   private void CreateNewInstitution() {
-    InstitutionContext.Institution.DataBaseConnectionName = $"db_{InstitutionContext.Institution.Id}";
+    InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
 
-    UserContext.User.Institution = InstitutionContext.Institution;
-    UserContext.User.Payment = new ();
+    UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
 
     UserService.Update(UserContext.User);
 

@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
+builder.Services.AddSingleton<ApplicationContextService>();
 
 builder.Services.AddAuthentication(options => {
   options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -43,6 +44,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

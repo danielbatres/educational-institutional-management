@@ -1,6 +1,11 @@
-@page "/application"
+@page "/application/{InstitutionId}"
 @layout ApplicationLayout
 
 <PageTitle>Application</PageTitle>
 
 <Dashboard />
+
+@code {
+  [Parameter]
+  public string InstitutionId { get; set; } = string.Empty;
+}

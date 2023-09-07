@@ -1,4 +1,4 @@
-namespace edu_institutional_management.Shared;
+namespace edu_institutional_management.Client.Containers;
 
 public class Palette {
   public string? PrimaryColor { get; set; }

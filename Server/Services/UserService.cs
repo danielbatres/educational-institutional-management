@@ -27,7 +27,7 @@ public class UserService : IUserService {
   }
 
   public IEnumerable<User> Get() {
-    return _context.Users.Include(u => u.Register).Include(u => u.OnlineStatus);
+    return _context.Users.Include(u => u.Register).Include(u => u.OnlineStatus).Include(u => u.Institution).Include(u => u.Payment);
   }
 
   public async Task Create(User user) {

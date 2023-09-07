@@ -4,7 +4,13 @@ using Microsoft.EntityFrameworkCore;
 namespace edu_institutional_management.Server;
 
 public class ApplicationContext : DbContext {
-    public ApplicationContext() { }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<Student> Students { get; set; }
+
+    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
+        ChangeTracker.LazyLoadingEnabled = true;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Role>(role => {
@@ -21,5 +27,7 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<Student>(student => {
             student.HasKey(t => t.Id);
         });
+
+        
     }
 }

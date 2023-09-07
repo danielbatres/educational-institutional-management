@@ -13,10 +13,8 @@ namespace edu_institutional_management.Server.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase {
   private readonly IUserService userService;
-  private readonly MainContext context;
-  public UserController(IUserService service, MainContext mainContext) {
+  public UserController(IUserService service) {
     userService = service;
-    context = mainContext;
   }
 
   [HttpGet]
@@ -27,7 +25,7 @@ public class UserController : ControllerBase {
   [HttpPost]
   [Route("login-user")]
   public async Task<ActionResult<User>> LoginUser(User user) {
-    var claim = new Claim(ClaimTypes.Name, user.Register.Email);
+    var claim = new Claim(ClaimTypes.Name, user.Id.ToString());
     var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -42,9 +40,7 @@ public class UserController : ControllerBase {
     User currentUser = new();
 
     if (User.Identity.IsAuthenticated) {
-      currentUser.Register = new() {
-        Email = User.FindFirstValue(ClaimTypes.Name)
-      };
+      currentUser = userService.Get().Where(x => x.Id == Guid.Parse(User.FindFirstValue(ClaimTypes.Name))).ToList()[0];
     }
 
     return await Task.FromResult(currentUser);
@@ -75,15 +71,6 @@ public class UserController : ControllerBase {
   [Route("update")]
   public async Task<IActionResult> Put([FromBody] User user) {
     await userService.Update(user);
-
-    return Ok();
-  }
-
-  [HttpGet]
-  [Route("createdb")]
-  public IActionResult CreateDatabase()
-  {
-    context.Database.EnsureCreated();
 
     return Ok();
   }

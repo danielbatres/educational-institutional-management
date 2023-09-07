@@ -17,6 +17,30 @@ namespace edu_institutional_management.Server
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            List<PaymentType> PaymentTypes = new() {
+                new PaymentType() {
+                    Id = Guid.NewGuid(),
+                    IndexNumber = 1,
+                    Name = "Plan de pago 1",
+                    Description = "Descripcion del plan de pago 1",
+                    Amount = 0
+                },
+                new PaymentType() {
+                    Id = Guid.NewGuid(),
+                    IndexNumber = 2,
+                    Name = "Plan de pago 2",
+                    Description = "Descripcion del plan de pago 2",
+                    Amount = 0
+                },
+                new PaymentType() {
+                    Id = Guid.NewGuid(),
+                    IndexNumber = 3,
+                    Name = "Plan de pago 3",
+                    Description = "Descripcion del plan de pago 3",
+                    Amount = 0
+                },
+            };
+            
             modelBuilder.Entity<Institution>(institution => {
                 institution.HasKey(x => x.Id);
                 institution.Property(x => x.Name);
@@ -44,22 +68,19 @@ namespace edu_institutional_management.Server
 
             modelBuilder.Entity<PaymentType>(paymentType => {
                 paymentType.HasKey(x => x.Id);
+                paymentType.Property(x => x.IndexNumber);
                 paymentType.Property(x => x.Name);
                 paymentType.Property(x => x.Description);
                 paymentType.Property(x => x.Amount);
-                paymentType.HasMany(pt => pt.Payments)
-                    .WithOne(p => p.PaymentType)
-                    .HasForeignKey(p => p.PaymentTypeId)
-                    .IsRequired();
+                paymentType.HasMany(pt => pt.Payments).WithOne(p => p.PaymentType).HasForeignKey(p => p.PaymentTypeId).IsRequired();
+                paymentType.HasData(PaymentTypes);
             });
 
             modelBuilder.Entity<Payment>(payment => {
                 payment.HasKey(x => x.Id);
                 payment.Property(x => x.RegisterDate);
                 payment.Property(x => x.EndDate);
-                payment.HasOne(p => p.PaymentType)
-                    .WithMany(pt => pt.Payments)
-                    .IsRequired();
+                payment.HasOne(p => p.PaymentType).WithMany(pt => pt.Payments).IsRequired();
                 payment.HasOne(p => p.User).WithOne(u => u.Payment).HasForeignKey<Payment>(p => p.UserId).IsRequired(false);
             });
 

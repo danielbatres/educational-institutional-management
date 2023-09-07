@@ -15,6 +15,8 @@ public partial class Login {
   private LoadingContext LoadingContext { get; set; }
   [Inject]
   private LoginContext LoginContext { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
   private List<List<object>> LoginInfo { get; set; } = new() {
     new List<object> { "", true },
     new List<object> { "", true }
@@ -49,7 +51,12 @@ public partial class Login {
     else {
       LoginContext.SetState(true);
       LoginContext.SetShowLoginStateModal(true, "Usuario autenticado correctamente", "¡Inicio de sesión exitoso!");
-      NavigationManager.NavigateTo("/");
+
+      if (UserContext.User.InstitutionId != null) {
+        NavigationManager.NavigateTo($"/application/{UserContext.User.InstitutionId}");
+      } else {
+        NavigationManager.NavigateTo("/");
+      }
     }
   }
 }
