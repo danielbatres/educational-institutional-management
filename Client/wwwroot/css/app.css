@@ -1,5 +1,6 @@
 :root {
     --font-family: 'Be Vietnam Pro', sans-serif;
+    --light-border: 1px solid var(--light-color);
 }
 
 * {
@@ -361,6 +362,12 @@ i {
     background: var(--light-color)
 }
 
+.user-info-img {
+    display: flex;
+    position: relative;
+    padding: 16px;
+}
+
 .edit-color {
     position: absolute;
     right: 10px;
@@ -382,12 +389,6 @@ i {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.user-info {
-    display: flex;
-    position: relative;
-    padding: 16px;
 }
 
 .user-photo-container {
@@ -417,10 +418,8 @@ i {
     font-size: var(--title);
 }
 
-.user-information {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.hide {
+    display: none !important;
 }
 
 @media (max-width: 1440px) {

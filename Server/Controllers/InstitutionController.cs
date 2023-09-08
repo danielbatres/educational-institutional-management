@@ -20,4 +20,10 @@ public class InstitutionController : ControllerBase {
 
         return Ok();
     }
+
+    [HttpGet]
+    [Route("get-institution-users")]
+    public IActionResult GetInstitutionUsers(Guid institutionId) {
+        return Ok(_institutionService.GetInstitutionUsers(institutionId));
+    } 
 }

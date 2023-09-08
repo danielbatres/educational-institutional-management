@@ -1,0 +1,74 @@
+<div class="user-options @(!ShowUserOptions ? "hide" : "")">
+  <ul>
+    <li @onclick="@GoToProfile">
+      <i class="fi fi-tr-arrow-up-right-from-square"></i>
+      <p>Ir a mi perfil</p>
+    </li>
+    <li @onclick="@Exit">
+      <i class="fi fi-tr-address-card"></i>
+      <p>
+        Cerrar sesi&oacute;n
+      </p>
+    </li>
+  </ul>
+</div>
+<div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
+  <div class="user-image"></div>
+  <div class="user-info-data">
+    <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
+    <p>@($"{UserContext.User.Register.Email}")</p>
+  </div>
+  <div class="select-profile-options">
+    <i class="fi fi-tr-angle-double-small-down"></i>
+    <div class="profile-options"></div>
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private NavBarContext NavBarContext { get; set;}
+  [Inject]
+  private NavigationManager NavigationManager { get; set;}
+  [Inject]
+  private IUserService UserService { get; set; }
+  private bool ShowUserOptions { get; set; } = false;
+  [Parameter]
+  public string Selection { get; set; } = string.Empty;
+
+  protected override void OnInitialized() {
+    UserContext.OnChange += HandleStateChanged;
+  }
+
+  private void HandleStateChanged() {
+    StateHasChanged();
+  }
+
+  private void Exit() {
+    UserContext.SetUser(null);
+    UserService.LogOut();
+
+    UserContext.SetIsActiveUser(false);
+    ShowUserOptions = false;
+    NavBarContext.ChangeHideButtons(false);
+  }
+
+  private void GoToProfile() {
+    ShowUserOptions = !ShowUserOptions;
+
+    string route = string.Empty;
+
+    switch (Selection) {
+      case "landing":
+        route = $"/user-profile/{UserContext.User.Id}";
+        break;
+      case "application":
+        route = $"/application/{UserContext.User.InstitutionId}/settings/my-account";
+        break;
+    }
+
+    NavigationManager.NavigateTo(route);
+  }
+
+}

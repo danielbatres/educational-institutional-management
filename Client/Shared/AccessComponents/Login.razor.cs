@@ -17,6 +17,7 @@ public partial class Login {
   private LoginContext LoginContext { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
+  private bool RememberMe { get; set; } = false;
   private List<List<object>> LoginInfo { get; set; } = new() {
     new List<object> { "", true },
     new List<object> { "", true }
@@ -35,12 +36,20 @@ public partial class Login {
     if (e.Key == "Enter") await AuthUser();
   }
 
+  protected override void OnInitialized() {
+    UserContext.OnChange += HandleStateChanged;
+  }
+
+  private void HandleStateChanged() {
+    StateHasChanged();
+  }
+
   private async Task AuthUser()
   {
     LoadingContext.SetLoading(true);
     LoadingContext.SetLoadingMessage("Buscando tu usuario...");
 
-    LoginInfo = await UserService.LoginUser(User);
+    LoginInfo = await UserService.LoginUser(User, RememberMe);
 
     LoadingContext.SetLoading(false);
 

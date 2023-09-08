@@ -1,11 +1,62 @@
 @page "/application/{InstitutionId}"
 @layout ApplicationLayout
+@implements IAsyncDisposable
 
 <PageTitle>Application</PageTitle>
 
 <Dashboard />
+<button type="button" class="button"
+@onclick="@(async () => await _hubConnection.InvokeAsync("DisconnectUser", UserContext.User.Id))">Desconectar</button>
 
 @code {
   [Parameter]
   public string InstitutionId { get; set; } = string.Empty;
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+  [Inject]
+  private IUserService UserService { get; set; }
+  private HubConnection _hubConnection { get; set; }
+
+  protected override void OnInitialized() {
+    UserContext.OnChange += HandleStateChange;
+    VerifyInstitution();
+  }
+
+  protected override async Task OnInitializedAsync() {
+    _hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/onlineUsersHub")).Build();
+
+    await _hubConnection.StartAsync();
+
+    SetActiveUser();
+  }
+
+  private async Task SetActiveUser() {
+    await _hubConnection.InvokeAsync("DisconnectUser", UserContext.User.Id);
+    await _hubConnection.SendAsync("Connect", UserContext.User);
+
+    UserContext.User.OnlineStatus.Status = true;
+    await UserService.Update(UserContext.User.Clone());
+  }
+
+  private void VerifyInstitution() {
+    if (UserContext.User == null || UserContext.User.Institution == null) {
+      NavigationManager.NavigateTo("/");
+    }
+  }
+
+  private void HandleStateChange() {
+    VerifyInstitution();
+    StateHasChanged();
+  }
+
+  public async ValueTask DisposeAsync() {
+    if (_hubConnection != null) {
+      UserContext.User.OnlineStatus.Status = false;
+      await UserService.Update(UserContext.User);
+
+      await _hubConnection.DisposeAsync();
+    }
+  }
 }

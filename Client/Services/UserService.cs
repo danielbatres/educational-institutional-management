@@ -34,6 +34,12 @@ public class UserService : BaseService, IUserService {
     }
   }
 
+  public async Task LogOut() {
+    var response = await HttpClient.GetAsync("api/user/logout-user");
+
+    await CheckResponse(response);
+  }
+
   public async Task<List<User>> GetUsers() {
     var response = await HttpClient.GetAsync("api/user");
     var content = await CheckResponseContent(response);
@@ -41,7 +47,7 @@ public class UserService : BaseService, IUserService {
     return JsonSerializer.Deserialize<List<User>>(content, JsonOptions) ?? new();
   }
 
-  public async Task<List<List<object>>> LoginUser(User user) {
+  public async Task<List<List<object>>> LoginUser(User user, bool isPersistent) {
     List<User> Users = await GetUsers();
     List<List<object>> LoginInfo = new() { 
       new List<object> { "Correo electrónico invalido", false }, 
@@ -67,7 +73,7 @@ public class UserService : BaseService, IUserService {
       Users = Users.Where(x => x.Register.Email.Equals(user.Register.Email) && VerifyPassword(x.Register.Password, user.Register.Password)).ToList();
 
       if (Users.Count == 1) {
-        var response = await HttpClient.PostAsJsonAsync("api/user/login-user", Users[0]);
+        var response = await HttpClient.PostAsJsonAsync($"api/user/login-user?isPersistent={isPersistent}", Users[0]);
         //var content = await CheckResponseContent(response);
 
         //UserContext.SetUser(JsonSerializer.Deserialize<User>(content, JsonOptions) ?? new());
@@ -121,6 +127,7 @@ public class UserService : BaseService, IUserService {
 public interface IUserService {
   Task Register(User user);
   Task Update(User user);
+  Task LogOut();
   Task<List<User>> GetUsers();
-  Task<List<List<object>>> LoginUser(User user);
+  Task<List<List<object>>> LoginUser(User user, bool isPersistent);
 }

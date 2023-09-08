@@ -15,8 +15,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
     _httpClient = httpClient;
     _userContext = userContext;
   }
-  public async override Task<AuthenticationState> GetAuthenticationStateAsync()
-  {
+
+  public async override Task<AuthenticationState> GetAuthenticationStateAsync() {
     User currentUser = await _httpClient.GetFromJsonAsync<User>("api/user/get-current-user");
 
     if (!currentUser.Id.Equals(Guid.Empty)) {

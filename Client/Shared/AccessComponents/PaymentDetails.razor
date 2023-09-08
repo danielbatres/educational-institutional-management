@@ -46,12 +46,12 @@
     InstitutionContext.OnChange += HandleStateChange;
   }
 
-  private void CreateNewInstitution() {
-    InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
-
+  private async Task CreateNewInstitution() {
+    await InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
+    await InstitutionContext.SetInstitutionUsers();
     UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
 
-    UserService.Update(UserContext.User);
+    await UserService.Update(UserContext.User);
 
     NavigationManager.NavigateTo("/");
   }

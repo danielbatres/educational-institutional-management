@@ -7,7 +7,7 @@ public class InstitutionService : BaseService, IInstitutionService {
   public InstitutionService(HttpClient httpClient) : base(httpClient) { }
 
   public async Task RegisterNewInstitution(Institution institution) {
-    institution.DataBaseConnectionName = $"DB_{institution.Name.Replace(" ", "").ToLower()}_{institution.Id}";
+    institution.DataBaseConnectionName = $"DB_{institution.Name.Replace(" ", "")}_{institution.Id}";
 
     var response = await HttpClient.PostAsJsonAsync("api/institution/create", institution);
 
@@ -27,8 +27,17 @@ public class InstitutionService : BaseService, IInstitutionService {
 
     await CheckResponse(await HttpClient.GetAsync("/api/server/create-application-db"));
   }
+
+  public async Task<List<User>> GetInstitutionUsers(Guid institutioId) {
+    var response = await HttpClient.GetAsync($"api/institution/get-institution-users?institutionId={institutioId}");
+
+    var content = await CheckResponseContent(response);
+
+    return JsonSerializer.Deserialize<List<User>>(content, JsonOptions) ?? new();
+  }
 }
 
 public interface IInstitutionService {
   Task RegisterNewInstitution(Institution institution);
+  Task<List<User>> GetInstitutionUsers(Guid institutionUser);
 }

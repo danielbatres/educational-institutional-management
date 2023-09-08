@@ -14,9 +14,11 @@ public class UserContext : BaseContainer {
 
   public void SetUser(User user) {
     User = user;
-    if (user.InstitutionId != null || !user.InstitutionId.Equals(Guid.Empty)) {
+
+    if (user.InstitutionId != null) {
       _navigationManager.NavigateTo($"/application/{user.InstitutionId}");
     }
+
     NotifyStateChanged();
   }
 

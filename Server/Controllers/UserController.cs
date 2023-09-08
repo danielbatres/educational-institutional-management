@@ -24,12 +24,12 @@ public class UserController : ControllerBase {
 
   [HttpPost]
   [Route("login-user")]
-  public async Task<ActionResult<User>> LoginUser(User user) {
+  public async Task<ActionResult<User>> LoginUser(User user, bool isPersistent) {
     var claim = new Claim(ClaimTypes.Name, user.Id.ToString());
     var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-    await HttpContext.SignInAsync(claimsPrincipal);
+    await HttpContext.SignInAsync(claimsPrincipal, GetAuthenticationProperties(isPersistent));
 
     return await Task.FromResult(user);
   }
@@ -62,9 +62,47 @@ public class UserController : ControllerBase {
     return Ok();
   }
 
-  [HttpGet("GoogleSignIn")]
-  public async Task GoogleSignIn() {
-    await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = "/" });
+  [HttpGet]
+  [Route("google-sign-in-callback")]
+  public async Task<IActionResult> GoogleSignInCallback() {
+    var googleUser = await HttpContext.AuthenticateAsync("Google");
+
+    if (googleUser.Succeeded) {
+      var user = googleUser.Principal;
+
+      Guid UserId = Guid.NewGuid();
+
+      User User = new() {
+        Id = UserId,
+        Name = user.FindFirst(ClaimTypes.Name)?.Value,
+        Location = user.FindFirst(ClaimTypes.Locality)?.Value,
+        Register = new() {
+          Id = Guid.NewGuid(),
+          Email = user.FindFirst(ClaimTypes.Email)?.Value,
+          AuthenticationMethod = "GoogleAuthentication",
+          UserId = UserId
+        },
+        OnlineStatus = new() {
+          Id = Guid.NewGuid(),
+          Status = true,
+          LastConnection = DateTime.Now,
+          UserId = UserId
+        }
+      };
+
+      await Post(User);
+      await LoginUser(User, true);
+
+      HttpContext.Response.Redirect("/");
+    }
+
+    return Ok();
+  }
+
+  [HttpGet("google-sign-in")]
+  public IActionResult GoogleSignIn() {
+    var properties = new AuthenticationProperties { RedirectUri = "/api/user/google-sign-in-callback" };
+    return Challenge(properties, "Google");
   }
 
   [HttpPut]
@@ -73,6 +111,13 @@ public class UserController : ControllerBase {
     await userService.Update(user);
 
     return Ok();
+  }
+
+  private AuthenticationProperties GetAuthenticationProperties(bool isPersistent = false) {
+    return new AuthenticationProperties() {
+      IsPersistent = isPersistent,
+      ExpiresUtc = DateTime.UtcNow.AddDays(5),
+    };
   }
 
   private bool VerifyPassword(string storedPassword, string passwordAttempt)

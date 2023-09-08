@@ -1,4 +1,4 @@
-@page "/application/settings/{Direction}"
+@page "/application/{InstitutionId}/settings/{Direction}"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Configuraciones</PageTitle>
@@ -20,6 +20,8 @@
 @code {
   [Parameter]
   public string Direction { get; set; } = string.Empty;
+  [Parameter]
+  public string InstitutionId { get; set; } = string.Empty;
   private User User = new();
 
   private readonly Menu Menu = new Menu() {

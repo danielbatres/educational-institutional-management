@@ -42,7 +42,6 @@ h4 {
 }
 
 input {
-  background: var(--primary-color);
   width: 100%;
   max-width: 500px;
 }
@@ -105,4 +104,220 @@ article:last-child {
 
 article {
   height: 100%;
+}
+
+
+h3 {
+  font-size: var(--title);
+  margin-bottom: 5px;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  font-weight: 400;
+}
+
+ul {
+  width: 100%;
+  padding: 0px 10px;
+}
+
+ul li {
+  background: var(--dark-color);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 1;
+}
+
+ul li p {
+  color: var(--white);
+}
+
+.my-account i {
+  display: none;
+}
+
+.primary-background-button {
+  background: var(--dark-color);
+}
+
+.transparent-button {
+  border: 1px solid var(--dark-color);
+  color: var(--dark-color);
+}
+
+.user-form {
+  padding: 20px;
+}
+
+.user-information {
+  padding: 0px 20px 20px;
+  border-bottom: var(--light-border);
+}
+
+.user-form-inputs {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recommendation-message {
+  margin-top: 6px;
+  font-size: var(--small-text);
+}
+
+.birth-date-inputs {
+  width: 100%;
+  display: flex;
+  gap: 4px;
+}
+
+fieldset {
+  border: none;
+  max-width: 50%;
+  width: 100%;
+  padding: 4px 8px 18px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.label div:first-child {
+  display: flex;
+}
+
+.input {
+  width: 100%;
+}
+
+.buttons {
+  justify-content: end;
+  align-items: right;
+}
+
+textarea {
+  font-family: var(--font-family);
+  font-size: var(--regular-text);
+  color: var(--text-color);
+  font-weight: 300;
+  min-height: 100px;
+  width: 100%;
+  border: var(--light-border);
+  resize: vertical;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  outline: none;
+}
+
+strong {
+  color: var(--danger-color);
+}
+
+@media (max-width: 920px) {
+  article:last-child {
+    display: none;
+  }
+
+  .user-form {
+    padding: 20px 0px;
+  }
+
+  article .low-side {
+    min-height: 40px;
+    overflow: hidden;
+  }
+
+  .low-side .sidebar-user {
+    min-height: 0px;
+    height: 42px;
+  }
+
+  .low-side .sidebar-user .access,
+  .low-side .sidebar-user .exit-sesion {
+    display: none;
+    opacity: 0;
+  }
+
+  .low-side .sidebar-user .account ul li {
+    display: flex;
+    border-bottom: none;
+  }
+
+  .sidebar-user-profile {
+    max-width: 100%;
+    min-height: 100px;
+    border: none;
+  }
+
+  .sidebar-user-profile h5 {
+    display: none;
+  }
+
+  .my-account {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .my-account i {
+    display: block;
+  }
+
+  ul li {
+    background: none;
+    border-bottom: var(--light-border);
+    border-radius: 0px;
+  }
+
+  ul li p {
+    color: var(--text-color);
+  }
+
+  .sidebar-user {
+    margin: 10px 0px;
+    background: none;
+    border: var(--light-border);
+  }
+
+  fieldset {
+    max-width: 100%;
+    width: 100%;
+    padding: 4px 0px 18px;
+  }
+
+  .user-information {
+    padding: 10px 0px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .buttons {
+    flex-wrap: nowrap;
+    padding: 10px 0px;
+    width: 100%;
+  }
+
+  .buttons .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 510px) {
+  .user-info {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0px;
+  }
+
+  .user-profile-photo {
+    left: unset;
+  }
 }

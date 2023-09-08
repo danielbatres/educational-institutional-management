@@ -6,20 +6,6 @@
 
 <div class="navbar-container">
   <div class="navbar-content">
-    <div class="user-options @(!ShowUserOptions ? "hide" : "")">
-      <ul>
-        <li @onclick="@GoToProfile" >
-          <i class="fi fi-tr-arrow-up-right-from-square"></i>
-          <p>Ir a mi perfil</p>
-        </li>
-        <li @onclick="@Exit">
-          <i class="fi fi-tr-address-card"></i>
-          <p>
-            Cerrar sesi&oacute;n
-          </p>
-        </li>
-      </ul>
-    </div>
     <div>
       <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
     </div>
@@ -32,17 +18,7 @@
         Styles="margin-right: 40px; justify-content: center;"
       />
       @if (UserContext.IsActiveUser) {
-        <div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
-          <div class="user-image"></div>
-          <div class="user-info-data">
-            <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
-            <p>@($"{UserContext.User.Register.Email}")</p>
-          </div>
-          <div class="select-profile-options">
-            <i class="fi fi-tr-angle-double-small-down"></i>
-            <div class="profile-options"></div>
-          </div>
-        </div>
+        <UserInfoOptions Selection="landing"/>
       }
       @if (!NavBarContext.HideButtons && !UserContext.IsActiveUser) {
         <div class="buttons">
@@ -71,7 +47,6 @@
   private UserContext UserContext { get; set; }
   [Inject]
   private NavBarContext NavBarContext { get; set; }
-  private bool ShowUserOptions { get; set; } = false;
   private bool ShowMobileNavigation { get; set; } = false;
 
   protected override void OnInitialized() {
@@ -83,19 +58,6 @@
     NavBarContext.ChangeHideButtons(hide);
 
     NavigationManager.NavigateTo(route);
-  }
-
-  private void Exit() {
-    UserContext.SetUser(null);
-
-    UserContext.SetIsActiveUser(false);
-    ShowUserOptions = false;
-    NavBarContext.ChangeHideButtons(false);
-  }
-
-  private void GoToProfile() {
-    ShowUserOptions = !ShowUserOptions;
-    NavigationManager.NavigateTo($"/user-profile/{UserContext.User.Id}");
   }
 
   private void HandleStateChange() {

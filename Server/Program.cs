@@ -1,6 +1,9 @@
 using edu_institutional_management.Server;
+using edu_institutional_management.Server.Hubs;
 using edu_institutional_management.Server.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,7 @@ builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
@@ -17,6 +21,7 @@ builder.Services.AddSingleton<ApplicationContextService>();
 
 builder.Services.AddAuthentication(options => {
   options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 }).AddCookie().AddGoogle(googleOptions => {
   googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
   googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
@@ -45,6 +50,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints => {
+  endpoints.MapHub<OnlineUsersHub>("/onlineUsersHub");
+});
 
 app.MapRazorPages();
 app.MapControllers();
