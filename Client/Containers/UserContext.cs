@@ -16,7 +16,7 @@ public class UserContext : BaseContainer {
     User = user;
 
     if (user.InstitutionId != null) {
-      _navigationManager.NavigateTo($"/application/{user.InstitutionId}");
+      //_navigationManager.NavigateTo($"/application/{user.InstitutionId}");
     }
 
     NotifyStateChanged();

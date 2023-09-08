@@ -1,0 +1,89 @@
+<section>
+  <div>
+    <h3>
+      Usuarios de la instituci&oacute;n
+    </h3>
+    <p>Aqu&iacute; puedes ver y administrar la informaci&oacute;n de los usuarios que est&aacute;n asociados a la instituci&oacute;n, puedes buscar un usuario para poder enviarle una solicitud de ingreso
+    </p>
+  </div>
+  <ul>
+    <li>Administrar usuarios</li>
+    <li>Buscar usuarios</li>
+  </ul>
+  <input type="text" class="input" placeholder="Buscar usuarios">
+  <div class="users-list">
+    <div>
+      <ul>
+        <li>
+          Foto
+        </li>
+        <li>
+          Username
+        </li>
+        <li>
+          Nombre de usuario
+        </li>
+        <li>
+          Correo electrónico de usuario
+        </li>
+      </ul>
+    </div>
+    <div>
+      @foreach (User user in UsersNoInstitution) {
+        User selectedUser = user;
+        <div @onclick="@(() => SelectedUser = selectedUser)">
+          <ul>
+            <li>
+              
+            </li>
+            <li>
+              <p>
+                
+              </p>
+            </li>
+            <li>
+              <p>
+                @user.Name @user.LastName
+              </p>
+            </li>
+            <li>
+              <p>
+                @user.Register.Email
+              </p>
+            </li>
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="send-request">
+    <p>Enviar a</p>
+    <div class="user-image"></div>
+    <p>Nombre del usuario</p>
+    <p>
+      correoelectronico@email.com
+    </p>
+    <label for="message">Mensage de solicitud</label>
+    <input type="text" placeholder="Escribir mensaje de solicitud" id="message" class="input">
+    <button type="button" class="button" @onclick="@SendRequest">
+      Enviar solicitud de ingreso
+    </button>
+  </div>
+</section>
+
+@code {
+  private List<User> UsersNoInstitution { get; set; } = new();
+  private User SelectedUser { get; set; } = new();
+  [Inject]
+  private IUserService UserService { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    UsersNoInstitution = await UserService.GetNoInstitutionUsers();
+  }
+
+  private async Task SendRequest() {
+    await UserService.Update(SelectedUser);
+
+    // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
+  } 
+}

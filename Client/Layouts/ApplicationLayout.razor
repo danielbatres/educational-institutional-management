@@ -2,7 +2,7 @@
 
 <style>
   :root {
-    --primary-color: @SelectedPalette.PrimaryColor;
+    --primary-color: @SelectedPalette.LightColor;
     --background-color: @SelectedPalette.BackgroundColor;
     --light-background-color: @SelectedPalette.LightBackgroundColor;
     --light-color: @SelectedPalette.LightColor;
@@ -27,7 +27,9 @@
     <div class="right-container">
       <TopBar />
       <main>
-        @Body
+        <CascadingValue Value="@InstitutionId" Name="Institution">
+          @Body
+        </CascadingValue>
       </main>
     </div>
   </div>
@@ -36,42 +38,47 @@
 @code {
   public bool Toggle { get; set; }
   private Palette SelectedPalette { get; set; } = Theme.LightTheme;
-  private Menu SideBarMenu = new();
+  private Menu SideBarMenu { get; set; } = new();
+  [Inject]
+  private UserContext UserContext { get; set; }
+  public Guid InstitutionId { get; set; } = Guid.Empty;
 
   protected override void OnInitialized() {
     Toggle = true;
 
+    InstitutionId = UserContext.User.Institution.Id;
+
     SideBarMenu = new() {
       MenuLabels = new List<string>() {
-      "menu principal", "menu de actividades"
-    },
-    MenuItems = new List<List<List<string>>>() {
-      new() {
+        "menu principal", "menu de actividades"
+      },
+      MenuItems = new List<List<List<string>>>() {
         new() {
-          "Dashboard", "fi fi-tr-dice-d6", "0", "/application"
+          new() {
+            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}"
+          },
+          new() {
+            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students"
+          },
+          new() {
+            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses"
+          },
+          new() {
+            "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", $"/application/{InstitutionId}/statistics"
+          }
         },
         new() {
-          "Estudiantes", "fi fi-tr-book-bookmark", "1", "/application/students" 
-        },
-        new() {
-          "Cursos", "fi fi-tr-hockey-puck", "2", "/application/courses"
-        },
-        new() { 
-          "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", "/application/statistics"
+          new() {
+            "Eventos", "fi fi-tr-calendar-day", "4", $"/application/{InstitutionId}/events"
+          },
+          new() {
+            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity"
+          }
         }
       },
-      new() {
-        new() { 
-          "Eventos", "fi fi-tr-calendar-day", "4", "/application/events"
-        },
-        new() { 
-          "Actividad", "fi fi-tr-book-copy", "5", "/application/activity" 
-        },
+      LastOption = new() {
+        "Configuraciones", "fi fi-tr-gears", "6", $"/application/{InstitutionId}/settings/my-account"
       }
-    },
-    LastOption = new() {
-      "Configuraciones", "fi fi-tr-gears", "6", "/application/settings/my-account"
-    }
-  };
+    };
   }
 }

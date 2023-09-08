@@ -5,6 +5,7 @@ using edu_institutional_management.Client.Containers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Globalization;
+using System.Collections;
 
 namespace edu_institutional_management.Client.Services;
 
@@ -45,6 +46,12 @@ public class UserService : BaseService, IUserService {
     var content = await CheckResponseContent(response);
 
     return JsonSerializer.Deserialize<List<User>>(content, JsonOptions) ?? new();
+  }
+
+  public async Task<List<User>> GetNoInstitutionUsers() {
+    List<User> UsersNoInstitution = await GetUsers();
+
+    return UsersNoInstitution.Where(u => u.InstitutionId.Equals(null)  || u.InstitutionId.Equals(Guid.Empty)).ToList();
   }
 
   public async Task<List<List<object>>> LoginUser(User user, bool isPersistent) {
@@ -130,4 +137,5 @@ public interface IUserService {
   Task LogOut();
   Task<List<User>> GetUsers();
   Task<List<List<object>>> LoginUser(User user, bool isPersistent);
+  Task<List<User>> GetNoInstitutionUsers();
 }
