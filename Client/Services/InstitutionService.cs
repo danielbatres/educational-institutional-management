@@ -20,24 +20,42 @@ public class InstitutionService : BaseService, IInstitutionService {
     await CreateInstitutionDataBase(request);
   }
 
-  private async Task CreateInstitutionDataBase(DataBaseConnectionRequest dbName) {
-    var response = await HttpClient.PostAsJsonAsync("/api/server/db-connection", dbName);
+  public async Task<Guid> GetInstitutionId(string name) {
+    var response = await HttpClient.GetAsync($"api/institution/get-institution-by?name={name}");
 
-    await CheckResponse(response);
+    var content = await CheckResponseContent(response);
+
+    List<Institution> Institutions = JsonSerializer.Deserialize<List<Institution>>(content, JsonOptions) ?? new();
+
+    if (Institutions.Count == 1) return Institutions[0].Id;
+
+    return Guid.Empty;
+  }
+
+  private async Task CreateInstitutionDataBase(DataBaseConnectionRequest dbName) {
+    await SendInstitutionConnection(dbName);
 
     await CheckResponse(await HttpClient.GetAsync("/api/server/create-application-db"));
   }
 
-  public async Task<List<User>> GetInstitutionUsers(Guid institutioId) {
-    var response = await HttpClient.GetAsync($"api/institution/get-institution-users?institutionId={institutioId}");
+  public async Task<List<User>> GetInstitutionUsers(Guid institutionId) {
+    var response = await HttpClient.GetAsync($"api/institution/get-institution-users?institutionId={institutionId}");
 
     var content = await CheckResponseContent(response);
 
     return JsonSerializer.Deserialize<List<User>>(content, JsonOptions) ?? new();
   }
+
+  public async Task SendInstitutionConnection(DataBaseConnectionRequest dbName) {
+    var response = await HttpClient.PostAsJsonAsync("/api/server/db-connection", dbName);
+
+    await CheckResponse(response);
+  }
 }
 
 public interface IInstitutionService {
+  Task<Guid> GetInstitutionId(string name);
   Task RegisterNewInstitution(Institution institution);
   Task<List<User>> GetInstitutionUsers(Guid institutionUser);
+  Task SendInstitutionConnection(DataBaseConnectionRequest dbName);
 }

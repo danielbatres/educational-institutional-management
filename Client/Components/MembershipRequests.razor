@@ -1,0 +1,58 @@
+<article>
+  <div>
+    <h4>Solicitudes de ingreso</h4>
+    <p>
+      Aqu&iacute; recibiras las solicitudes de ingreso de cualquier instituci&oacute;n
+    </p>
+  </div>
+  @for (int i = 0; i < ReceivedMembershipRequests.Count; i++) { 
+    string InstitutionName = ReceivedMembershipRequests[i].InstitutionName;
+    int MembershipIndex = i;
+
+    if (ReceivedMembershipRequests[i].IsAccepted) continue;
+    <div>
+      <h5>Solicitud de ingreso sin aceptar de:</h5>
+      <h4>
+        @ReceivedMembershipRequests[i].InstitutionName
+      </h4>
+      <h5>Autor</h5>
+      <p>
+        Has sido invitado a ingresar en la instituci&oacute;n
+      </p>
+      @if (ReceivedMembershipRequests[i].Message != null && !ReceivedMembershipRequests[i].Message.Equals(string.Empty))
+      {
+        <h5>Mensaje</h5>
+        <p>@ReceivedMembershipRequests[i].Message</p>
+      }
+      <p>@ReceivedMembershipRequests[i].CreationDate</p>
+      <button type="button" class="button primary-background-button" @onclick="@(() => AcceptRequest(InstitutionName, MembershipIndex))">
+        Aceptar
+      </button>
+    </div>
+  }
+</article>
+
+@code {
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private IInstitutionService InstitutionService { get; set; }
+  [Inject]
+  private IUserService UserService { get; set; }
+  public List<MembershipRequest> ReceivedMembershipRequests { get; set; } = new();
+
+  protected override void OnInitialized() {
+    ReceivedMembershipRequests = UserContext.User.ReceivedMembershipRequests.ToList();
+  }
+
+  private async Task AcceptRequest(string name, int index) {
+    UserContext.User.InstitutionId = await InstitutionService.GetInstitutionId(name);
+    UserContext.User.ReceivedMembershipRequests.ElementAtOrDefault(index).IsAccepted = true;
+
+    if (!UserContext.User.InstitutionId.Equals(Guid.Empty)) {
+      await UserService.Update(UserContext.User);
+    }
+
+    UserContext.NavigateToInstitution();
+  }
+}

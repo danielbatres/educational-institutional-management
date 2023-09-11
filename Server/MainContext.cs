@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using edu_institutional_management.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,8 @@ namespace edu_institutional_management.Server
         public DbSet<OnlineStatus> OnlineStatuses { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
+        public DbSet<MembershipRequest> MembershipRequests { get; set; }
+ 
         public MainContext(DbContextOptions<MainContext> options) : base(options) {
             ChangeTracker.LazyLoadingEnabled = true;
         }
@@ -96,6 +98,16 @@ namespace edu_institutional_management.Server
                 user.HasOne(u => u.Register).WithOne(r => r.User).HasForeignKey<Register>(r => r.UserId);
                 user.HasOne(u => u.Institution).WithMany(i => i.Users).HasForeignKey(u => u.InstitutionId);
                 user.HasOne(u => u.OnlineStatus).WithOne(e => e.User).HasForeignKey<OnlineStatus>(e => e.UserId);
+            });
+
+            modelBuilder.Entity<MembershipRequest>(request => {
+                request.HasKey(x => x.Id);
+                request.Property(x => x.Author).IsRequired();
+                request.Property(x => x.Message);
+                request.Property(x => x.CreationDate);
+                request.Property(x => x.IsAccepted);
+                request.Property(x => x.InstitutionName).IsRequired();
+                request.HasOne(x => x.ReceiverUser).WithMany(u => u.ReceivedMembershipRequests).HasForeignKey(x => x.ReceiverUserId);
             });
 
             base.OnModelCreating(modelBuilder);

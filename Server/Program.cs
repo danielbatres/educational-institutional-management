@@ -3,7 +3,6 @@ using edu_institutional_management.Server.Hubs;
 using edu_institutional_management.Server.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +15,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
+builder.Services.AddScoped<IMembershipRequestService, MembershipRequestService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 
@@ -53,6 +54,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => {
   endpoints.MapHub<OnlineUsersHub>("/onlineUsersHub");
+  endpoints.MapHub<RolesHub>("/rolesHub");
 });
 
 app.MapRazorPages();

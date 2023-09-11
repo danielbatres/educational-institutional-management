@@ -61,7 +61,7 @@
 
     switch (Selection) {
       case "landing":
-        route = $"/user-profile/{UserContext.User.Id}";
+        route = $"/user-settings/{UserContext.User.Id}/profile";
         break;
       case "application":
         route = $"/application/{UserContext.User.InstitutionId}/settings/my-account";

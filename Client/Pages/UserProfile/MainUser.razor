@@ -1,4 +1,4 @@
-@page "/user-profile/{UserId}"
+@page "/user-settings/{UserId}/{UserOption}"
 
 <PageTitle>Landing | Perfil de usuario</PageTitle>
 
@@ -12,7 +12,7 @@
               Configuraciones de usuario
             </h5>
             <ul>
-              <li class="my-account">
+              <li class="my-account" @onclick="@(() => NavigationManager.NavigateTo($"/user-settings/{UserId}/profile"))">
                 <p>Mi cuenta</p>
                 <i class="fi fi-tr-chevron-double-down" @onclick="@(() => MenuToggle = !MenuToggle)"></i>
               </li>
@@ -23,7 +23,7 @@
               Acceso de trabajo
             </h5>
             <ul>
-              <li>
+              <li @onclick="@(() => NavigationManager.NavigateTo($"/user-settings/{UserId}/membership-requests"))">
                 <p>Solicitudes de ingreso</p>
               </li>
             </ul>
@@ -38,7 +38,14 @@
         </div>
       </div>
     </article>
-    <UserProfile />
+    @switch(UserOption) {
+      case "profile":
+        <UserProfile />
+        break;
+      case "membership-requests":
+        <MembershipRequests />
+        break;
+    }
   </section>
 </LandingComponents>
 
@@ -53,6 +60,8 @@
   private IUserService UserService { get; set; }
   [Inject]
   private LoadingContext LoadingContext { get; set; }
+  [Parameter]
+  public string UserOption { get; set; }
   [Parameter]
   public String UserId { get; set; } = string.Empty;
   private bool MenuToggle { get; set; } = false;

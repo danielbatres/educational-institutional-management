@@ -7,7 +7,7 @@ public class OnlineUsersHub : Hub {
   private static List<User> Users { get; } = new();
 
   public async Task Connect(User user) {
-    if (!Users.Contains(user)) {  
+    if (!Users.Contains(user)) {
       Users.Add(user);
       await Clients.All.SendAsync("UserConnected", user);
     }

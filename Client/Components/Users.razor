@@ -64,7 +64,7 @@
       correoelectronico@email.com
     </p>
     <label for="message">Mensage de solicitud</label>
-    <input type="text" placeholder="Escribir mensaje de solicitud" id="message" class="input">
+    <input value="@MembershipRequest.Message" type="text" placeholder="Escribir mensaje de solicitud" id="message" class="input" @oninput="@UpdateMessage">
     <button type="button" class="button" @onclick="@SendRequest">
       Enviar solicitud de ingreso
     </button>
@@ -74,6 +74,11 @@
 @code {
   private List<User> UsersNoInstitution { get; set; } = new();
   private User SelectedUser { get; set; } = new();
+  private MembershipRequest MembershipRequest { get; set; } = new();
+  [Inject]
+  private IMembershipRequestService MembershipRequestService { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
 
@@ -81,9 +86,27 @@
     UsersNoInstitution = await UserService.GetNoInstitutionUsers();
   }
 
-  private async Task SendRequest() {
-    await UserService.Update(SelectedUser);
+  private void UpdateMessage(ChangeEventArgs e) {
+    MembershipRequest.Message = e.Value.ToString();
+  }
 
+  protected override void OnInitialized() {
+    MembershipRequest = new() {
+      Id = Guid.NewGuid(),
+      Author = $"{UserContext.User.Name} {UserContext.User.LastName}",
+      CreationDate = DateTime.Now,
+      IsAccepted = false,
+      InstitutionName = UserContext.User.Institution.Name,
+      Message = string.Empty
+    };
+  } 
+
+  private async Task SendRequest() {
+    MembershipRequest.ReceiverUserId = SelectedUser.Id;
+
+    await MembershipRequestService.Create(MembershipRequest);
+
+    Console.WriteLine("Solicitud enviada");
     // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
   } 
 }

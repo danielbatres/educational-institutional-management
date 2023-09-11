@@ -1,5 +1,3 @@
-using System.Data.Common;
-using System.Linq.Expressions;
 using edu_institutional_management.Client.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Components;
@@ -37,7 +35,7 @@ public class RegisterInstitutionContext : BaseContainer {
 
   public async Task SetInstitutionUsers() {
     if (!Institution.Id.Equals(null)) {
-      InstitutionUsers = await InstitutionService.GetInstitutionUsers(Institution.Id);
+      //InstitutionUsers = await InstitutionService.GetInstitutionUsers(Institution.Id);
     } else {
       InstitutionUsers = new();
     }

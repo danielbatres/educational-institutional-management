@@ -1,0 +1,55 @@
+<h4>Crear rol</h4>
+<p>Crear un nuevo rol</p>
+
+<label for="name">Nombre del rol</label>
+<input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
+<label for="description">Descripci&oacute;n del rol</label>
+<input value="@Role.Description" type="text" class="input" placeholder="Ingresar descripción del rol" id="description" @oninput="@(e => Update(e, "description"))">
+
+<p>Seleccionar color del rol</p>
+
+<button type="button" @onclick="@CreateNewRol" class="button">Crear rol</button>
+
+@code {
+  [Inject]
+  public UserContext UserContext { get; set; }
+  [Inject]
+  public IRoleService RoleService { get; set; }
+  [Inject]
+  private RolesHubManager RolesHubManager { get; set; }
+  public Role Role { get; set; } = new();
+
+  protected override void OnInitialized() {
+    AssignNewRol();
+  }
+
+  private async Task CreateNewRol() {
+    await RoleService.Create(Role);
+
+    //await RolesHubManager.StartConnectionAsync();
+    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
+
+    AssignNewRol();
+  }
+
+  private void AssignNewRol() {
+    Role = new() {
+      Id = Guid.NewGuid(),
+      RoleColor = "#ffffff"
+    };
+  }
+
+  private void Update(ChangeEventArgs e, string update) {
+    string value = e.Value.ToString();
+    
+    switch (update) {
+      case "name":
+        Role.Name = value;
+        break;
+      case "description":
+        Role.Description = value;
+        break;
+    }
+  }
+}
+

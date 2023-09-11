@@ -9,6 +9,19 @@
       @switch (Direction) {
         case "my-account":
           <UserProfile />
+          <article>
+            <div>
+              <h5>Roles asignados</h5>
+              <div class="roles">
+                @for (byte i = 0; i < 10; i++) {
+                  <div class="rol-box">
+                    <div class="rol-color"></div>
+                    <p>Rol asignado</p>
+                  </div>
+                }
+              </div>
+            </div>
+          </article>
           break;
         case "roles":
           <Roles />

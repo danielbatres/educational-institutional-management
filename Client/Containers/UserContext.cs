@@ -15,11 +15,13 @@ public class UserContext : BaseContainer {
   public void SetUser(User user) {
     User = user;
 
-    if (user.InstitutionId != null) {
-      //_navigationManager.NavigateTo($"/application/{user.InstitutionId}");
-    }
-
     NotifyStateChanged();
+  }
+
+  public void NavigateToInstitution() {
+    if (User.InstitutionId != null) {
+      _navigationManager.NavigateTo($"/application/{User.InstitutionId}");
+    }
   }
 
   public void SetIsActiveUser(bool isActiveUser) {

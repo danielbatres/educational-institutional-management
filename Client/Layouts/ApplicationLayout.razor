@@ -46,7 +46,7 @@
   protected override void OnInitialized() {
     Toggle = true;
 
-    InstitutionId = UserContext.User.Institution.Id;
+    InstitutionId = (Guid) UserContext.User.InstitutionId;
 
     SideBarMenu = new() {
       MenuLabels = new List<string>() {

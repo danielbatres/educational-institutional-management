@@ -22,6 +22,12 @@ public class InstitutionController : ControllerBase {
     }
 
     [HttpGet]
+    [Route("get-institution-by")]
+    public IActionResult GetInstitutionId(string name) {
+        return Ok(_institutionService.Get().Where(x => x.Name == name));
+    }
+
+    [HttpGet]
     [Route("get-institution-users")]
     public IActionResult GetInstitutionUsers(Guid institutionId) {
         return Ok(_institutionService.GetInstitutionUsers(institutionId));

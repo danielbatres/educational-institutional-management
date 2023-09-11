@@ -13,10 +13,12 @@ public class InstitutionService : IInstitutionService {
 
   public async Task Create(Institution institution) {
     _context.Institutions.Add(institution);
-    
-    Console.WriteLine("Guarda");
 
     await _context.SaveChangesAsync();
+  }
+
+  public IEnumerable<Institution> Get() {
+    return _context.Institutions;
   }
 
   public IEnumerable<User> GetInstitutionUsers(Guid institutionId) {
@@ -26,5 +28,6 @@ public class InstitutionService : IInstitutionService {
 
 public interface IInstitutionService {
   Task Create(Institution institution);
+  IEnumerable<Institution> Get();
   IEnumerable<User> GetInstitutionUsers(Guid institutionId);
 }

@@ -17,6 +17,7 @@ public class User {
   public virtual OnlineStatus OnlineStatus { get; set; }
   public virtual Register Register { get; set; }
   public virtual Payment? Payment { get; set; }
+  public virtual ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
 
   public User Clone() {
     return new User() {

@@ -32,29 +32,65 @@
           </li>
         </ul>
         <div>
-          @for (int i = 0; i < 10; i++) {
-            <div class="rol-card">
-              <ul class="rol-element">
-                <li>
-                  <div></div>
-                </li>
-                <li>
-                  <p>Nombre del rol</p>
-                </li>
-                <li>
-                  <p>1</p>
-                </li>
-                <li>
-                  <p>19</p>
-                </li>
-                <li>
-                  <div></div>
-                </li>
-              </ul>
+          @if (Loading) {
+            <div class="skeleton-container">
+              @for (int i = 0; i < 10; i++) {
+                <div class="skeleton-row"></div>
+              }
             </div>
+          } else {
+            @foreach (var role in UpdatedRoles)
+            {
+              <div class="rol-card">
+                <ul class="rol-element">
+                  <li>
+                    <div></div>
+                  </li>
+                  <li>
+                    <p>@role.Name</p>
+                  </li>
+                  <li>
+                    <p>@role.MembersCount</p>
+                  </li>
+                  <li>
+                    <p>@role.PermissionsCount</p>
+                  </li>
+                  <li>
+                    <div></div>
+                  </li>
+                </ul>
+              </div>
+            }
           }
+          
         </div>
       </div>
+      <CreateRole />
     </article>
   </div>
 </section>
+
+@code {
+  private List<Role> UpdatedRoles { get; set; } = new();
+  [Inject]
+  private RolesHubManager RolesHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  private bool Loading { get; set; } = true;
+
+  protected override async Task OnInitializedAsync() {
+    RolesHubManager.SendGroupName(UserContext.User.Institution.Name);
+
+    RolesHubManager.RolesUpdatedHandler(roles => {
+      UpdatedRoles = roles;
+      StateHasChanged();
+    });
+
+    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
+    Loading = false;
+  }
+
+  public async ValueTask DisposeAsync() {
+    //await RolesHubManager.DisposeConnectionAsync();
+  }
+}
