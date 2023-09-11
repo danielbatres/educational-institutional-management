@@ -8,6 +8,8 @@ public class ApplicationContext : DbContext {
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<Appearance> Appearances { get; set; }
+    public DbSet<Settings> Settings { get; set; }
     public DbSet<Student> Students { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
@@ -15,6 +17,15 @@ public class ApplicationContext : DbContext {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        List<Appearance> AppearanceInit = new() {
+            new() {
+                Theme = AppereanceSelection.LightTheme
+            },
+            new() {
+                Theme = AppereanceSelection.DarkTheme
+            }
+        };
+
         modelBuilder.Entity<Role>(role => {
             role.HasKey(t => t.Id);
             role.Property(t => t.Name).IsRequired();
@@ -39,6 +50,19 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<UserRole>(userRole => {
             userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
             userRole.HasOne(ur => ur.Role).WithMany().HasForeignKey(ur => ur.RoleId);
+        });
+
+        modelBuilder.Entity<Appearance>(appearance => {
+            appearance.HasKey(a => a.Id);
+            appearance.Property(a => a.Id).ValueGeneratedOnAdd();
+            appearance.Property(a => a.Theme);
+            appearance.HasData(AppearanceInit);
+        });
+
+        modelBuilder.Entity<Settings>(settings => {
+            settings.HasKey(s => s.Id);
+            settings.Property(s => s.UserId);
+            settings.HasOne(s => s.Appearance).WithMany(a => a.Settings).HasForeignKey(s => s.AppearanceId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Student>(student => {
