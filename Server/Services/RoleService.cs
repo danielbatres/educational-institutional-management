@@ -6,8 +6,10 @@ namespace edu_institutional_management.Server.Services;
 public class RoleService : IRoleService {
   private readonly ApplicationContext _applicationContext;
 
-  public RoleService(ApplicationContextService applicationContext) {
-    _applicationContext = applicationContext.GetApplicationContext(applicationContext.GetSavedConnectionString());
+  public RoleService(ApplicationContextService applicationContextService) {
+    var applicationContext = applicationContextService.GetApplicationContext();
+
+    _applicationContext = applicationContext;
   }
 
   public async Task Create(Role role) {

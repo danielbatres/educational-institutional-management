@@ -1,7 +1,6 @@
 using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Controllers;
 
@@ -9,7 +8,7 @@ namespace edu_institutional_management.Server.Controllers;
 [Route("/api/server")]
 public class DatabaseController : ControllerBase {
   private readonly MainContext _mainContext;
-  private ApplicationContextService _applicationContextService;
+  private readonly ApplicationContextService _applicationContextService;
 
   public DatabaseController(MainContext mainContext, ApplicationContextService applicationContextService) {
     _mainContext = mainContext;
@@ -20,7 +19,7 @@ public class DatabaseController : ControllerBase {
   [Route("db-connection")]
   public IActionResult SetDbConnection([FromBody] DataBaseConnectionRequest request) {
     var connectionString = $"Data Source=DESKTOP-NMVIEF5\\SQLEXPRESS;Initial Catalog={request.DataBaseName};Integrated security=True;TrustServerCertificate=True";
-    _applicationContextService.SetSavedConnectionString(connectionString);
+    _applicationContextService.ConfigureDynamicConnectionString(connectionString);
 
     return Ok("Successful database connection integration");
   }
@@ -36,8 +35,7 @@ public class DatabaseController : ControllerBase {
   [HttpGet]
   [Route("create-application-db")]
   public IActionResult CreateApplicationDataBase() {
-    var connectionString = _applicationContextService.GetSavedConnectionString();
-    var applicationContext = _applicationContextService.GetApplicationContext(connectionString);
+    using var applicationContext = _applicationContextService.GetApplicationContext();
 
     applicationContext.Database.EnsureCreated();
 

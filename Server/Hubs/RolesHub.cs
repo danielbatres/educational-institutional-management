@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace edu_institutional_management.Server.Hubs;
 
-public class RolesHub : MainHub {
+public class RolesHub : Hub {
   private readonly IRoleService _roleService;
 
   public RolesHub(IRoleService roleService){
@@ -14,12 +14,6 @@ public class RolesHub : MainHub {
   public async Task SendRolesUpdate(string groupName) {
     var roles = GetRoles();
     await Clients.Group(groupName).SendAsync("RolesUpdated", roles);
-  }
-
-  public string GroupName { get; set; }
-
-  public async Task JoinInstitutionGroup(string groupName) {
-    await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
   }
 
   public List<Role> GetRoles() {

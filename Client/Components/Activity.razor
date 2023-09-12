@@ -1,0 +1,46 @@
+<section>
+  <h4>Actividad reciente</h4>
+  @foreach (ActivityLog activity in Activities) {
+    string action = string.Empty;
+
+    switch (activity.ActionType) {
+      case ActionType.Create:
+        action = "Creación";
+        break;
+      case ActionType.Update:
+        action = "Actualización";
+        break;
+      case ActionType.Delete:
+        action = "Eliminación";
+        break;
+    }
+  
+    <div>
+      <p>@action</p>
+      <p>@activity.Author</p>
+      <p>@activity.UserName</p>
+      <h3>@activity.Title</h3>
+      <p>@activity.Message</p>
+      <p>@activity.Date</p>
+    </div>
+  }
+</section>
+
+@code {
+  private List<ActivityLog> Activities { get; set; } = new();
+  [Inject]
+  private ActivityHubManager _activityHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  
+  protected override async Task OnInitializedAsync() {
+    _activityHubManager.ActivityUpdatedHandler(activities => {
+      Activities = activities;
+      StateHasChanged();
+    });
+    
+    await _activityHubManager.StartConnectionAsync();
+    
+    await _activityHubManager.SendActivityUpdatedAsync(_userContext.User.Institution.Name);
+  }
+}

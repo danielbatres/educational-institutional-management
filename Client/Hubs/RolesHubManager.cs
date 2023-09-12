@@ -13,11 +13,6 @@ public class RolesHubManager : HubManagerBase {
     _hubConnection.On("RolesUpdated", handler);
   }
 
-  public async Task SendGroupName(string groupName) {
-    await StartConnectionAsync();
-    await _hubConnection.SendAsync("JoinInstitutionGroup", groupName);
-  }
-
   public async Task SendRolesUpdatedAsync(string groupName) {
     await _hubConnection.SendAsync("SendRolesUpdate", groupName);
   }

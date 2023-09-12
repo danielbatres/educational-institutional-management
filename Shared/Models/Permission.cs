@@ -8,5 +8,5 @@ public class Permission {
 }
 
 public enum PermissionName {
-
+  SeeActivity,
 }

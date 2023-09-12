@@ -16,7 +16,7 @@ public class SettingsController : ControllerBase {
   [HttpPost]
   [Route("create")]
   public async Task<IActionResult> Create([FromBody] Settings settings) {
-    await _settingsService.CreateOrUpdate(settings, "create");
+    await _settingsService.Create(settings);
 
     return Ok();
   }
@@ -24,7 +24,7 @@ public class SettingsController : ControllerBase {
   [HttpPut]
   [Route("update")]
   public async Task<IActionResult> Update([FromBody] Settings settings) {
-    await _settingsService.CreateOrUpdate(settings, "update");
+    await _settingsService.Update(settings);
 
     return Ok();
   }

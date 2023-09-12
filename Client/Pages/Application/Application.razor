@@ -6,43 +6,45 @@
 
 <Dashboard />
 <button type="button" class="button"
-@onclick="@(async () => await _hubConnection.InvokeAsync("DisconnectUser", UserContext.User.Id))">Desconectar</button>
+@onclick="@(async () => await _hubConnection.InvokeAsync("DisconnectUser",_userContext.User.Id))">Desconectar</button>
 
 @code {
   [Parameter]
   public string InstitutionId { get; set; } = string.Empty;
   [Inject]
-  private UserContext UserContext { get; set; }
+  private UserContext _userContext { get; set; }
   [Inject]
-  private NavigationManager NavigationManager { get; set; }
+  private NavigationManager _navigationManager { get; set; }
   [Inject]
-  private IUserService UserService { get; set; }
+  private IUserService _userService { get; set; }
+  
   private HubConnection _hubConnection { get; set; }
 
   protected override void OnInitialized() {
-    UserContext.OnChange += HandleStateChange;
+    _userContext.OnChange += HandleStateChange;
     VerifyInstitution();
   }
 
   protected override async Task OnInitializedAsync() {
-    _hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/onlineUsersHub")).Build();
+    _hubConnection = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/onlineUsersHub")).Build();
 
     await _hubConnection.StartAsync();
 
-    SetActiveUser();
+    await SetActiveUser();
   }
 
   private async Task SetActiveUser() {
-    await _hubConnection.InvokeAsync("DisconnectUser", UserContext.User.Id);
-    await _hubConnection.SendAsync("Connect", UserContext.User);
+    await _hubConnection.InvokeAsync("DisconnectUser", _userContext.User.Id);
+    await _hubConnection.SendAsync("Connect", _userContext.User);
 
-    UserContext.User.OnlineStatus.Status = true;
-    await UserService.Update(UserContext.User.Clone());
+    _userContext.User.OnlineStatus.Status = true;
+    await _userService.Update(_userContext.User.Clone());
   }
 
   private void VerifyInstitution() {
-    if (UserContext.User == null || UserContext.User.Institution == null) {
-      NavigationManager.NavigateTo("/");
+    if (_userContext.User == null || _userContext.User.Institution == null)
+    {
+      _navigationManager.NavigateTo("/");
     }
   }
 
@@ -53,8 +55,8 @@
 
   public async ValueTask DisposeAsync() {
     if (_hubConnection != null) {
-      UserContext.User.OnlineStatus.Status = false;
-      await UserService.Update(UserContext.User);
+      _userContext.User.OnlineStatus.Status = false;
+      await _userService.Update(_userContext.User);
 
       await _hubConnection.DisposeAsync();
     }

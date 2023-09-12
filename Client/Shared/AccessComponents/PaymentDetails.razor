@@ -41,6 +41,8 @@
   private UserContext UserContext { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
+  [Inject]
+  private ISettingsService SettingsService { get; set; }
 
   protected override void OnInitialized() {
     InstitutionContext.OnChange += HandleStateChange;
@@ -55,6 +57,14 @@
     await UserService.Update(UserContext.User);
 
     UserContext.NavigateToInstitution();
+
+    await SettingsService.Create(new() {
+      Id = Guid.NewGuid(),
+      UserId = UserContext.User.Id,
+      AppearanceId = 1
+    });
+
+    UserContext.User.Settings = await SettingsService.GetSettingsByUserId(UserContext.User.Id);
   }
 
   private void HandleStateChange() {

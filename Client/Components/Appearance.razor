@@ -1,0 +1,17 @@
+<section>
+  <div>
+    <div>
+      <div class="theme-box @(SelectedAppearance == 1 ? "selected-appearance" : "" )" @onclick="@(() => SetSelectedAppearance(1))">
+
+      </div>
+      <p>Tema claro (por defecto)</p>
+    </div>
+    <div>
+      <div class="theme-box @(SelectedAppearance == 2 ? "selected-appearance" : "")"
+      @onclick="@(() => SetSelectedAppearance(2))">
+
+      </div>
+      <p>Tema oscuro</p>
+    </div>
+  </div>
+</section>

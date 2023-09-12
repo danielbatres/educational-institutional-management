@@ -26,8 +26,11 @@
         case "roles":
           <Roles />
           break;
-          case "users":
-            <Users />
+        case "users":
+          <Users />
+          break;
+        case "appearance":
+          <Appearance />
           break;
       }
   </div>
@@ -40,6 +43,10 @@
   public string InstitutionIdParam { get; set; } = string.Empty;
   [CascadingParameter(Name = "Institution")]
   public Guid InstitutionId { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private ISettingsService _settingsService { get; set; }
 
   private User User = new();
 
@@ -58,7 +65,7 @@
         },
         new() {
           new() {
-            "Apariencia", "fi fi-tr-swatchbook", "1", "/application/settings/appearance"
+            "Apariencia", "fi fi-tr-swatchbook", "1", $"/application/{InstitutionId}/settings/appearance"
           },
           new() {
             "Usuarios", "fi fi-tr-users-medical", "2", $"/application/{InstitutionId}/settings/users" 

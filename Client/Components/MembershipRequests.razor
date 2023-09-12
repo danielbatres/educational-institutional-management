@@ -39,6 +39,8 @@
   private IInstitutionService InstitutionService { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
+  [Inject]
+  private ISettingsService SettingsService { get; set; }
   public List<MembershipRequest> ReceivedMembershipRequests { get; set; } = new();
 
   protected override void OnInitialized() {
@@ -54,5 +56,17 @@
     }
 
     UserContext.NavigateToInstitution();
+
+    await InstitutionService.SendInstitutionConnection(new DataBaseConnectionRequest() {
+      DataBaseName = UserContext.User.Institution?.DataBaseConnectionName
+    });
+
+    await SettingsService.Create(new() {
+      Id = Guid.NewGuid(),
+      UserId = UserContext.User.Id,
+      AppearanceId = 1
+    });
+
+    UserContext.User.Settings = await SettingsService.GetSettingsByUserId(UserContext.User.Id);
   }
 }

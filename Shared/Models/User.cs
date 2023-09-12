@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace edu_institutional_management.Shared.Models;
@@ -18,6 +19,12 @@ public class User {
   public virtual Register Register { get; set; }
   public virtual Payment? Payment { get; set; }
   public virtual ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
+  [NotMapped]
+  public List<UserRole>? UserRoles { get; set; }
+  [NotMapped]
+  public Settings? Settings { get; set; }
+  [NotMapped]
+  public List<Notification>? Notifications { get; set; }
 
   public User Clone() {
     return new User() {

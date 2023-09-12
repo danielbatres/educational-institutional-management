@@ -62,7 +62,6 @@
               </div>
             }
           }
-          
         </div>
       </div>
       <CreateRole />
@@ -73,24 +72,20 @@
 @code {
   private List<Role> UpdatedRoles { get; set; } = new();
   [Inject]
-  private RolesHubManager RolesHubManager { get; set; }
+  private RolesHubManager _rolesHubManager { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
   private bool Loading { get; set; } = true;
 
   protected override async Task OnInitializedAsync() {
-    RolesHubManager.SendGroupName(UserContext.User.Institution.Name);
-
-    RolesHubManager.RolesUpdatedHandler(roles => {
+    _rolesHubManager.RolesUpdatedHandler(roles => {
       UpdatedRoles = roles;
       StateHasChanged();
     });
 
-    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
-    Loading = false;
-  }
+    await _rolesHubManager.StartConnectionAsync();
 
-  public async ValueTask DisposeAsync() {
-    //await RolesHubManager.DisposeConnectionAsync();
+    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
+    Loading = false;
   }
 }

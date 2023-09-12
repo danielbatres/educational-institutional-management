@@ -1,0 +1,10 @@
+.theme-box {
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 10px;
+  border: var(--light-border);
+}
+
+.selected-appearance {
+  border: 1px solid var(--dark-color);
+}

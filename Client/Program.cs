@@ -24,13 +24,18 @@ builder.Services.AddSingleton<RegisterInstitutionContext>();
 builder.Services.AddSingleton<LoginContext>();
 builder.Services.AddSingleton<LoadingContext>();
 builder.Services.AddSingleton<RoleContext>();
+builder.Services.AddSingleton<ThemeContext>();
 builder.Services.AddSingleton<Validators>();
 builder.Services.AddSingleton<RolesHubManager>();
+builder.Services.AddSingleton<GroupHubManager>();
+builder.Services.AddSingleton<ActivityHubManager>();
 builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddScoped<IMembershipRequestService, MembershipRequestService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ISettingsService, SettingsService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

@@ -14,15 +14,19 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   private readonly HttpClient _httpClient;
   private readonly UserContext _userContext;
   private readonly NavigationManager _navigationManager;
-  private IInstitutionService _institutionService;
-  private RolesHubManager _rolesHubManager;
+  private readonly IInstitutionService _institutionService;
+  private readonly ISettingsService _settingsService;
+  private readonly RolesHubManager _rolesHubManager;
+  private readonly ThemeContext _themeContext;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, ISettingsService settingsService, ThemeContext themeContext) {
     _httpClient = httpClient;
     _userContext = userContext;
     _navigationManager = navigationManager;
     _institutionService = institutionService;
     _rolesHubManager = rolesHubManager;
+    _settingsService = settingsService;
+    _themeContext = themeContext;
   }
 
   public async override Task<AuthenticationState> GetAuthenticationStateAsync() {
@@ -37,8 +41,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         await _institutionService.SendInstitutionConnection(new DataBaseConnectionRequest() {
           DataBaseName = _userContext.User.Institution?.DataBaseConnectionName ?? string.Empty
         });
-        
-        await _rolesHubManager.SendGroupName(_userContext.User.Institution.Name);
       }
     }
 

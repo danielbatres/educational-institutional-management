@@ -1,33 +1,36 @@
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
 public class SettingsService : ISettingsService {
   private readonly ApplicationContext _applicationContext;
 
-  public SettingsService(ApplicationContextService applicationContext) {
-    _applicationContext = applicationContext.GetApplicationContext(applicationContext.GetSavedConnectionString());
+  public SettingsService(ApplicationContextService applicationContextService) {
+    var applicationContext = applicationContextService.GetApplicationContext();
+
+    _applicationContext = applicationContext;
   }
 
-  public async Task CreateOrUpdate(Settings settings, string option) {
-    switch(option) {
-      case "create":
-        _applicationContext.Settings.Add(settings);
-        break;
-      case "update":
-        _applicationContext.Settings.Update(settings);
-        break;
-    }
+  public async Task Create(Settings settings) {
+    _applicationContext.Settings.Add(settings);
+
+    await _applicationContext.SaveChangesAsync();
+  }
+
+  public async Task Update(Settings settings) {
+    _applicationContext.Settings.Update(settings);
 
     await _applicationContext.SaveChangesAsync();
   }
 
   public Settings? GetSettingsByUserId(Guid userId) {
-    return _applicationContext.Settings.Where(s => s.UserId == userId).FirstOrDefault();
+    return _applicationContext.Settings.Where(s => s.UserId == userId).Include(s => s.Appearance).FirstOrDefault();
   }
 }
 
 public interface ISettingsService {
-  Task CreateOrUpdate(Settings settings, string option);
+  Task Create(Settings settings);
+  Task Update(Settings settings);
   Settings? GetSettingsByUserId(Guid userId);
 }

@@ -11,17 +11,22 @@ public class ApplicationContext : DbContext {
     public DbSet<Appearance> Appearances { get; set; }
     public DbSet<Settings> Settings { get; set; }
     public DbSet<Student> Students { get; set; }
+    public DbSet<ActivityLog> Activities { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
+        ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         List<Appearance> AppearanceInit = new() {
             new() {
+                Id = 1,
                 Theme = AppereanceSelection.LightTheme
             },
             new() {
+                Id = 2,
                 Theme = AppereanceSelection.DarkTheme
             }
         };
@@ -44,11 +49,13 @@ public class ApplicationContext : DbContext {
         });
 
         modelBuilder.Entity<RolePermission>(rolePermission => {
-            rolePermission.HasKey(rp => new { rp.RoleId, rp.PermissionId });
+            rolePermission.HasKey(rp => rp.Id);
+            rolePermission.Property(rp => rp.Id).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<UserRole>(userRole => {
-            userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            userRole.HasKey(ur => ur.Id);
+            userRole.Property(ur => ur.Id).ValueGeneratedOnAdd();
             userRole.HasOne(ur => ur.Role).WithMany().HasForeignKey(ur => ur.RoleId);
         });
 
@@ -65,10 +72,28 @@ public class ApplicationContext : DbContext {
             settings.HasOne(s => s.Appearance).WithMany(a => a.Settings).HasForeignKey(s => s.AppearanceId).OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<ActivityLog>(activity => {
+            activity.HasKey(a => a.Id);
+            activity.Property(a => a.Id).ValueGeneratedOnAdd();
+            activity.Property(a => a.ActionType);
+            activity.Property(a => a.Author);
+            activity.Property(a => a.Message);
+            activity.Property(a => a.UserName);
+            activity.Property(a => a.Date);
+        });
+
+        modelBuilder.Entity<Notification>(notification => {
+            notification.HasKey(n => n.Id);
+            notification.Property(n => n.Id).ValueGeneratedOnAdd();
+            notification.Property(n => n.Title).IsRequired();
+            notification.Property(n => n.Message).IsRequired();
+            notification.Property(n => n.CreationDate);
+            notification.Property(n => n.Read);
+            notification.Property(n => n.UserId);
+        });
+
         modelBuilder.Entity<Student>(student => {
             student.HasKey(t => t.Id);
         });
-
-        
     }
 }

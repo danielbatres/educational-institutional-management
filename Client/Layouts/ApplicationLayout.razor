@@ -2,14 +2,14 @@
 
 <style>
   :root {
-    --primary-color: @SelectedPalette.LightColor;
-    --background-color: @SelectedPalette.BackgroundColor;
-    --light-background-color: @SelectedPalette.LightBackgroundColor;
-    --light-color: @SelectedPalette.LightColor;
-    --text-color: @SelectedPalette.TextColor;
-    --light-text-color: @SelectedPalette.LightTextColor;
-    --dark-color: @SelectedPalette.DarkColor;
-    --light-primary-color: @SelectedPalette.LightPrimaryColor;
+    --primary-color: @_themeContext.SelectedTheme.LightColor;
+    --background-color: @_themeContext.SelectedTheme.BackgroundColor;
+    --light-background-color: @_themeContext.SelectedTheme.LightBackgroundColor;
+    --light-color: @_themeContext.SelectedTheme.LightColor;
+    --text-color: @_themeContext.SelectedTheme.TextColor;
+    --light-text-color: @_themeContext.SelectedTheme.LightTextColor;
+    --dark-color: @_themeContext.SelectedTheme.DarkColor;
+    --light-primary-color: @_themeContext.SelectedTheme.LightPrimaryColor;
     --sm-text: 0.6rem;
     --regular-text: 0.95rem;
     --title: 1.1rem;
@@ -34,51 +34,3 @@
     </div>
   </div>
 </div>
-
-@code {
-  public bool Toggle { get; set; }
-  private Palette SelectedPalette { get; set; } = Theme.LightTheme;
-  private Menu SideBarMenu { get; set; } = new();
-  [Inject]
-  private UserContext UserContext { get; set; }
-  public Guid InstitutionId { get; set; } = Guid.Empty;
-
-  protected override void OnInitialized() {
-    Toggle = true;
-
-    InstitutionId = (Guid) UserContext.User.InstitutionId;
-
-    SideBarMenu = new() {
-      MenuLabels = new List<string>() {
-        "menu principal", "menu de actividades"
-      },
-      MenuItems = new List<List<List<string>>>() {
-        new() {
-          new() {
-            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}"
-          },
-          new() {
-            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students"
-          },
-          new() {
-            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses"
-          },
-          new() {
-            "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", $"/application/{InstitutionId}/statistics"
-          }
-        },
-        new() {
-          new() {
-            "Eventos", "fi fi-tr-calendar-day", "4", $"/application/{InstitutionId}/events"
-          },
-          new() {
-            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity"
-          }
-        }
-      },
-      LastOption = new() {
-        "Configuraciones", "fi fi-tr-gears", "6", $"/application/{InstitutionId}/settings/my-account"
-      }
-    };
-  }
-}
