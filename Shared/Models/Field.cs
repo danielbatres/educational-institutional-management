@@ -9,4 +9,5 @@ public class Field {
   public Guid CategoryId { get; set; }
   [JsonIgnore]
   public Category? Category { get; set; }
+  public ICollection<FieldInformation>? FieldsInformation { get; set; }
 }

@@ -22,6 +22,7 @@ public class ApplicationContext : DbContext {
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<SubjectCourse> SubjectCourses { get; set; }
+    public DbSet<CourseSchedule> CourseSchedules { get; set; }
     public DbSet<Attendance> Attendances { get; set; }
     public DbSet<AttendanceSchedule> AttendanceSchedules { get; set; }
 
@@ -106,8 +107,16 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<SubjectCourse>(subjectCourse => {
             subjectCourse.HasKey(s => s.Id);
             subjectCourse.HasMany(sc => sc.RatingsLists).WithOne(rl => rl.SubjectCourse).HasForeignKey(rl => rl.SubjectCourseId);
+            subjectCourse.HasMany(sc => sc.CourseSchedules).WithOne(cs => cs.SubjectCourse).HasForeignKey(cs => cs.SubjectCourseId);
         });
-        
+
+        modelBuilder.Entity<CourseSchedule>(courseSchedule => {
+            courseSchedule.HasKey(cs => cs.Id);
+            courseSchedule.Property(cs => cs.DayOfWeek).IsRequired();
+            courseSchedule.Property(cs => cs.StartTime).IsRequired();
+            courseSchedule.Property(cs => cs.EndTime).IsRequired();
+        });
+
         modelBuilder.Entity<Attendance>(attendance => {
             attendance.HasKey(a => a.Id);
             attendance.Property(a => a.Date).IsRequired();
@@ -117,7 +126,7 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<AttendanceSchedule>(attendanceSchedule => {
             attendanceSchedule.HasKey(ts => ts.Id);
             attendanceSchedule.Property(ts => ts.DayOfWeek).IsRequired();
-            attendanceSchedule.Property(ts => ts.StarTime).IsRequired();
+            attendanceSchedule.Property(ts => ts.StartTime).IsRequired();
             attendanceSchedule.Property(ts => ts.EndTime).IsRequired();
         });
 
@@ -171,6 +180,24 @@ public class ApplicationContext : DbContext {
             rating.Property(r => r.Id).ValueGeneratedOnAdd();
             rating.Property(r => r.StudentId);
             rating.Property(r => r.RatingValue);
+        });
+
+        modelBuilder.Entity<Category>(category => {
+            category.HasKey(c => c.Id);
+            category.Property(c => c.Name);
+            category.HasMany(c => c.Fields).WithOne(f => f.Category).HasForeignKey(f => f.CategoryId).OnDelete(DeleteBehavior.Cascade);
+        });
+        
+        modelBuilder.Entity<Field>(field => {
+            field.HasKey(f => f.Id);
+            field.Property(f => f.Name);
+            field.Property(f => f.IsRequired);
+            field.HasMany(f => f.FieldsInformation).WithOne(fi => fi.Field).HasForeignKey(fi => fi.FieldId).OnDelete(DeleteBehavior.Cascade);
+        });
+        
+        modelBuilder.Entity<FieldInformation>(fieldInformation => {
+            fieldInformation.HasKey(fi => fi.Id);
+            fieldInformation.Property(fi => fi.Information);
         });
     }
 }
