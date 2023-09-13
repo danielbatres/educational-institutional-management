@@ -36,14 +36,10 @@
   private async Task SetActiveUser() {
     await _hubConnection.InvokeAsync("DisconnectUser", _userContext.User.Id);
     await _hubConnection.SendAsync("Connect", _userContext.User);
-
-    _userContext.User.OnlineStatus.Status = true;
-    await _userService.Update(_userContext.User.Clone());
   }
 
   private void VerifyInstitution() {
-    if (_userContext.User == null || _userContext.User.Institution == null)
-    {
+    if (_userContext.User == null || _userContext.User.Institution == null) {
       _navigationManager.NavigateTo("/");
     }
   }
@@ -55,8 +51,6 @@
 
   public async ValueTask DisposeAsync() {
     if (_hubConnection != null) {
-      _userContext.User.OnlineStatus.Status = false;
-      await _userService.Update(_userContext.User);
 
       await _hubConnection.DisposeAsync();
     }

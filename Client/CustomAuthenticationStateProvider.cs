@@ -18,8 +18,9 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   private readonly ISettingsService _settingsService;
   private readonly RolesHubManager _rolesHubManager;
   private readonly ThemeContext _themeContext;
+  private readonly LoadingSiteContext _loadingContext;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, ISettingsService settingsService, ThemeContext themeContext) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext) {
     _httpClient = httpClient;
     _userContext = userContext;
     _navigationManager = navigationManager;
@@ -27,9 +28,10 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
     _rolesHubManager = rolesHubManager;
     _settingsService = settingsService;
     _themeContext = themeContext;
+    _loadingContext = loadingContext;
   }
 
-  public async override Task<AuthenticationState> GetAuthenticationStateAsync() {
+  public override async Task<AuthenticationState> GetAuthenticationStateAsync() {
     User currentUser = await _httpClient.GetFromJsonAsync<User>("api/user/get-current-user");
 
     if (!currentUser.Id.Equals(Guid.Empty)) {
@@ -43,7 +45,9 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         });
       }
     }
-
+    
+    _loadingContext.SetLoading(false);
+    
     if (currentUser != null) {
       var claim = new Claim(ClaimTypes.Name, currentUser.Id.ToString());
       var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");

@@ -18,6 +18,7 @@ builder.Services.AddAuthorizationCore(options =>
   });
 });
 
+builder.Services.AddSingleton<LoadingSiteContext>();
 builder.Services.AddSingleton<UserContext>();
 builder.Services.AddSingleton<NavBarContext>();
 builder.Services.AddSingleton<RegisterInstitutionContext>();

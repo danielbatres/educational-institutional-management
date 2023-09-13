@@ -25,6 +25,8 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAttendanceScheduleService, AttendanceScheduleService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 

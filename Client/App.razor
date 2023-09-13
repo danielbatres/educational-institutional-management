@@ -1,4 +1,6 @@
-﻿<CascadingAuthenticationState>
+﻿@if (_loadingContext.IsLoading) { <LoadingState /> }
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <ManageModals />
@@ -13,3 +15,16 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+  [Inject]
+  private LoadingSiteContext _loadingContext { get; set; }
+
+  protected override void OnInitialized() {
+    _loadingContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+}

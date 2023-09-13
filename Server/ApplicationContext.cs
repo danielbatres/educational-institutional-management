@@ -50,7 +50,7 @@ public class ApplicationContext : DbContext {
             role.Property(r => r.RoleColor);
             role.Property(r => r.MembersCount);
             role.Property(r => r.PermissionsCount);
-            role.HasMany(r => r.Permissions).WithOne(rp => rp.Role).HasForeignKey(rp => rp.RoleId);
+            role.HasMany(r => r.RolePermissions).WithOne(rp => rp.Role).HasForeignKey(rp => rp.RoleId);
         });
 
         modelBuilder.Entity<Permission>(permission => {

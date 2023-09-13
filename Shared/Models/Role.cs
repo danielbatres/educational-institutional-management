@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace edu_institutional_management.Shared.Models;
 
 public class Role {
@@ -7,5 +9,6 @@ public class Role {
   public string? Description { get; set; }
   public int MembersCount { get; set; }
   public int PermissionsCount { get; set; }
-  public List<RolePermission>? Permissions { get; set; }
+  [JsonIgnore]
+  public List<RolePermission>? RolePermissions { get; set; }
 }

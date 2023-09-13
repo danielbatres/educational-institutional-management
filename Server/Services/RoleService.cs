@@ -14,7 +14,7 @@ public class RoleService : BaseService, IRoleService {
   }
 
   public IEnumerable<Role> Get() {
-    return _applicationContext.Roles.Include(r => r.Permissions);
+    return _applicationContext.Roles.Include(r => r.RolePermissions);
   }
 }
 

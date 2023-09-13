@@ -59,6 +59,12 @@ section {
   padding:  14px 10px;
 }
 
+.update-rol {
+  min-width: 30px;
+  min-height: 30px;
+  background: var(--primary-color);
+}
+
 .skeleton-container {
   width: 100%;
   border-radius: 4px;
