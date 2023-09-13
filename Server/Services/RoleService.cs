@@ -3,14 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
-public class RoleService : IRoleService {
-  private readonly ApplicationContext _applicationContext;
+public class RoleService : BaseService, IRoleService {
 
-  public RoleService(ApplicationContextService applicationContextService) {
-    var applicationContext = applicationContextService.GetApplicationContext();
-
-    _applicationContext = applicationContext;
-  }
+  public RoleService(ApplicationContextService applicationContextService) : base(applicationContextService) {}
 
   public async Task Create(Role role) {
     _applicationContext.Roles.Add(role);

@@ -10,9 +10,20 @@ public class ApplicationContext : DbContext {
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Appearance> Appearances { get; set; }
     public DbSet<Settings> Settings { get; set; }
-    public DbSet<Student> Students { get; set; }
     public DbSet<ActivityLog> Activities { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Field> Fields { get; set; }
+    public DbSet<FieldInformation> FieldsInformation { get; set; }
+    public DbSet<Student> Students { get; set; }
+    public DbSet<StudentRegister> StudentRegisters { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<RatingsList> RatingsLists { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<SubjectCourse> SubjectCourses { get; set; }
+    public DbSet<Attendance> Attendances { get; set; }
+    public DbSet<AttendanceSchedule> AttendanceSchedules { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
@@ -92,8 +103,74 @@ public class ApplicationContext : DbContext {
             notification.Property(n => n.UserId);
         });
 
+        modelBuilder.Entity<SubjectCourse>(subjectCourse => {
+            subjectCourse.HasKey(s => s.Id);
+            subjectCourse.HasMany(sc => sc.RatingsLists).WithOne(rl => rl.SubjectCourse).HasForeignKey(rl => rl.SubjectCourseId);
+        });
+        
+        modelBuilder.Entity<Attendance>(attendance => {
+            attendance.HasKey(a => a.Id);
+            attendance.Property(a => a.Date).IsRequired();
+            attendance.Property(a => a.IsPresent).IsRequired();
+        });
+
+        modelBuilder.Entity<AttendanceSchedule>(attendanceSchedule => {
+            attendanceSchedule.HasKey(ts => ts.Id);
+            attendanceSchedule.Property(ts => ts.DayOfWeek).IsRequired();
+            attendanceSchedule.Property(ts => ts.StarTime).IsRequired();
+            attendanceSchedule.Property(ts => ts.EndTime).IsRequired();
+        });
+
+        modelBuilder.Entity<Course>(course => {
+            course.HasKey(c => c.Id);
+            course.Property(c => c.Guide);
+            course.Property(c => c.Name);
+            course.Property(c => c.StudentsCount);
+            course.HasMany(c => c.Students).WithOne(c => c.Course).HasForeignKey(s => s.CourseId);
+            course.HasMany(c => c.AttendanceSchedules).WithOne(c => c.Course).HasForeignKey(asch => asch.CourseId);
+        });
+
         modelBuilder.Entity<Student>(student => {
             student.HasKey(t => t.Id);
+            student.Property(s => s.Name);
+            student.Property(s => s.LastName);
+            student.Property(s => s.Gender);
+            student.Property(s => s.BirthDate);
+            student.Property(s => s.PhoneNumber);
+            student.Property(s => s.Photo);
+            student.Property(s => s.UniqueIdentifier);
+            student.HasIndex(s => s.UniqueIdentifier).IsUnique();
+            student.HasOne(s => s.StudentRegister).WithOne(sr => sr.Student).HasForeignKey<StudentRegister>(sr => sr.StudentId);
+            student.HasMany(s => s.FieldsInformation).WithOne(fi => fi.Student).HasForeignKey(fi => fi.StudentId);
+            student.HasMany(s => s.Attendances).WithOne(a => a.Student).HasForeignKey(a => a.StudentId);
+        });
+
+        modelBuilder.Entity<StudentRegister>(studentRegister => {
+            studentRegister.HasKey(sr => sr.Id);
+            studentRegister.Property(sr => sr.Email);
+            studentRegister.HasIndex(sr => sr.Email).IsUnique();
+            studentRegister.Property(sr => sr.Password);
+            studentRegister.Property(sr => sr.CreatedAt);
+        });
+
+        modelBuilder.Entity<Subject>(subject => {
+            subject.HasKey(s => s.Id);
+            subject.Property(s => s.Name);
+            subject.HasMany(s => s.SubjectCourses).WithOne(sc => sc.Subject).HasForeignKey(sc => sc.SubjectId);
+        });
+
+        modelBuilder.Entity<RatingsList>(ratingsList => {
+            ratingsList.HasKey(rl => rl.Id);
+            ratingsList.Property(rl => rl.ListName);
+            ratingsList.Property(rl => rl.Description);
+            ratingsList.HasMany(rl => rl.Ratings).WithOne(r => r.RatingsList).HasForeignKey(r => r.RatingsListId);
+        });
+
+        modelBuilder.Entity<Rating>(rating => {
+            rating.HasKey(r => r.Id);
+            rating.Property(r => r.Id).ValueGeneratedOnAdd();
+            rating.Property(r => r.StudentId);
+            rating.Property(r => r.RatingValue);
         });
     }
 }

@@ -3,14 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
-public class SettingsService : ISettingsService {
-  private readonly ApplicationContext _applicationContext;
-
-  public SettingsService(ApplicationContextService applicationContextService) {
-    var applicationContext = applicationContextService.GetApplicationContext();
-
-    _applicationContext = applicationContext;
-  }
+public class SettingsService : BaseService, ISettingsService {
+  public SettingsService(ApplicationContextService applicationContextService) : base(applicationContextService) {}
 
   public async Task Create(Settings settings) {
     _applicationContext.Settings.Add(settings);
