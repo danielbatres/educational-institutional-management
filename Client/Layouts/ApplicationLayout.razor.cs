@@ -17,8 +17,6 @@ public partial class ApplicationLayout {
   private RolesHubManager _rolesHubManager { get; set; }
   [Inject]
   private ISettingsService _settingsService { get; set; }
-  [Inject]
-  private GroupHubManager _groupHubManager { get; set; }
   public Guid InstitutionId { get; set; } = Guid.Empty;
 
   protected override void OnInitialized() {
@@ -68,9 +66,6 @@ public partial class ApplicationLayout {
   }
 
   protected override async Task OnInitializedAsync() {
-    await _groupHubManager.StartConnectionAsync();
-    await _groupHubManager.JoinGroup(_userContext.User.Institution.Name);
-
     _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 
     _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);

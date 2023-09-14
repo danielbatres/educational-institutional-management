@@ -32,6 +32,9 @@
         case "appearance":
           <Appearance />
           break;
+        case "courses":
+          <CourseSettings />
+          break;
       }
   </div>
 </section>
@@ -76,21 +79,21 @@
         },
         new() {
           new() { 
-            "Estudiantes", "fi fi-tr-book-bookmark", "4", "/application/settings/students" 
+            "Estudiantes", "fi fi-tr-book-bookmark", "4", $"/application/{InstitutionId}/settings/students" 
           },
           new() { 
-            "Cursos", "fi fi-tr-hockey-puck", "5", "/application/settings/courses" 
+            "Cursos", "fi fi-tr-hockey-puck", "5", $"/application/{InstitutionId}/settings/courses" 
           },
           new() {
-            "Pagos", "fi fi-tr-wallet", "6", "/application/settings/payments"
+            "Pagos", "fi fi-tr-wallet", "6", $"/application/{InstitutionId}/settings/payments"
           }
         }, 
         new() {
           new() {
-            "Insitucion", "fi fi-tr-house-chimney", "7", "/application/settings/institution"
+            "Insitucion", "fi fi-tr-house-chimney", "7", $"/application/{InstitutionId}/settings/institution"
           },
           new() {
-            "Plan de pago", "fi fi-tr-money-check", "8", "/application/settings/payment-plan"
+            "Plan de pago", "fi fi-tr-money-check", "8", $"/application/{InstitutionId}/settings/payment-plan"
           }
         }
       },

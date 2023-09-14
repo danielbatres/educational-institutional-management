@@ -62,12 +62,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => {
-  endpoints.MapHub<GroupHub>("/groupHub");
-  endpoints.MapHub<OnlineUsersHub>("/onlineUsersHub");
-  endpoints.MapHub<RolesHub>("/rolesHub");
-  endpoints.MapHub<ActivityHub>("/activityHub");
-});
+app.MapHub<OnlineUsersHub>("/onlineUsersHub");
+app.MapHub<RolesHub>("/rolesHub");
+app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<ActivityHub>("/activityHub");
+app.MapHub<CategoryHub>("/categoryHub");
+app.MapHub<StudentHub>("/studentsHub");
 
 app.MapRazorPages();
 app.MapControllers();

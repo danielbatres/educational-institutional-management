@@ -14,4 +14,12 @@ public class HubManagerBase {
       await _hubConnection.DisposeAsync();
     }
   }
+
+  public async Task JoinGroup(string groupName) {
+    await _hubConnection.SendAsync("JoinGroup", groupName);
+  }
+
+  public async Task LeaveGroup(string groupName) {
+    await _hubConnection.SendAsync("LeaveGroup", groupName);
+  }
 }

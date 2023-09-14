@@ -17,18 +17,24 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   private readonly IInstitutionService _institutionService;
   private readonly ISettingsService _settingsService;
   private readonly RolesHubManager _rolesHubManager;
+  private readonly CategoryHubManager _categoryHubManager;
+  private readonly StudentHubManager _studentHubManager;
+  private readonly ActivityHubManager _activityHubManager;
   private readonly ThemeContext _themeContext;
   private readonly LoadingSiteContext _loadingContext;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, CategoryHubManager categryHubManager, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext, StudentHubManager studentHubManager, ActivityHubManager activityHubManager) {
     _httpClient = httpClient;
     _userContext = userContext;
     _navigationManager = navigationManager;
     _institutionService = institutionService;
     _rolesHubManager = rolesHubManager;
+    _categoryHubManager = categryHubManager;
     _settingsService = settingsService;
     _themeContext = themeContext;
     _loadingContext = loadingContext;
+    _studentHubManager = studentHubManager;
+    _activityHubManager = activityHubManager;
   }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync() {
@@ -43,6 +49,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         await _institutionService.SendInstitutionConnection(new DataBaseConnectionRequest() {
           DataBaseName = _userContext.User.Institution?.DataBaseConnectionName ?? string.Empty
         });
+
+        await ConnectHubs(_userContext.User.InstitutionId.ToString());
       }
     }
     
@@ -57,5 +65,17 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
     } else {
       return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
     }
+  }
+
+  private async Task ConnectHubs(string groupName) {
+    await _rolesHubManager.StartConnectionAsync();
+    await _categoryHubManager.StartConnectionAsync();
+    await _studentHubManager.StartConnectionAsync();
+    await _activityHubManager.StartConnectionAsync();
+
+    await _rolesHubManager.JoinGroup(groupName);
+    await _categoryHubManager.JoinGroup(groupName);
+    await _studentHubManager.JoinGroup(groupName);
+    await _activityHubManager.JoinGroup(groupName);
   }
 }

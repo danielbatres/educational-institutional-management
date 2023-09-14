@@ -19,5 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\edu-institutional-management.Shared.csproj" />
   </ItemGroup>
-
 </Project>

@@ -13,7 +13,11 @@ public class SettingsService : BaseService, ISettingsService {
   }
 
   public async Task Update(Settings settings) {
-    _applicationContext.Settings.Update(settings);
+    var originalSettings = _applicationContext.Settings.Find(settings.Id);
+
+    _applicationContext.Entry(originalSettings).State = EntityState.Detached;
+
+    _applicationContext.Entry(settings).State = EntityState.Modified;
 
     await _applicationContext.SaveChangesAsync();
   }

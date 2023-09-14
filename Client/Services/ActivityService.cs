@@ -19,9 +19,7 @@ public class ActivityService : BaseService, IActivityService {
 
     await CheckResponse(response);
     
-    await _activityHubManager.StartConnectionAsync();
-    
-    await _activityHubManager.SendActivityUpdatedAsync(_userContext.User.Institution.Name);
+    await _activityHubManager.SendActivityUpdatedAsync(_userContext.User.InstitutionId.ToString());
   }
 }
 

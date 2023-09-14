@@ -95,7 +95,7 @@
                 </p>
               </li>
               <li>
-                <div class="action">
+                <div class="action" @onclick="@(() => _navigationManager.NavigateTo(Route))">
                   <i></i>
                 </div>
               </li>
@@ -344,4 +344,11 @@
 @code {
   [Parameter]
   public string InstitutionId { get; set; }
+  [Inject]
+  private NavigationManager _navigationManager { get; set; }
+  public string Route { get; set; }
+
+  protected override void OnInitialized() {
+    Route = $"/application/{InstitutionId}/students/1000";
+  }
 }

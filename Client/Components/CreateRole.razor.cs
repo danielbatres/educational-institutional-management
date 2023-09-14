@@ -12,7 +12,7 @@ public partial class CreateRole {
   [Inject]
   private IRoleService RoleService { get; set; }
   [Inject]
-  private RolesHubManager RolesHubManager { get; set; }
+  private RolesHubManager _rolesHubManager { get; set; }
   public Role Role { get; set; } = new();
   [Inject]
   private IActivityService _activityService { get; set; }
@@ -33,7 +33,7 @@ public partial class CreateRole {
       ActionType =  ActionType.Create
     };
 
-    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
+    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString());
     await _activityService.Create(activity);
     AssignNewRol();
   }

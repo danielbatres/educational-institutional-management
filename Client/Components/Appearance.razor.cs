@@ -18,6 +18,7 @@ public partial class Appearance {
     SelectedAppearance = _userContext.User.Settings.AppearanceId;
     _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);
     _userContext.OnChange += HandleStateChange;
+    _themeContext.OnChange += HandleStateChange;
   }
 
   private async Task SetSelectedAppearance(int selection) {
@@ -33,7 +34,10 @@ public partial class Appearance {
         break;
     }
 
+    Console.WriteLine(selection);
     await _settingsService.Update(_userContext.User.Settings);
+    Console.WriteLine(_userContext.User.Settings.AppearanceId);
+    _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
   }
 
   private void HandleStateChange() {

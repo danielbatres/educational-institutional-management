@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace edu_institutional_management.Server.Hubs;
 
-public class RolesHub : Hub {
+public class RolesHub : MainHub {
   private readonly IRoleService _roleService;
 
   public RolesHub(IRoleService roleService){

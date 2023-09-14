@@ -85,9 +85,7 @@
       StateHasChanged();
     });
 
-    await _rolesHubManager.StartConnectionAsync();
-
-    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.Institution.Name);
+    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString());
     Loading = false;
   }
 }

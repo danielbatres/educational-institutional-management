@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace edu_institutional_management.Server.Hubs;
 
-public class ActivityHub : Hub {
+public class ActivityHub : MainHub {
   private readonly IActivityService _activityService;
 
   public ActivityHub(IActivityService activityService) {

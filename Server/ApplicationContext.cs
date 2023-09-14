@@ -134,6 +134,7 @@ public class ApplicationContext : DbContext {
             course.HasKey(c => c.Id);
             course.Property(c => c.Guide);
             course.Property(c => c.Name);
+            course.Property(c => c.Acronym);
             course.Property(c => c.StudentsCount);
             course.HasMany(c => c.Students).WithOne(c => c.Course).HasForeignKey(s => s.CourseId);
             course.HasMany(c => c.AttendanceSchedules).WithOne(c => c.Course).HasForeignKey(asch => asch.CourseId);

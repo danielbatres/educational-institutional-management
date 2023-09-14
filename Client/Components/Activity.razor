@@ -1,6 +1,6 @@
 <section>
   <h4>Actividad reciente</h4>
-  @foreach (ActivityLog activity in Activities) {
+  @foreach (var activity in Activities) {
     string action = string.Empty;
 
     switch (activity.ActionType) {
@@ -39,8 +39,6 @@
       StateHasChanged();
     });
     
-    await _activityHubManager.StartConnectionAsync();
-    
-    await _activityHubManager.SendActivityUpdatedAsync(_userContext.User.Institution.Name);
+    await _activityHubManager.SendActivityUpdatedAsync(_userContext.User.InstitutionId.ToString());
   }
 }

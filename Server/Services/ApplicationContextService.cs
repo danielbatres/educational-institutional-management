@@ -9,10 +9,16 @@ public class ApplicationContextService {
     _connectionString = connectionString;
   }
 
-  public ApplicationContext GetApplicationContext() {
-    var options = new DbContextOptionsBuilder<ApplicationContext>().UseSqlServer(_connectionString).Options;
+  private ApplicationContext? ApplicationContext { get; set; }
 
-    return new ApplicationContext(options);
+  public ApplicationContext GetApplicationContext() {
+    if (ApplicationContext == null || ApplicationContext.Database.GetDbConnection().ConnectionString != _connectionString) {
+      var options = new DbContextOptionsBuilder<ApplicationContext>().UseSqlServer(_connectionString).Options;
+
+      ApplicationContext =  new ApplicationContext(options);
+    }
+    
+    return ApplicationContext;
   }
 
   public Guid GetActualInstitutionId() {

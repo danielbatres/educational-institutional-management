@@ -17,7 +17,11 @@ public class StudentService : BaseService, IStudentService {
   }
   
   public async Task Update(Student student) {
-    _applicationContext.Students.Update(student);
+    var originalStudent = _applicationContext.Settings.Find(student.Id);
+
+    _applicationContext.Entry(originalStudent).State = EntityState.Detached;
+
+    _applicationContext.Entry(student).State = EntityState.Modified;
     
     await _applicationContext.SaveChangesAsync();
   }
