@@ -1,0 +1,59 @@
+<section>
+  <h4>Informaci&oacute;n de la instituci&oacute;n</h4>
+
+  <form>
+    <fieldset>
+      <div class="label">
+        <label for="institution-name">Nombre de la instituci&oacute;n</label>
+      </div>
+      <input value="@Institution.Name" type="text" class="input" placeholder="Ingresar nombre de la institución" id="institution-name" @oninput="@(e => Update(e, "name"))">
+    </fieldset>
+    <fieldset>
+      <div class="label">
+        <label for="country">Pa&iacute;s de la instituci&oacute;n</label>
+      </div>
+      <input type="text" class="input" placeholder="Ingresar país de la institución" id="country">
+    </fieldset>
+    <fieldset>
+      <div class="label">
+        <label for="address">Direcci&oacute;n de la instituci&oacute;n</label>
+      </div>
+      <input type="text" class="input" placeholder="Ingresar dirección de la institución" id="address">
+    </fieldset>
+    <button type="button" @onclick="@UpdateInstitution" class="button">Actualizar instituci&oacute;n</button>
+  </form>
+</section>
+
+@code {
+  [Inject]
+  private UserContext _userContext { get; set; }   
+  [Inject]
+  private InstitutionHubManager _institutionHubManager { get; set; }
+  [Inject]
+  private IInstitutionService _institutionService { get; set; }
+  private Institution Institution { get; set; } = new();
+
+  protected override async Task OnInitializedAsync() {
+    _institutionHubManager.InstitutionUpdatedHandler(institution => {
+      Institution = institution;
+      StateHasChanged();
+    });
+    
+    await _institutionHubManager.SendInstitutionUpdatedAsync(_userContext.User.InstitutionId.ToString());
+  }
+
+  private async Task UpdateInstitution() {
+      await _institutionService.Update(Institution);
+  }
+  
+  private void Update(ChangeEventArgs e, string update) {
+    string value = e.Value.ToString();
+
+    switch (update) {   
+      case "name":
+        Institution.Name = value;
+        break;
+    }
+  
+  }
+}

@@ -1,15 +1,33 @@
+<style>
+  .fullname {
+    display: flex;
+    gap: 14px;
+  }
+</style>
+
 <AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
   <form>
-    <div class="label">
-      <label for="name">Nombre <strong>*</strong></label>
-      <p class="danger-text">@Warnings[0][0]</p>
+    <div class="fullname">
+      <div>
+        <div class="label">
+          <label for="name">Nombre <strong>*</strong></label>
+          <p class="danger-text">@Warnings[0][0]</p>
+        </div>
+        <input value="@User.Name" class="input @((bool) Warnings[0][1] ? "input-error" : "")" type="text" placeholder="Ingresa tu nombre" id="name" @oninput="@UpdateName" required>
+      </div>
+      <div>
+        <div class="label">
+          <label for="last-name">Apellido <strong>*</strong></label>
+          <p class="danger-text">@Warnings[1][0]</p>
+        </div>
+        <input value="@User.LastName" type="text" class="input @((bool) Warnings[1][1] ? "input-error" : "")" placeholder="Ingresa tu apellido" id="last-name" @oninput="@UpdateLastName" required>
+      </div>
     </div>
-    <input value="@User.Name" class="input @((bool) Warnings[0][1] ? "input-error" : "")" type="text" placeholder="Ingresa tu nombre" id="name" @oninput="@UpdateName" required>
     <div class="label">
-      <label for="last-name">Apellido <strong>*</strong></label>
-      <p class="danger-text">@Warnings[1][0]</p>
+      <label for="username">Username <strong>*</strong></label>
+      <p class="danger-text"></p>
     </div>
-    <input value="@User.LastName" type="text" class="input @((bool) Warnings[1][1] ? "input-error" : "")" placeholder="Ingresa tu apellido" @oninput="@UpdateLastName" required>
+    <input value="@User.UserName" type="text" class="input" placeholder="Ingresa tu username" @oninput="@UpdateUserName" required>
     <div class="label">
       <div>
         <i class="fi fi-tr-at"></i>

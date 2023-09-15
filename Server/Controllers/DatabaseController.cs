@@ -15,10 +15,10 @@ public class DatabaseController : ControllerBase {
     _applicationContextService = applicationContextService;
   }
 
-  [HttpPost]
+  [HttpGet]
   [Route("db-connection")]
-  public IActionResult SetDbConnection([FromBody] DataBaseConnectionRequest request) {
-    var connectionString = $"Data Source=DESKTOP-NMVIEF5\\SQLEXPRESS;Initial Catalog={request.DataBaseName};Integrated security=True;TrustServerCertificate=True";
+  public IActionResult SetDbConnection([FromBody] string dbName) {
+    var connectionString = $"Data Source=DESKTOP-NMVIEF5\\SQLEXPRESS;Initial Catalog={dbName};Integrated security=True;TrustServerCertificate=True";
     _applicationContextService.ConfigureDynamicConnectionString(connectionString);
 
     return Ok("Successful database connection integration");

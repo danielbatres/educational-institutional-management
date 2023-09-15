@@ -25,6 +25,7 @@ public class ApplicationContext : DbContext {
     public DbSet<CourseSchedule> CourseSchedules { get; set; }
     public DbSet<Attendance> Attendances { get; set; }
     public DbSet<AttendanceSchedule> AttendanceSchedules { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
@@ -199,6 +200,14 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<FieldInformation>(fieldInformation => {
             fieldInformation.HasKey(fi => fi.Id);
             fieldInformation.Property(fi => fi.Information);
+        });
+
+        modelBuilder.Entity<ChatMessage>(chat => {
+            chat.HasKey(c => c.Id);
+            chat.Property(c => c.Id).ValueGeneratedOnAdd();
+            chat.Property(c => c.Message);
+            chat.Property(c => c.TimeStamp);
+            chat.Property(c => c.UserId);
         });
     }
 }

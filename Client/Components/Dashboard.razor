@@ -4,7 +4,7 @@
   </article>
   <article class="dashboard-side-bar">
     <div class="online-users">
-      @foreach (User user in onlineUsers) {
+      @foreach (User user in Users) {
         if (user.OnlineStatus.Status) {
           <div>
             <h5>Nombre del rol - 3</h5>
@@ -60,26 +60,21 @@
   private uint SelectedContainer = 0;
   private bool IsSelected = false;
   [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+  [Inject]
   private UserContext UserContext { get; set; }
   [Inject]
   private NavigationManager NavigationManager { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
-  private List<User> onlineUsers = new();
-  private HubConnection _hubConnection;
+  private List<User> Users = new();
 
   protected override async Task OnInitializedAsync() {
-    _hubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/onlineUsersHub")).Build();
+    _usersHubManager.UsersUpdatedHandler(users => {
+      Users = users;
+      StateHasChanged();
+    });
 
-    _hubConnection.On<User>("UserConnected", async (user) => { await UpdateOnlineUsers(); });
-    _hubConnection.On<User>("UserDisconnected", async (user) => { await UpdateOnlineUsers(); });
-
-    await _hubConnection.StartAsync();
-  }
-
-  private async Task UpdateOnlineUsers() {
-    onlineUsers = await _hubConnection.InvokeAsync<List<User>>("GetInstitutionUsers",
-    UserContext.User.InstitutionId);
-    StateHasChanged();
+    await _usersHubManager.SendUsersUpdatedAsync(UserContext.User.InstitutionId.ToString());
   }
 }

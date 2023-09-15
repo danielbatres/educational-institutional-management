@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>edu-institutional-management</title>
     <base href="/" />
-    <link href="manifest.json" rel="manifest" />
+    <link href="webmanifest.json" rel="manifest" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="edu-institutional-management.Client.styles.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,5 +19,13 @@
     <div id="app">
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script>/*
+        window.onbeforeunload = (event) => {
+            alert("el navegador se va a cerrar");
+            DotNet.invokeMethodAsync('edu_institutional_management.Client.App', 'OnBeforeUnload');
+            event.preventDefault();
+            return '';
+        };*/
+    </script>
 </body>
 </html>

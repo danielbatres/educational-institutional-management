@@ -27,6 +27,7 @@ builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 
@@ -62,12 +63,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<OnlineUsersHub>("/onlineUsersHub");
+app.MapHub<UsersHub>("/usersHub");
+app.MapHub<ChatHub>("/chatHub");
 app.MapHub<RolesHub>("/rolesHub");
 app.MapHub<NotificationHub>("/notificationHub");
 app.MapHub<ActivityHub>("/activityHub");
 app.MapHub<CategoryHub>("/categoryHub");
 app.MapHub<StudentHub>("/studentsHub");
+app.MapHub<InstitutionHub>("/institutionHub");
 
 app.MapRazorPages();
 app.MapControllers();

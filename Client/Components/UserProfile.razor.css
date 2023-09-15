@@ -174,13 +174,6 @@ ul li p {
   gap: 4px;
 }
 
-fieldset {
-  border: none;
-  max-width: 50%;
-  width: 100%;
-  padding: 4px 8px 18px;
-}
-
 .label {
   display: flex;
   justify-content: space-between;

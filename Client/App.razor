@@ -1,4 +1,7 @@
-﻿@if (_loadingContext.IsLoading) { <LoadingState /> }
+﻿@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+
+@if (_loadingContext.IsLoading) { <LoadingState /> }
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
@@ -19,12 +22,43 @@
 @code {
   [Inject]
   private LoadingSiteContext _loadingContext { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+  [Inject]
+  private IUserService _userService { get; set; }
+  private DotNetObjectReference<App> _objRef;
 
   protected override void OnInitialized() {
     _loadingContext.OnChange += HandleStateChange;
   }
 
+  protected override async Task OnAfterRenderAsync(bool firstRender) {
+    if (firstRender) {
+      _objRef = DotNetObjectReference.Create(this);
+      await JSRuntime.InvokeVoidAsync("window.addEventListener", "beforeunload", _objRef);
+    }
+  }
+
+  [JSInvokable]
+  public async Task OnBeforeUnload() {
+    if (_userContext.User != null) {
+      _userContext.User.OnlineStatus.Status = false;
+      await _userService.Update(_userContext.User);
+
+      if (_userContext.User.InstitutionId != null) {
+        await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
+      }
+    }
+  }
+
   private void HandleStateChange() {
     StateHasChanged();
+  }
+
+  public async ValueTask DisposeAsync() {
+    await JSRuntime.InvokeVoidAsync("window.removeEventListener", "beforeunload", _objRef);
+    _objRef.Dispose();
   }
 }

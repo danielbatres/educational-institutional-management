@@ -48,18 +48,15 @@
   }
 
   private async Task AcceptRequest(string name, int index) {
-    UserContext.User.InstitutionId = await InstitutionService.GetInstitutionId(name);
+    Guid institutionId = await InstitutionService.GetInstitutionId(name);
+
     UserContext.User.ReceivedMembershipRequests.ElementAtOrDefault(index).IsAccepted = true;
 
     if (!UserContext.User.InstitutionId.Equals(Guid.Empty)) {
       await UserService.Update(UserContext.User);
     }
 
-    UserContext.NavigateToInstitution();
-
-    await InstitutionService.SendInstitutionConnection(new DataBaseConnectionRequest() {
-      DataBaseName = UserContext.User.Institution?.DataBaseConnectionName
-    });
+    await InstitutionService.SendInstitutionConnection(UserContext.User.Institution?.DataBaseConnectionName ?? string.Empty);
 
     await SettingsService.Create(new() {
       Id = Guid.NewGuid(),
@@ -68,5 +65,7 @@
     });
 
     UserContext.User.Settings = await SettingsService.GetSettingsByUserId(UserContext.User.Id);
+
+    UserContext.NavigateToInstitution(institutionId);
   }
 }

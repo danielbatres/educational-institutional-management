@@ -9,11 +9,11 @@
 
           @if (IsToggle) {
             if (Toggle) {
-              <h5>@Menu.MenuLabels?[0].ToUpper()</h5>
+              <h5>@Menu.MenuLabels?[i].ToUpper()</h5>
             }
           }
           else {
-            <h5>@Menu.MenuLabels?[0].ToUpper()</h5>
+            <h5>@Menu.MenuLabels?[i].ToUpper()</h5>
           }
 
             @for (int j = 0; j < Menu.MenuItems[i].Count(); j++) {

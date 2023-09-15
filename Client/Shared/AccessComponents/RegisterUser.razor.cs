@@ -21,6 +21,7 @@ public partial class RegisterUser {
   public User User { get; set; } = new() {
     Name = string.Empty,
     LastName = string.Empty,
+    UserName = string.Empty,
     Register = new() {
       Password = string.Empty,
       Email = string.Empty
@@ -122,7 +123,7 @@ public partial class RegisterUser {
     if (ErrorsQuantity == 0) {
       AssignUserData();
 
-      await UserService.Register(User);
+      await UserService.Register(User.Clone());
       NavBarContext.ChangeHideButtons(false);
       NavigationManager.NavigateTo("/");
     }
@@ -138,6 +139,10 @@ public partial class RegisterUser {
   private void UpdateLastName(ChangeEventArgs e) {
     User.LastName = e.Value.ToString();
     ValidateLastName();
+  }
+
+  private void UpdateUserName(ChangeEventArgs e) {
+    User.UserName = e.Value.ToString();
   }
 
   private void UpdatePassword(ChangeEventArgs e) {

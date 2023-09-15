@@ -1,0 +1,87 @@
+@using edu_institutional_management.Client.Pages.Chat
+<h4>Chat general</h4>
+
+<section>
+  <article>
+    @foreach (var message in ChatMessages) {
+      User user = Users.Find(u => u.Id == message.UserId);
+      
+      if (user != null) {
+        <div class="message-card">
+          <b>@user.Name @user.LastName</b>
+          <p>@user.Register?.Email</p>
+          <p>@message.Message</p>
+          <p>@message.TimeStamp</p>
+        </div>
+      }
+    }
+  </article>
+  <article>
+    <input value="@ChatMessage.Message" type="text" class="input" placeholder="Escribe un mensaje" @oninput="@UpdateMessage" @onkeydown="HandleKeyPress">
+    <button type="button" class="button" @onclick="@CreateMessage">Enviar </button>
+  </article>
+</section>
+
+@code {
+  private List<ChatMessage> ChatMessages { get; set; } = new();
+  private List<User> Users { get; set; } = new();
+  private ChatMessage ChatMessage { get; set; } = new();
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private IChatService _chatService { get; set; }
+  [Inject]
+  private ChatHubManager _chatHubManager { get; set; }
+  [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    _chatHubManager.ChatUpdatedHandler(chatMessages => {
+      ChatMessages = chatMessages;
+      StateHasChanged();
+    });
+    
+    _usersHubManager.UsersUpdatedHandler(users => {
+      Users = users;
+      StateHasChanged();
+    });
+
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
+
+    await SendUpdate();
+  }
+  
+  private async Task HandleKeyPress(KeyboardEventArgs e) {
+    if (e.Key == "Enter") await CreateMessage();
+  }
+
+  protected override void OnInitialized() {
+    AssignNewChatMessage();
+  }
+
+  private void AssignNewChatMessage() {
+    ChatMessage = new() {
+      UserId = _userContext.User.Id,
+      Message = String.Empty
+    };
+  }
+
+  public async Task CreateMessage() {
+    if (!ChatMessage.Message.Equals(string.Empty)) {
+      ChatMessage.TimeStamp = DateTime.Now;
+
+      await _chatService.Create(ChatMessage);
+      await SendUpdate();
+    }
+    
+    AssignNewChatMessage();
+  }
+
+  private void UpdateMessage(ChangeEventArgs e) {
+    ChatMessage.Message = e.Value.ToString();
+  }
+  
+  private async Task SendUpdate() {
+    await _chatHubManager.SendChatUpdatedAsync(_userContext.User.InstitutionId.ToString());
+  }
+}

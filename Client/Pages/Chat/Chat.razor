@@ -1,0 +1,13 @@
+@page "/application/{InstitutionId}/chat"
+@layout ApplicationLayout
+
+<PageTitle>Aplicaci&oacute;n | Comunicaci&oacute;n</PageTitle>
+
+<h3>Mensajeria</h3>
+
+<GeneralChat />
+
+@code {
+  [Parameter]
+  public string InstitutionId { get; set; }
+}

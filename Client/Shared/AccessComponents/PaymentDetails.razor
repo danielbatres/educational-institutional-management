@@ -43,20 +43,25 @@
   private IUserService UserService { get; set; }
   [Inject]
   private ISettingsService SettingsService { get; set; }
+  [Inject]
+  private HubsConnection HubsConnection { get; set; }
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
 
   protected override void OnInitialized() {
     InstitutionContext.OnChange += HandleStateChange;
   }
 
   private async Task CreateNewInstitution() {
+    LoadingContext.SetLoading(true);
+    LoadingContext.SetLoadingMessage("Registrando institución...");
+
     await InstitutionService.RegisterNewInstitution(InstitutionContext.Institution);
 
     await InstitutionContext.SetInstitutionUsers();
     UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
 
     await UserService.Update(UserContext.User);
-
-    UserContext.NavigateToInstitution();
 
     await SettingsService.Create(new() {
       Id = Guid.NewGuid(),
@@ -65,6 +70,11 @@
     });
 
     UserContext.User.Settings = await SettingsService.GetSettingsByUserId(UserContext.User.Id);
+
+    await HubsConnection.ConnectHubs(InstitutionContext.Institution.Id.ToString());
+
+    LoadingContext.SetLoading(false);
+    UserContext.NavigateToInstitution(InstitutionContext.Institution.Id);
   }
 
   private void HandleStateChange() {

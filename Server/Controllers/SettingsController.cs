@@ -32,10 +32,10 @@ public class SettingsController : ControllerBase {
   [HttpGet]
   [Route("get-by-user-id")]
   public ActionResult<Settings> GetSettingsByUserId(Guid userId) {
-    Settings Settings = _settingsService.GetSettingsByUserId(userId);
+    Settings settings = _settingsService.GetSettingsByUserId(userId);
 
-    if (Settings == null) return NotFound();
+    if (settings == null) return NotFound();
 
-    return Ok(Settings);
+    return Ok(settings);
   }
 }

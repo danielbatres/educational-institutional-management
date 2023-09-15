@@ -2,6 +2,7 @@ using edu_institutional_management.Client.Containers;
 using edu_institutional_management.Client.Hubs;
 using edu_institutional_management.Client.Models;
 using edu_institutional_management.Client.Services;
+using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace edu_institutional_management.Client.Layouts;
@@ -18,6 +19,9 @@ public partial class ApplicationLayout {
   [Inject]
   private ISettingsService _settingsService { get; set; }
   public Guid InstitutionId { get; set; } = Guid.Empty;
+  [Inject]
+  private InstitutionHubManager _institutionHubManager { get; set; }
+  private Institution Institution { get; set; } = new();
 
   protected override void OnInitialized() {
     Toggle = true;
@@ -27,7 +31,7 @@ public partial class ApplicationLayout {
     SideBarMenu = new()
     {
       MenuLabels = new List<string>() {
-        "menu principal", "menu de actividades"
+        "menu principal", "menu de actividades", "espacio de trabajo"
       },
       MenuItems = new List<List<List<string>>>() {
         new() {
@@ -50,11 +54,19 @@ public partial class ApplicationLayout {
           },
           new() {
             "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity"
+          },
+          new() {
+            "Comunicación", "fi fi-tr-comments", "6", $"/application/{InstitutionId}/chat"
+          }
+        },
+        new() {
+          new() {
+            "Entorno", "fi fi-tr-notes", "7", $"/application/{InstitutionId}/workspace",
           }
         }
       },
       LastOption = new() {
-        "Configuraciones", "fi fi-tr-gears", "6", $"/application/{InstitutionId}/settings/my-account"
+        "Configuraciones", "fi fi-tr-gears", "8", $"/application/{InstitutionId}/settings/my-account"
       }
     };
 
@@ -66,6 +78,13 @@ public partial class ApplicationLayout {
   }
 
   protected override async Task OnInitializedAsync() {
+    _institutionHubManager.InstitutionUpdatedHandler(institution => {
+      Institution = institution;
+      StateHasChanged();
+    });
+
+    await _institutionHubManager.SendInstitutionUpdatedAsync(_userContext.User.InstitutionId.ToString());
+
     _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 
     _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);

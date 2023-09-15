@@ -86,13 +86,13 @@ input {
 .students {
   display: flex;
   flex-direction: column;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 
 .student-target {
   width: 100%;
   border-bottom: 1px solid var(--light-color);
-  transition: background 0.1s ease-in-out;
+  transition: background 0.1s, opacity 0.4s ease-in-out;
   padding: 6px 6px 10px;
   margin-bottom: 10px;
 }
@@ -114,7 +114,7 @@ input {
   border-radius: 100%;
 }
 
-#filter {
+#filter, .show-option {
   min-width: 20px;
   max-width: 20px;
   background: var(--primary-color);  
@@ -159,6 +159,12 @@ input {
   padding: 0px 20px;
   background: var(--light-background-color);
   border-top: 1px solid var(--light-color);
+}
+
+.students-list-options-pages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 @media (max-width: 1440px) {

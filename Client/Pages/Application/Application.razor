@@ -1,12 +1,9 @@
 @page "/application/{InstitutionId}"
 @layout ApplicationLayout
-@implements IAsyncDisposable
 
 <PageTitle>Application</PageTitle>
 
 <Dashboard />
-<button type="button" class="button"
-@onclick="@(async () => await _hubConnection.InvokeAsync("DisconnectUser",_userContext.User.Id))">Desconectar</button>
 
 @code {
   [Parameter]
@@ -17,25 +14,10 @@
   private NavigationManager _navigationManager { get; set; }
   [Inject]
   private IUserService _userService { get; set; }
-  
-  private HubConnection _hubConnection { get; set; }
 
   protected override void OnInitialized() {
     _userContext.OnChange += HandleStateChange;
     VerifyInstitution();
-  }
-
-  protected override async Task OnInitializedAsync() {
-    _hubConnection = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/onlineUsersHub")).Build();
-
-    await _hubConnection.StartAsync();
-
-    await SetActiveUser();
-  }
-
-  private async Task SetActiveUser() {
-    await _hubConnection.InvokeAsync("DisconnectUser", _userContext.User.Id);
-    await _hubConnection.SendAsync("Connect", _userContext.User);
   }
 
   private void VerifyInstitution() {
@@ -47,12 +29,5 @@
   private void HandleStateChange() {
     VerifyInstitution();
     StateHasChanged();
-  }
-
-  public async ValueTask DisposeAsync() {
-    if (_hubConnection != null) {
-
-      await _hubConnection.DisposeAsync();
-    }
   }
 }

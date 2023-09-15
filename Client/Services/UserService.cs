@@ -10,7 +10,7 @@ using System.Collections;
 namespace edu_institutional_management.Client.Services;
 
 public class UserService : BaseService, IUserService {
-  private UserContext UserContext { get; set; }
+  private readonly UserContext UserContext;
 
   public UserService(HttpClient httpClient, UserContext userContext) : base(httpClient) {
     UserContext = userContext;
@@ -18,7 +18,6 @@ public class UserService : BaseService, IUserService {
 
   public async Task Register(User user) {
     user.Register.Password = HashPassword(user.Register.Password);
-    user.UserName = "newUser" + Guid.NewGuid();
 
     var response = await HttpClient.PostAsJsonAsync("api/user/create", user);
 

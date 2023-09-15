@@ -18,6 +18,8 @@ builder.Services.AddAuthorizationCore(options =>
   });
 });
 
+builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
 builder.Services.AddSingleton<LoadingSiteContext>();
 builder.Services.AddSingleton<UserContext>();
 builder.Services.AddSingleton<NavBarContext>();
@@ -27,17 +29,21 @@ builder.Services.AddSingleton<LoadingContext>();
 builder.Services.AddSingleton<RoleContext>();
 builder.Services.AddSingleton<ThemeContext>();
 builder.Services.AddSingleton<Validators>();
+builder.Services.AddSingleton<UsersHubManager>();
 builder.Services.AddSingleton<RolesHubManager>();
 builder.Services.AddSingleton<ActivityHubManager>();
 builder.Services.AddSingleton<CategoryHubManager>();
 builder.Services.AddSingleton<StudentHubManager>();
-builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton<ChatHubManager>();
+builder.Services.AddSingleton<InstitutionHubManager>();
+builder.Services.AddSingleton<HubsConnection>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
 builder.Services.AddScoped<IMembershipRequestService, MembershipRequestService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ISettingsService, SettingsService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

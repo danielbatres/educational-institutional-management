@@ -21,6 +21,14 @@ public class InstitutionController : ControllerBase {
         return Ok();
     }
 
+    [HttpPut]
+    [Route("update")]
+    public async Task<IActionResult> Put([FromBody] Institution institution) {
+        await _institutionService.Update(institution);
+        
+        return Ok();
+    }
+
     [HttpGet]
     [Route("get-institution-by")]
     public IActionResult GetInstitutionId(string name) {

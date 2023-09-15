@@ -16,25 +16,23 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   private readonly NavigationManager _navigationManager;
   private readonly IInstitutionService _institutionService;
   private readonly ISettingsService _settingsService;
-  private readonly RolesHubManager _rolesHubManager;
-  private readonly CategoryHubManager _categoryHubManager;
-  private readonly StudentHubManager _studentHubManager;
-  private readonly ActivityHubManager _activityHubManager;
   private readonly ThemeContext _themeContext;
   private readonly LoadingSiteContext _loadingContext;
+  private readonly IUserService _userService;
+  private readonly HubsConnection _hubsConnection;
+  private readonly UsersHubManager _usersHubManager;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, RolesHubManager rolesHubManager, CategoryHubManager categryHubManager, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext, StudentHubManager studentHubManager, ActivityHubManager activityHubManager) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext, IUserService userService, HubsConnection hubsConnection, UsersHubManager usersHubManager) {
     _httpClient = httpClient;
     _userContext = userContext;
     _navigationManager = navigationManager;
     _institutionService = institutionService;
-    _rolesHubManager = rolesHubManager;
-    _categoryHubManager = categryHubManager;
     _settingsService = settingsService;
     _themeContext = themeContext;
     _loadingContext = loadingContext;
-    _studentHubManager = studentHubManager;
-    _activityHubManager = activityHubManager;
+    _userService = userService;
+    _hubsConnection = hubsConnection;
+    _usersHubManager = usersHubManager;
   }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync() {
@@ -44,13 +42,18 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
       _userContext.SetUser(currentUser);
       _userContext.SetIsActiveUser(true);
 
-      if (_userContext.User.InstitutionId != null) {
-        _userContext.NavigateToInstitution();
-        await _institutionService.SendInstitutionConnection(new DataBaseConnectionRequest() {
-          DataBaseName = _userContext.User.Institution?.DataBaseConnectionName ?? string.Empty
-        });
+      currentUser.OnlineStatus.Status = true;
+      currentUser.OnlineStatus.LastConnection = DateTime.Now;
+      await _userService.Update(currentUser);
 
-        await ConnectHubs(_userContext.User.InstitutionId.ToString());
+      if (_userContext.User.InstitutionId != null) {
+        _userContext.NavigateToInstitution((Guid) _userContext.User.InstitutionId);
+        await _institutionService.SendInstitutionConnection(_userContext.User.Institution?.DataBaseConnectionName ?? string.Empty);
+
+        string groupName = _userContext.User.InstitutionId.ToString();
+
+        await _hubsConnection.ConnectHubs(groupName);
+        await _usersHubManager.SendUsersUpdatedAsync(groupName);
       }
     }
     
@@ -65,17 +68,5 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
     } else {
       return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
     }
-  }
-
-  private async Task ConnectHubs(string groupName) {
-    await _rolesHubManager.StartConnectionAsync();
-    await _categoryHubManager.StartConnectionAsync();
-    await _studentHubManager.StartConnectionAsync();
-    await _activityHubManager.StartConnectionAsync();
-
-    await _rolesHubManager.JoinGroup(groupName);
-    await _categoryHubManager.JoinGroup(groupName);
-    await _studentHubManager.JoinGroup(groupName);
-    await _activityHubManager.JoinGroup(groupName);
   }
 }

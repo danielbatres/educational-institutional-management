@@ -37,6 +37,35 @@ main {
   background: var(--light-background-color);
 }
 
+.top {
+  height: 6%;
+  padding: 20px;
+  background: var(--background-color);
+  text-align: center;
+  border: var(--light-border);
+  overflow: hidden;
+}
+
+.bar {
+  height: 94%;
+}
+
+ h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: moveText 20s linear infinite alternate;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 @media (max-width: 1050px) {
   .left-container {
     display: none;

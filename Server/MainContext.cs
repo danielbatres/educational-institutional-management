@@ -107,7 +107,7 @@ namespace edu_institutional_management.Server
                 request.Property(x => x.Message);
                 request.Property(x => x.CreationDate);
                 request.Property(x => x.IsAccepted);
-                request.Property(x => x.InstitutionName).IsRequired();
+                request.Property(x => x.InstitutionId).IsRequired();
                 request.HasOne(x => x.ReceiverUser).WithMany(u => u.ReceivedMembershipRequests).HasForeignKey(x => x.ReceiverUserId);
             });
 

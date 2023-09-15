@@ -33,7 +33,14 @@ public class User : MainUser {
       Institution = Institution,
       InstitutionId = InstitutionId,
       OnlineStatus = OnlineStatus,
-      Register = Register
+      Register = Register,
+      Payment = Payment,
+      Notifications = Notifications,
+      ReceivedMembershipRequests = ReceivedMembershipRequests,
+      Settings = Settings,
+      UserName = UserName,
+      UserRoles = UserRoles,
+      Photo = Photo
     };
   }
 }

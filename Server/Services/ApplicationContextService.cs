@@ -12,13 +12,9 @@ public class ApplicationContextService {
   private ApplicationContext? ApplicationContext { get; set; }
 
   public ApplicationContext GetApplicationContext() {
-    if (ApplicationContext == null || ApplicationContext.Database.GetDbConnection().ConnectionString != _connectionString) {
       var options = new DbContextOptionsBuilder<ApplicationContext>().UseSqlServer(_connectionString).Options;
 
-      ApplicationContext =  new ApplicationContext(options);
-    }
-    
-    return ApplicationContext;
+      return new ApplicationContext(options);
   }
 
   public Guid GetActualInstitutionId() {
