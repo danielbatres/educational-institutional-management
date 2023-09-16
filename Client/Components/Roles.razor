@@ -43,6 +43,8 @@
                 </div>
               } else {
                 @foreach (var role in UpdatedRoles) {
+                  Guid roleId = role.Id;
+
                   <div class="rol-card">
                     <ul class="rol-element">
                       <li>
@@ -58,7 +60,7 @@
                         <p>@role.PermissionsCount</p>
                       </li>
                       <li>
-                        <div class="update-rol centered-container" @onclick="@(() => _roleContext.SetSelection("show-role"))">
+                        <div class="update-rol centered-container" @onclick="@(() => SetSelection(roleId))">
                           <i class="fi fi-tr-pen-square"></i>
                         </div>
                       </li>
@@ -88,6 +90,12 @@
   [Inject]
   private RoleContext _roleContext { get; set; }
   private bool Loading { get; set; } = true;
+
+  private void SetSelection(Guid roleId) {
+    _roleContext.SetActualRoleId(roleId);
+
+    _roleContext.SetSelection("show-role");
+  }
 
   protected override async Task OnInitializedAsync() {
     _rolesHubManager.RolesUpdatedHandler(roles => {

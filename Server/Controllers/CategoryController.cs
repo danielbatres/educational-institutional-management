@@ -29,4 +29,12 @@ public class CategoryController : ControllerBase {
     
     return Ok();
   }
+
+  [HttpDelete]
+  [Route("remove")]
+  public async Task<IActionResult> Delete(string categoryId) {
+    await _categoryService.Delete(Guid.Parse(categoryId));
+    
+    return Ok();
+  }
 }

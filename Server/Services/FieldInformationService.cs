@@ -12,7 +12,7 @@ public class FieldInformationService : BaseService, IFieldInformationService {
   }
   
   public async Task Update(FieldInformation fieldInformation) {
-    _applicationContext.FieldsInformation.Add(fieldInformation);
+    _applicationContext.FieldsInformation.Update(fieldInformation);
     
     await _applicationContext.SaveChangesAsync();
   }

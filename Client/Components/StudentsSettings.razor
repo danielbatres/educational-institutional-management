@@ -1,0 +1,67 @@
+<section>
+  <CreateCategory />
+
+  <h4>Estudiantes</h4>
+
+  <p>Configura la informaci&oacute;n de los estudiantes</p>
+
+  <div class="student-information-settings">
+    <h4>Informaci&oacute;n de los estudiantes</h4>
+    <p>Crea y personaliza la informaci&oacute;n que se guardar&aacute; sobre los estudiantes</p>
+    <button type="button" class="button" @onclick="@CreateCategory">Crear categor&iacute;a</button>
+  </div>
+
+  <div>
+    <div>
+      <h4>Datos generales del estudiante</h4>
+      <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
+      <button type="button" class="button">Agregar campo</button>
+    </div>
+    <div class="categories-list-fields">
+      <ul>
+        <li>
+          <p>Identificador del campo</p>  
+        </li>
+        <li>
+          <p>Nombre del campo</p>  
+        </li>
+        <li>
+          <p>Requerido</p>  
+        </li>
+        <li>
+          <p>Tipo del campo</p>  
+        </li>
+        <li>
+          <p>Acciones</p>  
+        </li>  
+      </ul>  
+    </div>
+    <div class="categories">
+      <ul>
+        <li>
+          <p>10002</p>  
+        </li>
+        <li>
+          <p>Nombre</p>  
+        </li>
+        <li>
+          <input type="checkbox">  
+        </li>
+        <li>
+          <p>Texto</p>  
+        </li>
+        <li>
+          <div>
+            <i class="fi fi-tr-pen-square"></i>
+          </div>
+        </li>
+      </ul>  
+    </div>
+  </div>
+</section>
+
+@code {
+  private async Task CreateCategory() {
+    
+  }
+}

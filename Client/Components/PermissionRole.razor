@@ -3,6 +3,7 @@
 <div>
   @foreach (var permission in Permissions) {
     int index = Permissions.IndexOf(permission);
+    bool isRolePermission = RolePermissions.Any(r => r.PermissionId == permission.Id);
 
     <div>
       <div>
@@ -10,7 +11,7 @@
         <p>@permission.Description</p>
       </div>
       <div class="switch-container">
-        <input type="checkbox" class="switch-input" id="mySwitch-@index" @onclick="@TooglePermission">
+        <input type="checkbox" class="switch-input" id="mySwitch-@index" checked="@isRolePermission" @onclick="@(() => TogglePermission(index, isRolePermission))">
         <label class="switch-label" for="mySwitch-@index">
           <div class="switch-handle"></div>
         </label>
@@ -22,16 +23,44 @@
 @code {
   [Inject]
   private IPermissionService _permissionService { get; set; }
-  private List<Permission> Permissions { get; set; }
+  [Inject]
+  private RoleContext _roleContext { get; set; }
+  [Inject]
+  private RolesHubManager _rolesHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private IRolePermissionService _rolePermissionService { get; set; }
+  private List<Permission> Permissions { get; set; } = new();
+  private List<RolePermission> RolePermissions { get; set; } = new();
+  [Parameter]
+  public List<Role> Roles { get; set; } = new();
 
   protected override async Task OnInitializedAsync() {
+    _roleContext.OnChange += HandleStateChange;
+  }
+
+  protected override async Task OnParametersSetAsync() {
+    var selectedRole = Roles.FirstOrDefault(l => l.Id == _roleContext.ActualRoleIdSelection);
+
+    if (selectedRole != null) {
+      RolePermissions = await _rolePermissionService.Get(selectedRole.Id);
+    }
+
     Permissions = await _permissionService.Get();
   }
 
-  private void TooglePermission(Permission permission) {
-    if () {
-
+  private async Task TogglePermission(int index, bool isRolePermission) {
+    if (isRolePermission) {
+      await _rolePermissionService.Delete(RolePermissions.FirstOrDefault(rl => rl.PermissionId == Permissions[index].Id).Id);
+    } else {
+      await _rolePermissionService.Create(new RolePermission() {
+        PermissionId = Permissions[index].Id,
+        RoleId = _roleContext.ActualRoleIdSelection
+      });
     }
+
+    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
   }
 
   private string SetPermissionName(PermissionName name) {
@@ -86,5 +115,9 @@
     }
 
     return permissionName;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
   }
 }

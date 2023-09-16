@@ -24,7 +24,7 @@
       <GeneralRole />
       break;
       case "permissions":
-      <PermissionRole />
+      <PermissionRole Roles="@Roles" />
       break;
       case "members":
       <RoleMembers />
@@ -37,10 +37,20 @@
   private Role Role { get; set; } = new();
   [Inject]
   private RoleContext _roleContext { get; set; }
+  [Inject]
+  private RolesHubManager _rolesHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
   private string MenuSelection { get; set; } = "general";
+  private List<Role> Roles { get; set; }
   
   protected override async Task OnInitializedAsync() {
-      
+    _rolesHubManager.RolesUpdatedHandler(roles => {
+      Roles = roles;
+      StateHasChanged();
+    });
+
+    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
   }
   
   private void GoBackRoles() {

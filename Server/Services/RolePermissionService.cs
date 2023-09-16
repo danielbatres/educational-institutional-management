@@ -12,16 +12,23 @@ public class RolePermissionService : BaseService, IRolePermissionService{
     await _applicationContext.SaveChangesAsync();
   }
   
-  public async Task Delete(int rolePermission) {
-    var originalRolePermission = _applicationContext.RolePermissions.Find(rolePermission);
+  public async Task Delete(int rolePermissionId) {
+    var originalRolePermission = _applicationContext.RolePermissions.FirstOrDefault(rp => rp.Id == rolePermissionId);
+    
+    if (originalRolePermission != null) {
+      _applicationContext.RolePermissions.Remove(originalRolePermission);
+      await _applicationContext.SaveChangesAsync();
+    }
+  }
 
-    _applicationContext.Entry(originalRolePermission).State = EntityState.Deleted;
 
-    await _applicationContext.SaveChangesAsync();
+  public IEnumerable<RolePermission> Get(Guid roleId) {
+    return _applicationContext.RolePermissions.Where(r => r.RoleId == roleId);
   }
 }
 
 public interface IRolePermissionService {
   Task Create(RolePermission rolePermission);
-  Task Delete(int rolePermission);
+  Task Delete(int rolePermissionId);
+  IEnumerable<RolePermission> Get(Guid roleId);
 }

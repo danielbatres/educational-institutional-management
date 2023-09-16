@@ -1,0 +1,38 @@
+<style>
+  .add-role-member {
+    position: absolute;
+    right: -40%;
+    width: 40%;
+    height: 100%;
+    z-index: 1000;
+    background: var(--background-color);
+    transition: right 0.4s ease-in-out;
+  }
+</style>
+
+<div class="add-role-member">
+  
+</div>
+
+
+@code {
+  [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  private List<User> Users { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+      _usersHubManager.UsersUpdatedHandler(users => {
+        Users = users;
+        StateHasChanged();
+      });
+
+      await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
+    }
+
+    private async Task AddMember() {
+
+
+    }
+  }

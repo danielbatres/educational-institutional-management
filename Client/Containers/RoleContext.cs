@@ -2,7 +2,7 @@ namespace edu_institutional_management.Client.Containers;
 
 public class RoleContext : BaseContainer {
   public string Selection { get; set; }
-  public int ActualRoleIdSelection { get; set; }
+  public Guid ActualRoleIdSelection { get; set; }
   public bool CreateNewRol { get; set; } = false;
   
   public void SetSelection(string selection) {
@@ -17,7 +17,9 @@ public class RoleContext : BaseContainer {
     NotifyStateChanged();
   }
 
-  public void SetActualRoleIdSelection() {
-    
+  public void SetActualRoleId(Guid roleId) {
+    ActualRoleIdSelection = roleId;
+
+    NotifyStateChanged();
   }
 }

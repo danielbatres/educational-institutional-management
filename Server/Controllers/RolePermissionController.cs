@@ -13,6 +13,11 @@ public class RolePermissionController : ControllerBase {
     _rolePermissionService = rolePermissionService;
   }
   
+  [HttpGet]
+  public IActionResult Get(string roleId) {
+    return Ok(_rolePermissionService.Get(Guid.Parse(roleId)));
+  }
+
   [HttpPost]
   [Route("create")]
   public async Task<IActionResult> Post([FromBody] RolePermission rolePermission) {

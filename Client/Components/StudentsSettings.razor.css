@@ -1,0 +1,4 @@
+.categories ul, .categories-list-fields ul {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,19 @@
+<h4>Crear categoria</h4>
+<p>Crear categoria</p>
+
+<form id="create-category">
+  <label for="category-name">Nombre de la categor&iacute;a</label>
+  <input type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name">
+  <label for="category-description">Descripci&oacute;n</label>
+  <input type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description">
+  <button type="button" class="button">Crear categor&iacute;a</button>
+</form>
+
+@code {
+  [Inject]
+  private ICategoryService _categoryService { get; set; }
+
+  private async Task CreateNewCategory() {
+    
+  }
+}
