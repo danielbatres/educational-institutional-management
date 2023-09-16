@@ -1,82 +1,92 @@
-<section>
-  <div class="roles-settings-container">
-    <article>
-      <div>
-        <h3>
-          Roles de la instituci&oacute;n
-        </h3>
-        <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la instituci&oacute;n</p>
-      </div>
-      <div class="roles-actions">
-        <input type="text" placeholder="Buscar rol" class="input">
-        <button type="button" class="button primary-background-button">Crear rol</button>
-      </div>
-    </article>
-    <article>
-      <div class="roles-list">
-        <ul class="tags">
-          <li>
-            <h5>Color</h5>
-          </li>
-          <li>
-            <h5>Nombre del rol</h5>
-          </li>
-          <li>
-            <h5>Cantidad de miembros</h5>
-          </li>
-          <li>
-            <h5>Cantidad de permisos</h5>
-          </li>
-          <li>
-            <h5>Acciones</h5>
-          </li>
-        </ul>
-        <div>
-          @if (Loading) {
-            <div class="skeleton-container">
-              @for (int i = 0; i < 10; i++) {
-                <div class="skeleton-row"></div>
+@switch (_roleContext.Selection) {
+  case "roles":
+    <section>
+     <CreateRole />
+      <div class="roles-settings-container">
+        <article>
+          <div>
+            <h3>
+              Roles de la instituci&oacute;n
+            </h3>
+            <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la instituci&oacute;n</p>
+          </div>
+          <div class="roles-actions">
+            <input type="text" placeholder="Buscar rol" class="input">
+            <button type="button" class="button primary-background-button" @onclick="@(() => _roleContext.SetRolCreation(true))">Crear rol</button>
+          </div>
+        </article>
+        <article>
+          <div class="roles-list">
+            <ul class="tags">
+              <li>
+                <h5>Color</h5>
+              </li>
+              <li>
+                <h5>Nombre del rol</h5>
+              </li>
+              <li>
+                <h5>Cantidad de miembros</h5>
+              </li>
+              <li>
+                <h5>Cantidad de permisos</h5>
+              </li>
+              <li>
+                <h5>Acciones</h5>
+              </li>
+            </ul>
+            <div>
+              @if (Loading) {
+                <div class="skeleton-container">
+                  @for (int i = 0; i < 10; i++) {
+                    <div class="skeleton-row"></div>
+                  }
+                </div>
+              } else {
+                @foreach (var role in UpdatedRoles) {
+                  <div class="rol-card">
+                    <ul class="rol-element">
+                      <li>
+                        <div></div>
+                      </li>
+                      <li>
+                        <p>@role.Name</p>
+                      </li>
+                      <li>
+                        <p>@role.MembersCount</p>
+                      </li>
+                      <li>
+                        <p>@role.PermissionsCount</p>
+                      </li>
+                      <li>
+                        <div class="update-rol centered-container" @onclick="@(() => _roleContext.SetSelection("show-role"))">
+                          <i class="fi fi-tr-pen-square"></i>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                }
               }
             </div>
-          } else {
-            @foreach (var role in UpdatedRoles)
-            {
-              <div class="rol-card">
-                <ul class="rol-element">
-                  <li>
-                    <div></div>
-                  </li>
-                  <li>
-                    <p>@role.Name</p>
-                  </li>
-                  <li>
-                    <p>@role.MembersCount</p>
-                  </li>
-                  <li>
-                    <p>@role.PermissionsCount</p>
-                  </li>
-                  <li>
-                    <div class="update-rol centered-container">
-                      <i class="fi fi-tr-pen-square"></i>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            }
-          }
-        </div>
+          </div>
+        </article>
       </div>
-      <CreateRole />
-    </article>
-  </div>
-</section>
+    </section>
+    break;
+  case "show-role":
+    <ShowRole />
+    break;
+}
 
 @code {
   private List<Role> UpdatedRoles { get; set; } = new();
   [Inject]
   private RolesHubManager _rolesHubManager { get; set; }
   [Inject]
-  private UserContext UserContext { get; set; }
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private NavigationManager _navigationManager { get; set; }
+  [Inject]
+  private RoleContext _roleContext { get; set; }
   private bool Loading { get; set; } = true;
 
   protected override async Task OnInitializedAsync() {
@@ -85,7 +95,16 @@
       StateHasChanged();
     });
 
-    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString());
+    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
     Loading = false;
+  }
+
+  protected override void OnInitialized() {
+    _roleContext.OnChange += HandleStateChange;
+    _roleContext.SetSelection("roles");
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
   }
 }

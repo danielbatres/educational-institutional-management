@@ -1,0 +1,90 @@
+<h5>Permisos de administraci&oacute;n de la aplicaci&oacute;n</h5>
+
+<div>
+  @foreach (var permission in Permissions) {
+    int index = Permissions.IndexOf(permission);
+
+    <div>
+      <div>
+        <h4>@SetPermissionName(permission.Name)</h4>
+        <p>@permission.Description</p>
+      </div>
+      <div class="switch-container">
+        <input type="checkbox" class="switch-input" id="mySwitch-@index" @onclick="@TooglePermission">
+        <label class="switch-label" for="mySwitch-@index">
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+    </div>
+  }
+</div>
+
+@code {
+  [Inject]
+  private IPermissionService _permissionService { get; set; }
+  private List<Permission> Permissions { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    Permissions = await _permissionService.Get();
+  }
+
+  private void TooglePermission(Permission permission) {
+    if () {
+
+    }
+  }
+
+  private string SetPermissionName(PermissionName name) {
+    string permissionName = string.Empty;
+
+    switch (name) {
+      case PermissionName.Administrator:
+        permissionName = "Administrador";
+        break;
+      case PermissionName.HandleCourses:
+        permissionName = "Administrar cursos";
+        break;
+      case PermissionName.HandleCoursesSettings:
+        permissionName = "Administrar configuraciones de los cursos";
+        break;
+      case PermissionName.HandleEvents:
+        permissionName = "Administrar eventos";
+        break;
+      case PermissionName.HandleInstitutionSettings:
+        permissionName = "Administrar configuraciones de la institución";
+        break;
+      case PermissionName.HandleRolesSettings:
+        permissionName = "Administrar configuraciones de roles";
+        break;
+      case PermissionName.HandleStatistics:
+        permissionName = "Generar estadisticos";
+        break;
+      case PermissionName.HandleStudents:
+        permissionName = "Administrar información de los estudiantes";
+        break;
+      case PermissionName.HandleStudentsSettings:
+        permissionName = "Configurar categorias de información de los estudiantes";
+        break;
+      case PermissionName.HandleUsersSettings:
+        permissionName = "Administrar configuraciones de usuarios de la institución";
+        break;
+      case PermissionName.SeeActivity:
+        permissionName = "Ver registro de actividad";
+        break;
+      case PermissionName.SeeCourses:
+        permissionName = "Ver información de los cursos";
+        break;
+      case PermissionName.SeeEvents:
+        permissionName = "Ver información de eventos";
+        break;
+      case PermissionName.SeeStudents:
+        permissionName = "Ver información de estudiantes";
+        break;
+      case PermissionName.SeeRoles:
+        permissionName = "Ver información de roles";
+        break;
+    }
+
+    return permissionName;
+  }
+}

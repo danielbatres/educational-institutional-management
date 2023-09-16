@@ -30,7 +30,9 @@ public class UserService : BaseService, IUserService {
 
       await CheckResponse(response);
 
-      UserContext.SetUser(user);
+      List<User> users = await GetUsers();
+      
+      UserContext.SetUser(users.Where(u => u.Id == user.Id).ToList()[0]);
     }
   }
 

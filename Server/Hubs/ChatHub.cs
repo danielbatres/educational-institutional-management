@@ -17,6 +17,12 @@ public class ChatHub : MainHub {
     await Clients.Group(groupName).SendAsync("ChatUpdated", chatMessages);
   }
   
+  public async Task SendTypingUpdate(string groupName, string typingMessage) {
+    var typing = typingMessage;
+    
+    await Clients.Group(groupName).SendAsync("TypingUpdated", typing);
+  }
+
   public List<ChatMessage> GetChatMessages() {
     return _chatService.Get().ToList();
   }

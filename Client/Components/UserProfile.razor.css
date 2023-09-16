@@ -193,22 +193,6 @@ ul li p {
   align-items: right;
 }
 
-textarea {
-  font-family: var(--font-family);
-  font-size: var(--regular-text);
-  color: var(--text-color);
-  font-weight: 300;
-  min-height: 100px;
-  width: 100%;
-  border: var(--light-border);
-  resize: vertical;
-  border-radius: 10px;
-  padding: 10px 0px 10px 10px;
-  overflow-wrap: break-word;
-  overflow: hidden;
-  outline: none;
-}
-
 strong {
   color: var(--danger-color);
 }

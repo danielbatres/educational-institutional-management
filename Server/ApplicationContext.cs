@@ -44,6 +44,84 @@ public class ApplicationContext : DbContext {
             }
         };
 
+        List<Permission> PermissionsInit = new() {
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.Administrator,
+                Description = "Habilita todos los permisos de la aplicación, ten cuidado sobre a quien otorgas este permiso.",
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.SeeActivity,
+                Description = "Puedes ver todo el registro de la actividad que ocurre en la aplicación, todos los cambios que ocurran serán accesibles."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.SeeRoles,
+                Description = "Puedes ver la lista completa de roles pero no puedes realizar acciones sobre ellos, solo ver su información"
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleRolesSettings,
+                Description = "Puedes crear, actualizar y eliminar todos los roles de la aplicación."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleCourses,
+                Description = "Puedes administrar la información de los cursos de la institución, tanto crear como actualizar."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleStudentsSettings,
+                Description = "Puedes administrar la información de configuración para el registro de estudiantes, los campos que se necesite guardar y actualizar."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleUsersSettings,
+                Description = "Puedes administrar los usuarios que tienen acceso a esta institución y enviar invitaciones de ingreso"
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleCoursesSettings,
+                Description = "Puedes administrar la configuración de los cursos, editar materias y estudiantes que pertenezcan al curso."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleInstitutionSettings,
+                Description = "Puedes configurar la información pública de la institución."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleStatistics,
+                Description = "Puedes generar estadisticos de la información de los estudiantes."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleEvents,
+                Description = "Puedes generar programación de eventos a nivel de institución."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.SeeEvents,
+                Description = "Puedes ver la información de los eventos a nivel de institución."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.SeeStudents,
+                Description = "Puedes ver la información de los estudiantes."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.HandleStudents,
+                Description = "Puedes administrar la información de los estudiantes, crear y actualizar."
+            },
+            new() {
+                Id = Guid.NewGuid(),
+                Name = PermissionName.SeeCourses,
+                Description = "Puedes ver la información de los cursos de la institución."
+            }
+        };
+
         modelBuilder.Entity<Role>(role => {
             role.HasKey(t => t.Id);
             role.Property(t => t.Name).IsRequired();
@@ -59,6 +137,7 @@ public class ApplicationContext : DbContext {
             permission.Property(t => t.Name).IsRequired();
             permission.Property(t => t.Description);
             permission.HasMany(p => p.RolePermissions).WithOne(rp => rp.Permission).HasForeignKey(rp => rp.PermissionId);
+            permission.HasData(PermissionsInit);
         });
 
         modelBuilder.Entity<RolePermission>(rolePermission => {

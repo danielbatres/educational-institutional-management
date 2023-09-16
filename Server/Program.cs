@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 

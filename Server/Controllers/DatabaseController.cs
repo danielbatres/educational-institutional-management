@@ -17,7 +17,7 @@ public class DatabaseController : ControllerBase {
 
   [HttpGet]
   [Route("db-connection")]
-  public IActionResult SetDbConnection([FromBody] string dbName) {
+  public IActionResult SetDbConnection(string dbName) {
     var connectionString = $"Data Source=DESKTOP-NMVIEF5\\SQLEXPRESS;Initial Catalog={dbName};Integrated security=True;TrustServerCertificate=True";
     _applicationContextService.ConfigureDynamicConnectionString(connectionString);
 

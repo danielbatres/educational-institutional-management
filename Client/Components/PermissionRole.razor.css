@@ -1,0 +1,38 @@
+.switch-container {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 30px;
+}
+
+  .switch-input {
+  display: none;
+}
+
+  .switch-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+  .switch-input:checked + .switch-label {
+  background-color: #00b894;
+}
+
+  .switch-handle {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  transition: transform 0.2s;
+}
+
+  .switch-input:checked + .switch-label .switch-handle {
+  transform: translateX(30px);
+}

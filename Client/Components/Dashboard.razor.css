@@ -72,7 +72,7 @@ section article:last-child {
 .user-preferred-color {
   width: 100%;
   min-height: 55px;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0 0;
   background: var(--light-color);
 }
 

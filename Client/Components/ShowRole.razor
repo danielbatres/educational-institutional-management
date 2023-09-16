@@ -1,0 +1,49 @@
+<div>
+  <div>
+    <button type="button" class="button transparent-button centered-container" @onclick="@GoBackRoles">
+      <i class="fi fi-tr-arrow-small-left"></i>
+    </button>
+  
+    <h4>Nombre del rol</h4>
+    <p>Edita la informaci&oacute;n sobre este rol </p>
+    <ul>
+      <li @onclick="@(() => MenuSelection = "general")">
+        <p>General</p>  
+      </li>
+      <li @onclick="@(() => MenuSelection = "permissions")">
+        <p>Permisos</p>  
+      </li>
+      <li @onclick="@(() => MenuSelection = "members")">
+        <p>Miembros</p>  
+      </li>
+    </ul>
+  </div>
+  <div>
+    @switch (MenuSelection){
+      case "general":
+      <GeneralRole />
+      break;
+      case "permissions":
+      <PermissionRole />
+      break;
+      case "members":
+      <RoleMembers />
+      break;
+    }
+  </div>
+</div>
+
+@code {
+  private Role Role { get; set; } = new();
+  [Inject]
+  private RoleContext _roleContext { get; set; }
+  private string MenuSelection { get; set; } = "general";
+  
+  protected override async Task OnInitializedAsync() {
+      
+  }
+  
+  private void GoBackRoles() {
+    _roleContext.SetSelection("roles");
+  }
+}

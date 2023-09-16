@@ -1,0 +1,40 @@
+<form id="general-role">
+  <fieldset>
+    <div class="label">
+      <label for="role-name">Nombre del rol</label>
+    </div>
+    <input type="text" class="input" placeholder="Ingresar nombre del rol" id="role-name">
+  </fieldset>
+  <div>
+    <div>
+      <label for="input-color">Color del rol</label>
+    </div>
+    <div class="color-boxes">
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+        <div class="color-box"></div>
+    </div>
+    <input type="color" id="input-color">
+  </div>
+  <fieldset>
+    <div class="label">
+      <label for="role-description">Descripci&oacute;n del rol</label>
+    </div> 
+    <textarea id="role-description" maxlength="1024" placeholder="Ingresa tu biografía"></textarea>  
+  </fieldset>
+</form>
+
+@code {
+  private void UpdateText(ChangeEventArgs e, string update) {
+    switch (update) {
+      case "":
+        break;
+    }
+  }
+}

@@ -30,14 +30,14 @@ public class InstitutionController : ControllerBase {
     }
 
     [HttpGet]
-    [Route("get-institution-by")]
-    public IActionResult GetInstitutionId(string name) {
-        return Ok(_institutionService.Get().Where(x => x.Name == name));
+    [Route("get-institution")]
+    public IActionResult GetInstitution(string institutionId) {
+        return Ok(_institutionService.Get().Where(x => x.Id == Guid.Parse(institutionId)));
     }
 
     [HttpGet]
     [Route("get-institution-users")]
     public IActionResult GetInstitutionUsers(Guid institutionId) {
         return Ok(_institutionService.GetInstitutionUsers(institutionId));
-    } 
+    }
 }

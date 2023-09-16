@@ -19,3 +19,7 @@ section article:last-child {
 .button {
   width: 20%;
 }
+
+.typing {
+  color: var(--success-color);
+}

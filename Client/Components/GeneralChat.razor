@@ -1,7 +1,10 @@
 @using edu_institutional_management.Client.Pages.Chat
+@using System.Timers;
+
 <h4>Chat general</h4>
 
 <section>
+  <b class="typing">@Typing</b>
   <article>
     @foreach (var message in ChatMessages) {
       User user = Users.Find(u => u.Id == message.UserId);
@@ -34,10 +37,18 @@
   private ChatHubManager _chatHubManager { get; set; }
   [Inject]
   private UsersHubManager _usersHubManager { get; set; }
+  private string Typing { get; set; } = string.Empty;
+  private Timer TypingTimer;
+  private bool IsTyping = false;
 
   protected override async Task OnInitializedAsync() {
     _chatHubManager.ChatUpdatedHandler(chatMessages => {
       ChatMessages = chatMessages;
+      StateHasChanged();
+    });
+
+    _chatHubManager.TypingUpdatedHandler(typing => {
+      Typing = typing;
       StateHasChanged();
     });
     
@@ -77,8 +88,37 @@
     AssignNewChatMessage();
   }
 
-  private void UpdateMessage(ChangeEventArgs e) {
+  private async Task UpdateMessage(ChangeEventArgs e) {
     ChatMessage.Message = e.Value.ToString();
+
+    if (!ChatMessage.Message.Equals(string.Empty)) {
+      if (TypingTimer != null) {
+        TypingTimer.Stop();
+        TypingTimer.Dispose();
+      }
+
+      IsTyping = true;
+      await _chatHubManager.SendTypingUpdateAsync(_userContext.User.InstitutionId.ToString(), $"{_userContext.User.Name} {_userContext.User.LastName} está escribiendo...");
+
+      TypingTimer = new Timer(2000);
+      TypingTimer.Elapsed += TypingTimerElapsed;
+      TypingTimer.Start();
+    }
+    else {
+      if (TypingTimer != null) {
+        TypingTimer.Stop();
+        TypingTimer.Dispose();
+      }
+    }
+  }
+
+  private async Task NoTyping() {
+    await _chatHubManager.SendTypingUpdateAsync(_userContext.User.InstitutionId.ToString(), "");
+  }
+
+  private void TypingTimerElapsed(object sender, ElapsedEventArgs e) {
+    IsTyping = false;
+    NoTyping();
   }
   
   private async Task SendUpdate() {

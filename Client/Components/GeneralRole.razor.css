@@ -1,0 +1,12 @@
+.color-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--light-color);
+}

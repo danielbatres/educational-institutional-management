@@ -1,3 +1,14 @@
+.user-options {
+  position: absolute;
+  padding: 5px;
+  top: 6.5%;
+  right: 1%;
+  z-index: 10000;
+  background: var(--background-color);
+  border: var(--light-border);
+  border-radius: 10px;
+}
+
 .user-options ul,
 .user-options ul li {
   width: 100%;
@@ -64,7 +75,7 @@
 .select-profile-options i {
   font-size: 1.4rem;
   align-self: center;
-  padding: 0px 10px;
+  padding: 0 10px;
   cursor: pointer;
 }
 

@@ -5,27 +5,27 @@
       Aqu&iacute; recibiras las solicitudes de ingreso de cualquier instituci&oacute;n
     </p>
   </div>
-  @for (int i = 0; i < ReceivedMembershipRequests.Count; i++) { 
-    string InstitutionName = ReceivedMembershipRequests[i].InstitutionName;
-    int MembershipIndex = i;
+  @for (int i = 0; i < ReceivedMembershipRequests.Count; i++) {
+    Institution institutionRequest = Institutions?.Where(x => x.Id == ReceivedMembershipRequests[i].InstitutionId).FirstOrDefault() ?? new();
+    string institutionName = institutionRequest?.Name ?? String.Empty;
+    int membershipIndex = i;
 
     if (ReceivedMembershipRequests[i].IsAccepted) continue;
     <div>
       <h5>Solicitud de ingreso sin aceptar de:</h5>
       <h4>
-        @ReceivedMembershipRequests[i].InstitutionName
+        @institutionName
       </h4>
       <h5>Autor</h5>
       <p>
         Has sido invitado a ingresar en la instituci&oacute;n
       </p>
-      @if (ReceivedMembershipRequests[i].Message != null && !ReceivedMembershipRequests[i].Message.Equals(string.Empty))
-      {
+      @if (ReceivedMembershipRequests[i].Message != null && !ReceivedMembershipRequests[i].Message.Equals(string.Empty)) {
         <h5>Mensaje</h5>
         <p>@ReceivedMembershipRequests[i].Message</p>
       }
       <p>@ReceivedMembershipRequests[i].CreationDate</p>
-      <button type="button" class="button primary-background-button" @onclick="@(() => AcceptRequest(InstitutionName, MembershipIndex))">
+      <button type="button" class="button primary-background-button" @onclick="@(() => AcceptRequest(institutionRequest?.Id.ToString() ?? string.Empty, membershipIndex))">
         Aceptar
       </button>
     </div>
@@ -34,38 +34,44 @@
 
 @code {
   [Inject]
-  private UserContext UserContext { get; set; }
+  private UserContext _userContext { get; set; }
   [Inject]
-  private IInstitutionService InstitutionService { get; set; }
+  private IInstitutionService _institutionService { get; set; }
   [Inject]
-  private IUserService UserService { get; set; }
+  private IUserService _userService { get; set; }
   [Inject]
-  private ISettingsService SettingsService { get; set; }
+  private ISettingsService _settingsService { get; set; }
   public List<MembershipRequest> ReceivedMembershipRequests { get; set; } = new();
+  private List<Institution> Institutions { get; set; } = new();
 
-  protected override void OnInitialized() {
-    ReceivedMembershipRequests = UserContext.User.ReceivedMembershipRequests.ToList();
+  protected override async Task OnInitializedAsync() {
+    ReceivedMembershipRequests = _userContext.User.ReceivedMembershipRequests?.ToList() ?? new();
+
+    if (!ReceivedMembershipRequests.Count.Equals(0)) {
+      foreach (var request in ReceivedMembershipRequests) {
+        Institutions.Add(await _institutionService.GetInstitution(request.InstitutionId.ToString()) ?? new());
+      }
+    }
   }
 
-  private async Task AcceptRequest(string name, int index) {
-    Guid institutionId = await InstitutionService.GetInstitutionId(name);
+  private async Task AcceptRequest(string institutionId, int index) {
+    _userContext.User.InstitutionId = Guid.Parse(institutionId);
+    _userContext.User.ReceivedMembershipRequests.ElementAtOrDefault(index).IsAccepted = true;
 
-    UserContext.User.ReceivedMembershipRequests.ElementAtOrDefault(index).IsAccepted = true;
-
-    if (!UserContext.User.InstitutionId.Equals(Guid.Empty)) {
-      await UserService.Update(UserContext.User);
+    if (!_userContext.User.InstitutionId.Equals(Guid.Empty)) {
+      await _userService.Update(_userContext.User);
     }
 
-    await InstitutionService.SendInstitutionConnection(UserContext.User.Institution?.DataBaseConnectionName ?? string.Empty);
+    await _institutionService.SendInstitutionConnection(_userContext.User.Institution?.DataBaseConnectionName ?? string.Empty);
 
-    await SettingsService.Create(new() {
+    await _settingsService.Create(new() {
       Id = Guid.NewGuid(),
-      UserId = UserContext.User.Id,
+      UserId = _userContext.User.Id,
       AppearanceId = 1
     });
 
-    UserContext.User.Settings = await SettingsService.GetSettingsByUserId(UserContext.User.Id);
+    _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 
-    UserContext.NavigateToInstitution(institutionId);
+    _userContext.NavigateToInstitution(Guid.Parse(institutionId));
   }
 }

@@ -1,6 +1,10 @@
 :root {
     --font-family: 'Be Vietnam Pro', sans-serif;
     --light-border: 1px solid var(--light-color);
+    --success-color: #3DC13C;
+    --danger-color: #F13637;
+    --light-danger-color: #f1363638;
+    --warning-color: #F3BB1B;
 }
 
 * {
@@ -106,6 +110,22 @@ a, .btn-link {
 i {
     color: var(--text-color);
     font-size: 1rem;
+}
+
+textarea {
+    font-family: var(--font-family);
+    font-size: var(--regular-text);
+    color: var(--text-color);
+    font-weight: 300;
+    min-height: 100px;
+    width: 100%;
+    border: var(--light-border);
+    resize: vertical;
+    border-radius: 10px;
+    padding: 10px 0px 10px 10px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    outline: none;
 }
 
 .icon:hover {

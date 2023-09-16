@@ -18,13 +18,13 @@ public class RolePermissionController : ControllerBase {
   public async Task<IActionResult> Post([FromBody] RolePermission rolePermission) {
     await _rolePermissionService.Create(rolePermission);
   
-      return Ok();
+    return Ok();
   }
   
   [HttpDelete]
   [Route("remove")]
-  public async Task<IActionResult> Delete([FromBody] RolePermission rolePermission) {
-    await _rolePermissionService.Delete(rolePermission);
+  public async Task<IActionResult> Delete(int rolePermissionId) {
+    await _rolePermissionService.Delete(rolePermissionId);
   
     return Ok();
   }

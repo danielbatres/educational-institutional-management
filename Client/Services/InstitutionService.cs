@@ -29,16 +29,16 @@ public class InstitutionService : BaseService, IInstitutionService {
     await _institutionHubManager.SendInstitutionUpdatedAsync(institution.Id.ToString());
   }
 
-  public async Task<Guid> GetInstitutionId(string name) {
-    var response = await HttpClient.GetAsync($"api/institution/get-institution-by?name={name}");
+  public async Task<Institution?> GetInstitution(string institutionId) {
+    var response = await HttpClient.GetAsync($"api/institution/get-institution?institutionId={institutionId}");
 
     var content = await CheckResponseContent(response);
 
-    List<Institution> Institutions = JsonSerializer.Deserialize<List<Institution>>(content, JsonOptions) ?? new();
+    List<Institution> institutions = JsonSerializer.Deserialize<List<Institution>>(content, JsonOptions) ?? new();
 
-    if (Institutions.Count == 1) return Institutions[0].Id;
+    if (institutions.Count == 1) return institutions[0];
 
-    return Guid.Empty;
+    return null;
   }
 
   private async Task CreateInstitutionDataBase(string dbName) {
@@ -63,7 +63,7 @@ public class InstitutionService : BaseService, IInstitutionService {
 }
 
 public interface IInstitutionService {
-  Task<Guid> GetInstitutionId(string name);
+  Task<Institution?> GetInstitution(string institutionId);
   Task Update(Institution institution);
   Task RegisterNewInstitution(Institution institution);
   Task<List<User>> GetInstitutionUsers(Guid institutionUser);

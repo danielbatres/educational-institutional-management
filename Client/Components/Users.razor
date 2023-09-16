@@ -76,14 +76,14 @@
   private User SelectedUser { get; set; } = new();
   private MembershipRequest MembershipRequest { get; set; } = new();
   [Inject]
-  private IMembershipRequestService MembershipRequestService { get; set; }
+  private IMembershipRequestService _membershipRequestService { get; set; }
   [Inject]
-  private UserContext UserContext { get; set; }
+  private UserContext _userContext { get; set; }
   [Inject]
-  private IUserService UserService { get; set; }
+  private IUserService _userService { get; set; }
 
   protected override async Task OnInitializedAsync() {
-    UsersNoInstitution = await UserService.GetNoInstitutionUsers();
+    UsersNoInstitution = await _userService.GetNoInstitutionUsers();
   }
 
   private void UpdateMessage(ChangeEventArgs e) {
@@ -91,12 +91,16 @@
   }
 
   protected override void OnInitialized() {
+    CreateNewRequest();
+  }
+  
+  private void CreateNewRequest() {
     MembershipRequest = new() {
       Id = Guid.NewGuid(),
-      Author = $"{UserContext.User.Name} {UserContext.User.LastName}",
+      Author = $"{_userContext.User.Name} {_userContext.User.LastName}",
       CreationDate = DateTime.Now,
       IsAccepted = false,
-      InstitutionName = UserContext.User.Institution.Name,
+      InstitutionId = (Guid) _userContext.User.InstitutionId,
       Message = string.Empty
     };
   }
@@ -104,8 +108,9 @@
   private async Task SendRequest() {
     MembershipRequest.ReceiverUserId = SelectedUser.Id;
 
-    await MembershipRequestService.Create(MembershipRequest);
-
+    await _membershipRequestService.Create(MembershipRequest);
+  
+    CreateNewRequest();
     Console.WriteLine("Solicitud enviada");
     // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
   } 

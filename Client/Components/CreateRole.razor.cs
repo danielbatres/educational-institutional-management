@@ -16,8 +16,12 @@ public partial class CreateRole {
   public Role Role { get; set; } = new();
   [Inject]
   private IActivityService _activityService { get; set; }
+  [Inject]
+  private RoleContext _roleContext { get; set; }
 
   protected override void OnInitialized() {
+    _roleContext.OnChange += HandleStateChange;
+
     AssignNewRol();
   }
 
@@ -35,7 +39,7 @@ public partial class CreateRole {
 
     await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString());
     await _activityService.Create(activity);
-    AssignNewRol();
+    ExitRoleCreation();
   }
 
   private void AssignNewRol() {
@@ -43,6 +47,12 @@ public partial class CreateRole {
       Id = Guid.NewGuid(),
       RoleColor = "#ffffff"
     };
+  }
+
+  private void ExitRoleCreation() {
+    _roleContext.SetRolCreation(false);
+
+    AssignNewRol();
   }
 
   private void Update(ChangeEventArgs e, string update) {
@@ -56,5 +66,9 @@ public partial class CreateRole {
         Role.Description = value;
         break;
     }
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
   }
 }

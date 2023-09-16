@@ -1,11 +1,28 @@
-<h4>Crear rol</h4>
-<p>Crear un nuevo rol</p>
+<style>
+  .create-role {
+    position: absolute;
+    right: -40%;
+    width: 40%;
+    height: 100%;
+    z-index: 1000;
+    background: var(--background-color);
+    transition: right 0.4s ease-in-out;
+   }
+</style>
 
-<label for="name">Nombre del rol</label>
-<input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
-<label for="description">Descripci&oacute;n del rol</label>
-<input value="@Role.Description" type="text" class="input" placeholder="Ingresar descripción del rol" id="description" @oninput="@(e => Update(e, "description"))">
+<div class="create-role" style="@(_roleContext.CreateNewRol ? "right: 0;" : "")">
+  <h4>Crear rol</h4>
+  <p>Crear un nuevo rol</p>
+  <button type="button" class="button transparent-button centered-container" @onclick="@ExitRoleCreation">
+    <i class="fi fi-tr-rectangle-xmark"></i>
+  </button>
 
-<p>Seleccionar color del rol</p>
+  <label for="name">Nombre del rol</label>
+  <input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
+  <label for="description">Descripci&oacute;n del rol</label>
+  <input value="@Role.Description" type="text" class="input" placeholder="Ingresar descripción del rol" id="description" @oninput="@(e => Update(e, "description"))">
 
-<button type="button" @onclick="@CreateNewRol" class="button">Crear rol</button>
+  <p>Seleccionar color del rol</p>
+
+  <button type="button" @onclick="@CreateNewRol" class="button">Crear rol</button>
+</div>

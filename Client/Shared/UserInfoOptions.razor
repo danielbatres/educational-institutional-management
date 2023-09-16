@@ -1,24 +1,26 @@
-<div class="user-options @(!ShowUserOptions ? "hide" : "")">
-  <ul>
-    <li @onclick="@GoToProfile">
-      <i class="fi fi-tr-arrow-up-right-from-square"></i>
-      <p>Ir a mi perfil</p>
-    </li>
-    <li @onclick="@Exit">
-      <i class="fi fi-tr-address-card"></i>
-      <p>
-        Cerrar sesi&oacute;n
-      </p>
-    </li>
-  </ul>
-</div>
-<div class="user-info centered-container" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
+<div class="user-info centered-container">
+  @if (ShowUserOptions) {
+    <div class="user-options">
+      <ul>
+        <li @onclick="@GoToProfile">
+          <i class="fi fi-tr-arrow-up-right-from-square"></i>
+          <p>Ir a mi perfil</p>
+        </li>
+        <li @onclick="@Exit">
+          <i class="fi fi-tr-address-card"></i>
+          <p>
+            Cerrar sesi&oacute;n
+          </p>
+        </li>
+      </ul>
+    </div>
+  }
   <div class="user-image"></div>
   <div class="user-info-data">
     <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
     <p>@($"{UserContext.User.Register.Email}")</p>
   </div>
-  <div class="select-profile-options">
+  <div class="select-profile-options" @onclick="@(() => ShowUserOptions = !ShowUserOptions)">
     <i class="fi fi-tr-angle-double-small-down"></i>
     <div class="profile-options"></div>
   </div>

@@ -14,10 +14,13 @@ public class User : MainUser {
   public virtual Payment? Payment { get; set; }
   public virtual ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
   [NotMapped]
+  [JsonIgnore]
   public List<UserRole>? UserRoles { get; set; }
   [NotMapped]
+  [JsonIgnore]
   public Settings? Settings { get; set; }
   [NotMapped]
+  [JsonIgnore]
   public List<Notification>? Notifications { get; set; }
 
   public User Clone() {

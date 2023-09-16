@@ -3,53 +3,38 @@
 
   </article>
   <article class="dashboard-side-bar">
+    @if (IsSelected) {
+      <div class="user-target-information" style="top: @SelectedUserTop">
+        <div class="user-preferred-color"></div>
+        <div>
+          <p>@SelectedUser.Name @SelectedUser.LastName</p>
+          <p>@SelectedUser.Register.Email</p>
+        </div>
+        <div>
+          <h5>miembro desde</h5>
+          <p>15/9/2023</p>
+        </div>
+        <div>
+          <h5>roles asignados</h5>  
+        </div>
+      </div>
+    }
     <div class="online-users">
       @foreach (User user in Users) {
-        if (user.OnlineStatus.Status) {
-          <div>
-            <h5>Nombre del rol - 3</h5>
-            <div class="user-card" @onclick="@(() => IsSelected = !IsSelected)">
-              <div class="user-target-information" style="@(IsSelected ? "display: flex;" : "display: none;")">
-                <div class="user-preferred-color"></div>
-                <div>
-
-                </div>
+        int index = Users.IndexOf(user);
+        <div>
+          <h5>Nombre del rol - 3</h5>
+          <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
+            <div class="user-information">
+              <div class="user-image">
+                @if (user.OnlineStatus.Status) { <div class="green-state"></div> }
               </div>
-              <div class="user-information">
-                <div class="user-image">
-                  <div class="green-state"></div>
-                </div>
-                <div class="user-info">
-                  <p>@user.Name @user.LastName</p>
-                  <p>@user.Register.Email</p>
-                </div>
+              <div class="user-info">
+                <p>@user.Name @user.LastName</p>
+                <p>@user.Register.Email</p>
               </div>
             </div>
           </div>
-        }
-      }
-      @for (int i = 0; i < 6; i++) {
-        <div>
-          <h5>Nombre del rol - 3</h5>
-            @for (int j = 0; j < 3; j++) {
-              <div class="user-card" @onclick="@(() => IsSelected = !IsSelected)">
-                  <div class="user-target-information" style="@(IsSelected ? "display: flex;" : "display: none;")">
-                    <div class="user-preferred-color"></div>
-                    <div>
-
-                    </div>
-                  </div>
-                <div class="user-information">
-                  <div class="user-image">
-                    <div class="green-state"></div>
-                  </div>
-                  <div class="user-info">
-                    <p>Nombre completo de usuario</p>
-                    <p>correoelectronico@email.com</p>
-                  </div>
-                </div>
-              </div>
-            }
         </div>
       }
     </div>
@@ -62,12 +47,14 @@
   [Inject]
   private UsersHubManager _usersHubManager { get; set; }
   [Inject]
-  private UserContext UserContext { get; set; }
+  private UserContext _userContext { get; set; }
   [Inject]
-  private NavigationManager NavigationManager { get; set; }
+  private NavigationManager _navigationManager { get; set; }
   [Inject]
-  private IUserService UserService { get; set; }
+  private IUserService _userService { get; set; }
   private List<User> Users = new();
+  private User SelectedUser { get; set; } = new();
+  private string SelectedUserTop { get; set; } = string.Empty;
 
   protected override async Task OnInitializedAsync() {
     _usersHubManager.UsersUpdatedHandler(users => {
@@ -75,6 +62,17 @@
       StateHasChanged();
     });
 
-    await _usersHubManager.SendUsersUpdatedAsync(UserContext.User.InstitutionId.ToString());
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
+  }
+
+  private void SetSelectedUser(int index) {
+    IsSelected = !IsSelected;
+
+    SelectedUser = Users[index];
+    if (index == 0) {
+      SelectedUserTop = "1%";
+    } else {
+      SelectedUserTop = (index + 1) * 6 + "%";
+    }
   }
 }
