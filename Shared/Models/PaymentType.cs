@@ -9,5 +9,5 @@ public class PaymentType {
   public string Description { get; set; }
   public float Amount { get; set; }
   [JsonIgnore]
-  public virtual ICollection<Payment> Payments { get; set; }
+  public ICollection<Payment> Payments { get; set; }
 } 

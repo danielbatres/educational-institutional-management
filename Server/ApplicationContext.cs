@@ -27,6 +27,7 @@ public class ApplicationContext : DbContext {
     public DbSet<Attendance> Attendances { get; set; }
     public DbSet<AttendanceSchedule> AttendanceSchedules { get; set; }
     public DbSet<ChatMessage> ChatMessages { get; set; }
+    public DbSet<StudentSettings> StudentSettings { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
@@ -34,7 +35,14 @@ public class ApplicationContext : DbContext {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        List<Appearance> AppearanceInit = new() {
+        List<StudentSettings> studentSettingsInit = new() {
+          new() {
+              Id = Guid.NewGuid(),
+              DefaultIdentifier = true
+          }  
+        };
+        
+        List<Appearance> appearanceInit = new() {
             new() {
                 Id = 1,
                 Theme = AppereanceSelection.LightTheme
@@ -45,7 +53,7 @@ public class ApplicationContext : DbContext {
             }
         };
 
-        List<Permission> PermissionsInit = new() {
+        List<Permission> permissionsInit = new() {
             new() {
                 Id = Guid.NewGuid(),
                 Name = PermissionName.Administrator,
@@ -138,7 +146,7 @@ public class ApplicationContext : DbContext {
             permission.Property(t => t.Name).IsRequired();
             permission.Property(t => t.Description);
             permission.HasMany(p => p.RolePermissions).WithOne(rp => rp.Permission).HasForeignKey(rp => rp.PermissionId);
-            permission.HasData(PermissionsInit);
+            permission.HasData(permissionsInit);
         });
 
         modelBuilder.Entity<RolePermission>(rolePermission => {
@@ -156,7 +164,7 @@ public class ApplicationContext : DbContext {
             appearance.HasKey(a => a.Id);
             appearance.Property(a => a.Id).ValueGeneratedOnAdd();
             appearance.Property(a => a.Theme);
-            appearance.HasData(AppearanceInit);
+            appearance.HasData(appearanceInit);
         });
 
         modelBuilder.Entity<Settings>(settings => {
@@ -297,6 +305,12 @@ public class ApplicationContext : DbContext {
             chat.Property(c => c.Message);
             chat.Property(c => c.TimeStamp);
             chat.Property(c => c.UserId);
+        });
+        
+        modelBuilder.Entity<StudentSettings>(studentSettings => {
+            studentSettings.HasKey(s => s.Id);
+            studentSettings.Property(s => s.DefaultIdentifier);
+            studentSettings.HasData(studentSettingsInit);
         });
     }
 }

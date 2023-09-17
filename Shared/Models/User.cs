@@ -8,11 +8,11 @@ public class User : MainUser {
   public string? Bio { get; set; }
   public string? Location { get; set; }
   public Guid? InstitutionId { get; set; }
-  public virtual Institution? Institution { get; set; }
-  public virtual OnlineStatus OnlineStatus { get; set; }
-  public virtual Register Register { get; set; }
-  public virtual Payment? Payment { get; set; }
-  public virtual ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
+  public Institution? Institution { get; set; }
+  public OnlineStatus? OnlineStatus { get; set; }
+  public Register? Register { get; set; }
+  public Payment? Payment { get; set; }
+  public ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
   [NotMapped]
   [JsonIgnore]
   public List<UserRole>? UserRoles { get; set; }

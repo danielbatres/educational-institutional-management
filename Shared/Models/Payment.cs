@@ -8,7 +8,7 @@ public class Payment {
   public DateTime EndDate { get; set; }
   public Guid PaymentTypeId { get; set; }
   public PaymentType PaymentType { get; set; }
-  public virtual Guid UserId { get; set; }
+  public Guid UserId { get; set; }
   [JsonIgnore]
-  public virtual User User { get; set; }
+  public User? User { get; set; }
 }

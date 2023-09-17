@@ -5,6 +5,7 @@ namespace edu_institutional_management.Client.Containers;
 public class StudentContext : BaseContainer {
   public ActionType ActionStudent { get; set; }
   public Guid CurrentStudentId { get; set; }
+  public Guid CurrentCategorySelectionId { get; set; }
   public bool CategoryCreation { get; set; }
   
   public void SetActionType(ActionType action) {
@@ -22,6 +23,12 @@ public class StudentContext : BaseContainer {
   public void SetCategoryCreation(bool creation) {
     CategoryCreation = creation;
     
+    NotifyStateChanged();
+  }
+
+  public void SetCurrentCategorySelectionId(Guid categoryId) {
+    CurrentCategorySelectionId = categoryId;
+
     NotifyStateChanged();
   }
 }

@@ -41,16 +41,13 @@ public partial class CreateCategory {
 
   private void AddOption(int index) {
     Fields[index].Options.Add(new Option() {
-      Name = string.Empty
+      Name = string.Empty,
+      FieldId = Fields[index].Id
     });
   }
   
-  private void UpdateField(ChangeEventArgs e, int index) {
-    Fields[index].Name = e.Value.ToString();
-  }
-  
-  private void UpdateFieldOption(ChangeEventArgs e, int indexField, int indexOption) {
-    Fields[indexField].Options.ElementAtOrDefault(indexOption).Name = e.Value.ToString();
+  private void RemoveOption(int index, Option option) {
+    Fields[index].Options.Remove(option);
   }
   
   private void AssignNewCategory() {
@@ -64,13 +61,14 @@ public partial class CreateCategory {
   }
 
   private async Task CreateNewCategory() {
-    AssignNewCategory();
     ExitCategoryCreation();
-  
+
     await _categoryService.Create(Category);
     
     foreach (var field in Fields) {
       if (field.Name != string.Empty) {
+        await _fieldService.Create(field);
+
         if (field.Options != null) {
           if (!field.Options.Count.Equals(0)) {
             foreach (var option in field.Options) {
@@ -78,12 +76,12 @@ public partial class CreateCategory {
             }
           }
         }
-  
-        await _fieldService.Create(field);
       }
     }
     
     await _categoryHubManager.SendCategoriesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+
+    AssignNewCategory();
   }
   
   private void ExitCategoryCreation() {
@@ -91,7 +89,7 @@ public partial class CreateCategory {
   }
 
   private void Update(ChangeEventArgs e, string update) {
-    string value = e.Value?.ToString() ?? string.Empty;
+    string value = e.Value.ToString();
   
     switch (update) {
       case "name":
@@ -101,6 +99,14 @@ public partial class CreateCategory {
         Category.Description = value;
         break;
     }
+  }
+
+  private void UpdateField(ChangeEventArgs e, int index) {
+    Fields[index].Name = e.Value.ToString();
+  }
+
+  private void UpdateOption(ChangeEventArgs e, int index, int indexOption) {
+    Fields[index].Options.ElementAtOrDefault(indexOption).Name = e.Value.ToString();
   }
 
   private void HandleStateChange() {

@@ -1,4 +1,3 @@
-
 using System.Text.Json.Serialization;
 
 namespace edu_institutional_management.Shared.Models;
@@ -10,5 +9,5 @@ public class OnlineStatus
   public DateTime LastConnection { get; set; }
   public Guid UserId { get; set; }
   [JsonIgnore]
-  public virtual User? User { get; set; }
+  public User? User { get; set; }
 }

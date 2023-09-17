@@ -35,6 +35,7 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
 builder.Services.AddScoped<IOptionService, OptionService>();
+builder.Services.AddScoped<IStudentSettingsService, StudentSettingsService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 
@@ -76,6 +77,7 @@ app.MapHub<RolesHub>("/rolesHub");
 app.MapHub<NotificationHub>("/notificationHub");
 app.MapHub<ActivityHub>("/activityHub");
 app.MapHub<CategoryHub>("/categoryHub");
+app.MapHub<StudentSettingsHub>("/studentSettingsHub");
 app.MapHub<StudentHub>("/studentsHub");
 app.MapHub<InstitutionHub>("/institutionHub");
 

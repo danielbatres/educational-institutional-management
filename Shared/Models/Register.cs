@@ -6,5 +6,5 @@ public class Register : MainRegister {
   public string? AuthenticationMethod { get; set; }
   public Guid UserId { get; set; }
   [JsonIgnore]
-  public virtual User? User { get; set; }
+  public User? User { get; set; }
 }

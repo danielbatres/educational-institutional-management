@@ -1,4 +1,5 @@
-.fields ul, .categories-list-fields ul {
+.category-navigation ul {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }

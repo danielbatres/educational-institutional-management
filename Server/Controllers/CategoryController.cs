@@ -9,6 +9,10 @@ namespace edu_institutional_management.Server.Controllers;
 public class CategoryController : ControllerBase {
   private readonly ICategoryService _categoryService;
   
+  public CategoryController(ICategoryService categoryService) {
+    _categoryService = categoryService;
+  }
+
   [HttpGet]
   public IActionResult Get() {
     return Ok(_categoryService.Get());

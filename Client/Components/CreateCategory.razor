@@ -44,8 +44,8 @@
           @foreach (var option in Fields[index].Options) {
               int indexOption = Fields[index].Options.ToList().IndexOf(option);
 
-              <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text" placeholder="Ingresar nombre de la opción" @oninput="@(e => UpdateFieldOption(e, index, indexOption))">
-              <button class="button" @onclick="@(() => Fields[index].Options.Remove(option))">
+              <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text" placeholder="Ingresar nombre de la opción" class="input" @oninput="@(e => UpdateOption(e, index, indexOption))">
+              <button type="button" class="button" @onclick="@(() => RemoveOption(index, option))">
                 <i class="fi fi-tr-rectangle-xmark"></i>
               </button>
           }
@@ -57,6 +57,6 @@
       </div>
     }
 
-    <button type="button" class="button">Crear categor&iacute;a</button>
+    <button type="button" class="button" @onclick="@CreateNewCategory">Crear categor&iacute;a</button>
   </form>
 </div>
