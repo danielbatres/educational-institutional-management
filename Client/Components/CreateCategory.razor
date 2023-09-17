@@ -40,7 +40,15 @@
         </select>
 
         @if (Fields[index].FieldType == FieldType.List) {
-          <p>Es lista</p>
+          <button type="button" class="button" @onclick="@(() => AddOption(index))">Agregar nueva opci&oacute;n</button>
+          @foreach (var option in Fields[index].Options) {
+              int indexOption = Fields[index].Options.ToList().IndexOf(option);
+
+              <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text" placeholder="Ingresar nombre de la opción" @oninput="@(e => UpdateFieldOption(e, index, indexOption))">
+              <button class="button" @onclick="@(() => Fields[index].Options.Remove(option))">
+                <i class="fi fi-tr-rectangle-xmark"></i>
+              </button>
+          }
         }
 
         <button type="button" class="button" @onclick="@(() => Fields.RemoveAt(index))">
@@ -52,81 +60,3 @@
     <button type="button" class="button">Crear categor&iacute;a</button>
   </form>
 </div>
-
-@code {
-  [Inject]
-  private ICategoryService _categoryService { get; set; }
-  [Inject]
-  private IFieldService _fieldService { get; set; }
-  [Inject]
-  private StudentContext _studentContext { get; set; }
-  [Inject]
-  private CategoryHubManager _categoryHubManager { get; set; }
-  [Inject]
-  private UserContext _userContext { get; set; }
-  private Category Category { get; set; } = new();
-  private List<Field> Fields { get; set; } = new();
-
-  protected override void OnInitialized() {
-    _studentContext.OnChange += HandleStateChange;
-    AssignNewCategory();
-  }
-
-  private void AddField() {
-    Fields.Add(new Field {
-      Id = Guid.NewGuid(),
-      Name = string.Empty,
-      IsRequired = false,
-      CategoryId = Category.Id,
-      FieldType = FieldType.Text
-    });
-  }
-
-  private void UpdateField(ChangeEventArgs e, int index) {
-    Fields[index].Name = e.Value.ToString();
-  }
-
-  private void AssignNewCategory() {
-    Category = new() {
-      Id = Guid.NewGuid(),
-      Name = string.Empty,
-      Description = string.Empty
-    };
-
-    Fields.Clear();
-  }
-
-  private async Task CreateNewCategory() {
-    AssignNewCategory();
-    ExitCategoryCreation();
-
-    await _categoryService.Create(Category);
-    foreach (var field in Fields) {
-      if (field.Name != string.Empty) {
-        await _fieldService.Create(field);
-      }
-    }
-    await _categoryHubManager.SendCategoriesUpdatedAsync(_userContext.User.InstitutionId.ToString());
-  }
-
-  private void ExitCategoryCreation() {
-    _studentContext.SetCategoryCreation(false);
-  }
-
-  private void Update(ChangeEventArgs e, string update) {
-    string value = e.Value?.ToString() ?? string.Empty;
-    
-    switch (update) {
-      case "name":
-        Category.Name = value;
-        break;
-      case "description":
-        Category.Description = value;
-        break;
-    }
-  }
-
-  private void HandleStateChange() {
-    StateHasChanged();
-  }
-}
