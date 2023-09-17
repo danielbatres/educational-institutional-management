@@ -1,19 +1,132 @@
-<h4>Crear categoria</h4>
-<p>Crear categoria</p>
+<style>
+  .new-category {
+    position: absolute;
+    right: -40%;
+    width: 40%;
+    height: 100%;
+    z-index: 1000;
+    background: var(--background-color);
+    transition: right 0.4s ease-in-out;
+  }
+</style>
 
-<form id="create-category">
-  <label for="category-name">Nombre de la categor&iacute;a</label>
-  <input type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name">
-  <label for="category-description">Descripci&oacute;n</label>
-  <input type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description">
-  <button type="button" class="button">Crear categor&iacute;a</button>
-</form>
+<div class="new-category" style="@(_studentContext.CategoryCreation ? "right: 0;": "")">
+  <button type="button" class="button transparent-button centered-container" @onclick="@ExitCategoryCreation">
+    <i class="fi fi-tr-rectangle-xmark"></i>
+  </button>
+
+  <h4>Crear categoria</h4>
+  <p>Crear categoria</p>
+
+  <form id="create-category">
+    <label for="category-name">Nombre de la categor&iacute;a</label>
+    <input value="@Category.Name" type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name" @oninput="@(e => Update(e, "name"))">
+    <label for="category-description">Descripci&oacute;n</label>
+    <input value="@Category.Description" type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description" @oninput="@(e => Update(e, "description"))">
+    <button type="button" class="button" @onclick="@AddField">Agregar campo</button>
+
+    @foreach (var field in Fields) {
+      int index = Fields.IndexOf(field);
+
+      <div>
+        <label for="field-@index">Nombre del campo</label>
+        <input value="@Fields[index].Name" type="text" class="input" id="field-@index" placeholder="Ingresar nombre del campo" @oninput="@(e => UpdateField(e, index))">
+
+        <label for="select-@index">Tipo del campo</label>
+        <select id="select-@index" @bind="@Fields[index].FieldType">
+          <option value="@FieldType.Text">Texto</option>
+          <option value="@FieldType.Number">Num&eacute;rico</option>
+          <option value="@FieldType.List">Lista</option>
+        </select>
+
+        @if (Fields[index].FieldType == FieldType.List) {
+          <p>Es lista</p>
+        }
+
+        <button type="button" class="button" @onclick="@(() => Fields.RemoveAt(index))">
+          <i class="fi fi-tr-rectangle-xmark"></i>  
+        </button>
+      </div>
+    }
+
+    <button type="button" class="button">Crear categor&iacute;a</button>
+  </form>
+</div>
 
 @code {
   [Inject]
   private ICategoryService _categoryService { get; set; }
+  [Inject]
+  private IFieldService _fieldService { get; set; }
+  [Inject]
+  private StudentContext _studentContext { get; set; }
+  [Inject]
+  private CategoryHubManager _categoryHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  private Category Category { get; set; } = new();
+  private List<Field> Fields { get; set; } = new();
+
+  protected override void OnInitialized() {
+    _studentContext.OnChange += HandleStateChange;
+    AssignNewCategory();
+  }
+
+  private void AddField() {
+    Fields.Add(new Field {
+      Id = Guid.NewGuid(),
+      Name = string.Empty,
+      IsRequired = false,
+      CategoryId = Category.Id,
+      FieldType = FieldType.Text
+    });
+  }
+
+  private void UpdateField(ChangeEventArgs e, int index) {
+    Fields[index].Name = e.Value.ToString();
+  }
+
+  private void AssignNewCategory() {
+    Category = new() {
+      Id = Guid.NewGuid(),
+      Name = string.Empty,
+      Description = string.Empty
+    };
+
+    Fields.Clear();
+  }
 
   private async Task CreateNewCategory() {
+    AssignNewCategory();
+    ExitCategoryCreation();
+
+    await _categoryService.Create(Category);
+    foreach (var field in Fields) {
+      if (field.Name != string.Empty) {
+        await _fieldService.Create(field);
+      }
+    }
+    await _categoryHubManager.SendCategoriesUpdatedAsync(_userContext.User.InstitutionId.ToString());
+  }
+
+  private void ExitCategoryCreation() {
+    _studentContext.SetCategoryCreation(false);
+  }
+
+  private void Update(ChangeEventArgs e, string update) {
+    string value = e.Value?.ToString() ?? string.Empty;
     
+    switch (update) {
+      case "name":
+        Category.Name = value;
+        break;
+      case "description":
+        Category.Description = value;
+        break;
+    }
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
   }
 }

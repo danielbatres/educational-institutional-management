@@ -12,6 +12,7 @@ public class Field {
   public Category? Category { get; set; }
   [JsonIgnore]
   public ICollection<FieldInformation>? FieldsInformation { get; set; }
+  public ICollection<Option>? Options { get; set; }
 }
 
 public enum FieldType {

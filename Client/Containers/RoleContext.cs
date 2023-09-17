@@ -3,7 +3,7 @@ namespace edu_institutional_management.Client.Containers;
 public class RoleContext : BaseContainer {
   public string Selection { get; set; }
   public Guid ActualRoleIdSelection { get; set; }
-  public bool CreateNewRol { get; set; } = false;
+  public bool CreateNewRol { get; set; }
   
   public void SetSelection(string selection) {
     Selection = selection;

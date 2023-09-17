@@ -9,11 +9,11 @@ public class CategoryHubManager : HubManagerBase {
     _hubConnection = new HubConnectionBuilder().WithUrl(navigationManager.ToAbsoluteUri("/categoryHub")).Build();
   }
 
-  public void RolesUpdatedHandler(Action<List<Category>> handler) {
+  public void CategoriesUpdatedHandler(Action<List<Category>> handler) {
     _hubConnection.On("CategoriesUpdated", handler);
   }
 
-  public async Task SendRolesUpdatedAsync(string groupName) {
+  public async Task SendCategoriesUpdatedAsync(string groupName) {
     await _hubConnection.SendAsync("SendCategoriesUpdate", groupName);
   }
 }

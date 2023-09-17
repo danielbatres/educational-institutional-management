@@ -14,6 +14,7 @@ public class ApplicationContext : DbContext {
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Field> Fields { get; set; }
+    public DbSet<Option> Options { get; set; }
     public DbSet<FieldInformation> FieldsInformation { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentRegister> StudentRegisters { get; set; }
@@ -266,7 +267,14 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<Category>(category => {
             category.HasKey(c => c.Id);
             category.Property(c => c.Name);
+            category.Property(c => c.Description);
             category.HasMany(c => c.Fields).WithOne(f => f.Category).HasForeignKey(f => f.CategoryId).OnDelete(DeleteBehavior.Cascade);
+        });
+        
+        modelBuilder.Entity<Option>(option => {
+            option.HasKey(o => o.Id);
+            option.Property(o => o.Id).ValueGeneratedOnAdd();
+            option.Property(o => o.Name);
         });
         
         modelBuilder.Entity<Field>(field => {
@@ -275,6 +283,7 @@ public class ApplicationContext : DbContext {
             field.Property(f => f.IsRequired);
             field.Property(f => f.FieldType);
             field.HasMany(f => f.FieldsInformation).WithOne(fi => fi.Field).HasForeignKey(fi => fi.FieldId).OnDelete(DeleteBehavior.Cascade);
+            field.HasMany(f => f.Options).WithOne(o => o.Field).HasForeignKey(o => o.FieldId).OnDelete(DeleteBehavior.Cascade);
         });
         
         modelBuilder.Entity<FieldInformation>(fieldInformation => {

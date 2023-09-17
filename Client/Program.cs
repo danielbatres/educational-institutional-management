@@ -28,6 +28,7 @@ builder.Services.AddSingleton<LoginContext>();
 builder.Services.AddSingleton<LoadingContext>();
 builder.Services.AddSingleton<RoleContext>();
 builder.Services.AddSingleton<ThemeContext>();
+builder.Services.AddSingleton<StudentContext>();
 builder.Services.AddSingleton<Validators>();
 builder.Services.AddSingleton<UsersHubManager>();
 builder.Services.AddSingleton<RolesHubManager>();
@@ -47,6 +48,8 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFieldService, FieldService>();
+builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

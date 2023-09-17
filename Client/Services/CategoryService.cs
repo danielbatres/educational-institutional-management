@@ -17,8 +17,16 @@ public class CategoryService : BaseService, ICategoryService {
     
     await CheckResponse(response);
   }
+
+  public async Task Delete(Guid categoryId) {
+    var response = await HttpClient.DeleteAsync($"api/category/remove?categoryId={categoryId}");
+
+    await CheckResponse(response);
+  }
 }
 
 public interface ICategoryService {
   Task Create(Category category);
+  Task Update(Category category);
+  Task Delete(Guid categoryId);
 }
