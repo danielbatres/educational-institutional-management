@@ -37,7 +37,7 @@ public class OptionController : ControllerBase {
   [HttpDelete]
   [Route("remove")]
   public async Task<IActionResult> Delete(string optionId) {
-    await _optionService.Delete(int.Parse(optionId));
+    await _optionService.Delete(Guid.Parse(optionId));
     
     return Ok();
   }

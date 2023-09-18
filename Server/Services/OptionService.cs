@@ -11,9 +11,11 @@ public class OptionService : BaseService, IOptionService {
   }
   
   public async Task Create(Option option) {
-    _applicationContext.Options.Add(option);
-    
-    await _applicationContext.SaveChangesAsync();
+    if (!_applicationContext.Options.Any(o => o.Id.Equals(option.Id))) {
+      _applicationContext.Options.Add(option);
+
+      await _applicationContext.SaveChangesAsync(); 
+    }
   }
   
   public async Task Update(Option option) {
@@ -26,7 +28,7 @@ public class OptionService : BaseService, IOptionService {
     await _applicationContext.SaveChangesAsync();
   }
   
-  public async Task Delete(int optionId) {
+  public async Task Delete(Guid optionId) {
     var originalOption = _applicationContext.Options.FirstOrDefault(o => o.Id == optionId);
 
     if (originalOption != null) {
@@ -40,5 +42,5 @@ public interface IOptionService {
   IEnumerable<Option> Get(Guid fieldId);
   Task Create(Option option);
   Task Update(Option option);
-  Task Delete(int optionId);
+  Task Delete(Guid optionId);
 }

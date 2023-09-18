@@ -281,7 +281,6 @@ public class ApplicationContext : DbContext {
         
         modelBuilder.Entity<Option>(option => {
             option.HasKey(o => o.Id);
-            option.Property(o => o.Id).ValueGeneratedOnAdd();
             option.Property(o => o.Name);
         });
         

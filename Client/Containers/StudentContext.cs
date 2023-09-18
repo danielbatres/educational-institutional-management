@@ -7,7 +7,9 @@ public class StudentContext : BaseContainer {
   public Guid CurrentStudentId { get; set; }
   public Guid CurrentCategorySelectionId { get; set; }
   public bool CategoryCreation { get; set; }
-  
+  public Student Student { get; set; } = new();
+  public List<FieldInformation> FieldInformations { get; set; } = new();
+
   public void SetActionType(ActionType action) {
     ActionStudent = action;
     
@@ -28,6 +30,29 @@ public class StudentContext : BaseContainer {
 
   public void SetCurrentCategorySelectionId(Guid categoryId) {
     CurrentCategorySelectionId = categoryId;
+
+    NotifyStateChanged();
+  }
+
+  public void SetNewStudent() {
+    Guid newStudentId = Guid.NewGuid();
+
+    Student = new() {
+      Id = newStudentId,
+      UniqueIdentifier = string.Empty,
+      Name = string.Empty,
+      LastName = string.Empty,
+      PhoneNumber = string.Empty,
+      Gender = string.Empty,
+      Photo = string.Empty,
+      StudentRegister = new() {
+        Id = Guid.NewGuid(),
+        CreatedAt = DateTime.Now,
+        Email = string.Empty,
+        Password = string.Empty,
+        StudentId = newStudentId
+      }
+    };
 
     NotifyStateChanged();
   }

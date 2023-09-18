@@ -7,6 +7,7 @@ namespace edu_institutional_management.Server.Controllers;
 [Route("api/[controller]")]
 public class PermissionController : ControllerBase {
   private readonly IPermissionService _permissionService;
+  
   public PermissionController(IPermissionService permissionService) {
     _permissionService = permissionService;
   }

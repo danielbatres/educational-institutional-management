@@ -1,23 +1,59 @@
-<fieldset>
-  <label for="unique-identifier">Identificador &uacute;nico</label>
-  <input type="text" class="input" placeholder="Ingresar identificador único del estudiante" id="unique-identifier">
-</fieldset>
-<fieldset>
-  <label for="student-name">Nombre del estudiante</label>
-  <input type="text" class="input" placeholder="Ingresar nombre del estudiante" id="student-name">
-</fieldset>
-<fieldset>
-  <label for="student-last-name">Apellido del estudiante</label>
-  <input type="text" class="input" placeholder="Ingresar apellido del estudiante" id="student-last-name">  
-</fieldset>
-<fieldset>
-  <label for="phone-number">N&uacute;mero de tel&eacute;fono</label>
-  <input type="text" class="input" placeholder="Ingresar número de telefono del estudiante" id="phone-number" required>  
-</fieldset>
-<fieldset>
-  <label for="gender">Genero del estudiante</label>
-  <select id="gender">
-    <option value="m">Masculino</option>
-    <option value="f">Femenino</option>
-  </select>
-</fieldset>
+<form id="student-general-data">
+  @if (!_studentSettings.DefaultIdentifier) {
+    <fieldset>
+      <label for="unique-identifier">Identificador &uacute;nico</label>
+      <input @bind="@_studentContext.Student.UniqueIdentifier" type="text" class="input" placeholder="Ingresar identificador único del estudiante" id="unique-identifier">
+    </fieldset>
+  }
+  <fieldset>
+    <label for="student-name">Nombre del estudiante</label>
+    <input @bind="@_studentContext.Student.Name" type="text" class="input" placeholder="Ingresar nombre del estudiante" id="student-name">
+  </fieldset>
+  <fieldset>
+    <label for="student-last-name">Apellido del estudiante</label>
+    <input @bind="@_studentContext.Student.LastName" type="text" class="input" placeholder="Ingresar apellido del estudiante" id="student-last-name">
+  </fieldset>
+  <fieldset>
+    <label for="phone-number">N&uacute;mero de tel&eacute;fono</label>
+    <input type="text" class="input" placeholder="Ingresar número de telefono del estudiante" id="phone-number" required>
+  </fieldset>
+  <fieldset>
+    <label for="gender">Genero del estudiante</label>
+    <select id="gender" @bind="@_studentContext.Student.Gender">
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="birth-date"></label>
+    </div>
+  </fieldset>
+</form>
+
+@code {
+  [Inject]
+  private StudentContext _studentContext { get; set; }
+  [Inject]
+  private StudentSettingsHubManager _studentSettingsHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  private StudentSettings _studentSettings { get; set; } = new();
+
+  protected override async Task OnInitializedAsync() {
+    _studentSettingsHubManager.StudentSettingsUpdatedHandler(studentSettings => {
+      _studentSettings = studentSettings;
+      StateHasChanged();
+    });
+
+    await _studentSettingsHubManager.SendStudentSettingsUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  protected override void OnInitialized() {
+    _studentContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+}

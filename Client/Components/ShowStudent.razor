@@ -4,8 +4,8 @@
   </button>
 
   <div>
-    <button type="button" class="button transparent-button">Cancelar</button>
-    <button type="button" class="button primary-background-button">Guardar</button>
+    <button type="button" class="button transparent-button" @RemoveChanges>Cancelar</button>
+    <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
   </div>
 
   <div class="category-navigation">
@@ -29,16 +29,21 @@
     <form id="@_studentContext.CurrentCategorySelectionId">
       @foreach (var field in Categories.FirstOrDefault(c => c.Id == _studentContext.CurrentCategorySelectionId).Fields) {
         int index = Categories.FirstOrDefault(c => c.Id == _studentContext.CurrentCategorySelectionId).Fields.ToList().IndexOf(field);
-
+        FieldInformation fieldInformation = _studentContext.FieldInformations.FirstOrDefault(f => f.FieldId.Equals(field.Id)) ?? new();
+        
         <fieldset>
           <div class="label">
             <label for="field-@index">@field.Name</label>
           </div>
           @if (field.FieldType == FieldType.Text || field.FieldType == FieldType.Number) {
-            <input type="text" class="input" placeholder="Ingresar @field.Name.ToLower()" id="field-@index">
+            <input @bind="@fieldInformation.Information" type="text" class="input" placeholder="Ingresar @field.Name.ToLower()" id="field-@index">
           } else {
-            <select id="field-@index">
-
+            <select id="field-@index" @bind="@fieldInformation.Information">
+              @if (field.Options != null) {
+                @foreach (var option in field.Options) {
+                  <option value="@option.Name">@option.Name</option>
+                }
+              }
             </select>
           }
         </fieldset>

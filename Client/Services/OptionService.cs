@@ -17,7 +17,7 @@ public class OptionService : BaseService, IOptionService {
   
   public async Task Create(Option option) {
     var response = await HttpClient.PostAsJsonAsync("api/option/create", option);
-    
+
     await CheckResponse(response);
   }
   
@@ -27,7 +27,7 @@ public class OptionService : BaseService, IOptionService {
     await CheckResponse(response);
   }
   
-  public async Task Delete(int optionId) {
+  public async Task Delete(Guid optionId) {
     var response = await HttpClient.DeleteAsync($"api/option/remove?optionId={optionId}");
     
     await CheckResponse(response);
@@ -38,5 +38,5 @@ public interface IOptionService {
   Task<List<Option>> Get(Guid fieldId);
   Task Create(Option option);
   Task Update(Option option);
-  Task Delete(int optionId);
+  Task Delete(Guid optionId);
 }

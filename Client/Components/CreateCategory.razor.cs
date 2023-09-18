@@ -41,6 +41,7 @@ public partial class CreateCategory {
 
   private void AddOption(int index) {
     Fields[index].Options.Add(new Option() {
+      Id = Guid.NewGuid(),
       Name = string.Empty,
       FieldId = Fields[index].Id
     });
@@ -64,16 +65,16 @@ public partial class CreateCategory {
     ExitCategoryCreation();
 
     await _categoryService.Create(Category);
-    
-    foreach (var field in Fields) {
-      if (field.Name != string.Empty) {
-        await _fieldService.Create(field);
 
-        if (field.Options != null) {
-          if (!field.Options.Count.Equals(0)) {
-            foreach (var option in field.Options) {
-              await _optionService.Create(option);
-            }
+    foreach (var field in Fields) {
+      if (field.Name == string.Empty) continue;
+
+      await _fieldService.Create(field);
+
+      if (field.Options != null) {
+        if (!field.Options.Count.Equals(0)) {
+          foreach (var option in field.Options) {
+            await _optionService.Create(option);
           }
         }
       }

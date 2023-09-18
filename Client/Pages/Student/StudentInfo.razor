@@ -1,13 +1,19 @@
-@page "/application/{InstitutionId}/students/{studentId}"
+@page "/application/{InstitutionId}/students/{studentOption}"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Estudiante </PageTitle>
 
-<Student />
+<ShowStudent />
 
 @code {
   [Parameter]
   public string InstitutionId { get; set; }
   [Parameter]
-  public string StudentId { get; set; }
+  public string StudentOption { get; set; }
+  [Inject]
+  private StudentContext _studentContext { get; set; }
+
+  protected override void OnParametersSet() {
+    _studentContext.SetActionType(StudentOption.Equals("new-student") ? ActionType.Create : ActionType.Update);
+  }
 }

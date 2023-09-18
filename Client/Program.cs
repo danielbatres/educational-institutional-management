@@ -52,6 +52,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFieldService, FieldService>();
 builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IStudentSettingsService, StudentSettingsService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

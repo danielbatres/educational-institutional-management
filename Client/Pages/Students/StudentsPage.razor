@@ -1,0 +1,11 @@
+@page "/application/{InstitutionId}/students"
+@layout ApplicationLayout
+
+<PageTitle>Aplicaci&oacute;n | Estudiantes</PageTitle>
+
+<Students />
+
+@code {
+  [Parameter]
+  public string InstitutionId { get; set; }
+}
