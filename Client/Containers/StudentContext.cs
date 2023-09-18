@@ -34,6 +34,13 @@ public class StudentContext : BaseContainer {
     NotifyStateChanged();
   }
 
+  public void SetStudent(Student student) {
+    Console.WriteLine(student.StudentRegister == null);
+    Student = student;
+
+    NotifyStateChanged();
+  }
+
   public void SetNewStudent() {
     Guid newStudentId = Guid.NewGuid();
 
@@ -43,7 +50,7 @@ public class StudentContext : BaseContainer {
       Name = string.Empty,
       LastName = string.Empty,
       PhoneNumber = string.Empty,
-      Gender = string.Empty,
+      Gender = "Masculino",
       Photo = string.Empty,
       StudentRegister = new() {
         Id = Guid.NewGuid(),

@@ -23,6 +23,8 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ISettingsService, SettingsService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISubjectCourseService, SubjectCourseService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAttendanceScheduleService, AttendanceScheduleService>();
@@ -80,6 +82,8 @@ app.MapHub<CategoryHub>("/categoryHub");
 app.MapHub<StudentSettingsHub>("/studentSettingsHub");
 app.MapHub<StudentHub>("/studentsHub");
 app.MapHub<InstitutionHub>("/institutionHub");
+app.MapHub<SubjectHub>("/subjectHub");
+app.MapHub<CourseHub>("/courseHub");
 
 app.MapRazorPages();
 app.MapControllers();

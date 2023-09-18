@@ -1,4 +1,4 @@
-@page "/application/statistics"
+@page "/application/{InstitutionId}/statistics"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Estad&iacute;sticas</PageTitle>
@@ -358,3 +358,8 @@
     </div>
   </article>
 </section>
+
+@code {
+  [Parameter]
+  public string? InstitutionId { get; set; }
+}

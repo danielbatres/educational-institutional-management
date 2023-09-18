@@ -50,7 +50,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         _userContext.NavigateToInstitution((Guid) _userContext.User.InstitutionId);
         await _institutionService.SendInstitutionConnection(_userContext.User.Institution?.DataBaseConnectionName ?? string.Empty);
 
-        string groupName = _userContext.User.InstitutionId.ToString();
+        string groupName = _userContext.User.InstitutionId.ToString() ?? string.Empty;
 
         await _hubsConnection.ConnectHubs(groupName);
         await _usersHubManager.SendUsersUpdatedAsync(groupName);

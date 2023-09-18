@@ -9,8 +9,10 @@ public class HubsConnection {
   private readonly ChatHubManager _chatHubManager;
   private readonly InstitutionHubManager _institutionHubManager;
   private readonly StudentSettingsHubManager _studentSettingsHubManager;
+  private readonly SubjectHubManager _subjectHubManager;
+  private readonly CourseHubManager _courseHubManager;
   
-  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager) {
+  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager, SubjectHubManager subjectHubManager, CourseHubManager  courseHubManager) {
     _rolesHubManager = rolesHubManager;
     _categoryHubManager = categoryHubManager;
     _studentHubManager = studentHubManager;
@@ -19,6 +21,8 @@ public class HubsConnection {
     _usersHubManager = usersHubManager;
     _institutionHubManager = institutionHubManager;
     _studentSettingsHubManager = studentSettingsHubManager;
+    _subjectHubManager = subjectHubManager;
+    _courseHubManager = courseHubManager;
   }
   
   public async Task ConnectHubs(string groupName) {
@@ -30,6 +34,8 @@ public class HubsConnection {
     await _chatHubManager.StartConnectionAsync();
     await _institutionHubManager.StartConnectionAsync();
     await _studentSettingsHubManager.StartConnectionAsync();
+    await _subjectHubManager.StartConnectionAsync();
+    await _courseHubManager.StartConnectionAsync();
 
     await _usersHubManager.JoinGroup(groupName);
     await _rolesHubManager.JoinGroup(groupName);
@@ -39,5 +45,7 @@ public class HubsConnection {
     await _chatHubManager.JoinGroup(groupName);
     await _institutionHubManager.JoinGroup(groupName);
     await _studentSettingsHubManager.JoinGroup(groupName);
+    await _subjectHubManager.JoinGroup(groupName);
+    await _courseHubManager.JoinGroup(groupName);
   }
 }

@@ -13,6 +13,11 @@ public class FieldInformationController : ControllerBase {
     _fieldInformationService = fieldInformationService;
   }
 
+  [HttpGet]
+  public IActionResult Get(string studentId) {
+    return Ok(_fieldInformationService.Get(Guid.Parse(studentId)));
+  }
+
   [HttpPost]
   [Route("create")]
   public async Task<IActionResult> Post([FromBody] FieldInformation fieldInformation) {

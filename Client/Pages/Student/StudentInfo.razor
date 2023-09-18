@@ -7,13 +7,39 @@
 
 @code {
   [Parameter]
-  public string InstitutionId { get; set; }
+  public string? InstitutionId { get; set; }
   [Parameter]
-  public string StudentOption { get; set; }
+  public string? StudentOption { get; set; }
   [Inject]
   private StudentContext _studentContext { get; set; }
+  [Inject]
+  private NavigationManager _navigationManager { get; set; }
 
   protected override void OnParametersSet() {
-    _studentContext.SetActionType(StudentOption.Equals("new-student") ? ActionType.Create : ActionType.Update);
+    if (string.IsNullOrWhiteSpace(StudentOption)) {
+      GoBackStudents();
+      return;
+    }
+
+    if (StudentOption.Equals("new-student")) {
+      _studentContext.SetActionType(ActionType.Create);
+    } else {
+      Guid id = Guid.Empty;
+
+      try {
+        id = Guid.Parse(StudentOption);
+      } catch (FormatException) {
+        GoBackStudents();
+      }
+
+      if (id != Guid.Empty) {
+        _studentContext.SetCurrentStudent(id);
+        _studentContext.SetActionType(ActionType.Update);
+      }
+    }
+  }
+
+  private void GoBackStudents() {
+    _navigationManager.NavigateTo($"/application/{InstitutionId}/students");
   }
 }

@@ -17,9 +17,14 @@ public class CourseService : BaseService, ICourseService {
   }
   
   public async Task Update(Course course) {
-    _applicationContext.Courses.Update(course);
-    
-    await _applicationContext.SaveChangesAsync();
+    var originalCourse = _applicationContext.Courses.FirstOrDefault(c => c.Id.Equals(course.Id));
+
+    if (originalCourse != null) {
+      _applicationContext.Entry(originalCourse).State = EntityState.Detached;
+      _applicationContext.Entry(course).State = EntityState.Modified;
+
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 }
 

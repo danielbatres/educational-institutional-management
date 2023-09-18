@@ -1,10 +1,7 @@
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 
 namespace edu_institutional_management.Server.Controllers;
@@ -12,14 +9,15 @@ namespace edu_institutional_management.Server.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class UserController : ControllerBase {
-  private readonly IUserService userService;
+  private readonly IUserService _userService;
+  
   public UserController(IUserService service) {
-    userService = service;
+    _userService = service;
   }
 
   [HttpGet]
   public IActionResult Get() {
-    return Ok(userService.Get());
+    return Ok(_userService.Get());
   }
 
   [HttpPost]
@@ -40,7 +38,7 @@ public class UserController : ControllerBase {
     User currentUser = new();
 
     if (User.Identity.IsAuthenticated) {
-      currentUser = userService.Get().Where(x => x.Id == Guid.Parse(User.FindFirstValue(ClaimTypes.Name))).ToList()[0];
+      currentUser = _userService.Get().Where(x => x.Id == Guid.Parse(User.FindFirstValue(ClaimTypes.Name))).ToList()[0];
     }
 
     return await Task.FromResult(currentUser);
@@ -57,7 +55,7 @@ public class UserController : ControllerBase {
   [HttpPost]
   [Route("create")]
   public async Task<IActionResult> Post([FromBody] User user) {
-    await userService.Create(user);
+    await _userService.Create(user);
 
     return Ok();
   }
@@ -108,7 +106,7 @@ public class UserController : ControllerBase {
   [HttpPut]
   [Route("update")]
   public async Task<IActionResult> Put([FromBody] User user) {
-    await userService.Update(user);
+    await _userService.Update(user);
 
     return Ok();
   }
@@ -118,24 +116,5 @@ public class UserController : ControllerBase {
       IsPersistent = isPersistent,
       ExpiresUtc = DateTime.UtcNow.AddDays(5),
     };
-  }
-
-  private bool VerifyPassword(string storedPassword, string passwordAttempt)
-  {
-    string[] parts = storedPassword.Split(':');
-    if (parts.Length != 2)
-      return false;
-
-    byte[] saltBytes = Convert.FromBase64String(parts[1]);
-    byte[] passwordAttemptBytes = Encoding.UTF8.GetBytes(passwordAttempt);
-    byte[] combinedBytes = new byte[passwordAttemptBytes.Length + saltBytes.Length];
-    Buffer.BlockCopy(passwordAttemptBytes, 0, combinedBytes, 0, passwordAttemptBytes.Length);
-    Buffer.BlockCopy(saltBytes, 0, combinedBytes, passwordAttemptBytes.Length, saltBytes.Length);
-
-    using var sha256 = SHA256.Create();
-    byte[] hashedAttemptBytes = sha256.ComputeHash(combinedBytes);
-    string hashedAttempt = Convert.ToBase64String(hashedAttemptBytes);
-
-    return parts[0] == hashedAttempt;
   }
 }

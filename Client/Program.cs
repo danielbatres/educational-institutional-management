@@ -38,6 +38,8 @@ builder.Services.AddSingleton<StudentHubManager>();
 builder.Services.AddSingleton<ChatHubManager>();
 builder.Services.AddSingleton<InstitutionHubManager>();
 builder.Services.AddSingleton<StudentSettingsHubManager>();
+builder.Services.AddSingleton<SubjectHubManager>();
+builder.Services.AddSingleton<CourseHubManager>();
 builder.Services.AddSingleton<HubsConnection>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstitutionService, InstitutionService>();
@@ -54,6 +56,9 @@ builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IStudentSettingsService, StudentSettingsService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISubjectCourseService, SubjectCourseService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

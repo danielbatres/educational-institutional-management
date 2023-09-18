@@ -1,17 +1,27 @@
-<h4>Crear un nuevo curso</h4>
+<section>
+  <div>
+    <h4>Materias</h4>
+    <p>Secci&oacute;n de materias de la instituci&oacute;n, cada materia puede ser asignada a cualquier curso</p>
+    <input type="text" class="input">
+    <button type="button" class="button">Agregar materia</button>
+  </div>
 
-<label for="course-name"></label>
-<input type="text" placeholder="Ingresar nombre del curso" id="course-name">
+  <h4>Crear un nuevo curso</h4>
 
-<label for="acronym"></label>
-<input type="text" placeholder="Ingresar acronimo del curso" id="acronym">
+  <label for="course-name"></label>
+  <input type="text" class="input" placeholder="Ingresar nombre del curso" id="course-name">
 
-<label for="guide">Seleccionar gu&iacute;a para el curso</label>
+  <label for="acronym"></label>
+  <input type="text" class="input" placeholder="Ingresar acronimo del curso" id="acronym">
 
-<button type="button" class="button">Crear curso</button>
+  <label for="guide">Seleccionar gu&iacute;a para el curso</label>
+  <select id="guide"></select>
+
+  <button type="button" class="button">Crear curso</button>
+</section>
 
 @code {
-  private Course Course { get; set; }
+  private Course? Course { get; set; }
   
   private void CreateNewCourse() {
   

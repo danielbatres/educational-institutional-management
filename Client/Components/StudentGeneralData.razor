@@ -28,6 +28,19 @@
     <div class="label">
       <label for="birth-date"></label>
     </div>
+    <input @bind="@_studentContext.Student.BirthDate" type="date" id="birth-date" class="input">
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="email">Correo electr&oacute;nico del estudiante</label>
+    </div>
+    <input @bind="@_studentContext.Student.StudentRegister.Email" type="email" id="email" class="input" placeholder="Ingresar correo electrónico del estudiante">
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="password">Contrase&ntilde;a del estudiante</label>
+    </div>
+    <input @bind="@_studentContext.Student.StudentRegister.Password" type="password" id="password" class="input" placeholder="Ingresar contraseña del estudiante">
   </fieldset>
 </form>
 

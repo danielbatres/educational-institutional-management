@@ -1,4 +1,4 @@
-@page "/application/events"
+@page "/application/{InstitutionId}/events"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Eventos</PageTitle>
@@ -237,6 +237,8 @@
 </section>
 
 @code {
+  [Parameter]
+  public string? InstitutionId { get; set; }
   private List<string> Months = new();
 
   protected override void OnInitialized() {

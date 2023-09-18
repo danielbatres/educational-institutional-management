@@ -18,7 +18,7 @@ public class StudentController : ControllerBase {
   public async Task<IActionResult> Post([FromBody] Student student) {
     await _studentService.Create(student);
   
-  return Ok();
+    return Ok();
   }
   
   [HttpPut]
@@ -26,7 +26,7 @@ public class StudentController : ControllerBase {
   public async Task<IActionResult> Put([FromBody] Student student) {
     await _studentService.Update(student);
   
-  return Ok();
+    return Ok();
   }
   
   [HttpGet]

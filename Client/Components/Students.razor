@@ -13,7 +13,7 @@
           <button type="button" class="button transparent-button centered-container show-option">
             <i class="fi fi-tr-rectangles-mixed"></i>
           </button>
-          <input type="text" placeholder="Buscar estudiante" class="input search-input">
+          <input value="@SearchValue" type="text" placeholder="Buscar estudiante" class="input search-input" @onkeydown="SearchStudents" @oninput="@UpdateSearchValue">
           <div>
             <input type="text" class="input" placeholder="Seleccionar curso">
           </div>
@@ -64,6 +64,62 @@
               }
             </div>
           } else {
+            @foreach (var student in FilteredStudentsList) {
+              DateTime now = DateTime.Now;
+              int age = now.Year - student.BirthDate.Value.Year;
+              string identifier = StudentSettings.DefaultIdentifier ? $"{student.Id.ToString().Substring(0, 6)}..." : student.UniqueIdentifier != null && student.UniqueIdentifier.Equals(string.Empty) ? "--------" : student.UniqueIdentifier ?? string.Empty;
+
+              if (student.BirthDate.Value.Date > now.AddYears(-age)) {
+                age--;
+              }
+
+              <div class="student-target">
+                <ul>
+                  <li title="@(StudentSettings.DefaultIdentifier ? $"{student.Id}" : $"{identifier}")">
+                    <p>@identifier</p>
+                  </li>
+                  <li>
+                    <div class="student-image"></div>
+                  </li>
+                  <li class="special-width">
+                    <p>
+                      @student.Name @student.LastName
+                    </p>
+                  </li>
+                  <li class="special-width">
+                    <p>
+                      @student.StudentRegister.Email
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      @student.Gender
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      @age
+                    </p>
+                  </li>
+                  <li>
+                    <p class="course">
+                      BBBB
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      @student.StudentRegister.CreatedAt
+                    </p>
+                  </li>
+                  <li>
+                    <div class="action" @onclick="@(() => SetShowStudent(student))">
+                      <i></i>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            }
+
             @for (int i = 0; i < 10; i++) {
               int index = i;
 

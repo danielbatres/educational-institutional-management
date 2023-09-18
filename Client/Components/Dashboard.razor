@@ -37,6 +37,7 @@
           </div>
         </div>
       }
+      <button type="button" class="button" @onclick="@Disconnect">Desconectar</button>
     </div>
   </article>
 </section>
@@ -61,7 +62,15 @@
       StateHasChanged();
     });
 
-    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private async Task Disconnect() {
+    _userContext.User.OnlineStatus.Status = false;
+    _userContext.User.OnlineStatus.LastConnection = DateTime.Now;
+    await _userService.Update(_userContext.User);
+
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
   }
 
   private void SetSelectedUser(int index) {

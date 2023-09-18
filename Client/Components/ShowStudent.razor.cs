@@ -23,7 +23,18 @@ public partial class ShowStudent {
   private IStudentService _studentService { get; set; }
   [Inject]
   private IFieldInformationService _fieldInformationService { get; set; }
-  private List<Category> Categories { get; set; } = new();
+  private List<Category> _categories = new();
+  private List<Category> Categories {
+    get => _categories;
+    set {
+      if (!value.SequenceEqual(_categories)) {
+        _categories = value.ToList();
+
+        HandleCategoriesChangeAsync();
+      }
+    }
+  }
+
   private List<Field> Fields { get; set; } = new();
 
   protected override async Task OnInitializedAsync() {
@@ -43,23 +54,27 @@ public partial class ShowStudent {
     }
   }
   
-  protected override async Task OnAfterRenderAsync(bool isFirstRender) {
+  private async Task HandleCategoriesChangeAsync() {
     _studentContext.FieldInformations.Clear();
-    
+    if (_studentContext.ActionStudent.Equals(ActionType.Update)) {
+      _studentContext.FieldInformations = await _fieldInformationService.Get(_studentContext.Student.Id);
+    }
+
     foreach (var category in Categories ) {
       if (category.Fields == null) continue;
-      
-      foreach (var field in category.Fields) {
-        FieldInformation fieldInformation = new() {
-          Information = string.Empty,
-          StudentId = _studentContext.Student.Id,
-          FieldId = field.Id
-        };
 
-        _studentContext.FieldInformations.Add(fieldInformation);
-        
+      foreach (var field in category.Fields) {
+        if (!_studentContext.FieldInformations.Any(f => f.FieldId.Equals(field.Id))) {
+          FieldInformation fieldInformation = new() {
+            Information = string.Empty,
+            StudentId = _studentContext.Student.Id,
+            FieldId = field.Id
+          };
+
+          _studentContext.FieldInformations.Add(fieldInformation);
+        }
+
         if (field.FieldType != FieldType.List) continue;
-    
         field.Options = await _optionService.Get(field.Id);
       }
     }
@@ -82,7 +97,7 @@ public partial class ShowStudent {
   private async Task SaveChanges() {
     if (_studentContext.ActionStudent.Equals(ActionType.Create)) {
       await CreateNewStudent();
-    } else {
+    } else if (_studentContext.ActionStudent.Equals(ActionType.Update)) {
       await UpdateStudent();
     }
   }
@@ -111,7 +126,18 @@ public partial class ShowStudent {
   
   private async Task UpdateStudent() {
     await _studentService.Update();
+
+    List<FieldInformation> fieldsInformationBackup = await _fieldInformationService.Get(_studentContext.Student.Id);
     
+    foreach (var fieldInformation in _studentContext.FieldInformations) {
+      if (fieldsInformationBackup.Any(fb => fb.FieldId.Equals(fieldInformation.FieldId))) {
+        await _fieldInformationService.Update(fieldInformation);
+      } else {
+        await _fieldInformationService.Create(fieldInformation);
+      }
+    }
+
     await _studentHubManager.SendStudentsUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+    ExitStudentView();
   }
 }

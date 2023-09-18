@@ -17,13 +17,15 @@ public class StudentService : BaseService, IStudentService {
   }
   
   public async Task Update(Student student) {
-    var originalStudent = _applicationContext.Settings.Find(student.Id);
+    var originalStudent = _applicationContext.Students.Where(s => s.Id.Equals(student.Id)).Include(s => s.StudentRegister).FirstOrDefault();
 
-    _applicationContext.Entry(originalStudent).State = EntityState.Detached;
+    if (originalStudent != null) {
+      _applicationContext.Entry(originalStudent).State = EntityState.Detached;
+      _applicationContext.Entry(student).State = EntityState.Modified;
+      _applicationContext.Entry(student.StudentRegister).State = EntityState.Modified;
 
-    _applicationContext.Entry(student).State = EntityState.Modified;
-    
-    await _applicationContext.SaveChangesAsync();
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 }
 
