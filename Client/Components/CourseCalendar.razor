@@ -1,0 +1,75 @@
+<button @onclick="@SetValues" type="button" class="button">Colocar valores</button>
+<section class="calendar-container">
+  <div id="#actual-hour"></div>
+  <div class="calendar">
+    @foreach (var courseSchedule in CourseSchedules) {
+      DateTime now = DateTime.Now;
+
+      double totalMinutes = (courseSchedule.EndTime - courseSchedule.StartTime).TotalMinutes;
+      double elapsedMinutes = (now - courseSchedule.StartTime).TotalMinutes;
+      double percentage = (elapsedMinutes / totalMinutes) * 100;
+      double position = (percentage > 100) ? 100 : ((percentage < 0) ? 0 : percentage);
+
+      <div class="content-value" style="height: @position%;"></div>
+    }
+    <div class="top-calendar">
+      @foreach (string value in DaysOfWeek) {
+        <div class="top-calendar-cell">
+          <h4>@value</h4>
+        </div>
+      }
+    </div>
+    <div class="hour-and-cells">
+      <div class="subject-block"></div>
+      <div class="hour-cells">
+        @for (int i = 0; i <= 23; i++) {
+          <div>@i</div>
+        }
+      </div>
+      <div class="calendar-cells">
+        @for (int i = 0; i < 168; i++) {
+          <div class="cell"></div>
+        }  
+      </div>
+    </div>
+  </div>
+</section>
+
+@code {
+    [Inject]
+    private edu_institutional_management.Client.Containers.CourseContext _courseContext { get; set; }
+    [Inject]
+    private edu_institutional_management.Client.Hubs.SubjectHubManager _subjectHubManager { get; set; }
+    [Inject]
+    private edu_institutional_management.Client.Services.ICourseScheduleService _courseScheduleService { get; set; }
+    [Inject]
+    private edu_institutional_management.Client.Services.ISubjectCourseService _subjectCourseService { get; set; }
+    private List<edu_institutional_management.Shared.Models.Subject> Subjects { get; set; }
+    private List<edu_institutional_management.Shared.Models.CourseSchedule> CourseSchedules { get; set; } = new();
+    [Inject]
+    private edu_institutional_management.Client.Containers.UserContext _userContext { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    _subjectHubManager.SubjectsUpdatedHandler(subjects => {
+      Subjects = subjects;
+      StateHasChanged();
+    });
+
+    await _subjectHubManager.SendSubjectsUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private async Task SetValues() {
+    CourseSchedules = await _courseScheduleService.Get(Subjects[0].Id);
+  }
+
+  private List<string> DaysOfWeek = new() {
+    "Hora",
+    "Lunes", 
+    "Martes",
+    "Miercoles",
+    "Jueves",
+    "Viernes",
+    "Sabado",
+    "Domingo"
+  };
+}

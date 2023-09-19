@@ -1,0 +1,13 @@
+@page "/application/{InstitutionId}/courses/{CourseId}"
+@layout ApplicationLayout
+
+<PageTitle>Aplicaci&oacute;n | Cursos</PageTitle>
+
+<CourseInfo />
+
+@code {
+  [Parameter]
+  public string? InstitutionId { get; set; }
+  [Parameter]
+  public string? CourseId { get; set; }
+}

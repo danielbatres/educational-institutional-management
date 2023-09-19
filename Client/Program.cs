@@ -29,6 +29,7 @@ builder.Services.AddSingleton<LoadingContext>();
 builder.Services.AddSingleton<RoleContext>();
 builder.Services.AddSingleton<ThemeContext>();
 builder.Services.AddSingleton<StudentContext>();
+builder.Services.AddSingleton<CourseContext>();
 builder.Services.AddSingleton<Validators>();
 builder.Services.AddSingleton<UsersHubManager>();
 builder.Services.AddSingleton<RolesHubManager>();
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISubjectCourseService, SubjectCourseService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICourseScheduleService, CourseScheduleService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

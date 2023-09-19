@@ -103,7 +103,7 @@
       StateHasChanged();
     });
 
-    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
+    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
     Loading = false;
   }
 

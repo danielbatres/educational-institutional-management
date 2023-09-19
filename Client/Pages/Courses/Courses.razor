@@ -18,368 +18,132 @@
   </article>
   <article>
     <div class="cards-container">
-      <div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
+      @foreach (var course in CoursesList) {
+        <div class="course-card" @onclick="@(() => NavigateToCourse(course))">
+          <div>
+            <h5>Nombre del curso</h5>
+            <div class="course-name">
+              <p>@course.Name</p>
+              <h4>@course.Acronym</h4>
+            </div>
           </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
+          <div>
+            <h5>Guia del curso</h5>
+            <div class="course-guide">
               <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+                <div class="guide-image"></div>
+                <div>
+                  <p>Nombre del guia del curso</p>
+                  <p>correodelguiadelcurso@edu</p>
+                </div>
+              </div>
+              <div class="course-guide-option centered-container">
+                <i class="fi fi-tr-messages"></i>
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
-            </div>
           </div>
-        </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
-            </div>
-          </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
-
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div>
-      <div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
-          </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
+          <div>
+            <h5>Materias del curso</h5>
+            <div class="subjects">
               <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+                <p>Matem&aacute;ticas</p>
+              </div>
+              <div>
+                <p>Sociales</p>
+              </div>
+              <div>
+                <p>Ciencias f&iacute;sicas</p>
+              </div>
+              <div>
+                <p>Lenguaje</p>
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
-            </div>
           </div>
-        </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
-            </div>
-          </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
+          <div class="course-students">
+            <div class="students-images">
+              <div class="student-image">
 
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div><div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
-          </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
-              <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+              </div>
+              <div class="student-image">
+
+              </div>
+              <div class="student-image">
+
+              </div>
+              <div class="student-image">
+
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
+            <div class="students-quantity centered-container">
+              <i class="fi fi-tr-id-card-clip-alt"></i>
+              <p>31 Estudiantes</p>
             </div>
           </div>
         </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
+      }
+      @for(int i = 0; i < 5; i++) {
+        <div class="course-card">
+          <div>
+            <h5>Nombre del curso</h5>
+            <div class="course-name">
+              <p>Este es el nombre del curso</p>
+              <h4>BBBB</h4>
             </div>
           </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
-
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div><div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
-          </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
+          <div>
+            <h5>Guia del curso</h5>
+            <div class="course-guide">
               <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+                <div class="guide-image"></div>
+                <div>
+                  <p>Nombre del guia del curso</p>
+                  <p>correodelguiadelcurso@edu</p>
+                </div>
+              </div>
+              <div class="course-guide-option centered-container">
+                <i class="fi fi-tr-messages"></i>
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
-            </div>
           </div>
-        </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
-            </div>
-          </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
-
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div><div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
-          </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
+          <div>
+            <h5>Materias del curso</h5>
+            <div  class="subjects">
               <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+                <p>Matem&aacute;ticas</p>
+              </div>
+              <div>
+                <p>Sociales</p>
+              </div>
+              <div>
+                <p>Ciencias f&iacute;sicas</p>
+              </div>
+              <div>
+                <p>Lenguaje</p>
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
-            </div>
           </div>
-        </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
-            </div>
-          </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
+          <div class="course-students">
+            <div class="students-images">
+              <div class="student-image">
 
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div><div class="course-card">
-        <div>
-          <h5>Nombre del curso</h5>
-          <div class="course-name">
-            <p>Este es el nombre del curso</p>
-            <h4>BBBB</h4>
-          </div>
-        </div>
-        <div>
-          <h5>Guia del curso</h5>
-          <div class="course-guide">
-            <div>
-              <div class="guide-image"></div>
-              <div>
-                <p>Nombre del guia del curso</p>
-                <p>correodelguiadelcurso@edu</p>
+              </div>
+              <div class="student-image">
+                
+              </div>
+              <div class="student-image">
+                
+              </div>
+              <div class="student-image">
+                
               </div>
             </div>
-            <div class="course-guide-option centered-container">
-              <i class="fi fi-tr-messages"></i>
+            <div class="students-quantity centered-container">
+              <i class="fi fi-tr-id-card-clip-alt"></i>
+              <p>31 Estudiantes</p>
             </div>
           </div>
         </div>
-        <div>
-          <h5>Materias del curso</h5>
-          <div  class="subjects">
-            <div>
-              <p>Matem&aacute;ticas</p>
-            </div>
-            <div>
-              <p>Sociales</p>
-            </div>
-            <div>
-              <p>Ciencias f&iacute;sicas</p>
-            </div>
-            <div>
-              <p>Lenguaje</p>
-            </div>
-          </div>
-        </div>
-        <div class="course-students">
-          <div class="students-images">
-            <div class="student-image">
-
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-            <div class="student-image">
-              
-            </div>
-          </div>
-          <div class="students-quantity centered-container">
-            <i class="fi fi-tr-id-card-clip-alt"></i>
-            <p>31 Estudiantes</p>
-          </div>
-        </div>
-      </div>
+      }
     </div>
   </article>
 </section>
@@ -387,4 +151,28 @@
 @code {
   [Parameter]
   public string InstitutionId { get; set; }
+  [Inject]
+  private CourseHubManager _courseHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private NavigationManager _navigationManager { get; set; }
+  [Inject]
+  private CourseContext _courseContext { get; set; }
+  private List<Course> CoursesList { get; set; } = new();
+  
+  protected override async Task OnInitializedAsync() {
+    _courseHubManager.CoursesUpdatedHandler(courses => {
+      CoursesList = courses;
+      StateHasChanged();
+    });
+
+    await _courseHubManager.SendCoursesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void NavigateToCourse(Course course) {
+    _courseContext.SetCourse(course);
+
+    _navigationManager.NavigateTo($"/application/{_userContext.User.InstitutionId}/courses/{course.Id}");
+  }
 }

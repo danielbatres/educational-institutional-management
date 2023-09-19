@@ -12,7 +12,7 @@ public class CourseHub : MainHub {
   }
   
   public async Task SendCoursesUpdate(string groupName) {
-    var courses = GetCourses;
+    var courses = GetCourses();
     
     await Clients.Group(groupName).SendAsync("CoursesUpdated", courses);
   }

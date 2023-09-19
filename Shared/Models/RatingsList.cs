@@ -5,6 +5,6 @@ public class RatingsList {
   public string ListName { get ; set; }
   public string Description { get; set; }
   public ICollection<Rating>? Ratings { get; set; }
-  public int SubjectCourseId { get; set; }
+  public Guid SubjectCourseId { get; set; }
   public SubjectCourse? SubjectCourse { get; set; }
 }

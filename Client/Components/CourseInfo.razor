@@ -1,0 +1,54 @@
+<style>
+  section {
+    width: 100%;
+    height: 100%;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-evenly;
+  }  
+</style>
+
+<section>
+  <h4>Curso</h4>
+  <p>Informaci&oacute;n del curso</p>
+  
+  <ul>
+    <li @onclick="@(() => SetSelection("general"))">
+      <p>Informacion general del curso</p>
+    </li>
+    <li @onclick="@(() => SetSelection("calendar"))">
+      <p>Calendario del curso</p>
+    </li>
+  </ul>
+  
+  @if (Selection.Equals("general")) {
+    <form>
+      <fieldset>
+        <div class="label">
+          <label for="acronym"></label>  
+        </div>
+        <input @bind="@_courseContext.Course.Acronym" type="text" class="input" id="acronym">
+      </fieldset> 
+      <fieldset>
+        <div class="label">
+          <label for="course-name"></label>  
+        </div>
+        <input @bind="@_courseContext.Course.Name" type="text" class="input" id="course-name">
+      </fieldset>  
+    </form>
+  } else {
+    <CourseCalendar />
+  }
+</section>
+
+@code {
+    [Inject]
+    private edu_institutional_management.Client.Containers.CourseContext _courseContext { get; set; }
+    private string Selection { get; set; } = "general";
+  
+  private void SetSelection(string selection) {
+    Selection = selection;
+  } 
+}

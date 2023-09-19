@@ -38,6 +38,7 @@ builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
 builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IStudentSettingsService, StudentSettingsService>();
+builder.Services.AddScoped<ICourseScheduleService, CourseScheduleService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 

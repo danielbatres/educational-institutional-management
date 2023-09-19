@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 namespace edu_institutional_management.Shared.Models;
 
 public class SubjectCourse {
-  public int Id { get; set; }
+  public Guid Id { get; set; }
   public Guid CourseId { get; set; }
   [JsonIgnore]
   public Course? Course { get; set; }

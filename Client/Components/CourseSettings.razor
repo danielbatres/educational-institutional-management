@@ -2,28 +2,73 @@
   <div>
     <h4>Materias</h4>
     <p>Secci&oacute;n de materias de la instituci&oacute;n, cada materia puede ser asignada a cualquier curso</p>
-    <input type="text" class="input">
-    <button type="button" class="button">Agregar materia</button>
+    <input @bind="@Subject.Name" type="text" class="input" placeholder="Ingresar nombre de la materia">
+    <button type="button" class="button" @onclick="@CreateNewSubject">Agregar materia</button>
   </div>
 
-  <h4>Crear un nuevo curso</h4>
+  <div>
+    @foreach (var subject in Subjects) {
+      <h4>@subject.Name</h4>
+    }
+  </div>
 
-  <label for="course-name"></label>
-  <input type="text" class="input" placeholder="Ingresar nombre del curso" id="course-name">
+  <div>
+    <h4>Crear un nuevo curso</h4>
 
-  <label for="acronym"></label>
-  <input type="text" class="input" placeholder="Ingresar acronimo del curso" id="acronym">
+    <label for="course-name"></label>
+    <input @bind="@_courseContext.Course.Name" type="text" class="input" placeholder="Ingresar nombre del curso" id="course-name">
 
-  <label for="guide">Seleccionar gu&iacute;a para el curso</label>
-  <select id="guide"></select>
+    <label for="acronym"></label>
+    <input @bind="@_courseContext.Course.Acronym" type="text" class="input" placeholder="Ingresar acronimo del curso" id="acronym">
 
-  <button type="button" class="button">Crear curso</button>
+    <label for="guide">Seleccionar gu&iacute;a para el curso</label>
+    <select id="guide"></select>
+
+    <button type="button" class="button" @onclick="@CreateNewCourse">Crear curso</button>
+  </div>
+  <div>
+    @foreach(var course in Courses) {
+      int index = Courses.IndexOf(course);
+
+      <h4>@course.Acronym</h4>
+      <h4>@course.Name</h4>
+
+      <form>
+        <fieldset>
+          <select id="subject-@index" @bind="@SubjectId">
+            @foreach (var subject in Subjects) {
+              <option value="@subject.Id.ToString()">@subject.Name</option>
+            }
+          </select>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="day-of-week">Dia</label>
+          </div>
+          <select id="day-of-week" @bind="CourseSchedule.DayOfWeek">
+            <option value="@DayOfWeek.Sunday">Domingo</option>
+            <option value="@DayOfWeek.Monday">Lunes</option>
+            <option value="@DayOfWeek.Tuesday">Martes</option>
+            <option value="@DayOfWeek.Wednesday">Miércoles</option>
+            <option value="@DayOfWeek.Thursday">Jueves</option>
+            <option value="@DayOfWeek.Friday">Viernes</option>
+            <option value="@DayOfWeek.Saturday">Sábado</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="start-time">Empieza</label>
+          </div>
+          <input @bind="@CourseSchedule.StartTime" id="start-time" type="time" class="input" >
+        </fieldset>
+        <fieldset>
+          <div class="label">
+            <label for="end-time">Empieza</label>
+          </div>
+          <input @bind="@CourseSchedule.EndTime" id="end-time" type="time" class="input">
+        </fieldset>
+      </form>
+      <button type="button" class="button" @onclick="@(() => CreateNewCourseSubject(Subjects[0].Id, course.Id))">Agregar materia al curso</button>
+    }
+  </div>
 </section>
-
-@code {
-  private Course? Course { get; set; }
-  
-  private void CreateNewCourse() {
-  
-  }
-}
