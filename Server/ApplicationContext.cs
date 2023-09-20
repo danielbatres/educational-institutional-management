@@ -29,6 +29,8 @@ public class ApplicationContext : DbContext {
     public DbSet<AttendanceSchedule> AttendanceSchedules { get; set; }
     public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<StudentSettings> StudentSettings { get; set; }
+    public DbSet<Event> Events { get; set; }
+    public DbSet<Statistic> Statistics { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
@@ -317,6 +319,14 @@ public class ApplicationContext : DbContext {
             studentSettings.HasKey(s => s.Id);
             studentSettings.Property(s => s.DefaultIdentifier);
             studentSettings.HasData(studentSettingsInit);
+        });
+        
+        modelBuilder.Entity<Event>(eventModel => {
+            eventModel.HasKey(e => e.Id);
+        });
+        
+        modelBuilder.Entity<Statistic>(statistic => {
+            statistic.HasKey(s => s.Id);
         });
     }
 }

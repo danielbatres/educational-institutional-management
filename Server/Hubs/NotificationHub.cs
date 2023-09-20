@@ -2,11 +2,13 @@ using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.SignalR;
 
-public class NotificationHub : Hub {
-  private readonly INotificationService _notificationService;
+namespace edu_institutional_management.Server.Hubs;
+
+public class NotificationHub : MainHub {
+  private readonly IGeneralNotificationService _generalNotificationService;
 
   public NotificationHub(INotificationService notificationService) {
-    _notificationService = notificationService;
+    _generalNotificationService = generalNotificationService;
   }
 
   public async Task JoinNotificationsGroup(string userId) {
@@ -14,7 +16,7 @@ public class NotificationHub : Hub {
   }
 
   public async Task SendNotificationsUpdate(string userId) {
-    List<Notification> notifications;
+    List<GeneralNotification> notifications;
     
     try { 
       notifications = GetNotifications(Guid.Parse(userId));
@@ -23,7 +25,7 @@ public class NotificationHub : Hub {
     await Clients.Group(userId).SendAsync("NotificationsUpdated", notifications);
   }
 
-  public List<Notification> GetNotifications(Guid userId) {
-    return _notificationService.GetNotificationsByUserId(userId).ToList();
+  public List<GeneralNotification> GetNotifications(Guid userId) {
+    return _generalNotificationService.GetNotificationsByUserId(userId).ToList();
   }
 }

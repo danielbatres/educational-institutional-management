@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace edu_institutional_management.Server.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class StatisticController : ControllerBase {
 	private readonly IStatisticService _statisticService;
 	

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace edu_institutional_management.Server.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class EventController : ControllerBase {
 	private readonly IEventService _eventService;
 	
