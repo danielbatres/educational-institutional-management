@@ -11,10 +11,14 @@ public class UserRoleService : BaseService, IUserRoleService{
     await _applicationContext.SaveChangesAsync();
   }
   
-  public async Task Delete(UserRole userRole) {
-    _applicationContext.UserRoles.Remove(userRole);
-  
-    await _applicationContext.SaveChangesAsync();
+  public async Task Delete(Guid userRoleId) {
+    var originalRole = _applicationContext.UserRoles.FirstOrDefault(u => u.Id.Equals(userRoleId));
+    
+    if (originalRole != null) {
+      _applicationContext.UserRoles.Remove(originalRole);
+
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 }
 

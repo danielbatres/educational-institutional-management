@@ -1,4 +1,5 @@
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
@@ -12,9 +13,14 @@ public class AttendanceService : BaseService, IAttendanceService {
   }
   
   public async Task Update(Attendance attendance) {
-    _applicationContext.Attendances.Update(attendance);
-    
-    await _applicationContext.SaveChangesAsync();
+    var originalAttendance = _applicationContext.Attendances.FirstOrDefault(a => a.Id.Equals(attendance.Id));
+
+    if (originalAttendance != null) {
+      _applicationContext.Entry(originalAttendance).State = EntityState.Detached;
+      _applicationContext.Entry(attendance).State = EntityState.Modified;
+
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 }
 

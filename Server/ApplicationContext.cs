@@ -11,7 +11,8 @@ public class ApplicationContext : DbContext {
     public DbSet<Appearance> Appearances { get; set; }
     public DbSet<Settings> Settings { get; set; }
     public DbSet<ActivityLog> Activities { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<GeneralNotification> GeneralNotifications { get; set; }
+    public DbSet<NotificationVisualization> NotificationsVisualization { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Field> Fields { get; set; }
     public DbSet<Option> Options { get; set; }
@@ -183,7 +184,12 @@ public class ApplicationContext : DbContext {
             activity.Property(a => a.Date);
         });
 
-        modelBuilder.Entity<Notification>(notification => {
+        modelBuilder.Entity<NotificationVisualization>(notificationVisualization => {
+            notificationVisualization.HasKey(n => n.Id);
+            notificationVisualization.Property(n => n.Id).ValueGeneratedOnAdd();
+        });
+
+        modelBuilder.Entity<GeneralNotification>(notification => {
             notification.HasKey(n => n.Id);
             notification.Property(n => n.Id).ValueGeneratedOnAdd();
             notification.Property(n => n.Title).IsRequired();
@@ -191,6 +197,7 @@ public class ApplicationContext : DbContext {
             notification.Property(n => n.CreationDate);
             notification.Property(n => n.Read);
             notification.Property(n => n.UserId);
+            notification.HasMany(n => n.NotificationsVisualization).WithOne(nv => nv.Notification).HasForeignKey(nv => nv.NotificationId);
         });
 
         modelBuilder.Entity<SubjectCourse>(subjectCourse => {

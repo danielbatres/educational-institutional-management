@@ -22,7 +22,8 @@ builder.Services.AddScoped<IMembershipRequestService, MembershipRequestService>(
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ISettingsService, SettingsService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IGeneralNotificationService, GeneralNotificationService>();
+builder.Services.AddScoped<INotificationVisualizationService, NotificationVisualizationService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISubjectCourseService, SubjectCourseService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
@@ -39,6 +40,8 @@ builder.Services.AddScoped<IFieldInformationService, FieldInformationService>();
 builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IStudentSettingsService, StudentSettingsService>();
 builder.Services.AddScoped<ICourseScheduleService, CourseScheduleService>();
+builder.Services.AddScoped<IStatisticService, StatisticService>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 

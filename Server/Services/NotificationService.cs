@@ -1,36 +1,41 @@
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
-public class NotificationService : INotificationService {
+public class GeneralNotificationService : IGeneralNotificationService {
   private readonly ApplicationContext _applicationContext;
 
-  public NotificationService(ApplicationContextService applicationContextService)
-  {
+  public GeneralNotificationService(ApplicationContextService applicationContextService) {
     var applicationContext = applicationContextService.GetApplicationContext();
 
     _applicationContext = applicationContext;
   }
 
-  public async Task Create(Notification notification) {
-    _applicationContext.Notifications.Add(notification);
+  public async Task Create(GeneralNotification notification) {
+    _applicationContext.GeneralNotifications.Add(notification);
 
     await _applicationContext.SaveChangesAsync();
   }
 
-  public async Task Update(Notification notification) {
-    _applicationContext.Notifications.Update(notification);
+  public async Task Update(GeneralNotification notification) {
+    var originalGeneralNotification = _applicationContext.GeneralNotifications.FirstOrDefault(n => n.Id.Equals(notification.Id));
 
-    await _applicationContext.SaveChangesAsync();
+    if (originalGeneralNotification != null) {
+      _applicationContext.Entry(originalGeneralNotification).State = EntityState.Detached;
+      _applicationContext.Entry(notification).State = EntityState.Modified;
+
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 
-  public IEnumerable<Notification> GetNotificationsByUserId(Guid userId) {
-    return _applicationContext.Notifications.Where(n => n.UserId == userId);
+  public IEnumerable<GeneralNotification> Get() {
+    return _applicationContext.GeneralNotifications;
   }
 }
 
-public interface INotificationService {
-  Task Create(Notification notification);
-  Task Update(Notification notification);
-  IEnumerable<Notification> GetNotificationsByUserId(Guid userId);
+public interface IGeneralNotificationService {
+  Task Create(GeneralNotification notification);
+  Task Update(GeneralNotification notification);
+  IEnumerable<GeneralNotification> Get();
 }
