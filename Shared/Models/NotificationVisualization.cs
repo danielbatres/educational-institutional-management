@@ -7,5 +7,5 @@ public class NotificationVisualization {
     public Guid UserId { get; set; }
     public Guid NotificationId { get; set; }
     [JsonIgnore]
-    public Notification Notification { get; set; }
+    public GeneralNotification? Notification { get; set; }
 }

@@ -23,8 +23,8 @@ public class UserRoleController : ControllerBase {
   
   [HttpDelete]
   [Route("remove")]
-  public async Task<IActionResult> Delete([FromBody] UserRole userRole) {
-    await _userRoleService.Delete(userRole);
+  public async Task<IActionResult> Delete(string userRoleId) {
+    await _userRoleService.Delete(Guid.Parse(userRoleId));
     
     return Ok();
   }

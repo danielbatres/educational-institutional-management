@@ -7,9 +7,9 @@ namespace edu_institutional_management.Server.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class NotificationVisualizerController : ControllerBase {
-	private readonly INotificationVisualizerService _notificationVisualizerService;
+	private readonly INotificationVisualizationService _notificationVisualizerService;
 	
-	public NotificationVisualizerController(INotificationVisualizerService notificationVisualizerService) {
+	public NotificationVisualizerController(INotificationVisualizationService notificationVisualizerService) {
 		_notificationVisualizerService = notificationVisualizerService;
 	}
 	
@@ -20,7 +20,7 @@ public class NotificationVisualizerController : ControllerBase {
 	
 	[HttpPost]
 	[Route("create")]
-	public async Task<IActionResult> Post([FromBody] NotificationVisualizer notificationVisualizer) {
+	public async Task<IActionResult> Post([FromBody] NotificationVisualization notificationVisualizer) {
 		await _notificationVisualizerService.Create(notificationVisualizer);
 		
 		return Ok();
@@ -28,7 +28,7 @@ public class NotificationVisualizerController : ControllerBase {
 	
 	[HttpPut]
 	[Route("update")]
-	public async Task<IActionResult> Put([FromBody] NotificationVisualizer notificationVisualizer) {
+	public async Task<IActionResult> Put([FromBody] NotificationVisualization notificationVisualizer) {
 		await _notificationVisualizerService.Update(notificationVisualizer);
 		
 		return Ok();

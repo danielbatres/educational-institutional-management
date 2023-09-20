@@ -3,7 +3,9 @@ using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Client.Services;
 
-public class UserRoleService {
+public class UserRoleService : BaseService, IUserRoleService {
+	public UserRoleService(HttpClient httpClient) : base(httpClient) {}
+	
 	public async Task Create(UserRole userRole) {
 		var response = await HttpClient.PostAsJsonAsync("api/userrole/create", userRole);
 		

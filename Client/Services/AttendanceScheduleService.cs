@@ -4,6 +4,8 @@ using edu_institutional_management.Shared.Models;
 namespace edu_institutional_management.Client.Services;
 
 public class AttendanceScheduleService : BaseService, IAttendanceScheduleService {
+	public AttendanceScheduleService(HttpClient httpClient) : base(httpClient) {}
+	
 	public async Task Create(AttendanceSchedule attendanceSchedule) {
 		var response = await HttpClient.PostAsJsonAsync("api/attendanceschedule/create", attendanceSchedule);
 		

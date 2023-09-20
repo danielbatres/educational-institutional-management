@@ -19,9 +19,6 @@ public class User : MainUser {
   [NotMapped]
   [JsonIgnore]
   public Settings? Settings { get; set; }
-  [NotMapped]
-  [JsonIgnore]
-  public List<Notification>? Notifications { get; set; }
 
   public User Clone() {
     return new User() {
@@ -38,7 +35,6 @@ public class User : MainUser {
       OnlineStatus = OnlineStatus,
       Register = Register,
       Payment = Payment,
-      Notifications = Notifications,
       ReceivedMembershipRequests = ReceivedMembershipRequests,
       Settings = Settings,
       UserName = UserName,

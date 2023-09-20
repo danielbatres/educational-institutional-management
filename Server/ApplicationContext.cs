@@ -198,7 +198,6 @@ public class ApplicationContext : DbContext {
             notification.Property(n => n.Message).IsRequired();
             notification.Property(n => n.CreationDate);
             notification.Property(n => n.Read);
-            notification.Property(n => n.UserId);
             notification.HasMany(n => n.NotificationsVisualization).WithOne(nv => nv.Notification).HasForeignKey(nv => nv.NotificationId);
         });
 

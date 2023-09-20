@@ -10,7 +10,7 @@ public class EventService : BaseService, IEventService {
 	public async Task<List<Event>> Get() {
 		var response = await HttpClient.GetAsync("api/event");
 		
-		var content = await CheckResponse(response);
+		var content = await CheckResponseContent(response);
 		
 		return JsonSerializer.Deserialize<List<Event>>(content, JsonOptions) ?? new();
 	}
