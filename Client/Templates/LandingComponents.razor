@@ -1,5 +1,5 @@
 <div class="container-lc" style="@BackgroundUrl @MinHeight @BackgroundColor" id="@IdSection">
-    <div class="content-lc">@ChildContent</div>
+    <div class="content-lc" style="@Reverse">@ChildContent</div>
 </div>
 
 @code {
@@ -16,4 +16,6 @@
   public string? MinHeight { get; set; }
   [Parameter]
   public string? IdSection { get; set; }
+  [Parameter]
+  public string? Reverse { get; set; }
 } 

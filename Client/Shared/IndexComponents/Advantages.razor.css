@@ -1,0 +1,38 @@
+section {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.advantage-card {
+  max-width: 400px;
+  border: var(--light-border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.icon-box {
+  min-width: 30px;
+  min-height: 30px;
+  background-color: var(--light-primary-color);
+  border-radius: 10px;
+}
+
+.icon-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.icon-title h4 {
+  color: var(--dark-color);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+@media
+{
+  
+}

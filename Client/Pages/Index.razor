@@ -4,10 +4,26 @@
 
 <Home />
 
-<Title TitleSent="Lo que ofrece nuestra aplicacion"/>
+<Title TitleSent="Ventajas de contratar el servicio" Text="Se parte de la digitalización administrativa" />
 
-<Benefits />
+<Advantages />
 
-<Title TitleSent="¿Listo para potenciar tu institucion?" Text="Plan de servicio"/>
+<Title TitleSent="Lo que ofrece nuestra aplicacion" Text="Funcionalidades especificas de la plataforma" />
+
+<Benefits BenefitsList="@BenefitsList" MakeReverse="false"/>
+<Benefits BenefitsList="@BenefitsList" MakeReverse="true"/>
+
+<Title TitleSent="¿Listo para potenciar tu institucion?" Text="Plan de servicio, inversión mínima a cambio de un impacto de alto valor en la administración"/>
 
 <Plans />
+
+@code {
+  private List<string[]> BenefitsList { get; } = new();
+
+  protected override void OnInitialized() {
+    BenefitsList.Add(new string[] { "Manejo de estudiantes", "LLeva el control de todos los estudiantes, crea categorias, modifica los registros y almacena toda la información que quieras", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Personaliza los cursos", "Crea cursos y asignaturas para poder mantener el control de los horarios y guias especiales para cada uno de ellos", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Registro de calificaciones", "Genera listados de calificaciones de cualquier curso y de cualquier asignatura, evalua el rendimiento con información detallada y al instante", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Genera estadisticos", "Crea estadisticos de la información que consideres util y necesaria para la toma de desiciones", "fi fi-tr-badge-check"});
+  }
+}

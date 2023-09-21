@@ -35,6 +35,10 @@ p {
     margin-bottom: 15px;
 }
 
+.info-message {
+    max-width: 850px;
+}
+
 .start-button i {
     margin-left: 5px;
     color: var(--white);

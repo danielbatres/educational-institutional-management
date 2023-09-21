@@ -93,8 +93,6 @@ i {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
   border: 1px solid var(--light-color);
   border-radius: 10px;
   background-image: url("https://i.ibb.co/XsfwQ7R/payment.png");

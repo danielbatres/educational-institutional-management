@@ -1,0 +1,23 @@
+<LandingComponents MinHeight="min-height: 100px;" IdSection="advantages">
+    <section>
+        @for (int i = 0; i < 3; i++) {
+            <article class="advantage-card">
+                <div class="icon-title">
+                    <div class="icon-box">
+    
+                    </div>
+                    <div>
+                        <h4>Primer ventaja</h4>    
+                    </div>
+                </div>
+                <div>
+                    <p>Primer texto de la ventaja, este texto se extiende todo lo que quieras para poder probar el espacio que puede llegar a tener el mensaje que aqui se escribe si</p> 
+                </div>
+            </article>
+        }
+    </section>
+</LandingComponents>
+
+@code {
+    private List<string> Advantanges { get; set; } = new();    
+}

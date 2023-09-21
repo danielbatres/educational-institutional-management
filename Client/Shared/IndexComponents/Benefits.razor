@@ -1,10 +1,10 @@
-<LandingComponents MinHeight="min-height: 600px;" IdSection="benefits">
+<LandingComponents MinHeight="min-height: 400px;" IdSection="benefits" Reverse="@(MakeReverse ? "flex-direction: row-reverse;" : "")">
   <section class="centered-container-columns">
     @foreach (var benefit in BenefitsList) {
       <div class="benefit">
         <div class="centered-container">
           <i class="@benefit[2]"></i>
-          </div>
+        </div>
         <div>
           <h4 class="sm-title">@benefit[0]</h4>
           <p>@benefit[1]</p>
@@ -14,19 +14,14 @@
   </section>
   <section>
     <div>
-      
+
     </div>
   </section>
 </LandingComponents>
 
 @code {
-  public List<string[]> BenefitsList = new List<string[]>();
-
-  protected override void OnInitialized()
-  {
-    BenefitsList.Add(new string[] { "Manejo de estudiantes", "LLeva el control de los estudiantes de tu institución y personaliza la información que deseas guardar", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Personaliza los cursos", "Crea cursos y asignales materias y profesores", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Manejo de notas", "Genera listados de notas de cada curso y de cualquier materia", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Genera estadisticos", "Podras crear todos los estadisticos que quieras", "fi fi-tr-badge-check"});
-  }
+  [Parameter]
+  public List<string[]> BenefitsList { get; set; } = new();
+  [Parameter]
+  public bool MakeReverse { get; set; }
 }
