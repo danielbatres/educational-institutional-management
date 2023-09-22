@@ -89,6 +89,7 @@ app.MapHub<StudentHub>("/studentsHub");
 app.MapHub<InstitutionHub>("/institutionHub");
 app.MapHub<SubjectHub>("/subjectHub");
 app.MapHub<CourseHub>("/courseHub");
+app.MapHub<UserRoleHub>("/userRoleHub");
 
 app.MapRazorPages();
 app.MapControllers();

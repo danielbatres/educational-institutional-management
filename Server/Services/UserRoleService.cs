@@ -5,6 +5,10 @@ namespace edu_institutional_management.Server.Services;
 public class UserRoleService : BaseService, IUserRoleService {
   public UserRoleService(ApplicationContextService applicationContextService) : base(applicationContextService) {}
 
+  public IEnumerable<UserRole> Get() {
+    return _applicationContext.UserRoles;
+  }
+
   public async Task Create(UserRole userRole) {
     _applicationContext.UserRoles.Add(userRole);
   
@@ -23,6 +27,7 @@ public class UserRoleService : BaseService, IUserRoleService {
 }
 
 public interface IUserRoleService {
+  IEnumerable<UserRole> Get();
   Task Create(UserRole userRole);
   Task Delete(Guid userRoleId);
 }

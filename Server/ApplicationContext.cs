@@ -1,5 +1,6 @@
 using edu_institutional_management.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace edu_institutional_management.Server;
 
@@ -13,6 +14,7 @@ public class ApplicationContext : DbContext {
     public DbSet<ActivityLog> Activities { get; set; }
     public DbSet<GeneralNotification> GeneralNotifications { get; set; }
     public DbSet<NotificationVisualization> NotificationsVisualization { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Field> Fields { get; set; }
     public DbSet<Option> Options { get; set; }
@@ -326,6 +328,11 @@ public class ApplicationContext : DbContext {
         
         modelBuilder.Entity<Statistic>(statistic => {
             statistic.HasKey(s => s.Id);
+        });
+
+        modelBuilder.Entity<Notification>(notification => {
+            notification.HasKey(n => n.Id);
+            notification.Property(n => n.Id).ValueGeneratedOnAdd();
         });
     }
 }

@@ -32,7 +32,9 @@ section {
   font-weight: 400;
 }
 
-@media
-{
-  
+
+@media (max-width: 767px) {
+  section {
+    flex-wrap: wrap;
+  }
 }

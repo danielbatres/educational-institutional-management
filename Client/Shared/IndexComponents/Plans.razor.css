@@ -3,96 +3,18 @@ section {
   width: 100%;
   justify-content: space-evenly;
   align-content: center;
-  flex-wrap: wrap;
   gap: 54px;
 }
 
-.card-container {
-  position: relative;
-  min-width: 240px;
-  max-width: 340px;
-  height: 550px;
-  border: 1px solid var(--light-color);
-  border-radius: 10px;
-  padding: 45px 18px 18px 18px;
-}
-
-.benefits-c {
-  padding: 0px 14px;
-}
-
-.benefits-container {
-  margin: 14px 0px;
-}
-
-p {
-  font-size: 1.2rem;
-}
-
-h3 {
-  font-size: 1.6rem;
-  font-weight: 500;
-}
-
-h4 {
-  font-size: 2.4rem;
-  margin: 14px 0px;
-  font-weight: 500;
-}
-
-.sm {
-  font-size: 1rem;
-}
-
-.includes {
-  padding: 10px 0px 20px 0px;
-  border-bottom: 1px solid var(--light-color);
-  margin-bottom: 20px;
-}
-
-h5 {
-  font-size: 1.4rem;
-  font-weight: 500;
-}
-
-.icon-box {
-  min-width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  background: var(--light-blue);
-  margin-right: 20px;
-}
-
-i {
-  color: var(--primary-color);
-}
-
-.button {
+.plan-card {
+  max-width: 300px;
   width: 100%;
-  margin: 20px 0px;
-}
-
-.card-name {
-  position: absolute;
-  top: -30px;
-  left: calc(24%);
-  width: 190px;
-  background: var(--white);
-  border: 1px solid var(--primary-color);
-  text-align: center;
-  color: var(--primary-color);
+  border: var(--light-border);
   border-radius: 10px;
-  padding: 10px 0px;
+  padding: 20px;
 }
-
-
-
-
 
 .plan-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: 1px solid var(--light-color);
   border-radius: 10px;
   background-image: url("https://i.ibb.co/XsfwQ7R/payment.png");
@@ -116,10 +38,7 @@ i {
 }
 
 .plan-container article {
-  min-width: 50%;
-  max-width: 50%;
-  height: 100%;
-  padding: 40px;
+  padding: 20px;
 }
 
 .plan-name {
@@ -130,9 +49,6 @@ i {
   font-size: var(--regular-text);
 }
 
-.price {
-  text-align: end;
-}
 
 h4 {
   font-size: 2.4rem;

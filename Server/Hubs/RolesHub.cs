@@ -7,7 +7,7 @@ namespace edu_institutional_management.Server.Hubs;
 public class RolesHub : MainHub {
   private readonly IRoleService _roleService;
 
-  public RolesHub(IRoleService roleService){
+  public RolesHub(IRoleService roleService) {
     _roleService = roleService;
   }
 
