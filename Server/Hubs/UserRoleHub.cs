@@ -18,6 +18,6 @@ public class UserRoleHub : MainHub {
   }
 
   public List<UserRole> GetUserRoles() {
-    return _userRoleService.Get().ToList();
+    return new();
   }
 }
