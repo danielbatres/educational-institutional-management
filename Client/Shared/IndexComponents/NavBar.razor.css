@@ -20,6 +20,21 @@
     cursor: pointer;
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    min-width: 40px;
+    min-height: 40px;
+    background-image: url("https://i.ibb.co/bzLVpyy/bbaa-1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .navbar-content {
     position: relative;
     display: flex;

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using edu_institutional_management.Client.Containers;
 using edu_institutional_management.Client.Services;
 using edu_institutional_management.Shared.Models;
@@ -33,10 +32,11 @@ public partial class RegisterUser {
     new() { "", false }, 
     new() { "", false }, 
     new() { "", false }, 
-    new() { "", false } 
+    new() { "", false },
+    new() { "", false },
   };
   private int ErrorsQuantity { get; set; } = 0;
-  private string CharactersMessage { get; set; } = "Caracteres permitidos 2 - 40";
+  private string CharactersMessage { get; set; } = "Caracteres 2 - 40";
 
   private void GoogleSignIn() {
     NavigationManager.NavigateTo("/api/user/google-sign-in", true);
@@ -45,39 +45,60 @@ public partial class RegisterUser {
   private void ValidatePassword() {
     Warnings[3][1] = false;
 
-      switch (Validators.IsValidPassword(User.Register.Password)) {
-        case PasswordStrength.Weak:
-          Warnings[3][0] = "Contraseña debil";
-          Warnings[3][1] = true;
-          PasswordClass = "danger-text";
-          ErrorsQuantity++;
-          break;
-        case PasswordStrength.Moderate:
-          Warnings[3][0] = "Contraseña moderada";
-          Warnings[3][1] = true;
-          PasswordClass = "warning-text";
-          ErrorsQuantity++;
-          break;
-        case PasswordStrength.Strong:
-          Warnings[3][0] = "Contraseña fuerte";
-          PasswordClass = "success-text";
-          break;
-        default:
-          Warnings[3][0] = string.Empty;
-          Warnings[3][1] = true;
-          ErrorsQuantity++;
-          break;
+    if (User.Register != null && User.Register.Password != null)
+
+    switch (Validators.IsValidPassword(User.Register.Password)) {
+      case PasswordStrength.Weak:
+        Warnings[3][0] = "Contraseña debil";
+        Warnings[3][1] = true;
+        PasswordClass = "danger-text";
+        ErrorsQuantity++;
+        break;
+      case PasswordStrength.Moderate:
+        Warnings[3][0] = "Contraseña moderada";
+        Warnings[3][1] = true;
+        PasswordClass = "warning-text";
+        ErrorsQuantity++;
+        break;
+      case PasswordStrength.Strong:
+        Warnings[3][0] = "Contraseña fuerte";
+        PasswordClass = "success-text";
+        break;
+      default:
+        Warnings[3][0] = string.Empty;
+        Warnings[3][1] = true;
+        ErrorsQuantity++;
+        break;
     }
   }
 
-  private void ValidateEmail() {
+  private async Task ValidateUserName() {
+    Warnings[4][0] = string.Empty;
+    Warnings[4][1] = false;
+
+    if (await UserService.UserNameExists(User.UserName) || string.IsNullOrEmpty(User.UserName)) {
+      Warnings[4][0] = "El username ya esta en uso";
+      Warnings[4][1] = true;
+      ErrorsQuantity++;
+    }
+  }
+
+  private async Task ValidateEmail() {
     Warnings[2][0] = string.Empty;
     Warnings[2][1] = false;
 
-    if (!Validators.IsValidEmail(User.Register.Email)) {
-      Warnings[2][0] = "Correo electrónico invalido";
-      Warnings[2][1] = true;
-      ErrorsQuantity++;
+    if (User.Register != null && User.Register.Email != null) {
+      if (!Validators.IsValidEmail(User.Register.Email)) {
+        Warnings[2][0] = "Correo electrónico invalido";
+        Warnings[2][1] = true;
+        ErrorsQuantity++;
+      }
+
+      if (await UserService.UserEmailExists(User.Register.Email)) {
+        Warnings[2][0] = "El correo electrónico ya esta registrado";
+        Warnings[2][1] = true;
+        ErrorsQuantity++;
+      }
     }
   }
 
@@ -118,7 +139,7 @@ public partial class RegisterUser {
     LoadingContext.SetLoading(true);
     LoadingContext.SetLoadingMessage("Registrando tu usuario...");
 
-    MakeValidations();
+    await MakeValidations();
 
     if (ErrorsQuantity == 0) {
       AssignUserData();
@@ -163,12 +184,13 @@ public partial class RegisterUser {
     if (e.Key == "Enter") await CreateNewUser();
   }
 
-  private void MakeValidations() {
+  private async Task MakeValidations() {
     ErrorsQuantity = 0;
 
     ValidateName();
     ValidateLastName();
-    ValidateEmail();
+    await ValidateEmail();
+    await ValidateUserName();
     ValidatePassword();
   }
 }

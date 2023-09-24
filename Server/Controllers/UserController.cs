@@ -111,6 +111,22 @@ public class UserController : ControllerBase {
     return Ok();
   }
 
+  [HttpGet]
+  [Route("check-username")]
+  public IActionResult UserNameExists(string userName) {
+    if (_userService.UserNameExists(userName)) return Ok();
+
+    return NotFound();
+  }
+
+  [HttpGet]
+  [Route("check-email")]
+  public IActionResult UserEmailExists(string userEmail) {
+    if (_userService.UserEmailExists(userEmail)) return Ok();
+
+    return NotFound();
+  }
+
   private AuthenticationProperties GetAuthenticationProperties(bool isPersistent = false) {
     return new AuthenticationProperties() {
       IsPersistent = isPersistent,

@@ -1,13 +1,21 @@
 @inject NavigationManager NavigationManager
 
+<style>
+  b {
+    color: var(--primary-color);
+  }
+</style>
+
 <div
   class="navigation-mobile @(ShowMobileNavigation ? "show-mobile" : "")"
 @onclick="@(() => ShowMobileNavigation = !ShowMobileNavigation)"></div>
 
 <div class="navbar-container">
   <div class="navbar-content">
-    <div>
-      <p class="logo" @onclick="@(() => OnNavigation("/", false))">Landing</p>
+    <div class="logo-container">
+      <div class="logo-img">
+      </div>
+      <p class="logo" @onclick="@(() => OnNavigation("/", false))">Buen<b>Academia</b></p>
     </div>
     <div class="nav-mobile">
       <i class="fi fi-tr-bars-staggered" @onclick="@(() => ShowMobileNavigation = !ShowMobileNavigation)"></i>

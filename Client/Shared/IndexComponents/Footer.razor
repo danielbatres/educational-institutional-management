@@ -1,14 +1,64 @@
 @inject NavigationManager NavigationManager
 
-<LandingComponents MinHeight="min-height: 160px;" BackgroundColor="background: #17191A;" IdSection="footer">
-  <section>
-    <h3 @onclick="@(() => NavigationManager.NavigateTo("/"))">Landing</h3>
-    <p>Para instituciones educativas</p>
+<LandingComponents MinHeight="min-height: 280px;" BackgroundColor="background: #17191A;" IdSection="footer">
+  <section class="footer-info">
+    <div>
+      <h3 @onclick="@(() => NavigationManager.NavigateTo("/"))">BuenAcademia</h3>
+      <p class="description">Una plataforma de organizaci&oacute;n administrativa hecha para instituciones educativas y estudiantes apoyandoles a maximizar la eficiencia en su labor.</p>
+    </div>
   </section>
-  <section>
-    <NavigationLinks Styles="justify-content: right;"/>
+  <section class="footer-links">
+    <ul>
+      <li>
+        <h5>
+          Enlaces directos
+        </h5>
+      </li>
+      <li>
+        <p>HomePage</p>
+        <i class="fi fi-tr-arrow-up-right-from-square"></i>
+      </li>
+      <li>
+        <p>Beneficios</p>
+      </li>
+      <li>
+        <p>Planes de servicio</p>
+      </li>
+      <li>
+        <p>Sobre nosotros</p>
+        <i class="fi fi-tr-arrow-up-right-from-square"></i>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <h5>Informaci&oacute;n</h5>
+      </li>
+      <li>
+        <p>Terminos y condiciones</p>
+      </li>
+      <li>
+        <p>Politicas de privacidad</p>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <h5>
+          Compa&ntilde;ia
+        </h5>
+      </li>
+      <li>
+        <i class="fi fi-tr-circle-phone-flip"></i>
+        <p>
+          +503 7070 7070
+        </p>
+      </li>
+      <li>
+        <i class="fi fi-tr-at"></i>
+        <p>info@email.com</p>
+      </li>
+    </ul>
   </section>
 </LandingComponents>
 <div class="bottom centered-container">
-  <p>Informaci&oacute;n del footer</p>
+  <p>Copyright © BuenAcademia 2023. Todos los derechos reservados</p>
 </div>

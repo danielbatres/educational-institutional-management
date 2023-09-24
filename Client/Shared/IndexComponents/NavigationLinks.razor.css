@@ -4,9 +4,17 @@ ul {
   gap: 40px;
 }
 
-li p:hover {
+li p:hover, li a:hover {
   color: var(--primary-color);
   cursor: pointer;
+}
+
+li a {
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 @media (max-width: 767px) {

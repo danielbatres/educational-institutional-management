@@ -1,0 +1,124 @@
+<style>
+  label {
+    font-size: 1rem;
+  }
+
+  .label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--dark-color);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  .label div:first-child {
+    display: flex;
+  }
+
+  .warning-text {
+    color: var(--warning-color);
+  }
+
+  .danger-text {
+    color: var(--danger-color);
+  }
+
+  .success-text {
+    color: var(--success-color);
+  }
+
+  .password {
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primary-color);
+  }
+
+  .password:hover {
+    text-decoration: underline;
+  }
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-right: 5px;
+  }
+
+  .input {
+    width: 100%;
+    font-size: var(--regular-text);
+    padding: 11px;
+  }
+
+  .input-error {
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+  }
+
+  .input-container {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+  .eye {
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .eye:hover {
+    color: var(--light-text-color)
+  }
+
+  strong {
+    color: var(--danger-color);
+  }
+
+  .lgn-button {
+    width: 100%;
+    margin-top: 25px;
+  }
+
+  .login-button p {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  .login-button p b {
+    font-weight: 300;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+
+  .login-button p b:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="form-container">
+  <div class="form-content">
+    @ChildContent
+  </div>
+  <div class="background-container" style="@BackgroundImage @Border">
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public RenderFragment? ChildContent { get; set; }
+  [Parameter]
+  public string? BackgroundImage { get; set; }
+  [Parameter]
+  public string? Border { get; set; }
+}

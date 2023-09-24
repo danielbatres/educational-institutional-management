@@ -26,6 +26,14 @@ public class UserService : IUserService {
     return null;
   }
 
+  public bool UserNameExists(string userName) {
+    return _context.Users.Any(u => u.UserName.Equals(userName));
+  }
+
+  public bool UserEmailExists(string userEmail) {
+    return _context.Users.Include(u => u.Register).Any(u => u.Register != null && u.Register.Email != null && u.Register.Email.Equals(userEmail));
+  }
+
   public IEnumerable<User> Get() {
     return _context.Users.Include(u => u.Register).Include(u => u.OnlineStatus).Include(u => u.Institution).Include(u => u.Payment).Include(u => u.ReceivedMembershipRequests);
   }
@@ -49,4 +57,6 @@ public interface IUserService
   IEnumerable<User> Get();
   Task Create(User user);
   Task Update(User user);
+  bool UserNameExists(string userName);
+  bool UserEmailExists(string userEmail);
 }

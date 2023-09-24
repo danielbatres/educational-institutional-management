@@ -1,21 +1,61 @@
 <style>
   .fullname {
     display: flex;
+    width: 100%;
     gap: 14px;
+  }
+
+  .fullname .f-name {
+    width: 50%;
+  }
+
+  .or-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .straight-line {
+    border-bottom: var(--light-border);
+    width: 100%;
+    height: 0;
+  }
+
+  .terms-and-conditions {
+    display: flex;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .terms-and-conditions p b {
+    color: var(--primary-color);
+    font-weight: 300;
+    text-decoration: underline;
   }
 </style>
 
-<AccessComponent Title="Hola, vamos a comenzar" Description="Completa los campos para crear tu cuenta" MaxWidth="max-width: 400px;">
+<AccessComponent Title="Hola, vamos a comenzar"
+  Description="Selecciona una opcion de registro y completa los campos para crear tu cuenta"
+  MaxWidth="max-width: 470px;">
   <form>
+    <button type="button" class="button google-button" @onclick="@GoogleSignIn">
+      <div class="google-logo"></div>Registrarme con Google
+    </button>
+    <div class="or-line">
+      <div class="straight-line"></div>
+      <p>o</p>
+      <div class="straight-line"></div>
+    </div>
     <div class="fullname">
-      <div>
+      <div class="f-name">
         <div class="label">
           <label for="name">Nombre <strong>*</strong></label>
           <p class="danger-text">@Warnings[0][0]</p>
         </div>
         <input value="@User.Name" class="input @((bool) Warnings[0][1] ? "input-error" : "")" type="text" placeholder="Ingresa tu nombre" id="name" @oninput="@UpdateName" required>
       </div>
-      <div>
+      <div class="f-name">
         <div class="label">
           <label for="last-name">Apellido <strong>*</strong></label>
           <p class="danger-text">@Warnings[1][0]</p>
@@ -25,9 +65,11 @@
     </div>
     <div class="label">
       <label for="username">Username <strong>*</strong></label>
-      <p class="danger-text"></p>
+      <p class="danger-text">@Warnings[4][0]</p>
     </div>
-    <input value="@User.UserName" type="text" class="input" placeholder="Ingresa tu username" @oninput="@UpdateUserName" required>
+    <input value="@User.UserName" type="text" class="input @((bool) Warnings[4][1] ? "input-error" : "")"
+      placeholder="Ingresa tu username" @oninput="@UpdateUserName"
+      required>
     <div class="label">
       <div>
         <i class="fi fi-tr-at"></i>
@@ -58,8 +100,9 @@
         ¿Ya tienes una cuenta? <b @onclick="@(() => NavigationManager.NavigateTo("/access"))">Iniciar sesi&oacute;n</b>
       </p>
     </div>
-    <button type="button" class="button google-button" @onclick="@GoogleSignIn">
-      <div class="google-logo"></div>Registrarme con Google
-    </button>
+    <div class="terms-and-conditions">
+      <input type="checkbox" >
+      <p>Acepto los <b>terminos y condiciones</b> y la <b>politica de privacidad</b></p>
+    </div>
   </form>
 </AccessComponent>

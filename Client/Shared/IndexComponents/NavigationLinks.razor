@@ -2,18 +2,22 @@
 
 <ul class="@HideOnMobile" style="@Styles">
   <li>
-    <p @onclick="@(() => NavigationManager.NavigateTo("/application"))">Inicio</p>
+    <p @onclick="@(() => NavigationManager.NavigateTo("/"))">Homepage</p>
   </li>
   <li>
-    <p>
+    <p @onclick="@NavigateTo">
       Beneficios
+      <i class="fi fi-tr-angle-small-down"></i>
     </p>
   </li>
   <li>
-    <p>Planes de servicio</p>
+    <a href="#pricing">
+      Planes de servicio
+      <i class="fi fi-tr-angle-small-down"></i>
+    </a>
   </li>
   <li>
-    <p>Sobre nosotros</p>
+    <p @onclick="@(() => NavigationManager.NavigateTo("/about-us"))">Sobre nosotros</p>
   </li>
 </ul>
 
@@ -23,4 +27,8 @@
   public string HideOnMobile { get; set; } = "";
   [Parameter]
   public string Styles { get; set; } = "flex-direction: row;";
+
+  private void NavigateTo() {
+    NavigationManager.NavigateTo("/#benefits");
+  }
 }

@@ -7,38 +7,92 @@ section {
 }
 
 .plan-card {
-  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  max-width: 370px;
   width: 100%;
-  border: var(--light-border);
+  background: #f8f9fc;
   border-radius: 10px;
   padding: 20px;
 }
 
-.plan-container {
-  border: 1px solid var(--light-color);
+.plan-name-card {
+  display: flex;
+}
+
+.plan-card .especial-card h3 {
+  color: var(--primary-color);
+  background: var(--white);
+}
+
+.plan-name-card h3 {
+  font-size: 1.2rem;
+  color: var(--white);
+  padding: 4px 10px;
   border-radius: 10px;
+  background: var(--primary-color);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 20px;
+}
+
+.price h4 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.plan-container .price h4, .plan-container .price h4 b {
+  color: var(--white);
+}
+
+.price h4 b {
+  color: var(--text-color);
+  font-size: var(--regular-text);
+}
+
+.price p {
+  font-size: var(--small-text);
+}
+
+.plan-benefits {
+  border-top: var(--light-border);
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+.plan-benefits ul {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.plan-benefit-option {
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 100%;
+  background: var(--light-success-color);
+}
+
+.plan-container .plan-benefit-option {
+  background: var(--white);
+}
+
+.plan-container {
+  background: var(--primary-color);
+  /*
   background-image: url("https://i.ibb.co/XsfwQ7R/payment.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover;*/
 }
 
 .plan-container p, .plan-container h3, .plan-container h6 {
   color: var(--white);
-}
-
-.plan-container h3 {
-  font-size: 1.7rem;
-  margin-bottom: 4px;
-}
-
-.plan-container h6 {
-  font-size: 1.1rem;
-  font-weight: 400;
-
-}
-
-.plan-container article {
-  padding: 20px;
 }
 
 .plan-name {
@@ -56,13 +110,8 @@ h4 {
   margin: 4px 0px;
 }
 
-.button-content {
-  align-self: self-end;
-}
-
 .get-plan {
   min-width: 250px;
-  max-width: 300px;
   width: 100%;
   box-shadow: none;
   border: none;
@@ -87,15 +136,6 @@ ul li {
 
 ul li p {
   font-size: var(--small-text);
-}
-
-.sm-circle {
-  min-width: 10px;
-  min-height: 10px;
-  max-width: 10px;
-  max-height: 10px;
-  border-radius: 100%;
-  background: var(--white);
 }
 
 .plan-container article:last-child {

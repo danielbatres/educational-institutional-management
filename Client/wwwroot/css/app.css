@@ -3,6 +3,7 @@
     --light-border: 1px solid var(--light-color);
     --success-color: #3DC13C;
     --danger-color: #F13637;
+    --light-success-color: #3cc13c45;
     --light-danger-color: #f1363638;
     --warning-color: #F3BB1B;
 }
@@ -216,7 +217,7 @@ textarea {
     justify-content: center;
     align-items: center;
     padding: 6px 0;
-    margin: 30px 0 20px;
+    margin: 20px 0 16px;
 }
 
 .google-logo {
@@ -304,7 +305,7 @@ select {
     flex-direction: column;
     align-items: center;
     min-width: 180px;
-    max-width: 400px;
+    max-width: 370px;
     width: 100%;
     min-height: 200px;
     border-radius: 10px;
@@ -316,6 +317,10 @@ select {
 
 .modal h3 {
     font-weight: 400;
+}
+
+.buttons-modal, .buttons-modal .button {
+    width: 100%;
 }
 
 .cross {

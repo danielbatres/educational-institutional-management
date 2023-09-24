@@ -1,55 +1,83 @@
 @inject NavigationManager NavigationManager
 
-<LandingComponents MinHeight="min-height: 350px;" IdSection="plans">
+<LandingComponents MinHeight="min-height: 350px;">
   <section>
     <div class="plan-card">
-      <h3>Plan b&aacute;sico</h3>
-      <p>Descripci&oacute;n del plan de servicio</p>
-    </div>
-    <div class="plan-container">
-      <article>
-        <div class="plan-name">
-          <h3>
-            Plan centro educativo - plan de pago anual
-          </h3>
-        </div>
-        <p>Un solo plan, obten acceso completo y renueva cuando quieras</p>
-        <div class="price">
-          <h4>USD $100.00</h4>
-          <p>Renovaci&oacute;n anual</p>
-        </div>
+      <div class="plan-name-card">
+        <h3>Plan b&aacute;sico</h3>
+      </div>
+      <p>Con este plan tienes acceso a todos los beneficios pero por un tiempo muy limitado</p>
+      <div class="price">
+        <h4><b>USD</b> $50.00</h4>
+        <p>Renovaci&oacute;n cada 3 meses</p>
+      </div>
+      <button type="button" class="button transparent-button" @onclick="@CheckRegisterUser">Conseguir</button>
+      <div class="plan-benefits">
         <ul>
           <li>
-            <div class="sm-circle"></div>
-            <p>Control completo de la instituci&oacute;n</p>
+            <div class="plan-benefit-option"></div>
+            <p>Guarda hasta 3,000 estudiantes</p>
           </li>
-          <li>
-            <div class="sm-circle"></div>
-            <p>Manejo de la informaci&oacute;n de los estudiantes</p>
-          </li>
-          <li>
-            <div class="sm-circle"></div>
-            <p>Control de pagos personalizables</p>
-          </li>
-          <li>
-            <div class="sm-circle"></div>
-            <p>Manejo de la informaci&oacute;n de los estudiantes</p>
-          </li>
-          <li>
-            <div class="sm-circle"></div>
-            <p>Control de pagos personalizables</p>
-          </li>
+          @for (int i = 0; i < 6; i++) {
+            <li>
+              <div class="plan-benefit-option"></div>
+              <p>Beneficio del plan de servicio</p>
+            </li>
+          }
         </ul>
-      </article>
-      <article>
-        <div class="button-content">
-          <button class="button get-plan metallic-button" type="button" @onclick="@CheckRegisterUser">Conseguir</button>
-        </div>
-      </article>
+      </div>
+    </div>
+    <div class="plan-card plan-container">
+      <div class="plan-name-card especial-card">
+        <h3>
+          Plan premium
+        </h3>
+      </div>
+      <p>Un solo plan para obtener todos los beneficios durante un año</p>
+      <div class="price">
+        <h4><b>USD</b> $200.00</h4>
+        <p>Renovaci&oacute;n anual</p>
+      </div>
+      <button class="button get-plan metallic-button" type="button" @onclick="@CheckRegisterUser">Conseguir</button>
+      <div class="plan-benefits">
+        <ul>
+          <li>
+            <div class="plan-benefit-option"></div>
+            <p>Guarda hasta 3,000 estudiantes</p>
+          </li>
+          @for (int i = 0; i < 6; i++) {
+            <li>
+              <div class="plan-benefit-option"></div>
+              <p>Beneficio del plan de servicio</p>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
     <div class="plan-card">
-      <h3>Plan intermedio</h3>
-      <p>Descripci&oacute;n del plan de servicio</p>
+      <div class="plan-name-card">
+        <h3>Plan intermedio</h3>
+      </div>
+      <p>Con este plan tienes acceso a todos los beneficios pero por un tiempo muy limitado</p>
+      <div class="price">
+        <h4><b>USD</b> $100.00</h4>
+        <p>Renovaci&oacute;n cada 6 meses</p>
+      </div>
+      <button type="button" class="button transparent-button" @onclick="@CheckRegisterUser">Conseguir</button>
+      <div class="plan-benefits">
+        <ul>
+          <li>
+            <div class="plan-benefit-option"></div>
+            <p>Guarda hasta 3,000 estudiantes</p>
+          </li>
+          @for (int i = 0; i < 6; i++) {
+            <li>
+              <div class="plan-benefit-option"></div>
+              <p>Beneficio del plan de servicio</p>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
   </section>
 </LandingComponents>

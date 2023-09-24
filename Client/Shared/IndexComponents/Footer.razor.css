@@ -2,26 +2,53 @@ section {
   min-width: 50%;
 }
 
-section:first-child {
-  padding-bottom: 40px;
+.footer-links {
+  display: flex;
+  justify-content: space-evenly;
 }
 
-section:last-child {
+.footer-info div {
+  max-width: 400px;
+}
+
+ul {
   display: flex;
   flex-direction: column;
-  justify-content: right;
+  gap: 10px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: color 1s ease-in-out;
+}
+
+li i {
+  color: var(--white);
+}
+
+li:hover i, li:hover p {
+  color: var(--white);
 }
 
 h3 {
   cursor: pointer;
-  color: var(--text-color);
+  color: var(--white);
   font-weight: 500;
   font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
+h5 {
+  text-transform: none;
+  color: var(--white);
+}
+
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  color: #b1b1b1;
 }
 
 .bottom {

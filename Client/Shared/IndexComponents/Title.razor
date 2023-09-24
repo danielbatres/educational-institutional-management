@@ -1,4 +1,4 @@
-<div class="title-container">
+<div class="title-container" id="@SectionId">
   <div class="line-over-container">
     <div class="line-over-title"></div>
   </div>
@@ -14,4 +14,6 @@
   public string TitleSent { get; set; } = "";
   [Parameter]
   public string Text { get; set; } = "";
+  [Parameter]
+  public string SectionId { get; set; } = string.Empty;
 }

@@ -2,43 +2,34 @@
   width: 100%;
   min-height: 100vh;
   display: flex;
-  position: relative;
   justify-content: center;
   align-content: center;
   flex-grow: 1;
 }
 
 .form-content {
-  position: absolute;
-  max-width: 1280px;
   min-width: 320px;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
   min-height: 100vh;
-  padding: 60px 20px;
+  padding: 140px 20px;
 }
 
 .background-container {
   display: flex;
-  width: 100%;
+  min-width: 50%;
   min-height: 100vh;
 }
 
-section {
-  min-width: 50%;
-}
-
-section:last-child {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 @media (max-width: 767px) {
-  section:last-child {
-    background: none !important;
+  .form-content {
+    width: 100%;
+  }
+
+  .background-container {
+    display: none;
   }
 }

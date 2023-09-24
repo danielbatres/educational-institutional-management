@@ -7,6 +7,7 @@
   align-items: center;
   text-align: center;
   background: var(--white);
+  padding: 30px 0;
 }
 
 .line-over-container {
@@ -20,4 +21,5 @@
 h3 {
   color: var(--dark-color);
   margin-bottom: 10px;
+  font-weight: 600;
 }

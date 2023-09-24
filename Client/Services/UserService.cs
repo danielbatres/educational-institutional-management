@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Globalization;
 using System.Collections;
+using System.Net;
 
 namespace edu_institutional_management.Client.Services;
 
@@ -34,6 +35,18 @@ public class UserService : BaseService, IUserService {
       
       UserContext.SetUser(users.Where(u => u.Id == user.Id).ToList()[0]);
     }
+  }
+
+  public async Task<bool> UserNameExists(string userName) {
+    var response = await HttpClient.GetAsync($"api/user/check-username?userName={userName}");
+
+    return await CheckResponseStatusCode(response);
+  }
+
+  public async Task<bool> UserEmailExists(string userEmail) {
+    var response = await HttpClient.GetAsync($"api/user/check-email?userEmail={userEmail}");
+
+    return await CheckResponseStatusCode(response);
   }
 
   public async Task LogOut() {
@@ -139,4 +152,6 @@ public interface IUserService {
   Task<List<User>> GetUsers();
   Task<List<List<object>>> LoginUser(User user, bool isPersistent);
   Task<List<User>> GetNoInstitutionUsers();
+  Task<bool> UserNameExists(string userName);
+  Task<bool> UserEmailExists(string userEmail);
 }

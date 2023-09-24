@@ -1,0 +1,9 @@
+@inject NavigationManager NavigationManager
+
+<section>
+  <h2>404</h2>
+  <h4>Oops! parece que te perdiste</h4>
+  <p>La p&aacute;gina que estas buscando no existe...</p>
+  <button type="button" class="button primary-background-button" @onclick="@(() => NavigationManager.NavigateTo("/"))">
+    <i class="fi fi-tr-undo"></i>Volver al inicio</button>
+</section>
