@@ -8,7 +8,7 @@
     <div class="user-info-img">
       <div class="user-photo-container">
         <div class="user-profile-photo centered-container">
-          <div class="user-photo"></div>
+          <div class="user-photo user-no-photo-container"></div>
         </div>
       </div>
       <div class="user-name-email">
@@ -56,7 +56,7 @@
       <div class="label">
         <label for="nickname">Username <strong>*</strong></label>
       </div>
-      <input type="text" class="input" placeholder="Ingresa tu username" id="nickname">
+      <input value="@NewUser.UserName" type="text" class="input" placeholder="Ingresa tu username" id="nickname" @oninput="@UpdateUserName">
       <p class="recommendation-message">Tu username es &uacute;nico</p>
     </fieldset>
     <fieldset>
@@ -96,7 +96,7 @@
       <div class="label">
         <label for="location">Ubicaci&oacute;n </label>
       </div>
-      <input value="@NewUser.Location" id="location" type="text" class="input" placeholder="Ingresar ubicación">
+      <input value="@NewUser.Location" id="location" type="text" class="input" placeholder="Ingresar ubicación" @oninput="@UpdateLocation">
       <p class="recommendation-message">Cuentanos de donde eres</p>
     </fieldset>
     <fieldset>
@@ -108,92 +108,3 @@
     </fieldset>
   </form>
 </article>
-
-@code {
-  private User UserBackup;
-  private User NewUser;
-  [Inject]
-  public UserContext UserContext { get; set; }
-  [Inject]
-  public LoadingContext LoadingContext { get; set; }
-  [Inject]
-  public IUserService UserService { get; set; }
-  private User User = new User();
-  private bool HasChanges = false;
-
-  protected override void OnInitialized() {
-    UserContext.OnChange += HandleStateChange;
-
-    if (UserContext.User != null) {
-      UserBackup = UserContext.User.Clone();
-      NewUser = UserContext.User.Clone();
-    }
-  }
-
-  private void HandleStateChange() {
-    StateHasChanged();
-  }
-
-  private void SubmitValue() {
-    
-  }
-
-  private async Task UpdateUser() {
-    LoadingContext.SetLoading(true);
-    LoadingContext.SetLoadingMessage("Actualizando tu usuario...");
-
-    await UserService.Update(NewUser);
-    UserBackup = UserContext.User.Clone();
-    NewUser = UserContext.User.Clone();
-    HasChanges = false;
-    LoadingContext.SetLoading(false);
-  }
-
-  private void SetChanges()
-  {
-    HasChanges = !UserBackup.Equals(NewUser);
-  }
-
-  private void RevertChanges()
-  {
-    NewUser = UserBackup.Clone();
-
-    HasChanges = false;
-  }
-
-  private void UpdateName(ChangeEventArgs e)
-  {
-    NewUser.Name = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateLastName(ChangeEventArgs e)
-  {
-    NewUser.LastName = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateLocation(ChangeEventArgs e)
-  {
-    NewUser.Location = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateBio(ChangeEventArgs e)
-  {
-    NewUser.Bio = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateEmail(ChangeEventArgs e)
-  {
-    NewUser.Register.Email = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdatePhoneNumber(ChangeEventArgs e)
-  {
-    NewUser.PhoneNumber = e.Value.ToString();
-    SetChanges();
-  }
-}

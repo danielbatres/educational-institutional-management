@@ -1,35 +1,61 @@
 <article>
-  <div>
+  <div class="request-info">
+    <div class="request-info-title">
+      <div class="request-info-box">
+      </div>
+    </div>
     <h4>Solicitudes de ingreso</h4>
     <p>
-      Aqu&iacute; recibiras las solicitudes de ingreso de cualquier instituci&oacute;n
+      En esta secci&oacute;n recibiras las solicitudes de ingreso que sean enviadas a tu cuenta para que puedas entrar en una instituci&oacute;n
     </p>
   </div>
-  @for (int i = 0; i < ReceivedMembershipRequests.Count; i++) {
-    Institution institutionRequest = Institutions?.Where(x => x.Id == ReceivedMembershipRequests[i].InstitutionId).FirstOrDefault() ?? new();
-    string institutionName = institutionRequest?.Name ?? String.Empty;
-    int membershipIndex = i;
-
-    if (ReceivedMembershipRequests[i].IsAccepted) continue;
-    <div>
-      <h5>Solicitud de ingreso sin aceptar de:</h5>
-      <h4>
-        @institutionName
-      </h4>
-      <h5>Autor</h5>
-      <p>
-        Has sido invitado a ingresar en la instituci&oacute;n
-      </p>
-      @if (ReceivedMembershipRequests[i].Message != null && !ReceivedMembershipRequests[i].Message.Equals(string.Empty)) {
-        <h5>Mensaje</h5>
-        <p>@ReceivedMembershipRequests[i].Message</p>
-      }
-      <p>@ReceivedMembershipRequests[i].CreationDate</p>
-      <button type="button" class="button primary-background-button" @onclick="@(() => AcceptRequest(institutionRequest?.Id.ToString() ?? string.Empty, membershipIndex))">
-        Aceptar
-      </button>
+  <div class="requests">
+    @if (ReceivedMembershipRequests.Count.Equals(0)) {
+    <div class="no-request">
+      <div class="no-request-image"></div>
+      <h3>Aun no tienes solicitudes de ingreso...</h3>
+      <p>Si estas esperando una solicitud intenta refrescar la p&aacute;gina</p>
     </div>
-  }
+    } else {
+      @for (int i = 0; i < ReceivedMembershipRequests.Count; i++) {
+        Institution institutionRequest = Institutions?.Where(x => x.Id ==
+        ReceivedMembershipRequests[i].InstitutionId).FirstOrDefault() ?? new();
+        string institutionName = institutionRequest?.Name ?? String.Empty;
+        int membershipIndex = i;
+
+        if (ReceivedMembershipRequests[i].IsAccepted) continue;
+        <div class="request">
+          <div class="institution-request">
+            <h5>Solicitud de ingreso sin aceptar de:</h5>
+            <h4>
+              @institutionName
+            </h4>
+            <p>
+              Has sido invitado a ingresar en la instituci&oacute;n
+            </p>
+          </div>
+          <div class="request-author">
+            <h5>Autor</h5>
+            <p>@ReceivedMembershipRequests[i].Author</p>
+          </div>
+          @if (ReceivedMembershipRequests[i].Message != null && !ReceivedMembershipRequests[i].Message.Equals(string.Empty)) {
+            <div class="request-message">
+              <h5>Mensaje</h5>
+              <p>
+                @ReceivedMembershipRequests[i].Message
+              </p>
+            </div>
+          }
+          <div class="request-last-section">
+            <p>Enviada @ReceivedMembershipRequests[i].CreationDate</p>
+            <button type="button" class="button primary-background-button" @onclick="@(() => AcceptRequest(institutionRequest?.Id.ToString() ?? string.Empty, membershipIndex))">
+              Aceptar
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
 </article>
 
 @code {

@@ -1,0 +1,28 @@
+<SettingsModule>
+  <div class="appearance-info">
+    <h4>Apariencia</h4>
+    <p>Cambia la apariencia de tu espacio de trabajo</p>
+  </div>
+  <div>
+    <div class="interface-theme">
+      <div class="interface-section">
+        <h6>Tema de la interfaz</h6>
+        <p>Selecciona el tema para la interfaz</p>
+      </div>
+      <div class="interface-section">
+        <div>
+          <div class="theme-box @(SelectedAppearance == 1 ? "selected-appearance" : "" )"
+            @onclick="@(() => SetSelectedAppearance(1))">
+          </div>
+          <p>Tema claro (por defecto)</p>
+        </div>
+        <div>
+          <div class="theme-box @(SelectedAppearance == 2 ? "selected-appearance" : "")"
+            @onclick="@(() => SetSelectedAppearance(2))">
+          </div>
+          <p>Tema oscuro</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</SettingsModule>

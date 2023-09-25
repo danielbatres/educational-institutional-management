@@ -3,11 +3,15 @@
 
 <PageTitle>Aplicaci&oacute;n | Comunicaci&oacute;n</PageTitle>
 
-<h3>Mensajeria</h3>
-
 <GeneralChat />
 
 @code {
   [Parameter]
   public string InstitutionId { get; set; }
+  [Inject]
+  private ContentContext ContentContext { get; set; }
+
+  protected override void OnInitialized() {
+    ContentContext.SetSectionContent("Comunicación", "Chat general");
+  }
 }

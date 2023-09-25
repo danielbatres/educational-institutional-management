@@ -1,9 +1,11 @@
 <LandingComponents MinHeight="min-height: 100px;" IdSection="advantages">
     <section>
         @for (int i = 0; i < 3; i++) {
+            int index = i;
+
             <article class="advantage-card">
                 <div class="icon-title">
-                    <div class="icon-box">
+                    <div class="icon-box icon-@index">
     
                     </div>
                     <div>

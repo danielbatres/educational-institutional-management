@@ -1,9 +1,9 @@
 <div class="top-container">
     <div class="left-side-container">
         <h3>
-            Contenido
+            @ContentContext.Section
         </h3>
-        <p class="route">Contenido > contenido</p>
+        <p class="route">@ContentContext.Content</p>
     </div>
     <div class="right-side-container">
         <div class="search">
@@ -19,5 +19,15 @@
 </div>
 
 @code {
-    public string UserName { get; set; } = ""; 
+    [Inject]
+    private ContentContext ContentContext { get; set; }
+    public string UserName { get; set; } = "";
+
+    protected override void OnInitialized() {
+        ContentContext.OnChange += HandleStateChange;
+    }
+
+    private void HandleStateChange() {
+        StateHasChanged();
+    }
 }

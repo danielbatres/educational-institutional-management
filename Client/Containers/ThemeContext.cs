@@ -1,4 +1,5 @@
 using edu_institutional_management.Shared.Models;
+using edu_institutional_management.Client.Models;
 
 namespace edu_institutional_management.Client.Containers;
 
@@ -13,7 +14,7 @@ public class ThemeContext : BaseContainer {
     LightPrimaryColor = "#D9DFFF"
   };
   public Palette DarkTheme { get; set; } = new() {
-    PrimaryColor = "#242424",
+    PrimaryColor = "#4361EE",
     BackgroundColor = "#1f1f1f",
     LightBackgroundColor = "#141414",
     LightColor = "#38393d",
@@ -21,6 +22,7 @@ public class ThemeContext : BaseContainer {
     DarkColor = "#FFFFFF",
     LightPrimaryColor = "#292929",
     LightTextColor = "#75777d",
+    SpecialLightColor = "#242424"
   };
 
   public Palette SelectedTheme { get; set; }

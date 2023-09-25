@@ -15,8 +15,19 @@ section {
 .icon-box {
   min-width: 30px;
   min-height: 30px;
-  background-color: var(--light-primary-color);
   border-radius: 10px;
+}
+
+.icon-0 {
+  background-color: var(--light-success-color);
+}
+
+.icon-1 {
+  background-color: var(--light-danger-color);
+}
+
+.icon-2 {
+  background-color: var(--light-warning-color);
 }
 
 .icon-title {

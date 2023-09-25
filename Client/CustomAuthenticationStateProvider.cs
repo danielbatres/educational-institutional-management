@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 namespace edu_institutional_management.Client;
 
 public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
-
   private readonly HttpClient _httpClient;
+  private readonly IDatabaseService _databaseService;
   private readonly UserContext _userContext;
   private readonly NavigationManager _navigationManager;
   private readonly IInstitutionService _institutionService;
@@ -22,8 +22,9 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   private readonly HubsConnection _hubsConnection;
   private readonly UsersHubManager _usersHubManager;
 
-  public CustomAuthenticationStateProvider(HttpClient httpClient, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext, IUserService userService, HubsConnection hubsConnection, UsersHubManager usersHubManager) {
+  public CustomAuthenticationStateProvider(HttpClient httpClient, IDatabaseService databaseService, UserContext userContext, NavigationManager navigationManager, IInstitutionService institutionService, ISettingsService settingsService, ThemeContext themeContext, LoadingSiteContext loadingContext, IUserService userService, HubsConnection hubsConnection, UsersHubManager usersHubManager) {
     _httpClient = httpClient;
+    _databaseService = databaseService;
     _userContext = userContext;
     _navigationManager = navigationManager;
     _institutionService = institutionService;
@@ -36,6 +37,8 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
   }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync() {
+    await _databaseService.EnsureMainDb();
+
     User currentUser = await _httpClient.GetFromJsonAsync<User>("api/user/get-current-user");
 
     if (!currentUser.Id.Equals(Guid.Empty)) {

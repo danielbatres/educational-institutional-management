@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace edu_institutional_management.Client.Components;
 
-public partial class Appearance {
+public partial class AppearanceSettings {
   private int SelectedAppearance { get; set; }
   [Inject]
   private UserContext _userContext { get; set; }

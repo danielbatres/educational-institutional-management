@@ -8,6 +8,7 @@
   <div class="settings-content">
       @switch (Direction) {
         case "my-account":
+          ContentContext.SetSectionContent(SectionName, "Mi cuenta");
           <UserProfile />
           <article>
             <div>
@@ -24,21 +25,27 @@
           </article>
           break;
         case "roles":
+          ContentContext.SetSectionContent(SectionName, "Roles");
           <Roles />
           break;
         case "users":
+          ContentContext.SetSectionContent(SectionName, "Usuarios");
           <Users />
           break;
         case "appearance":
-          <Appearance />
+          ContentContext.SetSectionContent(SectionName, "Apariencia");
+          <AppearanceSettings />
           break;
         case "students":
+          ContentContext.SetSectionContent(SectionName, "Estudiantes");
           <StudentsSettings />
           break;
         case "courses":
+          ContentContext.SetSectionContent(SectionName, "Cursos");
           <CourseSettings />
           break;
         case "institution":
+          ContentContext.SetSectionContent(SectionName, "Institucion");
           <InstitutionInfo />
           break;
       }
@@ -46,6 +53,7 @@
 </section>
 
 @code {
+  private string SectionName { get; } = "Configuraciones";
   [Parameter]
   public string Direction { get; set; } = string.Empty;
   [Parameter]
@@ -53,15 +61,17 @@
   [CascadingParameter(Name = "Institution")]
   public Guid InstitutionId { get; set; }
   [Inject]
+  private ContentContext ContentContext { get; set; }
+  [Inject]
   private UserContext _userContext { get; set; }
   [Inject]
   private ISettingsService _settingsService { get; set; }
-
   private User User = new();
-
   private Menu Menu { get; set; } = new();
 
   protected override void OnInitialized() {
+    ContentContext.SetSectionContent("Configuraciones", "Mi cuenta");
+
     Menu = new Menu() {
       MenuLabels = new List<string>() {
         "configuraciones de usuario", "configuraciones de aplicacion", "configuraciones de estudiantes", "configuraciones de institucion"

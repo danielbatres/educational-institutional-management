@@ -1,0 +1,39 @@
+.theme-box {
+  min-width: 180px;
+  min-height: 180px;
+  border-radius: 10px;
+  border: var(--light-border);
+  margin: 8px 0 12px;
+}
+
+.selected-appearance {
+  border: 1px solid var(--dark-color);
+}
+
+.interface-theme {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-bottom: var(--light-border);
+  padding-bottom: 40px;
+}
+
+.appearance-info {
+  padding-bottom: 14px;
+  margin-bottom: 26px;
+  border-bottom: var(--light-border);
+}
+
+.interface-section {
+  min-width: 50%;
+}
+
+.interface-section:first-child {
+  margin-bottom: 20px;
+}
+
+.interface-section:last-child {
+  display: flex;
+  gap: 20px;
+  text-align: center;
+}

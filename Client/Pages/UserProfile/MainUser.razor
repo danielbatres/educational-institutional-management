@@ -12,9 +12,10 @@
               Configuraciones de usuario
             </h5>
             <ul>
-              <li class="my-account" @onclick="@(() => NavigationManager.NavigateTo($"/user-settings/{UserId}/profile"))">
+              <li class="my-account @(ProfileContext.SelectedContainer == 1 ? "selected-option" : "")" @onclick="@(() => SetSelection(1))">
+                <i class="fi fi-tr-circle-user icon-info"></i>
                 <p>Mi cuenta</p>
-                <i class="fi fi-tr-chevron-double-down" @onclick="@(() => MenuToggle = !MenuToggle)"></i>
+                <i class="fi fi-tr-chevron-double-down icn" @onclick="@(() => MenuToggle = !MenuToggle)"></i>
               </li>
             </ul>
           </div>
@@ -23,7 +24,9 @@
               Acceso de trabajo
             </h5>
             <ul>
-              <li @onclick="@(() => NavigationManager.NavigateTo($"/user-settings/{UserId}/membership-requests"))">
+              <li class="@(ProfileContext.SelectedContainer == 2 ? "selected-option" : "")"
+                @onclick="@(() => SetSelection(2))">
+                <i class="fi fi-tr-ballot icon-info"></i>
                 <p>Solicitudes de ingreso</p>
               </li>
             </ul>
@@ -32,6 +35,7 @@
         <div class="exit-sesion">
           <ul>
             <li>
+              <i class="fi fi-tr-address-card"></i>
               <p>Cerrar sesi&oacute;n</p>
             </li>
           </ul>
@@ -50,30 +54,35 @@
 </LandingComponents>
 
 @code {
-  private User UserBackup;
-  private User NewUser;
+  [Inject]
+  private ProfileContext ProfileContext { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
   [Inject]
   private NavigationManager NavigationManager { get; set; }
   [Inject]
   private IUserService UserService { get; set; }
-  [Inject]
-  private LoadingContext LoadingContext { get; set; }
   [Parameter]
   public string UserOption { get; set; }
   [Parameter]
   public String UserId { get; set; } = string.Empty;
   private bool MenuToggle { get; set; } = false;
-  private int SelectedContainer { get; set; } = 0;
-  private bool HasChanges = false;
 
   protected override void OnInitialized() {
     UserContext.OnChange += HandleStateChange;
+    ProfileContext.OnChange += HandleStateChange;
+  }
 
-    if (UserContext.User != null) {
-      UserBackup = UserContext.User.Clone();
-      NewUser = UserContext.User.Clone();
+  private void SetSelection(int selection) {
+    ProfileContext.SetSelectedContainer(selection);
+    
+    switch (selection) {
+      case 1:
+        NavigationManager.NavigateTo($"/user-settings/{UserId}/profile");
+        break;
+      case 2:
+        NavigationManager.NavigateTo($"/user-settings/{UserId}/membership-requests");
+        break;
     }
   }
 
@@ -87,57 +96,15 @@
     if (!UserId.Equals(Id)) {
       NavigationManager.NavigateTo("/");
     }
-  }
 
-  private async Task UpdateUser() {
-    LoadingContext.SetLoading(true);
-    LoadingContext.SetLoadingMessage("Actualizando tu usuario...");
-
-    await UserService.Update(NewUser);
-    UserBackup = UserContext.User.Clone();
-    NewUser = UserContext.User.Clone();
-    HasChanges = false;
-    LoadingContext.SetLoading(false);
-  }
-
-  private void SetChanges() {
-    HasChanges = !UserBackup.Equals(NewUser);
-  }
-
-  private void RevertChanges() {
-    NewUser = UserBackup.Clone();
-
-    HasChanges = false;
-  }
-
-  private void UpdateName(ChangeEventArgs e) {
-    NewUser.Name = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateLastName(ChangeEventArgs e) {
-    NewUser.LastName = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateLocation(ChangeEventArgs e) {
-    NewUser.Location = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateBio(ChangeEventArgs e) {
-    NewUser.Bio = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdateEmail(ChangeEventArgs e) {
-    NewUser.Register.Email = e.Value.ToString();
-    SetChanges();
-  }
-
-  private void UpdatePhoneNumber(ChangeEventArgs e) {
-    NewUser.PhoneNumber = e.Value.ToString();
-    SetChanges();
+    switch (UserOption) {
+      case "profile":
+        ProfileContext.SetSelectedContainer(1);
+        break;
+      case "membership-requests":
+        ProfileContext.SetSelectedContainer(2);
+        break;
+    }
   }
 
   private void HandleStateChange() {

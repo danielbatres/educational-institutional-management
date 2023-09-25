@@ -2,7 +2,7 @@
 
 <style>
   :root {
-    --primary-color: @_themeContext.SelectedTheme.LightColor;
+    --primary-color: @_themeContext.SelectedTheme.PrimaryColor;
     --background-color: @_themeContext.SelectedTheme.BackgroundColor;
     --light-background-color: @_themeContext.SelectedTheme.LightBackgroundColor;
     --light-color: @_themeContext.SelectedTheme.LightColor;
@@ -10,9 +10,24 @@
     --light-text-color: @_themeContext.SelectedTheme.LightTextColor;
     --dark-color: @_themeContext.SelectedTheme.DarkColor;
     --light-primary-color: @_themeContext.SelectedTheme.LightPrimaryColor;
-    --sm-text: 0.6rem;
+    --special-light-color: @_themeContext.SelectedTheme.SpecialLightColor;
+    --smaller-text: 0.6rem;
+    --small-text: 0.85rem;
     --regular-text: 0.95rem;
-    --title: 1.1rem;
+    --mid-title: 1.1rem;
+    --title: 1.3rem;
+  }
+
+  h4 {
+    font-size: var(--title);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h6 {
+    font-size: var(--mid-title);
+    font-weight: 500;
+    margin-bottom: 10px;
   }
 </style>
 

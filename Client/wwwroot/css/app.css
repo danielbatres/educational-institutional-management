@@ -1,10 +1,12 @@
 :root {
     --font-family: 'Be Vietnam Pro', sans-serif;
     --light-border: 1px solid var(--light-color);
+    --white: #FFFFFF;
     --success-color: #3DC13C;
     --danger-color: #F13637;
     --light-success-color: #3cc13c45;
     --light-danger-color: #f1363638;
+    --light-warning-color: #f3b91b5e;
     --warning-color: #F3BB1B;
 }
 
@@ -57,12 +59,12 @@ h1, h2, h3, h4, h5, h6 {
 
 h3 {
     font-size: var(--title);
-    font-weight: 400;
+    font-weight: 500;
 }
 
 h5 {
     margin-top: 8px;
-    font-size: var(--sm-text);
+    font-size: var(--smaller-text);
     margin-bottom: 10px;
     color: var(--light-text-color);
     font-weight: 300;
@@ -169,7 +171,6 @@ textarea {
     font-family: var(--font-family);
     font-weight: 300;
     font-size: var(--regular-text);
-    box-shadow: 5px 5px 25px var(--light-color);
 }
 
 .primary-background-button {
@@ -280,7 +281,10 @@ select {
 }
 
 .user-no-photo-container {
-    background-image: var("https://i.ibb.co/QM1z09q/circulo-de-usuario-1-2.png");
+    background-image: url("https://i.ibb.co/DVRbZwt/usr-1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .content {
@@ -445,7 +449,7 @@ select {
     min-width: 110px;
     min-height: 110px;
     border-radius: 100%;
-    background: var(--text-color);
+    border: var(--light-border);
 }
 
 .user-name-email p:first-child {

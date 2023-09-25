@@ -45,6 +45,8 @@
 @code {
   private bool IsSelected = false;
   [Inject]
+  private ContentContext ContentContext { get; set; }
+  [Inject]
   private UsersHubManager _usersHubManager { get; set; }
   [Inject]
   private UserContext _userContext { get; set; }
@@ -57,6 +59,8 @@
   private string SelectedUserTop { get; set; } = string.Empty;
 
   protected override async Task OnInitializedAsync() {
+    ContentContext.SetSectionContent("Dashboard", "Mi panel");
+    
     _usersHubManager.UsersUpdatedHandler(users => {
       Users = users;
       StateHasChanged();

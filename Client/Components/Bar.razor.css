@@ -25,7 +25,7 @@ section {
 
 .navigation-container h5 {
   margin-top: 10px;
-  font-size: var(--sm-text);
+  font-size: var(--smaller-text);
   margin-top: 20px;
   margin-bottom: 20px;
   color: var(--light-text-color);

@@ -1,28 +1,70 @@
 @using edu_institutional_management.Client.Pages.Chat
 @using System.Timers;
-
-<h4>Chat general</h4>
+@inject IJSRuntime JSRuntime
 
 <section>
-  <b class="typing">@Typing</b>
-  <article>
-    @foreach (var message in ChatMessages) {
-      User user = Users.Find(u => u.Id == message.UserId);
-      
-      if (user != null) {
-        <div class="message-card">
-          <b>@user.Name @user.LastName</b>
-          <p>@user.Register?.Email</p>
-          <p>@message.Message</p>
-          <p>@message.TimeStamp</p>
-        </div>
-      }
-    }
+  <article class="communication">
+    <div class="communication-side-bar">
+      <h5>Canales de comunicaci&oacute;n</h5>
+      <ul>
+        <li>
+          <i class="fi fi-tr-messages"></i>
+          <p>
+            Chat general
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div class="communication-chat">
+      <div class="chat-info">
+        <h4>Chat general</h4>
+        <p>Este es el chat general de la instituci&oacute;n, todos los miembros pueden enviar mensajes aqu&iacute;</p>
+        <b class="typing">@Typing</b>
+      </div>
+      <div class="messages" @ref="messagesContainer">
+        @foreach (var message in ChatMessages.OrderBy(c => c.TimeStamp)) {
+          User user = Users.Find(u => u.Id == message.UserId);
+          int index = ChatMessages.IndexOf(message);
+
+          if (user != null) {
+            if ((index - 1) >= 0) {
+              if (message.TimeStamp.Day.Equals(ChatMessages[index - 1].TimeStamp.Day)) {
+                <div>
+                  <div></div>
+                  <p></p>
+                  <div></div>
+                </div>
+              }
+            }
+            <div class="message-card">
+              <div>
+                <div class="user-image-message user-no-photo-container"></div>
+              </div>
+              <div class="message-container">
+                <div class="user-message-info">
+                  <p class="user-name-message">@user.Name @user.LastName</p>
+                  <p>@user.Register?.Email</p>
+                </div>
+                <div>
+                  <div class="message">
+                    <p>@message.Message</p>
+                  </div>
+                  <div class="message-date">
+                    <p>@message.TimeStamp</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </div>
+      <div class="chat-sender">
+        <input value="@ChatMessage.Message" type="text" class="input" placeholder="Escribe un mensaje" @oninput="@UpdateMessage" @onkeydown="HandleKeyPress">
+        <button type="button" class="button primary-background-button send-button" @onclick="@CreateMessage">Enviar <i class="fi fi-tr-paper-plane-top"></i> </button>
+      </div>
+    </div>
   </article>
-  <article>
-    <input value="@ChatMessage.Message" type="text" class="input" placeholder="Escribe un mensaje" @oninput="@UpdateMessage" @onkeydown="HandleKeyPress">
-    <button type="button" class="button" @onclick="@CreateMessage">Enviar </button>
-  </article>
+  <OnlineUsers />
 </section>
 
 @code {
@@ -40,6 +82,7 @@
   private string Typing { get; set; } = string.Empty;
   private Timer TypingTimer;
   private bool IsTyping = false;
+  private ElementReference messagesContainer;
 
   protected override async Task OnInitializedAsync() {
     _chatHubManager.ChatUpdatedHandler(chatMessages => {
@@ -62,6 +105,10 @@
     await SendUpdate();
   }
   
+  protected override async Task OnAfterRenderAsync(bool firstRender) {
+    await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesContainer);
+  }
+
   private async Task HandleKeyPress(KeyboardEventArgs e) {
     if (e.Key == "Enter") await CreateMessage();
   }

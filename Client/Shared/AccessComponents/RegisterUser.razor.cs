@@ -37,6 +37,7 @@ public partial class RegisterUser {
   };
   private int ErrorsQuantity { get; set; } = 0;
   private string CharactersMessage { get; set; } = "Caracteres 2 - 40";
+  private bool IsAccepted { get; set; } = false;
 
   private void GoogleSignIn() {
     NavigationManager.NavigateTo("/api/user/google-sign-in", true);
@@ -136,6 +137,8 @@ public partial class RegisterUser {
   }
 
   private async Task CreateNewUser() {
+    if (!IsAccepted) return;
+    
     LoadingContext.SetLoading(true);
     LoadingContext.SetLoadingMessage("Registrando tu usuario...");
 

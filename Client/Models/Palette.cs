@@ -1,4 +1,4 @@
-namespace edu_institutional_management.Client.Containers;
+namespace edu_institutional_management.Client.Models;
 
 public class Palette {
   public string? PrimaryColor { get; set; }
@@ -9,4 +9,5 @@ public class Palette {
   public string? LightTextColor { get; set; }
   public string? LightPrimaryColor { get; set; }
   public string? LightColor { get; set; }
+  public string? SpecialLightColor { get; set; }
 }

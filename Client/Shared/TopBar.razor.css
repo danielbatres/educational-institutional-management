@@ -52,7 +52,7 @@ h3 {
 
 .search input {
     width: 240px;
-    background: var(--primary-color);
+    background: var(--special-light-color);
 }
 
 .user-info {

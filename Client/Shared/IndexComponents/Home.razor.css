@@ -48,6 +48,21 @@ h2 span {
     color: var(--primary-color);
 }
 
+.product-view {
+    height: 600px;
+    width: 100%;
+    margin: 24px 0 0;
+}
+
+.product {
+    min-height: 600px;
+    width: 100%;
+    background-image: url("https://i.ibb.co/rtJghjj/product-view-2.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 767px) {
     button {
         width: 100%;

@@ -1,0 +1,87 @@
+<article class="online-side-bar">
+  @if (IsSelected)
+  {
+    <div class="user-target-information" style="top: @SelectedUserTop">
+      <div class="user-preferred-color"></div>
+      <div>
+        <p>@SelectedUser.Name @SelectedUser.LastName</p>
+        <p>@SelectedUser.Register.Email</p>
+      </div>
+      <div>
+        <h5>miembro desde</h5>
+        <p>15/9/2023</p>
+      </div>
+      <div>
+        <h5>roles asignados</h5>
+      </div>
+    </div>
+  }
+  <div class="online-users">
+    @foreach (User user in Users)
+    {
+      int index = Users.IndexOf(user);
+      <div>
+        <h5>Nombre del rol - 3</h5>
+        <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
+          <div class="user-information">
+            <div class="user-image">
+              @if (user.OnlineStatus.Status)
+              {
+                <div class="green-state"></div>
+              }
+            </div>
+            <div class="user-info">
+              <p>@user.Name @user.LastName</p>
+              <p>@user.Register.Email</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <button type="button" class="button" @onclick="@Disconnect">Desconectar</button>
+  </div>
+</article>
+@code {
+  private bool IsSelected = false;
+  [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private IUserService _userService { get; set; }
+  private List<User> Users = new();
+  private User SelectedUser { get; set; } = new();
+  private string SelectedUserTop { get; set; } = string.Empty;
+
+  protected override async Task OnInitializedAsync() {
+    _usersHubManager.UsersUpdatedHandler(users =>
+    {
+      Users = users;
+      StateHasChanged();
+    });
+
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private async Task Disconnect() {
+    _userContext.User.OnlineStatus.Status = false;
+    _userContext.User.OnlineStatus.LastConnection = DateTime.Now;
+    await _userService.Update(_userContext.User);
+
+    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void SetSelectedUser(int index) {
+    IsSelected = !IsSelected;
+
+    SelectedUser = Users[index];
+    if (index == 0)
+    {
+      SelectedUserTop = "1%";
+    }
+    else
+    {
+      SelectedUserTop = (index + 1) * 6 + "%";
+    }
+  }
+}
