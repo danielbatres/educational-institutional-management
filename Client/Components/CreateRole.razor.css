@@ -1,0 +1,43 @@
+.create-role-info {
+    border-bottom: var(--light-border);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    max-width: 100%;
+}
+
+form input {
+    width: 100%;
+}
+
+form .color-input {
+    max-width: 10%;
+    background: var(--background-color);
+    border: var(--light-border);
+}
+
+.label {
+    margin-bottom: 10px;
+}
+
+.create-rol-button {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+}
+
+.create-rol-button button {
+    align-self: self-end;
+}
+
+.recomendation-text {
+    margin-top: 10px;
+}

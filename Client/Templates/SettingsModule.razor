@@ -1,5 +1,7 @@
 @if (SettingsContext.ShowSettingsModal) { <SettingsModal /> }
 
+<SideSettingsForm />
+
 <section>
   <article>
     @ChildContent
@@ -15,6 +17,7 @@
 
   protected override void OnInitialized() {
     SettingsContext.SetShowSettingsModal(false);
+    SettingsContext.SetShowSideForm(false);
     SettingsContext.OnChange += HandleStateChange;
   }
 

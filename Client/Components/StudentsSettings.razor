@@ -1,133 +1,130 @@
-<style>
-  section {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-</style>
-
-<section>
-  <CreateCategory />
-
-  <h4>Estudiantes</h4>
-
-  <p>Configura la informaci&oacute;n de los estudiantes</p>
-
-  <div class="change-identifier">
-    <h4>Cambiar identificador &uacute;nico para los estudiantes</h4>
-    <p>Utilizar identificador por defecto</p>
-    
-    <div class="switch-container">
-      <input type="checkbox" class="switch-input" id="identifier-switch" checked="@StudentSettings.DefaultIdentifier" @onclick="@UpdateIdentifier">
-      <label class="switch-label" for="identifier-switch">
-        <div class="switch-handle"></div>
-      </label>
+<SettingsModule>
+  <div class="students-settings-container">
+    <div class="box-background">
+      <h4>Estudiantes</h4>
+      <p>Configura la informaci&oacute;n de los estudiantes</p>
     </div>
-    <p>Te recomendamos no utilizar el identificador por defecto</p>
-  </div>
 
-  <div class="student-information-settings">
-    <h4>Informaci&oacute;n de los estudiantes</h4>
-    <p>Crea y personaliza la informaci&oacute;n que se guardar&aacute; sobre los estudiantes</p>
-    <button type="button" class="button" @onclick="@(() => _studentContext.SetCategoryCreation(true))">Crear categor&iacute;a</button>
-  </div>
-
-  <div>
-    @foreach (var category in Categories) {
+    <div class="change-identifier box-background">
       <div>
-        <h4>@category.Name</h4>
-        <p>@category.Description</p>
+        <h4>Cambiar identificador &uacute;nico para los estudiantes</h4>
+        <p>Utilizar identificador por defecto (te recomendamos no utilizar el identificador por defecto)</p>
+      </div>
+      <div>
+        <div class="switch-container">
+        <input type="checkbox" class="switch-input" id="identifier-switch" checked="@StudentSettings.DefaultIdentifier" @onclick="@UpdateIdentifier">
+        <label class="switch-label" for="identifier-switch">
+          <div class="switch-handle"></div>
+        </label>
+      </div>
+      </div>
+    </div>
+
+    <div class="student-information-settings box-background">
+      <div>
+        <h4>Informaci&oacute;n de los estudiantes</h4>
+        <p>Crea y personaliza la informaci&oacute;n que se guardar&aacute; sobre los estudiantes</p>
+      </div>
+      <button type="button" class="button primary-background-button" @onclick="@(() => SetCategoryAction("create"))">Crear categor&iacute;a</button>
+    </div>
+
+    <div class="box-background">
+      @foreach (var category in Categories) {
+        <div class="category-info">
+          <div>
+            <h4>@category.Name</h4>
+            <p>@category.Description</p>
+          </div>  <div></div>
+          <button type="button" class="button primary-background-button">Actualizar categoria</button>
+        </div>
+        <div class="categories-list-fields">
+          <ul>
+            <li>
+              <p>Identificador del campo</p>
+            </li>
+            <li>
+              <p>Nombre del campo</p>
+            </li>
+            <li>
+              <p>Requerido</p>
+            </li>
+            <li>
+              <p>Tipo del campo</p>
+            </li>
+            <li>
+              <p>Acciones</p>
+            </li>
+          </ul>
+        </div>
+        <div class="fields">
+          @foreach (var field in category.Fields) {
+            <ul>
+              <li>
+                <p>1002</p>
+              </li>
+              <li>
+                <p>@field.Name</p>
+              </li>
+              <li>
+                <input type="checkbox" checked="@field.IsRequired">
+              </li>
+              <li>
+                <p>@field.FieldType</p>
+              </li>
+              <li>
+                <div>
+                  <i class="fi fi-tr-pen-square"></i>
+                </div>
+              </li>
+            </ul>
+          }
+        </div>
+      }
+      <div>
+        <h4>Datos generales del estudiante</h4>
+        <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
         <button type="button" class="button">Agregar campo</button>
       </div>
       <div class="categories-list-fields">
         <ul>
           <li>
-            <p>Identificador del campo</p>
+            <p>Identificador del campo</p>  
           </li>
           <li>
-            <p>Nombre del campo</p>
+            <p>Nombre del campo</p>  
           </li>
           <li>
-            <p>Requerido</p>
+            <p>Requerido</p>  
           </li>
           <li>
-            <p>Tipo del campo</p>
+            <p>Tipo del campo</p>  
           </li>
           <li>
-            <p>Acciones</p>
-          </li>
-        </ul>
+            <p>Acciones</p>  
+          </li>  
+        </ul>  
       </div>
       <div class="fields">
-        @foreach (var field in category.Fields) {
-          <ul>
-            <li>
-              <p>1002</p>
-            </li>
-            <li>
-              <p>@field.Name</p>
-            </li>
-            <li>
-              <input type="checkbox" checked="@field.IsRequired">
-            </li>
-            <li>
-              <p>@field.FieldType</p>
-            </li>
-            <li>
-              <div>
-                <i class="fi fi-tr-pen-square"></i>
-              </div>
-            </li>
-          </ul>
-        }
+        <ul>
+          <li>
+            <p>10002</p>  
+          </li>
+          <li>
+            <p>Nombre</p>  
+          </li>
+          <li>
+            <input type="checkbox">  
+          </li>
+          <li>
+            <p>Texto</p>  
+          </li>
+          <li>
+            <div>
+              <i class="fi fi-tr-pen-square"></i>
+            </div>
+          </li>
+        </ul>  
       </div>
-    }
-    <div>
-      <h4>Datos generales del estudiante</h4>
-      <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
-      <button type="button" class="button">Agregar campo</button>
-    </div>
-    <div class="categories-list-fields">
-      <ul>
-        <li>
-          <p>Identificador del campo</p>  
-        </li>
-        <li>
-          <p>Nombre del campo</p>  
-        </li>
-        <li>
-          <p>Requerido</p>  
-        </li>
-        <li>
-          <p>Tipo del campo</p>  
-        </li>
-        <li>
-          <p>Acciones</p>  
-        </li>  
-      </ul>  
-    </div>
-    <div class="fields">
-      <ul>
-        <li>
-          <p>10002</p>  
-        </li>
-        <li>
-          <p>Nombre</p>  
-        </li>
-        <li>
-          <input type="checkbox">  
-        </li>
-        <li>
-          <p>Texto</p>  
-        </li>
-        <li>
-          <div>
-            <i class="fi fi-tr-pen-square"></i>
-          </div>
-        </li>
-      </ul>  
     </div>
   </div>
-</section>
+</SettingsModule>

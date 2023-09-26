@@ -5,11 +5,25 @@ namespace edu_institutional_management.Client.Containers;
 
 public class SettingsContext : BaseContainer {
   public bool ShowSettingsModal { get; set; }
+  public bool ShowSideForm { get; set; }
   public ShowSettingsOption ShowSettingsOption { get; set; }
+  public ShowSideFormOptions  ShowSideFormOptions { get; set; }
   public User SelectedUser { get; set; } = new();
 
   public void SetShowSettingsModal(bool valueModal) {
     ShowSettingsModal = valueModal;
+
+    NotifyStateChanged();
+  }
+
+  public void SetShowSideForm(bool newValue) {
+    ShowSideForm = newValue;
+
+    NotifyStateChanged();
+  }
+
+  public void SetShowSideFormOptions(ShowSideFormOptions showOptions) {
+    ShowSideFormOptions = showOptions;
 
     NotifyStateChanged();
   }

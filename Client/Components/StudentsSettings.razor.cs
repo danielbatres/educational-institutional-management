@@ -17,6 +17,8 @@ public partial class StudentsSettings {
   private StudentSettingsHubManager _studentSettingsHubManager { get; set; }
   [Inject]
   private IStudentSettingsService _studentSettingsService { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
   private StudentSettings StudentSettings { get; set; } = new();
   private List<Category> Categories { get; set; } = new();
 
@@ -42,5 +44,18 @@ public partial class StudentsSettings {
 
     await _studentSettingsService.Update(StudentSettings);
     await _studentSettingsHubManager.SendStudentSettingsUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void SetCategoryAction(string action) {
+    switch (action) {
+      case "create":
+        SettingsContext.SetShowSideFormOptions(ShowSideFormOptions.CategoryCreation);
+        break;
+      case "update":
+        SettingsContext.SetShowSideFormOptions(ShowSideFormOptions.CategoryUpdate);
+        break;
+    }
+
+    SettingsContext.SetShowSideForm(true);
   }
 }

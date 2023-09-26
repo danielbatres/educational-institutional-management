@@ -1,4 +1,45 @@
+.students-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .fields ul, .categories-list-fields ul {
   display: flex;
   justify-content: space-between;
+}
+
+.fields ul li, .categories-list-fields ul li {
+  width: 20%;
+}
+
+.fields ul {
+  padding: 20px 10px;
+  border-bottom: var(--light-border);
+}
+
+.fields ul li:last-child, .categories-list-fields ul li:last-child {
+  width: 8%;
+}
+
+.change-identifier, .student-information-settings, .category-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.change-identifier .switch-container {
+  margin-right: 40px;
+}
+
+.categories-list-fields ul {
+  background: var(--light-color);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+input[type="checkbox"] {
+  background-color: var(--light-color);
+  color: var(--primary-color)
 }

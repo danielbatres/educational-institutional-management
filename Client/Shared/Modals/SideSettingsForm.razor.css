@@ -1,0 +1,18 @@
+.side-form-container {
+    position: absolute;
+    right: -45%;
+    width: 45%;
+    height: 100%;
+    z-index: 1000;
+    background: var(--background-color);
+    transition: right 0.4s ease-in-out;
+    padding: 24px;
+    box-shadow: -10px 10px 50px var(--light-color);
+}
+
+.exit-button {
+    position: absolute;
+    right: 20px;
+    top: 8px;
+    z-index: 1001;
+}

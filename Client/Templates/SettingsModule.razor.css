@@ -5,6 +5,7 @@ section {
   justify-content: center;
   overflow-y: auto;
   padding: 20px;
+  overflow-x: hidden;
 }
 
 article {

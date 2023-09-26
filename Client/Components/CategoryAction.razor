@@ -1,0 +1,44 @@
+<h4>Crear categoria</h4>
+<p>Crear categoria para guardar la informaci&oacute;n de los estudiantes</p>
+
+<form id="create-category">
+  <label for="category-name">Nombre de la categor&iacute;a</label>
+  <input value="@Category.Name" type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name" @oninput="@(e => Update(e, "name"))">
+  <label for="category-description">Descripci&oacute;n</label>
+  <input value="@Category.Description" type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description" @oninput="@(e => Update(e, "description"))">
+  <button type="button" class="button" @onclick="@AddField">Agregar campo</button>
+
+  @foreach (var field in Fields) {
+    int index = Fields.IndexOf(field);
+
+    <div>
+      <label for="field-@index">Nombre del campo</label>
+      <input value="@Fields[index].Name" type="text" class="input" id="field-@index" placeholder="Ingresar nombre del campo" @oninput="@(e => UpdateField(e, index))">
+
+      <label for="select-@index">Tipo del campo</label>
+      <select id="select-@index" @bind="@Fields[index].FieldType">
+        <option value="@FieldType.Text">Texto</option>
+        <option value="@FieldType.Number">Num&eacute;rico</option>
+        <option value="@FieldType.List">Lista</option>
+      </select>
+
+      @if (Fields[index].FieldType == FieldType.List) {
+        <button type="button" class="button" @onclick="@(() => AddOption(index))">Agregar nueva opci&oacute;n</button>
+        @foreach (var option in Fields[index].Options) {
+            int indexOption = Fields[index].Options.ToList().IndexOf(option);
+
+            <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text" placeholder="Ingresar nombre de la opción" class="input" @oninput="@(e => UpdateOption(e, index, indexOption))">
+            <button type="button" class="button" @onclick="@(() => RemoveOption(index, option))">
+              <i class="fi fi-tr-rectangle-xmark"></i>
+            </button>
+        }
+      }
+
+      <button type="button" class="button" @onclick="@(() => Fields.RemoveAt(index))">
+        <i class="fi fi-tr-rectangle-xmark"></i>  
+      </button>
+    </div>
+  }
+
+  <button type="button" class="button" @onclick="@CreateNewCategory">Crear categor&iacute;a</button>
+</form>

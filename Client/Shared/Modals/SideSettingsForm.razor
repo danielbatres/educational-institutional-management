@@ -1,0 +1,33 @@
+<div class="side-form-container" style="@(SettingsContext.ShowSideForm ? "right: 0;" : "")">
+    <button type="button" class="gray-button centered-container exit-button" @onclick="@ExitSideForm">
+        <i class="fi fi-tr-rectangle-xmark"></i>
+    </button>
+    @switch (SettingsContext.ShowSideFormOptions) {
+        case ShowSideFormOptions.CreateRole:
+            <CreateRole />
+            break;
+        case ShowSideFormOptions.CategoryCreation:
+            <CategoryAction ActionOption="create" />
+            break;
+        case ShowSideFormOptions.CategoryUpdate:
+            <CategoryAction ActionOption="update" />
+            break;
+    }
+</div>
+
+@code {
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+
+  protected override void OnInitialized() {
+    SettingsContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+
+  private void ExitSideForm() {
+    SettingsContext.SetShowSideForm(false);
+  }
+}

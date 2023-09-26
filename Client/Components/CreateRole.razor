@@ -1,28 +1,31 @@
-<style>
-  .create-role {
-    position: absolute;
-    right: -40%;
-    width: 40%;
-    height: 100%;
-    z-index: 1000;
-    background: var(--background-color);
-    transition: right 0.4s ease-in-out;
-   }
-</style>
-
-<div class="create-role" style="@(_roleContext.CreateNewRol ? "right: 0;" : "")">
-  <h4>Crear rol</h4>
-  <p>Crear un nuevo rol</p>
-  <button type="button" class="button transparent-button centered-container" @onclick="@ExitRoleCreation">
-    <i class="fi fi-tr-rectangle-xmark"></i>
-  </button>
-
-  <label for="name">Nombre del rol</label>
-  <input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
-  <label for="description">Descripci&oacute;n del rol</label>
-  <input value="@Role.Description" type="text" class="input" placeholder="Ingresar descripción del rol" id="description" @oninput="@(e => Update(e, "description"))">
-
-  <p>Seleccionar color del rol</p>
-
-  <button type="button" @onclick="@CreateNewRol" class="button">Crear rol</button>
+<div class="create-role-info">
+  <h4>Crear nuevo rol</h4>
+  <p>Crear un nuevo rol, ingresa la informaci&oacute;n para el nuevo rol</p>
 </div>
+<form>
+  <fieldset>
+    <div class="label">
+      <label for="name">Nombre del rol</label>
+    </div>
+    <input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="description">Descripci&oacute;n del rol</label>
+    </div>
+    <input value="@Role.Description" type="text" class="input" placeholder="Ingresar descripción del rol" id="description" @oninput="@(e => Update(e, "description"))">
+    <p class="recomendation-text">Sobre que se trata el nuevo rol</p>
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="color-input">
+        Seleccionar color del rol
+      </label>
+    </div>
+    <input type="color" class="color-input">
+    <p class="recomendation-text">Distingue el nuevo rol con un color especial</p>
+  </fieldset>
+  <div class="create-rol-button">
+    <button type="button" @onclick="@CreateNewRol" class="button primary-background-button">Crear rol</button>
+  </div>
+</form>

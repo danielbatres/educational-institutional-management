@@ -1,4 +1,4 @@
-<div>
+<SettingsModule>
   <div>
     <button type="button" class="button transparent-button centered-container" @onclick="@GoBackRoles">
       <i class="fi fi-tr-arrow-small-left"></i>
@@ -7,16 +7,32 @@
     <h4>Nombre del rol</h4>
     <p>Edita la informaci&oacute;n sobre este rol </p>
     <ul>
-      <li @onclick="@(() => MenuSelection = "general")">
+      <li @onclick="@(() => SetNavBarOptionSelection(0))">
         <p>General</p>  
       </li>
-      <li @onclick="@(() => MenuSelection = "permissions")">
+      <li @onclick="@(() => SetNavBarOptionSelection(1))">
         <p>Permisos</p>  
       </li>
-      <li @onclick="@(() => MenuSelection = "members")">
+      <li @onclick="@(() => SetNavBarOptionSelection(2))">
         <p>Miembros</p>  
       </li>
     </ul>
+
+    @if (false)
+      {
+        <ul class="nav-options">
+          <li class="@(NavBarOptionSelection == 0 ? "nav-selection-option" : "")"
+            @onclick="@(() => SetNavBarOptionSelection(0))">
+            <p>Administrar usuarios</p>
+          </li>
+          <li class="@(NavBarOptionSelection == 1 ? "nav-selection-option" : "")"
+            @onclick="@(() => SetNavBarOptionSelection(1))">
+            <p>
+              Buscar usuarios
+            </p>
+          </li>
+        </ul>
+      }
   </div>
   <div>
     @switch (MenuSelection){
@@ -31,29 +47,4 @@
       break;
     }
   </div>
-</div>
-
-@code {
-  private Role Role { get; set; } = new();
-  [Inject]
-  private RoleContext _roleContext { get; set; }
-  [Inject]
-  private RolesHubManager _rolesHubManager { get; set; }
-  [Inject]
-  private UserContext _userContext { get; set; }
-  private string MenuSelection { get; set; } = "general";
-  private List<Role> Roles { get; set; }
-  
-  protected override async Task OnInitializedAsync() {
-    _rolesHubManager.RolesUpdatedHandler(roles => {
-      Roles = roles;
-      StateHasChanged();
-    });
-
-    await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
-  }
-  
-  private void GoBackRoles() {
-    _roleContext.SetSelection("roles");
-  }
-}
+</SettingsModule>

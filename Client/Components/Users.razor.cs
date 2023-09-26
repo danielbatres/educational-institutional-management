@@ -12,12 +12,12 @@ public partial class Users {
   private UserContext UserContext { get; set; }
   [Inject]
   private UsersHubManager UsersHubManager { get; set; }
-  private int NavBarOptionSelection { get; set; }
   [Inject]
   private SettingsContext SettingsContext { get; set; }
   private string SearchValue { get; set; } = string.Empty;
   private List<User> UsersList { get; set; } = new();
   private bool IsBoxStyle { get; set; } = false;
+  private bool Loading { get; set; } = true;
 
   private void SearchUsers() {
     SettingsContext.SetShowSettingsModal(true);
@@ -31,9 +31,15 @@ public partial class Users {
     });
 
     await UsersHubManager.SendUsersUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+    await Task.Delay(400);
+    Loading = false;
   }
 
-  private void SetNavBarOptionSelection(int selection) {
-    NavBarOptionSelection = selection;
+  private void UpdateSearchValue(ChangeEventArgs e) {
+    SearchValue = e.Value.ToString();
+  }
+
+  private void Member() {
+
   }
 }

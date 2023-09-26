@@ -1,18 +1,13 @@
-section {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.roles-settings-container {
+.article {
   padding: 34px;
   width: 100%;
   min-width: 288px;
   max-width: 1400px;
+  height: 100%;
+}
+
+article:last-child {
+  height: 100%;
 }
 
 .roles-actions {
@@ -21,7 +16,7 @@ section {
   justify-content: space-between;
   gap: 8px;
   width: 100%;
-  padding: 24px 0px;
+  padding: 24px;
   margin: 10px 0px;
   border-bottom: 1px solid var(--light-color);
 }
@@ -46,7 +41,7 @@ section {
 
 .tags {
   display: flex;
-  background: var(--primary-color);
+  background: var(--light-color);
   border-radius: 10px;
   padding: 0px 10px;
 }

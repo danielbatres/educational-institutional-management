@@ -18,6 +18,8 @@ public partial class CreateRole {
   private IActivityService _activityService { get; set; }
   [Inject]
   private RoleContext _roleContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
 
   protected override void OnInitialized() {
     _roleContext.OnChange += HandleStateChange;
@@ -50,7 +52,7 @@ public partial class CreateRole {
   }
 
   private void ExitRoleCreation() {
-    _roleContext.SetRolCreation(false);
+    SettingsContext.SetShowSideForm(false);
 
     AssignNewRol();
   }

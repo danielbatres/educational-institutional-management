@@ -1,78 +1,75 @@
 @switch (_roleContext.Selection) {
   case "roles":
-    <section>
-     <CreateRole />
-      <div class="roles-settings-container">
-        <article>
+    <SettingsModule>
+      <article>
+        <div class="box-background">
+          <h3>
+            Roles de la instituci&oacute;n
+          </h3>
+          <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la instituci&oacute;n</p>
+        </div>
+        <div class="roles-actions box-background">
+          <input type="text" placeholder="Buscar rol" class="input">
+          <button type="button" class="button primary-background-button" @onclick="@(() => SetRoleCreation())">Crear rol</button>
+        </div>
+      </article>
+      <article class="roles-list-container box-background">
+        <div class="roles-list">
+          <ul class="tags">
+            <li>
+              <h5>Color</h5>
+            </li>
+            <li>
+              <h5>Nombre del rol</h5>
+            </li>
+            <li>
+              <h5>Cantidad de miembros</h5>
+            </li>
+            <li>
+              <h5>Cantidad de permisos</h5>
+            </li>
+            <li>
+              <h5>Acciones</h5>
+            </li>
+          </ul>
           <div>
-            <h3>
-              Roles de la instituci&oacute;n
-            </h3>
-            <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la instituci&oacute;n</p>
-          </div>
-          <div class="roles-actions">
-            <input type="text" placeholder="Buscar rol" class="input">
-            <button type="button" class="button primary-background-button" @onclick="@(() => _roleContext.SetRolCreation(true))">Crear rol</button>
-          </div>
-        </article>
-        <article>
-          <div class="roles-list">
-            <ul class="tags">
-              <li>
-                <h5>Color</h5>
-              </li>
-              <li>
-                <h5>Nombre del rol</h5>
-              </li>
-              <li>
-                <h5>Cantidad de miembros</h5>
-              </li>
-              <li>
-                <h5>Cantidad de permisos</h5>
-              </li>
-              <li>
-                <h5>Acciones</h5>
-              </li>
-            </ul>
-            <div>
-              @if (Loading) {
-                <div class="skeleton-container">
-                  @for (int i = 0; i < 10; i++) {
-                    <div class="skeleton-row"></div>
-                  }
-                </div>
-              } else {
-                @foreach (var role in UpdatedRoles) {
-                  Guid roleId = role.Id;
-
-                  <div class="rol-card">
-                    <ul class="rol-element">
-                      <li>
-                        <div></div>
-                      </li>
-                      <li>
-                        <p>@role.Name</p>
-                      </li>
-                      <li>
-                        <p>@role.MembersCount</p>
-                      </li>
-                      <li>
-                        <p>@role.PermissionsCount</p>
-                      </li>
-                      <li>
-                        <div class="update-rol centered-container" @onclick="@(() => SetSelection(roleId))">
-                          <i class="fi fi-tr-pen-square"></i>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+            @if (Loading) {
+              <div class="skeleton-container">
+                @for (int i = 0; i < 10; i++) {
+                  <div class="skeleton-row"></div>
                 }
+              </div>
+            } else {
+              @foreach (var role in UpdatedRoles) {
+                Guid roleId = role.Id;
+
+                <div class="rol-card">
+                  <ul class="rol-element">
+                    <li>
+                      <div></div>
+                    </li>
+                    <li>
+                      <p>@role.Name</p>
+                    </li>
+                    <li>
+                      <p>@role.MembersCount</p>
+                    </li>
+                    <li>
+                      <p>@role.PermissionsCount</p>
+                    </li>
+                    <li>
+                      <div class="update-rol centered-container" @onclick="@(() => SetSelection(roleId))">
+                        <i class="fi fi-tr-pen-square"></i>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               }
-            </div>
+            }
           </div>
-        </article>
-      </div>
-    </section>
+        </div>
+      </article>
+    </SettingsModule>
     break;
   case "show-role":
     <ShowRole />
@@ -89,12 +86,19 @@
   private NavigationManager _navigationManager { get; set; }
   [Inject]
   private RoleContext _roleContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
   private bool Loading { get; set; } = true;
 
   private void SetSelection(Guid roleId) {
     _roleContext.SetActualRoleId(roleId);
 
     _roleContext.SetSelection("show-role");
+  }
+
+  private void SetRoleCreation() {
+    SettingsContext.SetShowSideFormOptions(ShowSideFormOptions.CreateRole);
+    SettingsContext.SetShowSideForm(true);
   }
 
   protected override async Task OnInitializedAsync() {

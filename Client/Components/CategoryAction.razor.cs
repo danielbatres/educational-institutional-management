@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace edu_institutional_management.Client.Components;
 
-public partial class CreateCategory {
+public partial class CategoryAction {
   [Inject]
   private ICategoryService _categoryService { get; set; }
   [Inject]
@@ -21,7 +21,8 @@ public partial class CreateCategory {
   private IOptionService _optionService { get; set; }
   private Category Category { get; set; } = new();
   private List<Field> Fields { get; set; } = new();
-
+  [Parameter]
+  public string ActionOption { get; set; } = string.Empty;
 
   protected override void OnInitialized() {
     _studentContext.OnChange += HandleStateChange;
