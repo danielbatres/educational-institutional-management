@@ -28,62 +28,86 @@
       <button type="button" class="button primary-background-button" @onclick="@(() => SetCategoryAction("create"))">Crear categor&iacute;a</button>
     </div>
 
-    <div class="box-background">
       @foreach (var category in Categories) {
-        <div class="category-info">
-          <div>
-            <h4>@category.Name</h4>
-            <p>@category.Description</p>
-          </div>  <div></div>
-          <button type="button" class="button primary-background-button">Actualizar categoria</button>
-        </div>
-        <div class="categories-list-fields">
-          <ul>
-            <li>
-              <p>Identificador del campo</p>
-            </li>
-            <li>
-              <p>Nombre del campo</p>
-            </li>
-            <li>
-              <p>Requerido</p>
-            </li>
-            <li>
-              <p>Tipo del campo</p>
-            </li>
-            <li>
-              <p>Acciones</p>
-            </li>
-          </ul>
-        </div>
-        <div class="fields">
-          @foreach (var field in category.Fields) {
+        <div class="box-background">
+          <div class="category-info">
+            <div>
+              <h4>@category.Name</h4>
+              <p>@category.Description</p>
+            </div>  <div></div>
+            <button type="button" class="button primary-background-button">Actualizar categoria</button>
+          </div>
+          <div class="categories-list-fields">
             <ul>
               <li>
-                <p>1002</p>
+                <p>Identificador del campo</p>
               </li>
               <li>
-                <p>@field.Name</p>
+                <p>Nombre del campo</p>
               </li>
               <li>
-                <input type="checkbox" checked="@field.IsRequired">
+                <p>Requerido</p>
               </li>
               <li>
-                <p>@field.FieldType</p>
+                <p>Campo privado</p>
               </li>
               <li>
-                <div>
-                  <i class="fi fi-tr-pen-square"></i>
-                </div>
+                <p>Tipo del campo</p>
+              </li>
+              <li>
+                <p>Acciones</p>
               </li>
             </ul>
-          }
+          </div>
+          <div class="fields">
+            @foreach (var field in category.Fields) {
+              string fieldType = string.Empty;
+              
+              switch(field.FieldType) {
+                case FieldType.Text:
+                  fieldType = "Texto";
+                  break;
+                case FieldType.Number:
+                  fieldType = "Numérico";
+                  break;
+                case FieldType.List:
+                  fieldType = "Listado";
+                  break;
+              }
+              
+              <ul>
+                <li>
+                  <p>1002</p>
+                </li>
+                <li>
+                  <p>@field.Name</p>
+                </li>
+                <li>
+                  <input type="checkbox" checked="@field.IsRequired">
+                </li>
+                <li>
+                  <input type="checkbox" checked="@field.IsPrivateField">
+                </li>
+                <li>
+                  <p>@fieldType</p>
+                </li>
+                <li>
+                  <button class="gray-button">
+                    <i class="fi fi-tr-pen-square"></i>
+                  </button>
+                </li>
+              </ul>
+            }
+          </div>
         </div>
       }
-      <div>
-        <h4>Datos generales del estudiante</h4>
-        <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
-        <button type="button" class="button">Agregar campo</button>
+      <div class="box-background">
+        <div class="category-info">
+        <div>
+          <h4>Datos generales del estudiante</h4>
+          <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
+        </div>
+        <button type="button" class="button primary-background-button">Actualizar categoria</button>
       </div>
       <div class="categories-list-fields">
         <ul>
@@ -95,6 +119,9 @@
           </li>
           <li>
             <p>Requerido</p>  
+          </li>
+          <li>
+            <p>Campo privado</p>  
           </li>
           <li>
             <p>Tipo del campo</p>  
@@ -116,12 +143,15 @@
             <input type="checkbox">  
           </li>
           <li>
+            <input type="checkbox">  
+          </li>
+          <li>
             <p>Texto</p>  
           </li>
           <li>
-            <div>
+            <button class="gray-button">
               <i class="fi fi-tr-pen-square"></i>
-            </div>
+            </button>
           </li>
         </ul>  
       </div>

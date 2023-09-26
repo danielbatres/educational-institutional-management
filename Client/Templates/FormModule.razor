@@ -1,0 +1,9 @@
+<section>
+    @ChildContent
+</section>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

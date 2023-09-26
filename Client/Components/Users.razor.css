@@ -57,13 +57,13 @@
   justify-content: space-between;
 }
 
-.users-searcher form {
+.users-searcher .search-form {
   display: flex;
   width: 70%;
   gap: 10px;
 }
 
-.users-searcher form .input {
+.users-searcher .search-form .input {
   width: 100%;
 }
 
@@ -128,6 +128,10 @@
   border-radius: 100%;
   width: 18px;
   height: 18px;
+}
+
+.users-list-box-style .no-results {
+  width: 100%;
 }
 
 .user-properties ul li:first-child, .users-list ul li:first-child, .skeleton-load li:first-child {

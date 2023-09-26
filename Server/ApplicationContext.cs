@@ -299,6 +299,7 @@ public class ApplicationContext : DbContext {
             field.Property(f => f.Name);
             field.Property(f => f.IsRequired);
             field.Property(f => f.FieldType);
+            field.Property(f => f.IsPrivateField);
             field.HasMany(f => f.FieldsInformation).WithOne(fi => fi.Field).HasForeignKey(fi => fi.FieldId).OnDelete(DeleteBehavior.Cascade);
             field.HasMany(f => f.Options).WithOne(o => o.Field).HasForeignKey(o => o.FieldId).OnDelete(DeleteBehavior.Cascade);
         });

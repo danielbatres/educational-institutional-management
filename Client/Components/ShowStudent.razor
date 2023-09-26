@@ -1,4 +1,4 @@
-<section>
+<FormModule>
   <button type="button" class="button transparent-button centered-container" @onclick="@ExitStudentView">
     <i class="fi fi-tr-arrow-small-left"></i>
   </button>
@@ -8,15 +8,16 @@
     <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
   </div>
 
-  <div class="category-navigation">
+  <div class="category-navigation box-background">
     <ul>
-      <li @onclick="@(() => _studentContext.SetCurrentCategorySelectionId(Guid.Empty))">
+      <li class="@(NavigationOption == 0 ? "navigation-selection" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 0))">
         <p>Datos generales del estudiante</p>
       </li>
       @foreach (var category in Categories) {
         Guid cateogoryId = category.Id;
+        int index = Categories.IndexOf(category);
 
-        <li @onclick="@(() => _studentContext.SetCurrentCategorySelectionId(cateogoryId))">
+        <li class="@(NavigationOption == (index + 1) ? "navigation-selection" : "")" @onclick="@(() => SetNavigationOption(cateogoryId, (index + 1)))">
           <p>@category.Name</p>
         </li>
       }
@@ -52,4 +53,4 @@
   } else {
     <StudentGeneralData />
   }
-</section>
+</FormModule>

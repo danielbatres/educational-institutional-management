@@ -24,9 +24,9 @@
       <div class="users-searcher-container">
         <div>
           <div class="users-searcher">
-            <form>
-              <input value="@SearchValue" type="text" class="input" placeholder="Buscar usuarios en la institución" @oninput="@UpdateSearchValue">
-              <button type="button" class="button primary-background-button">
+            <div class="search-form">
+              <input value="@SearchValue" type="text" class="input" placeholder="Buscar usuarios en la institución" @oninput="@UpdateSearchValue" @onkeydown="@SearchUsersList">
+              <button type="button" class="button primary-background-button" @onclick="@Search">
                 Buscar
               </button>
               <div class="style-list-buttons">
@@ -37,12 +37,12 @@
                   <i class="fi fi-tr-rectangles-mixed"></i>
                 </button>
               </div>
-            </form>
+            </div>
             <div class="results-info">
               <div>
                 <p>Mostrando resultados</p>
                 <div class="results-quantity">
-                  <p>0</p>
+                  <p>@UsersListFiltered.Count</p>
                 </div>
               </div>
             </div>
@@ -91,13 +91,13 @@
               </ul>
             }
           } else {
-            @if (UsersList.Count.Equals(0)) {
+            @if (UsersListFiltered.Count.Equals(0)) {
               <div class="no-results">
                 <h4>No hay usuarios para mostrar</h4>
                 <p>No hemos encontrado ning&uacute;n usuario en la instituci&oacute;n</p>
               </div>
             }
-            @foreach (var user in UsersList) {
+            @foreach (var user in UsersListFiltered) {
               <ul>
                 <li>
                   <div class="user-status">

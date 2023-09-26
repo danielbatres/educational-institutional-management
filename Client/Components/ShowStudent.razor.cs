@@ -24,6 +24,7 @@ public partial class ShowStudent {
   [Inject]
   private IFieldInformationService _fieldInformationService { get; set; }
   private List<Category> _categories = new();
+  private int NavigationOption { get; set; } = 0;
   private List<Category> Categories {
     get => _categories;
     set {
@@ -36,6 +37,11 @@ public partial class ShowStudent {
   }
 
   private List<Field> Fields { get; set; } = new();
+
+  private void SetNavigationOption(Guid selectedCategoryId, int option) {
+    NavigationOption = option;
+    _studentContext.SetCurrentCategorySelectionId(selectedCategoryId);
+  }
 
   protected override async Task OnInitializedAsync() {
     _studentContext.OnChange += HandleStateChange;

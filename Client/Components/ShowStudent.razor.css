@@ -1,5 +1,13 @@
 .category-navigation ul {
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+}
+
+.navigation-selection {
+  border-bottom: 3px solid var(--primary-color);
+  padding: 20px;
+}
+
+.navigation-selection p {
+  color: var(--primary-color);
 }

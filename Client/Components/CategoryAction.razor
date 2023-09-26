@@ -2,11 +2,19 @@
 <p>Crear categoria para guardar la informaci&oacute;n de los estudiantes</p>
 
 <form id="create-category">
-  <label for="category-name">Nombre de la categor&iacute;a</label>
-  <input value="@Category.Name" type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name" @oninput="@(e => Update(e, "name"))">
-  <label for="category-description">Descripci&oacute;n</label>
-  <input value="@Category.Description" type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description" @oninput="@(e => Update(e, "description"))">
-  <button type="button" class="button" @onclick="@AddField">Agregar campo</button>
+  <fieldset>
+    <div class="label">
+      <label for="category-name">Nombre de la categor&iacute;a</label>
+    </div>
+    <input value="@Category.Name" type="text" class="input" placeholder="Ingresar nombre de la categoría" id="category-name" @oninput="@(e => Update(e, "name"))">
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="category-description">Descripci&oacute;n</label>
+    </div>
+    <input value="@Category.Description" type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description" @oninput="@(e => Update(e, "description"))">
+  </fieldset>
+  <button type="button" class="button primary" @onclick="@AddField">Agregar campo</button>
 
   @foreach (var field in Fields) {
     int index = Fields.IndexOf(field);
