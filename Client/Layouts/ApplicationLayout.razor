@@ -11,6 +11,9 @@
     --dark-color: @_themeContext.SelectedTheme.DarkColor;
     --light-primary-color: @_themeContext.SelectedTheme.LightPrimaryColor;
     --special-light-color: @_themeContext.SelectedTheme.SpecialLightColor;
+    --first-loading-color: @_themeContext.SelectedTheme.FirstLoadingColor;
+    --second-loading-color: @_themeContext.SelectedTheme.SecondLoadingColor;
+    --third-loading-color: @_themeContext.SelectedTheme.ThirdLoadingColor;
     --smaller-text: 0.6rem;
     --small-text: 0.85rem;
     --regular-text: 0.95rem;
@@ -36,11 +39,12 @@
     <div class="left-container" style="@(Toggle ? "width: 280px;" : "width: 100px;")">
       <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
       <div class="top">
-        <h2>@Institution.Name</h2>
+        <h2>Buen<b>Academia</b></h2>
+        <h5>@Institution.Name</h5>
       </div>
       <div class="bar">
         <CascadingValue Value="@Toggle" Name="Toggle">
-          <Bar IsToggle=@true Menu=@SideBarMenu Styles="max-width: 100%" />
+          <Bar SideBarOption="main-menu" IsToggle=@true Menu=@SideBarMenu Styles="max-width: 100%" />
         </CascadingValue>
       </div>
     </div>

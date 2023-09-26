@@ -1,0 +1,30 @@
+<div class="settings-modal-overlay">
+  <div class="settings-modal">
+    <i class="fi fi-tr-circle-xmark settings-exit-modal" @onclick="@ExitModal"></i>
+    @switch (SettingsContext.ShowSettingsOption) {
+      case ShowSettingsOption.SearchUsers:
+        <SearchUsers />
+        break;
+      case ShowSettingsOption.SendUserRequest:
+        <SendRequestUser />
+        break;
+    }
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+
+  protected override void OnInitialized() {
+    SettingsContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+
+  private void ExitModal() {
+    SettingsContext.SetShowSettingsModal(false);
+  }
+}

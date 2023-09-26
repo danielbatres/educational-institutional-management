@@ -6,12 +6,16 @@ namespace edu_institutional_management.Client.Containers;
 public class ThemeContext : BaseContainer {
   public Palette LightTheme { get; set; } = new () {
     PrimaryColor = "#4361EE",
-    BackgroundColor = "#FAFAFA",
-    LightBackgroundColor = "#FFFFFF",
+    BackgroundColor = "#FFFFFF",
+    LightBackgroundColor = "#f8f9fc",
     LightColor = "#ECECEC",
-    TextColor = "#828A91",
+    TextColor = "#a3a5b5",
+    LightTextColor = "#a3a4a5",
     DarkColor = "#0E1116",
-    LightPrimaryColor = "#D9DFFF"
+    LightPrimaryColor = "#D9DFFF",
+    FirstLoadingColor = "#f0f0f0",
+    SecondLoadingColor = "#e0e0e0",
+    ThirdLoadingColor = "#f0f0f0"
   };
   public Palette DarkTheme { get; set; } = new() {
     PrimaryColor = "#4361EE",
@@ -22,7 +26,10 @@ public class ThemeContext : BaseContainer {
     DarkColor = "#FFFFFF",
     LightPrimaryColor = "#292929",
     LightTextColor = "#75777d",
-    SpecialLightColor = "#242424"
+    SpecialLightColor = "#242424",
+    FirstLoadingColor = "#3c3c3c",
+    SecondLoadingColor = "#242424",
+    ThirdLoadingColor = "#3c3c3c"
   };
 
   public Palette SelectedTheme { get; set; }

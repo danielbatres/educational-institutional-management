@@ -1,0 +1,78 @@
+<div class="modal-title">
+  <h4>Enviar solicitud de ingreso</h4>
+  <p>Escribe un mensaje personalizado para el usuario</p>
+</div>
+<div class="destiny-container">
+  <h5>Enviar a</h5>
+  <div class="destiny">
+    <div class="user-image"></div>
+    <div class="destiny-user-info">
+      <div>
+        <p>@SettingsContext.SelectedUser.Name @SettingsContext.SelectedUser.LastName</p>
+        <p>
+          @SettingsContext.SelectedUser.Register.Email
+        </p>
+      </div>
+      <div>
+        <div class="username-selected">
+          <p>
+            @SettingsContext.SelectedUser.UserName
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="send-request">
+  <form>
+    <div class="label">
+      <label for="message">Mensage de solicitud</label>
+    </div>
+    <input value="@MembershipRequest.Message" type="text" placeholder="Escribir mensaje de solicitud" id="message"
+      class="input" @oninput="@UpdateMessage">
+      <p class="recomendation-message">Hazle saber tus motivaciones</p>
+    <div class="send-button">
+      <button type="button" class="button primary-background-button" @onclick="@SendRequest">
+        Enviar solicitud de ingreso
+      </button>
+    </div>
+  </form>
+</div>
+
+@code {
+  private MembershipRequest MembershipRequest { get; set; } = new();
+  [Inject]
+  private IMembershipRequestService _membershipRequestService { get; set; }
+  [Inject]
+  private UserContext _userContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+
+  protected override void OnInitialized() {
+    CreateNewRequest();
+  }
+
+  private void CreateNewRequest() {
+    MembershipRequest = new() {
+      Id = Guid.NewGuid(),
+      Author = $"{_userContext.User.Name} {_userContext.User.LastName}",
+      CreationDate = DateTime.Now,
+      IsAccepted = false,
+      InstitutionId = (Guid)_userContext.User.InstitutionId,
+      Message = string.Empty
+    };
+  }
+
+  private async Task SendRequest() {
+    MembershipRequest.ReceiverUserId = SettingsContext.SelectedUser.Id;
+
+    await _membershipRequestService.Create(MembershipRequest);
+
+    SettingsContext.SetShowSettingsModal(false);
+    // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
+  }
+
+  private void UpdateMessage(ChangeEventArgs e) {
+    MembershipRequest.Message = e.Value.ToString();
+  }
+}

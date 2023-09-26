@@ -159,9 +159,16 @@
   private NavigationManager _navigationManager { get; set; }
   [Inject]
   private CourseContext _courseContext { get; set; }
+  [Inject]
+  private SideBarContext SideBarContext { get; set; }
+  [Inject]
+  private ContentContext ContentContext { get; set; }
   private List<Course> CoursesList { get; set; } = new();
   
   protected override async Task OnInitializedAsync() {
+    SideBarContext.SetSelectedOptionMainMenu(2);
+    ContentContext.SetSectionContent("Cursos", "Ver cursos");
+
     _courseHubManager.CoursesUpdatedHandler(courses => {
       CoursesList = courses;
       StateHasChanged();

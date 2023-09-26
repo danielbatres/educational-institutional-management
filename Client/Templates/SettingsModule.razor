@@ -1,3 +1,5 @@
+@if (SettingsContext.ShowSettingsModal) { <SettingsModal /> }
+
 <section>
   <article>
     @ChildContent
@@ -8,4 +10,15 @@
   [Parameter]
   [EditorRequired]
   public RenderFragment? ChildContent { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+
+  protected override void OnInitialized() {
+    SettingsContext.SetShowSettingsModal(false);
+    SettingsContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
 }

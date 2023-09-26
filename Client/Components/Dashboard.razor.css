@@ -12,6 +12,16 @@ article {
 
 section article:first-child {
   width: 82%;
+  padding: 20px;
+}
+
+.greeting {
+  width: 30%;
+  height: 180px;
+  border-radius: 10px;
+  background: var(--background-color);
+  padding: 20px;
+  border: var(--light-border);
 }
 
 section article:last-child {

@@ -21,13 +21,20 @@
               int Index = j;
 
               <div
-                class="@(selectedContainer == Menu.MenuItems[i][j][2] ? "selected" : "") @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "") button-container"
+                class="@(GetSelectedContainer() == Menu.MenuItems[i][j][2] ? "selected" : "") @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "") button-container"
               @onclick="(() => SetSelectedValues(Menu.MenuItems[ListIndex][Index][3], Menu.MenuItems[ListIndex][Index][2]))"
               >
                 <i class="@Menu.MenuItems[i][j][1]"></i>
                 @if(IsToggle) {
                   @if (Toggle) {
-                    <p>@Menu.MenuItems[i][j][0]</p>
+                    <div class="item-bar">
+                      <p>@Menu.MenuItems[i][j][0]</p>
+                      @if (int.Parse(Menu.MenuItems[i][j][4]) > 0) {
+                        <div class="active-notification centered-container">
+                          <span>@Menu.MenuItems[i][j][4]</span>
+                        </div>
+                      }
+                    </div>
                   } 
                 } else {
                   <p>@Menu.MenuItems[i][j][0]</p>
@@ -38,7 +45,7 @@
       </div>
     </div>
     <div class="settings padding-sides">
-      <div class="@(selectedContainer == Menu.LastOption[2] ? "selected" : "") button-container @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => SetSelectedValues(Menu.LastOption[3], Menu.LastOption[2]))">
+      <div class="@(GetSelectedContainer() == Menu.LastOption[2] ? "selected" : "") button-container @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => SetSelectedValues(Menu.LastOption[3], Menu.LastOption[2]))">
         <i class="@Menu.LastOption[1]"></i>
         @if (IsToggle) {
           @if (Toggle) {

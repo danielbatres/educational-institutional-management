@@ -12,6 +12,7 @@ public class User : MainUser {
   public OnlineStatus? OnlineStatus { get; set; }
   public Register? Register { get; set; }
   public Payment? Payment { get; set; }
+  public ICollection<TelephoneNumber>? TelephoneNumbers { get; set; }
   public ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
   [NotMapped]
   [JsonIgnore]

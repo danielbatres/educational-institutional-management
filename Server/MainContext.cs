@@ -11,6 +11,7 @@ public class MainContext : DbContext {
     public DbSet<OnlineStatus> OnlineStatuses { get; set; }
     public DbSet<PaymentType> PaymentTypes { get; set; }
     public DbSet<Payment> Payments { get; set; }
+    public DbSet<TelephoneNumber> TelephoneNumbers { get; set; }
     public DbSet<MembershipRequest> MembershipRequests { get; set; }
 
     public MainContext(DbContextOptions<MainContext> options) : base(options) {
@@ -82,6 +83,12 @@ public class MainContext : DbContext {
             payment.HasOne(p => p.User).WithOne(u => u.Payment).HasForeignKey<Payment>(p => p.UserId).IsRequired(false);
         });
 
+        modelBuilder.Entity<TelephoneNumber>(telephoneNumber => {
+            telephoneNumber.HasKey(t => t.Id);
+            telephoneNumber.Property(t => t.Id).ValueGeneratedOnAdd();
+            telephoneNumber.Property(t => t.PhoneNumber);
+        });
+
         modelBuilder.Entity<User>(user => {
             user.HasKey(x => x.Id);
             user.Property(x => x.UserName).IsRequired().HasMaxLength(100);
@@ -95,6 +102,7 @@ public class MainContext : DbContext {
             user.HasOne(u => u.Register).WithOne(r => r.User).HasForeignKey<Register>(r => r.UserId);
             user.HasOne(u => u.Institution).WithMany(i => i.Users).HasForeignKey(u => u.InstitutionId);
             user.HasOne(u => u.OnlineStatus).WithOne(e => e.User).HasForeignKey<OnlineStatus>(e => e.UserId);
+            user.HasMany(u => u.TelephoneNumbers).WithOne(t => t.User).HasForeignKey(t => t.UserId);
         });
 
         modelBuilder.Entity<MembershipRequest>(request => {

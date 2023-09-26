@@ -1,0 +1,29 @@
+.settings-modal-overlay {
+  position: fixed;
+  width: 72%;
+  height: 94%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-modal {
+  position: relative;
+  min-width: 200px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 10px;
+  border: var(--light-border);
+  background: var(--background-color);
+  padding: 20px;
+}
+
+.settings-exit-modal {
+  position: absolute;
+  color: var(--danger-color);
+  right: 10px;
+  top: 10px;
+}

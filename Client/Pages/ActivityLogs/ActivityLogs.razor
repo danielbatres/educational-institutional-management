@@ -8,4 +8,13 @@
 @code {
   [Parameter]
   public string InstitutionId { get; set; }
+  [Inject]
+  private SideBarContext SideBarContext { get; set; }
+  [Inject]
+  private ContentContext ContentContext { get; set; }
+
+  protected override void OnInitialized() {
+    SideBarContext.SetSelectedOptionMainMenu(5);
+    ContentContext.SetSectionContent("Actividad", "Registro de actividad");
+  }
 }

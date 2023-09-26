@@ -10,8 +10,11 @@
   public string InstitutionId { get; set; }
   [Inject]
   private ContentContext ContentContext { get; set; }
+  [Inject]
+  private SideBarContext SideBarContext { get; set; }
 
   protected override void OnInitialized() {
+    SideBarContext.SetSelectedOptionMainMenu(6);
     ContentContext.SetSectionContent("Comunicación", "Chat general");
   }
 }

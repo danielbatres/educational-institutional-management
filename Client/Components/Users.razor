@@ -1,117 +1,146 @@
 <SettingsModule>
-  <div class="users-info">
-    <h4>
-      Usuarios de la instituci&oacute;n
-    </h4>
-    <p>Aqu&iacute; puedes ver y administrar la informaci&oacute;n de los usuarios que est&aacute;n asociados a la instituci&oacute;n, puedes buscar un usuario para poder enviarle una solicitud de ingreso
-    </p>
-  </div>
-  <ul>
-    <li>Administrar usuarios</li>
-    <li>Buscar usuarios</li>
-  </ul>
-  <input type="text" class="input" placeholder="Buscar usuarios">
-  <div class="users-list">
-    <div>
-      <ul>
-        <li>
-          Foto
-        </li>
-        <li>
-          Username
-        </li>
-        <li>
-          Nombre de usuario
-        </li>
-        <li>
-          Correo electrónico de usuario
-        </li>
-      </ul>
+  <div class="users-container">
+    <div class="users-info">
+      <div class="box-background">
+        <h4>
+          Usuarios de la instituci&oacute;n
+        </h4>
+        <p>Aqu&iacute; puedes ver y administrar la informaci&oacute;n de los usuarios que est&aacute;n asociados a la
+          instituci&oacute;n, puedes buscar un usuario para poder enviarle una solicitud de ingreso
+        </p>
+      </div>
     </div>
-    <div>
-      @foreach (User user in UsersNoInstitution) {
-        User selectedUser = user;
-        <div @onclick="@(() => SelectedUser = selectedUser)">
-          <ul>
-            <li>
-              
-            </li>
-            <li>
-              <p>
-                
-              </p>
-            </li>
-            <li>
-              <p>
-                @user.Name @user.LastName
-              </p>
-            </li>
-            <li>
-              <p>
-                @user.Register.Email
-              </p>
-            </li>
-          </ul>
+    <div class="admin-users-info-container box-background">
+      <div class="admin-users-info">
+        <div>
+          <h6>Administrar usuarios</h6>
+          <p>Administra los usuarios de la instituci&oacute;n</p>
         </div>
+        <div>
+          <button type="button" class="button primary-background-button search-users-button" @onclick="@SearchUsers">
+            <i class="fi fi-tr-users-medical"></i>Buscar usuarios</button>
+        </div>
+      </div>
+      <div class="users-searcher-container">
+        <div>
+          <div class="users-searcher">
+            <form>
+              <input value="@SearchValue" type="text" class="input" placeholder="Buscar usuarios en la institución">
+              <button type="button" class="button primary-background-button">
+                Buscar
+              </button>
+              <div class="style-list-buttons">
+                <button type="button" class="gray-button centered-container" @onclick="@(() => IsBoxStyle = false)">
+                  <i class="fi fi-tr-diagram-cells"></i>
+                </button>
+                <button type="button" class="gray-button centered-container" @onclick="@(() => IsBoxStyle = true)">
+                  <i class="fi fi-tr-rectangles-mixed"></i>
+                </button>
+              </div>
+            </form>
+            <div class="results-info">
+              <div>
+                <p>Mostrando resultados</p>
+                <div class="results-quantity">
+                  <p>0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          @if (!IsBoxStyle) {
+            <div class="user-properties">
+              <ul>
+                <li>
+                  <h5>
+                    Estado en l&iacute;nea
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    Datos de usuario
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    Correo electr&oacute;nico
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    Informaci&oacute;n de contacto
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    Acciones
+                  </h5>
+                </li>
+              </ul>
+            </div>
+          }
+        </div>
+        <div class="@(IsBoxStyle ? "users-list-box-style" : "users-list") users-list-container">
+          @if (false) {
+            <div class="no-results">
+              <h4>No hay usuarios para mostrar</h4>
+              <p>No hemos encontrado ning&uacute;n usuario en la instituci&oacute;n</p>
+            </div>
+          }
+          @for (int i = 0; i < 8; i++) {
+            <ul>
+              <li>
+                <div class="user-status">
+                </div>
+              </li>
+              <li>
+                @if (IsBoxStyle) { <h5>Datos de usuario</h5> }
+                <div class="user-data-list">
+                  <div class="user-data-image">
+                  </div>
+                  <div class="user-data-info">
+                    <p>
+                      Daniel Alessandro Garcia Batres
+                    </p>
+                    <p>
+                      username
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                @if (IsBoxStyle) { <h5>Informaci&oacute;n de contacto</h5> }
+                <p>correoelectronico@gmail.com</p>
+              </li>
+              <li>
+                <p>127218</p>
+              </li>
+              <li>
+                <div class="user-actions">
+                  <button type="button" class="gray-button delete-user-button">
+                    <i class="fi fi-tr-rectangle-xmark"></i>
+                    @if (IsBoxStyle) { <span>Expulsar</span> }
+                  </button>
+                </div>
+              </li>
+            </ul>
+          }
+        </div>
+      </div>
+      @if (false)
+      {
+        <ul class="nav-options">
+          <li class="@(NavBarOptionSelection == 0 ? "nav-selection-option" : "")"
+            @onclick="@(() => SetNavBarOptionSelection(0))">
+            <p>Administrar usuarios</p>
+          </li>
+          <li class="@(NavBarOptionSelection == 1 ? "nav-selection-option" : "")"
+            @onclick="@(() => SetNavBarOptionSelection(1))">
+            <p>
+              Buscar usuarios
+            </p>
+          </li>
+        </ul>
       }
     </div>
   </div>
-  <div class="send-request">
-    <p>Enviar a</p>
-    <div class="user-image"></div>
-    <p>Nombre del usuario</p>
-    <p>
-      correoelectronico@email.com
-    </p>
-    <label for="message">Mensage de solicitud</label>
-    <input value="@MembershipRequest.Message" type="text" placeholder="Escribir mensaje de solicitud" id="message" class="input" @oninput="@UpdateMessage">
-    <button type="button" class="button" @onclick="@SendRequest">
-      Enviar solicitud de ingreso
-    </button>
-  </div>
 </SettingsModule>
-
-@code {
-  private List<User> UsersNoInstitution { get; set; } = new();
-  private User SelectedUser { get; set; } = new();
-  private MembershipRequest MembershipRequest { get; set; } = new();
-  [Inject]
-  private IMembershipRequestService _membershipRequestService { get; set; }
-  [Inject]
-  private UserContext _userContext { get; set; }
-  [Inject]
-  private IUserService _userService { get; set; }
-
-  protected override async Task OnInitializedAsync() {
-    UsersNoInstitution = await _userService.GetNoInstitutionUsers();
-  }
-
-  private void UpdateMessage(ChangeEventArgs e) {
-    MembershipRequest.Message = e.Value.ToString();
-  }
-
-  protected override void OnInitialized() {
-    CreateNewRequest();
-  }
-  
-  private void CreateNewRequest() {
-    MembershipRequest = new() {
-      Id = Guid.NewGuid(),
-      Author = $"{_userContext.User.Name} {_userContext.User.LastName}",
-      CreationDate = DateTime.Now,
-      IsAccepted = false,
-      InstitutionId = (Guid) _userContext.User.InstitutionId,
-      Message = string.Empty
-    };
-  }
-
-  private async Task SendRequest() {
-    MembershipRequest.ReceiverUserId = SelectedUser.Id;
-
-    await _membershipRequestService.Create(MembershipRequest);
-  
-    CreateNewRequest();
-    Console.WriteLine("Solicitud enviada");
-    // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
-  } 
-}

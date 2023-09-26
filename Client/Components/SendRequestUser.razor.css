@@ -1,0 +1,64 @@
+.destiny-container {
+  border-radius: 10px;
+  border: var(--light-border);
+  padding: 0 10px 10px;
+  margin: 20px 0;
+}
+
+.destiny {
+  display: flex;
+  gap: 12px;
+}
+
+.user-image {
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 100%;
+  background: var(--light-color);
+}
+
+.destiny-user-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.destiny-user-info div:first-child p:first-child {
+  color: var(--dark-color);
+  font-weight: 500;
+}
+
+.destiny-user-info div:first-child p:last-child {
+  font-size: var(--small-text);
+}
+
+.username-selected {
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--light-color);
+}
+
+.label {
+  margin: 16px 0 14px;
+}
+
+.send-button {
+  display: flex;
+  justify-content: right;
+  margin-top: 28px;
+}
+
+.recomendation-message {
+  margin-top: 8px;
+  font-size: var(--small-text);
+}
+
+label {
+  font-size: var(--regular-text);
+  font-weight: 400;
+  color: var(--dark-color);
+}
+
+input {
+  width: 100%;
+}

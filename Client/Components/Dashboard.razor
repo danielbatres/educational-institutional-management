@@ -1,6 +1,11 @@
 <section>
   <article>
-
+    <div class="greeting">
+      <h4>
+        Hola, @UserContext.User.Name
+      </h4>
+      <p>Este es tu panel principal</p>
+    </div>
   </article>
   <article class="dashboard-side-bar">
     @if (IsSelected) {
@@ -41,50 +46,3 @@
     </div>
   </article>
 </section>
-
-@code {
-  private bool IsSelected = false;
-  [Inject]
-  private ContentContext ContentContext { get; set; }
-  [Inject]
-  private UsersHubManager _usersHubManager { get; set; }
-  [Inject]
-  private UserContext _userContext { get; set; }
-  [Inject]
-  private NavigationManager _navigationManager { get; set; }
-  [Inject]
-  private IUserService _userService { get; set; }
-  private List<User> Users = new();
-  private User SelectedUser { get; set; } = new();
-  private string SelectedUserTop { get; set; } = string.Empty;
-
-  protected override async Task OnInitializedAsync() {
-    ContentContext.SetSectionContent("Dashboard", "Mi panel");
-    
-    _usersHubManager.UsersUpdatedHandler(users => {
-      Users = users;
-      StateHasChanged();
-    });
-
-    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-
-  private async Task Disconnect() {
-    _userContext.User.OnlineStatus.Status = false;
-    _userContext.User.OnlineStatus.LastConnection = DateTime.Now;
-    await _userService.Update(_userContext.User);
-
-    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-
-  private void SetSelectedUser(int index) {
-    IsSelected = !IsSelected;
-
-    SelectedUser = Users[index];
-    if (index == 0) {
-      SelectedUserTop = "1%";
-    } else {
-      SelectedUserTop = (index + 1) * 6 + "%";
-    }
-  }
-}

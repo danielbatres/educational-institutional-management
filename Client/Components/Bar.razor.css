@@ -60,7 +60,7 @@ section {
 }
 
 .selected-item {
-  background: var(--primary-color);
+  background: var(--light-primary-color);
 }
 
 .selected-item p,
@@ -91,13 +91,32 @@ section {
 
 .selected p,
 .selected i {
-  color: var(--dark-color);
+  color: var(--white);
 }
 
 .line-over {
   width: 100%;
   border-bottom: 1px solid var(--light-color);
   margin: 5px 3px;
+}
+
+.item-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.active-notification {
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 100%;
+  background: var(--primary-color);
+  margin-right: 5px;
+}
+
+.active-notification span {
+  font-size: var(--smaller-text);
+  color: var(--white);
 }
 
 @keyframes fadeIn {

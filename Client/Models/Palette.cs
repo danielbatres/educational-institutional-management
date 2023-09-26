@@ -10,4 +10,7 @@ public class Palette {
   public string? LightPrimaryColor { get; set; }
   public string? LightColor { get; set; }
   public string? SpecialLightColor { get; set; }
+  public string? FirstLoadingColor { get; set; }
+  public string? SecondLoadingColor { get; set; }
+  public string? ThirdLoadingColor { get; set; }
 }

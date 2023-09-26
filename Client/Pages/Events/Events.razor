@@ -239,9 +239,16 @@
 @code {
   [Parameter]
   public string? InstitutionId { get; set; }
+  [Inject]
+  private SideBarContext SideBarContext { get; set; }
+  [Inject]
+  private ContentContext ContentContext { get; set; }
   private List<string> Months = new();
 
   protected override void OnInitialized() {
+    SideBarContext.SetSelectedOptionMainMenu(4);
+    ContentContext.SetSectionContent("Eventos", "Ver eventos");
+
     Months.Add("Enero");
     Months.Add("Febrero");
     Months.Add("Marzo");

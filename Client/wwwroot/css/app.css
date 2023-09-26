@@ -67,7 +67,7 @@ h5 {
     font-size: var(--smaller-text);
     margin-bottom: 10px;
     color: var(--light-text-color);
-    font-weight: 300;
+    font-weight: 400;
     animation: fadeIn 0.5s ease-in-out;
     text-transform: uppercase;
 }
@@ -75,7 +75,7 @@ h5 {
 p {
     font-size: var(--regular-text);
     color: var(--text-color);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 span::selection, p::selection, h5::selection {
@@ -94,6 +94,18 @@ a, ul {
 
 h1:focus {
     outline: none;
+}
+
+.box-background {
+    background: var(--background-color);
+    border-radius: 10px;
+    padding: 20px;
+    border: var(--light-border);
+}
+
+.modal-title {
+    padding: 10px;
+    border-bottom: var(--light-border);
 }
 
 .mid-title {
@@ -166,7 +178,7 @@ textarea {
 .button {
     min-width: 100px;
     padding: 8px 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     font-family: var(--font-family);
     font-weight: 300;
@@ -185,6 +197,18 @@ textarea {
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     transition: background-color 200ms ease-in-out 0.01s;
+}
+
+.gray-button {
+    border-radius: 8px;
+    padding: 6px 14px;
+    margin: 5px;
+    cursor: pointer;
+    background: var(--light-color);
+    border: 1px solid var(--background-color);
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: var(--regular-text);
 }
 
 .transparent-button {
@@ -244,7 +268,7 @@ textarea {
     max-width: 100%;
     padding: 8px 0 8px 10px;
     border: 1px solid var(--light-color);
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: var(--regular-text);
     font-family: var(--font-family);
     color: var(--text-color);
@@ -277,7 +301,6 @@ select {
 
 .selected {
     background: var(--primary-color);
-    border: 1px solid var(--primary-color);
 }
 
 .user-no-photo-container {
@@ -485,16 +508,16 @@ fieldset {
     height: 100%;
     border-radius: 4px;
     overflow: hidden;
-    margin: 20px auto;
+    margin: auto;
 }
 
 .skeleton-row {
     height: 40px;
     margin: 8px 0;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, var(--first-loading-color) 0%, var(--second-loading-color) 50%, var(--third-loading-color) 75%);
     border-radius: 10px;
     background-size: 200% 100%;
-    animation: loading 1.5s infinite;
+    animation: loading 1.4s infinite;
 }
 
 .switch-container {

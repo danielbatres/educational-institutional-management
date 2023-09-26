@@ -36,37 +36,37 @@ public partial class ApplicationLayout {
       MenuItems = new List<List<List<string>>>() {
         new() {
           new() {
-            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}"
+            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}", "0"
           },
           new() {
-            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students"
+            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students", "0"
           },
           new() {
-            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses"
+            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses", "0"
           },
           new() {
-            "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", $"/application/{InstitutionId}/statistics"
+            "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", $"/application/{InstitutionId}/statistics", "0"
           }
         },
         new() {
           new() {
-            "Eventos", "fi fi-tr-calendar-day", "4", $"/application/{InstitutionId}/events"
+            "Eventos", "fi fi-tr-calendar-day", "4", $"/application/{InstitutionId}/events", "0"
           },
           new() {
-            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity"
+            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity", "0"
           },
           new() {
-            "Comunicación", "fi fi-tr-comments", "6", $"/application/{InstitutionId}/chat"
+            "Comunicación", "fi fi-tr-comments", "6", $"/application/{InstitutionId}/chat", "0"
           }
         },
         new() {
           new() {
-            "Entorno", "fi fi-tr-notes", "7", $"/application/{InstitutionId}/workspace",
+            "Entorno", "fi fi-tr-notes", "7", $"/application/{InstitutionId}/workspace", "0"
           }
         }
       },
       LastOption = new() {
-        "Configuraciones", "fi fi-tr-gears", "8", $"/application/{InstitutionId}/settings/my-account"
+        "Configuraciones", "fi fi-tr-gears", "8", $"/application/{InstitutionId}/settings/my-account", "0"
       }
     };
 

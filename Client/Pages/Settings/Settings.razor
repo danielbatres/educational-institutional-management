@@ -4,11 +4,12 @@
 <PageTitle>Aplicaci&oacute;n | Configuraciones</PageTitle>
 
 <section>
-  <Bar IsToggle=@false Menu=@Menu Styles="min-width: 5%; max-width: 18%;"/>
+  <Bar SideBarOption="settings-menu" IsToggle=@false Menu=@Menu Styles="min-width: 5%; max-width: 18%;"/>
   <div class="settings-content">
       @switch (Direction) {
         case "my-account":
           ContentContext.SetSectionContent(SectionName, "Mi cuenta");
+          SideBarContext.SetSelectedOptionSettingsMenu(0);
           <UserProfile />
           <article>
             <div>
@@ -26,26 +27,32 @@
           break;
         case "roles":
           ContentContext.SetSectionContent(SectionName, "Roles");
+          SideBarContext.SetSelectedOptionSettingsMenu(3);
           <Roles />
           break;
         case "users":
           ContentContext.SetSectionContent(SectionName, "Usuarios");
+          SideBarContext.SetSelectedOptionSettingsMenu(2);
           <Users />
           break;
         case "appearance":
           ContentContext.SetSectionContent(SectionName, "Apariencia");
+          SideBarContext.SetSelectedOptionSettingsMenu(1);
           <AppearanceSettings />
           break;
         case "students":
           ContentContext.SetSectionContent(SectionName, "Estudiantes");
+          SideBarContext.SetSelectedOptionSettingsMenu(4);
           <StudentsSettings />
           break;
         case "courses":
           ContentContext.SetSectionContent(SectionName, "Cursos");
+          SideBarContext.SetSelectedOptionSettingsMenu(5);
           <CourseSettings />
           break;
         case "institution":
           ContentContext.SetSectionContent(SectionName, "Institucion");
+          SideBarContext.SetSelectedOptionSettingsMenu(7);
           <InstitutionInfo />
           break;
       }
@@ -66,10 +73,14 @@
   private UserContext _userContext { get; set; }
   [Inject]
   private ISettingsService _settingsService { get; set; }
+  [Inject]
+  private SideBarContext SideBarContext { get; set; }
   private User User = new();
   private Menu Menu { get; set; } = new();
 
   protected override void OnInitialized() {
+    SideBarContext.SetSelectedOptionMainMenu(8);
+    SideBarContext.SetSelectedOptionSettingsMenu(0);
     ContentContext.SetSectionContent("Configuraciones", "Mi cuenta");
 
     Menu = new Menu() {
