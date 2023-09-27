@@ -1,25 +1,26 @@
 <SettingsModule>
-  <div>
-    <button type="button" class="button transparent-button centered-container" @onclick="@GoBackRoles">
-      <i class="fi fi-tr-arrow-small-left"></i>
-    </button>
-  
-    <h4>Nombre del rol</h4>
-    <p>Edita la informaci&oacute;n sobre este rol </p>
-    <ul>
-      <li @onclick="@(() => SetNavBarOptionSelection(0))">
-        <p>General</p>  
-      </li>
-      <li @onclick="@(() => SetNavBarOptionSelection(1))">
-        <p>Permisos</p>  
-      </li>
-      <li @onclick="@(() => SetNavBarOptionSelection(2))">
-        <p>Miembros</p>  
-      </li>
-    </ul>
+  <div class="roles-container">
+    <div class="box-background">
+      <div class="role-name">
+        <button type="button" class="gray-button" @onclick="@GoBackRoles">
+          <i class="fi fi-tr-arrow-small-left"></i>
+        </button>
+        <h4>@Roles.FirstOrDefault(r => r.Id.Equals(_roleContext.ActualRoleIdSelection))?.Name</h4>
+      </div>
+      <p>Edita la informaci&oacute;n sobre este rol </p>
+      <ul class="navigation-bar-options">
+        <li class="@(NavBarOptionSelection == 0 ? "selected-navigation" : "")" @onclick="@(() => SetNavBarOptionSelection(0))">
+          <p>General</p>  
+        </li>
+        <li class="@(NavBarOptionSelection == 1 ? "selected-navigation" : "")" @onclick="@(() => SetNavBarOptionSelection(1))">
+          <p>Permisos</p>  
+        </li>
+        <li class="@(NavBarOptionSelection == 2 ? "selected-navigation" : "")" @onclick="@(() => SetNavBarOptionSelection(2))">
+          <p>Miembros</p>  
+        </li>
+      </ul>
 
-    @if (false)
-      {
+      @if (false) {
         <ul class="nav-options">
           <li class="@(NavBarOptionSelection == 0 ? "nav-selection-option" : "")"
             @onclick="@(() => SetNavBarOptionSelection(0))">
@@ -33,18 +34,19 @@
           </li>
         </ul>
       }
-  </div>
-  <div>
-    @switch (MenuSelection){
-      case "general":
-      <GeneralRole />
-      break;
-      case "permissions":
-      <PermissionRole Roles="@Roles" />
-      break;
-      case "members":
-      <RoleMembers />
-      break;
-    }
+    </div>
+    <div>
+      @switch (MenuSelection){
+        case "general":
+          <GeneralRole />
+          break;
+        case "permissions":
+          <PermissionRole Roles="@Roles" />
+          break;
+        case "members":
+          <RoleMembers />
+          break;
+      }
+    </div>
   </div>
 </SettingsModule>

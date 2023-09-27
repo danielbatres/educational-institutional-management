@@ -1,39 +1,70 @@
-<form id="general-role">
-  <fieldset>
-    <div class="label">
-      <label for="role-name">Nombre del rol</label>
-    </div>
-    <input type="text" class="input" placeholder="Ingresar nombre del rol" id="role-name">
-  </fieldset>
-  <div>
+<div class="general-role-container">
+  <div class="box-background role-action">
     <div>
-      <label for="input-color">Color del rol</label>
+      <h4>Informaci&oacute;n general del rol</h4>
+      <p>Informaci&oacute;n general del rol, modifica los campos que desees</p>
     </div>
-    <div class="color-boxes">
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
-        <div class="color-box"></div>
+    <div class="role-buttons">
+      <button type="button" class="button transparent-button">Cancelar</button>
+      <button type="button" class="button primary-background-button">Guardar</button>
     </div>
-    <input type="color" id="input-color">
   </div>
-  <fieldset>
-    <div class="label">
-      <label for="role-description">Descripci&oacute;n del rol</label>
-    </div> 
-    <textarea id="role-description" maxlength="1024" placeholder="Ingresa tu biografía"></textarea>  
-  </fieldset>
-</form>
+  <form id="general-role" class="box-background">
+    <fieldset>
+      <div class="label">
+        <label for="role-name">Nombre del rol</label>
+        <p>Distingue el rol con un nombre atractivo</p>
+      </div>
+      <input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="role-name" @oninput="@(e => UpdateText(e, "role-name"))">
+    </fieldset>
+    <div class="fieldset-colors">
+      <div class="label">
+        <label for="input-color">Color del rol</label>
+        <p>Selecciona un color para el rol</p>
+      </div>
+      <div class="color-boxes">
+        @for (int i = 0; i < 9; i++) {
+          <div class="color-box"></div>
+        }
+      </div>
+      <input type="color" id="input-color">
+    </div>
+    <fieldset>
+      <div class="label">
+        <label for="role-description">Descripci&oacute;n del rol</label>
+      </div>
+      <textarea value="@Role.Description" id="role-description" maxlength="1024" placeholder="Ingresa tu biografía" @oninput="@(e => UpdateText(e, "role-description"))"></textarea>
+    </fieldset>
+  </form>
+</div>
 
 @code {
+  [Inject]
+  private RolesHubManager RolesHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private RoleContext RoleContext { get; set; }
+  private Role Role { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    RolesHubManager.RolesUpdatedHandler(roles => {
+      Role = roles.FirstOrDefault(r => r.Id.Equals(RoleContext.ActualRoleIdSelection));
+      StateHasChanged();
+    });
+
+    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
   private void UpdateText(ChangeEventArgs e, string update) {
+    string value = e.Value.ToString() ?? string.Empty;
+
     switch (update) {
-      case "":
+      case "role-name":
+        Role.Name = value;
+        break;
+      case "role-description":
+        Role.Description = value;
         break;
     }
   }

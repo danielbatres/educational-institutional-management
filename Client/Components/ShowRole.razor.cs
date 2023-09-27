@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 namespace edu_institutional_management.Client.Components;
 
 public partial class ShowRole {
-    private Role Role { get; set; } = new();
+  private Role Role { get; set; } = new();
   [Inject]
   private RoleContext _roleContext { get; set; }
   [Inject]
@@ -15,7 +15,7 @@ public partial class ShowRole {
   [Inject]
   private UserContext _userContext { get; set; }
   private string MenuSelection { get; set; } = "general";
-  private List<Role> Roles { get; set; }
+  private List<Role> Roles { get; set; } = new();
   private int NavBarOptionSelection { get; set; }
   
    private void SetNavBarOptionSelection(int selection) {

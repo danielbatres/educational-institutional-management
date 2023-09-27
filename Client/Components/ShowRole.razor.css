@@ -1,0 +1,22 @@
+.roles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;    
+}
+
+.role-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.role-name h4 {
+    margin: 0;
+}
+
+.navigation-bar-options {
+    margin-top: 20px;
+    border-top: var(--light-border);
+}
+

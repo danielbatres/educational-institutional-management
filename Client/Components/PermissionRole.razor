@@ -1,11 +1,11 @@
 <h5>Permisos de administraci&oacute;n de la aplicaci&oacute;n</h5>
 
-<div>
+<div class="permissions-container">
   @foreach (var permission in Permissions) {
     int index = Permissions.IndexOf(permission);
     bool isRolePermission = RolePermissions.Any(r => r.PermissionId == permission.Id);
 
-    <div>
+    <div class="box-background permission-content">
       <div>
         <h4>@SetPermissionName(permission.Name)</h4>
         <p>@permission.Description</p>

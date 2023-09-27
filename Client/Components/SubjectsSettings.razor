@@ -5,9 +5,34 @@
   </div>
 
   <div class="box-background">
-    @foreach (var subject in Subjects) {
-      <h4>@subject.Name</h4>
-    }
+    <ul class="subjects-tags-fields">
+      <li>
+        <p>Nombre de la materia</p>
+      </li>
+      <li>
+        <p>Color de la materia</p>
+      </li>
+      <li>
+        <p>Acciones</p>
+      </li>
+    </ul>
+    <div>
+      @foreach (var subject in Subjects) {
+        <ul>
+          <li>
+            <p>@subject.Name</p>
+          </li>
+          <li>
+            <div></div>
+          </li>
+          <li>
+            <button type="button" class="gray-button">
+
+            </button>
+          </li>
+        </ul>
+      }
+    </div>
   </div>
 </SettingsModule>
 

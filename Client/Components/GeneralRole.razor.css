@@ -1,7 +1,48 @@
+.general-role-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0 20px;
+}
+
+.role-action {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.role-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  min-width: 100%;
+  margin: 10px 0;
+  border-bottom: var(--light-border);
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+fieldset input {
+  max-width: 60%;
+  width: 100%;
+}
+
+.fieldset-colors {
+}
+
 .color-boxes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
+  min-width: 200px;
+  max-width: 200px;
+  margin: 20px;
 }
 
 .color-box {
