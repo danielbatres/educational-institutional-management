@@ -102,6 +102,29 @@ h1:focus {
     padding: 20px;
     border: var(--light-border);
 }
+.navigation-bar-options {
+    display: flex;
+    border-bottom: var(--light-border);
+}
+
+.navigation-bar-options li {
+    padding: 10px;
+    transition: border 0.15s ease-in-out;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+}
+
+.navigation-bar-options li p {
+    transition: color 0.15s ease-in-out;
+}
+
+.navigation-bar-options .selected-navigation {
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.selected-navigation p {
+    color: var(--primary-color);
+}
 
 .modal-title {
     padding: 10px;

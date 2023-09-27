@@ -1,7 +1,10 @@
-<section>
-  <h4>Informaci&oacute;n de la instituci&oacute;n</h4>
+<SettingsModule>
+  <div class="box-background">
+    <h4>Informaci&oacute;n de la instituci&oacute;n</h4>
+    <p>Aqu&iacute; puedes editar la informaci&oacute;n de la instituci&oacute;n</p>
+  </div>
 
-  <form>
+  <form class="box-background">
     <fieldset>
       <div class="label">
         <label for="institution-name">Nombre de la instituci&oacute;n</label>
@@ -22,7 +25,7 @@
     </fieldset>
     <button type="button" @onclick="@UpdateInstitution" class="button">Actualizar instituci&oacute;n</button>
   </form>
-</section>
+</SettingsModule>
 
 @code {
   [Inject]

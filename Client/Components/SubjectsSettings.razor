@@ -1,0 +1,31 @@
+<SettingsModule>
+  <div class="box-background">
+    <h4>Asignaturas</h4>
+    <p>Secci&oacute;n de materias de la instituci&oacute;n, cada materia puede ser asignada a cualquier curso</p>
+  </div>
+
+  <div class="box-background">
+    @foreach (var subject in Subjects) {
+      <h4>@subject.Name</h4>
+    }
+  </div>
+</SettingsModule>
+
+@code {
+  [Inject]
+  private ISubjectService SubjectService { get; set; }
+  [Inject]
+  private SubjectHubManager SubjectHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  private List<Subject> Subjects { get; set; } = new();
+
+  protected override async Task OnInitializedAsync() {
+    SubjectHubManager.SubjectsUpdatedHandler(subjects => {
+      Subjects = subjects;
+      StateHasChanged();
+    });
+
+    await SubjectHubManager.SendSubjectsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+}

@@ -9,22 +9,17 @@ namespace edu_institutional_management.Client.Components;
 
 public partial class CourseSettings {
   [Inject]
-  private ISubjectService _subjectService { get; set; }
-  [Inject]
   private ICourseService _courseService { get; set; }
   [Inject]
   private CourseContext _courseContext { get; set; }
   [Inject]
   private CourseHubManager _courseHubManager { get; set; }
   [Inject]
-  private SubjectHubManager _subjectHubManager { get; set; }
-  [Inject]
   private UserContext _userContext { get; set; }
   [Inject]
   private ISubjectCourseService _subjectCourseService { get; set; }
   [Inject]
   private ICourseScheduleService _courseScheduleService { get; set; }
-  private Subject Subject { get; set; } = new();
   private List<Subject> Subjects { get; set; } = new();
   private SubjectCourse SubjectCourse { get; set; }
   private List<SubjectCourse> SubjectsCourse { get; set; } = new();
@@ -32,30 +27,28 @@ public partial class CourseSettings {
   private List<Course> Courses { get; set; } = new();
   private int RenderCount { get; set; } = 0;
   private string SubjectId { get; set; } = string.Empty;
+  private int NavigationOption { get; set; } 
 
   protected override void OnInitialized() {
-    AssignNewSubject();
     AssignNewCourseSchedule();
     _courseContext.SetNewCourse();
   }
   
   protected override async Task OnInitializedAsync() {
-    _subjectHubManager.SubjectsUpdatedHandler(subjects => {
-      Subjects = subjects;
-      StateHasChanged();
-    });
-  
     _courseHubManager.CoursesUpdatedHandler(courses => {
       Courses = courses;
       StateHasChanged();
     });
   
     string groupName = _userContext.User.InstitutionId.ToString() ?? string.Empty;
-  
-    await _subjectHubManager.SendSubjectsUpdatedAsync(groupName);
+
     await _courseHubManager.SendCoursesUpdatedAsync(groupName);
   }
   
+  private void SetNavigationOption(int option) {
+    NavigationOption = option;
+  }
+
   protected override async Task OnAfterRenderAsync(bool isFirstRender) {
     /*if (RenderCount < 2 && RenderCount > 0) {
       if (Courses.Count > 0)
@@ -65,23 +58,11 @@ public partial class CourseSettings {
     RenderCount += 1;*/
   }
   
-  private void AssignNewSubject() {
-    Subject = new() {
-      Id = Guid.NewGuid(),
-      Name = string.Empty
-    };
-  }
-  
   private void AssignNewCourseSchedule() {
     CourseSchedule = new() {
-      Id = Guid.NewGuid()
+      Id = Guid.NewGuid(),
+      DayOfWeek = DayOfWeek.Monday
     };
-  }
-  
-  private async Task CreateNewSubject() {
-    await _subjectService.Create(Subject);
-  
-    AssignNewSubject();
   }
   
   private async Task CreateNewCourse() {

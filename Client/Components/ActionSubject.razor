@@ -1,0 +1,46 @@
+<div class="modal-title">
+  <h6>Agregar nueva asignatura</h6>
+  <p>Ingresa la informaci&oacute;n para crear la nueva asignatura</p>
+</div>
+<div>
+  <form>
+    <div class="label">
+      <label for="subject-name"></label>
+    </div>
+    <input @bind="@Subject.Name" type="text" class="input" placeholder="Ingresar nombre de la materia" id="subject-name">
+  </form>
+  <button type="button" class="button" @onclick="@CreateNewSubject">Agregar materia</button>
+</div>
+
+@code {
+  [Inject]
+  private ISubjectService SubjectService { get; set; }
+  [Inject]
+  private SubjectHubManager SubjectHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Parameter]
+  public string Action { get; set; } = string.Empty;
+  private Subject Subject { get; set; }
+
+  protected override void OnInitialized() {
+    AssignNewSubject();
+  }
+
+  protected override async Task OnInitializedAsync() {
+    await SubjectHubManager.SendSubjectsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void AssignNewSubject() {
+    Subject = new() {
+      Id = Guid.NewGuid(),
+      Name = string.Empty
+    };
+  }
+
+  private async Task CreateNewSubject() {
+    await SubjectService.Create(Subject);
+
+    AssignNewSubject();
+  }
+}

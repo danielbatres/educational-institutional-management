@@ -45,10 +45,10 @@
           SideBarContext.SetSelectedOptionSettingsMenu(4);
           <StudentsSettings />
           break;
-        case "courses":
-          ContentContext.SetSectionContent(SectionName, "Cursos");
+        case "subjects":
+          ContentContext.SetSectionContent(SectionName, "Asignaturas");
           SideBarContext.SetSelectedOptionSettingsMenu(5);
-          <CourseSettings />
+          <SubjectsSettings />
           break;
         case "institution":
           ContentContext.SetSectionContent(SectionName, "Institucion");
@@ -109,7 +109,7 @@
             "Estudiantes", "fi fi-tr-book-bookmark", "4", $"/application/{InstitutionId}/settings/students" 
           },
           new() {
-            "Cursos", "fi fi-tr-hockey-puck", "5", $"/application/{InstitutionId}/settings/courses" 
+            "Asignaturas", "fi fi-tr-hockey-puck", "5", $"/application/{InstitutionId}/settings/subjects" 
           },
           new() {
             "Pagos", "fi fi-tr-wallet", "6", $"/application/{InstitutionId}/settings/payments"
