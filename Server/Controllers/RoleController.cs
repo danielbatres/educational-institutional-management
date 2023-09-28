@@ -20,4 +20,12 @@ public class RoleController : ControllerBase {
 
     return Ok();
   }
+
+  [HttpPut]
+  [Route("update")]
+  public async Task<IActionResult> Update([FromBody] Role role) {
+    await _roleService.Update(role);
+
+    return Ok();
+  }
 }

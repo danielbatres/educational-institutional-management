@@ -1,74 +1,104 @@
 @switch (_roleContext.Selection) {
   case "roles":
     <SettingsModule>
-      <article>
+      <div class="roles-container">
         <div class="box-background">
-          <h3>
+          <h4>
             Roles de la instituci&oacute;n
-          </h3>
-          <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la instituci&oacute;n</p>
-        </div>
+          </h4>
+          <p>Crea y edita roles personalizables, selecciona sus permisos y asignalos a los miembros de la
+            instituci&oacute;n</p>
+        </div> 
         <div class="roles-actions box-background">
-          <input type="text" placeholder="Buscar rol" class="input">
-          <button type="button" class="button primary-background-button" @onclick="@(() => SetRoleCreation())">Crear rol</button>
+          <input value="@SearchValue" type="text" placeholder="Buscar rol" class="input" @oninput="@UpdateSearchValue"
+            @onkeydown="@HandleRoleSearch">
+          <button type="button" class="button primary-background-button" @onclick="@Search">Buscar rol</button>
+          <button type="button" class="button primary-background-button" @onclick="@(() => SetRoleCreation())">Crear
+            rol</button>
         </div>
-      </article>
-      <article class="roles-list-container box-background">
-        <div class="roles-list">
-          <ul class="tags">
-            <li>
-              <h5>Color</h5>
-            </li>
-            <li>
-              <h5>Nombre del rol</h5>
-            </li>
-            <li>
-              <h5>Cantidad de miembros</h5>
-            </li>
-            <li>
-              <h5>Cantidad de permisos</h5>
-            </li>
-            <li>
-              <h5>Acciones</h5>
-            </li>
-          </ul>
-          <div>
-            @if (Loading) {
-              <div class="skeleton-container">
-                @for (int i = 0; i < 10; i++) {
-                  <div class="skeleton-row"></div>
-                }
-              </div>
-            } else {
-              @foreach (var role in UpdatedRoles) {
-                Guid roleId = role.Id;
-
-                <div class="rol-card">
-                  <ul class="rol-element">
-                    <li>
-                      <div></div>
-                    </li>
-                    <li>
-                      <p>@role.Name</p>
-                    </li>
-                    <li>
-                      <p>@role.MembersCount</p>
-                    </li>
-                    <li>
-                      <p>@role.PermissionsCount</p>
-                    </li>
-                    <li>
-                      <button class="gray-button" @onclick="@(() => SetSelection(roleId))">
-                        <i class="fi fi-tr-pen-square"></i>
-                      </button>
-                    </li>
-                  </ul>
+        <div class="roles-list-container box-background">
+          <div class="roles-list">
+            <ul class="tags" @onclick="@(() => StatusModalContext.SetStatus(StatusType.Success))">
+              <li>
+                <p>Color</p>
+              </li>
+              <li>
+                <p>Nombre del rol</p>
+              </li>
+              <li>
+                <p>Cantidad de miembros</p>
+              </li>
+              <li>
+                <p>Cantidad de permisos</p>
+              </li>
+              <li>
+                <p>Acciones</p>
+              </li>
+            </ul>
+            <div>
+              @if (Loading)
+              {
+                <div class="skeleton-load">
+                  @for (int i = 0; i < 10; i++)
+                  {
+                    <ul>
+                      @for (int j = 0; j < 5; j++)
+                      {
+                        <li>
+                          <div class="skeleton-row"></div>
+                        </li>
+                      }
+                    </ul>
+                  }
                 </div>
               }
-            }
+              else
+              {
+                if (UpdatedRolesFilter.Count.Equals(0))
+                {
+                  <div class="no-roles-results">
+                    <h4>
+                      No encontramos roles para mostrar
+                    </h4>
+                    <p>No encontramos ning&uacute;n rol en la busqueda</p>
+                  </div>
+                }
+                else
+                {
+                  @foreach (var role in UpdatedRolesFilter)
+                  {
+                    Guid roleId = role.Id;
+
+                    <div class="rol-card">
+                      <ul class="rol-element scale-list">
+                        <li>
+                          <div class="color-box" style="background: @role.RoleColor;"></div>
+                        </li>
+                        <li>
+                          <p>@role.Name</p>
+                        </li>
+                        <li>
+                          <i class="fi fi-tr-book-user"></i>
+                          <p>@role.MembersCount</p>
+                        </li>
+                        <li>
+                          <i class="fi fi-tr-list-timeline"></i>
+                          <p>@role.PermissionsCount</p>
+                        </li>
+                        <li>
+                          <button class="gray-button" @onclick="@(() => SetSelection(roleId))">
+                            <i class="fi fi-tr-pen-square"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  }
+                }
+              }
+            </div>
           </div>
         </div>
-      </article>
+      </div>
     </SettingsModule>
     break;
   case "show-role":
@@ -77,6 +107,7 @@
 }
 
 @code {
+  private List<Role> UpdatedRolesFilter { get; set; } = new();
   private List<Role> UpdatedRoles { get; set; } = new();
   [Inject]
   private RolesHubManager _rolesHubManager { get; set; }
@@ -88,7 +119,11 @@
   private RoleContext _roleContext { get; set; }
   [Inject]
   private SettingsContext SettingsContext { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
   private bool Loading { get; set; } = true;
+  private string SearchValue { get; set; } = string.Empty;
+  private int RenderCount { get; set; } = 0;
 
   private void SetSelection(Guid roleId) {
     _roleContext.SetActualRoleId(roleId);
@@ -108,7 +143,36 @@
     });
 
     await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+
+    await Task.Delay(400);
     Loading = false;
+  }
+
+  protected override void OnAfterRender(bool firstRender) {
+    if (RenderCount.Equals(1)) {
+      UpdatedRolesFilter = UpdatedRoles.ToList();
+    }
+
+    RenderCount++;
+  }
+
+  private void HandleRoleSearch(KeyboardEventArgs e) {
+    if (e.Key == "Enter") {
+      Search();
+    }
+  }
+
+  private void Search() {
+    if (!string.IsNullOrEmpty(SearchValue)) {
+      UpdatedRolesFilter = UpdatedRoles.Where(r =>
+      r.Name.ToLower().Contains(SearchValue.ToLower())).ToList();
+    } else {
+      UpdatedRolesFilter = UpdatedRoles.ToList();
+    }
+  }
+
+  private void UpdateSearchValue(ChangeEventArgs e) {
+    SearchValue = e.Value.ToString();
   }
 
   protected override void OnInitialized() {

@@ -36,7 +36,7 @@ public class ApplicationContext : DbContext {
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
-        ChangeTracker.AutoDetectChangesEnabled = false;
+        ChangeTracker.AutoDetectChangesEnabled = false;   
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

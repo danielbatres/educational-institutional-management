@@ -25,6 +25,8 @@ form .color-input {
 }
 
 .label {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 

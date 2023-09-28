@@ -18,6 +18,8 @@ public partial class ApplicationLayout {
   private RolesHubManager _rolesHubManager { get; set; }
   [Inject]
   private ISettingsService _settingsService { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
   public Guid InstitutionId { get; set; } = Guid.Empty;
   [Inject]
   private InstitutionHubManager _institutionHubManager { get; set; }
@@ -71,6 +73,7 @@ public partial class ApplicationLayout {
     };
 
     _themeContext.OnChange += HandleStateChange;
+    StatusModalContext.OnChange += HandleStateChange;
   }
 
   private void HandleStateChange() {

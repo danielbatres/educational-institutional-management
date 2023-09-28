@@ -20,6 +20,14 @@ public partial class CreateRole {
   private RoleContext _roleContext { get; set; }
   [Inject]
   private SettingsContext SettingsContext { get; set; }
+  [Inject]
+  private Validators Validators { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
+  private List<List<object>> Warnings { get; set; } = new() {
+    new() { "", false }
+  };
+  private int ErrorsCount { get; set; }
 
   protected override void OnInitialized() {
     _roleContext.OnChange += HandleStateChange;
@@ -28,6 +36,16 @@ public partial class CreateRole {
   }
 
   private async Task CreateNewRol() {
+    ErrorsCount = 0;
+
+    ValidateFields();
+
+    if (!ErrorsCount.Equals(0)) {
+      await StatusModalContext.SetStatus(StatusType.Danger);
+      
+      return; 
+    }
+
     await RoleService.Create(Role);
     
     ActivityLog activity = new() {
@@ -39,9 +57,11 @@ public partial class CreateRole {
       ActionType =  ActionType.Create
     };
 
-    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString());
+    await _rolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
     await _activityService.Create(activity);
     ExitRoleCreation();
+
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
 
   private void AssignNewRol() {
@@ -55,6 +75,18 @@ public partial class CreateRole {
     SettingsContext.SetShowSideForm(false);
 
     AssignNewRol();
+  }
+
+  private void ValidateFields() {
+    string warningValue = Validators.IsRequired(Role.Name ?? string.Empty);
+    Warnings[0][0] = warningValue;
+
+    if (!string.IsNullOrEmpty(warningValue)) {
+      ErrorsCount++;
+      Warnings[0][1] = true;
+    } else {
+      Warnings[0][1] = false;
+    }
   }
 
   private void Update(ChangeEventArgs e, string update) {

@@ -49,6 +49,43 @@
       </div>
     </div>
     <div class="right-container">
+      @if (StatusModalContext.ShowModal) {
+        string operationTitle = string.Empty;
+        string operationMessage = string.Empty;
+        string operationType = string.Empty;
+        string operationIcon = string.Empty;
+
+        switch (StatusModalContext.Status) {
+          case StatusType.Success:
+            operationTitle = "Operación realizada con exito";
+            operationMessage = "Todo ha salido correctamente, tu operación se realizo exitosamente";
+            operationType = "success";
+            operationIcon = "fi fi-tr-check-circle";
+            break;
+          case StatusType.Danger: 
+            operationTitle = "Algo salio mal durante la operación";
+            operationMessage = "Algo salio mal en el proceso, la operación no se realizo correctamente";
+            operationType = "danger";
+            operationIcon = "fi fi-tr-circle-xmark";
+            break;
+          case StatusType.Warning:
+            break;
+        }
+
+        <div class="application-modal-status @operationType">
+          <div>
+            <div class="status-circle centered-container">
+              <i class="@operationIcon"></i>
+            </div>
+          </div>
+          <div>
+            <h4>
+              @operationTitle
+            </h4>
+            <p>@operationMessage</p>
+          </div>
+        </div>
+      }
       <TopBar />
       <main>
         <CascadingValue Value="@InstitutionId" Name="Institution">

@@ -5,33 +5,44 @@
       <p>Informaci&oacute;n general del rol, modifica los campos que desees</p>
     </div>
     <div class="role-buttons">
-      <button type="button" class="button transparent-button">Cancelar</button>
-      <button type="button" class="button primary-background-button">Guardar</button>
+      <button type="button"
+        class="button transparent-button @(!HasChanges ? "not-enabled-button" : "")" @onclick="@RevertChanges">Cancelar</button>
+      <button type="button"
+        class="button primary-background-button @(!HasChanges ? "not-enabled-button" : "")" @onclick="@UpdateRole">Guardar</button>
     </div>
   </div>
   <form id="general-role" class="box-background">
     <fieldset>
       <div class="label">
-        <label for="role-name">Nombre del rol</label>
+        <label for="role-name">Nombre del rol <strong>*</strong></label>
         <p>Distingue el rol con un nombre atractivo</p>
       </div>
-      <input value="@Role.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="role-name" @oninput="@(e => UpdateText(e, "role-name"))">
+      <input value="@RoleBackup.Name" type="text" class="input" placeholder="Ingresar nombre del rol" id="role-name" @oninput="@(e => UpdateText(e, "role-name"))">
     </fieldset>
     <div class="fieldset-colors">
       <div class="label">
-        <label for="input-color">Color del rol</label>
+        <label for="input-color">Color del rol <strong>*</strong></label>
         <p>Selecciona un color para el rol</p>
       </div>
       <div class="color-boxes">
-        @for (int i = 0; i < 9; i++) {
-          <div class="color-box"></div>
+        @foreach (string color in DefaultColors) {
+          int index = DefaultColors.IndexOf(color);
+
+          <div class="color-box" style="background: @color" @onclick="@(() => {
+            RoleBackup.RoleColor = DefaultColors[index];
+            HasChanges = true;
+          })"></div>
         }
       </div>
-      <input type="color" id="input-color">
+      <div class="custom-color">
+        <p>Personalizado</p>
+        <input value="@RoleBackup.RoleColor" type="color" id="input-color" @onchange="@UpdateColor">
+      </div>
     </div>
     <fieldset>
       <div class="label">
         <label for="role-description">Descripci&oacute;n del rol</label>
+        <p>Una descripci&oacute;n breve para el proposito del rol</p>
       </div>
       <textarea value="@Role.Description" id="role-description" maxlength="1024" placeholder="Ingresa tu biografía" @oninput="@(e => UpdateText(e, "role-description"))"></textarea>
     </fieldset>
@@ -45,15 +56,42 @@
   private UserContext UserContext { get; set; }
   [Inject]
   private RoleContext RoleContext { get; set; }
-  private Role Role { get; set; }
+  [Inject]
+  private IRoleService RoleService { get; set; }
+  private Role Role { get; set; } = new();
+  private Role RoleBackup { get; set; } = new();
+  private bool HasChanges { get; set; }
+  private int RenderCount { get; set; } = 0;
+  private List<string> DefaultColors { get; set; } = new() {
+    "#3498DB", "#2ECC71", "#F1C40F",
+    "#E74C3C", "#9B59B6", "#E67E22",
+    "#FF6B81", "#1ABC9C", "#F7DC6F",
+    "#00B894", "#6C5CE7", "#FF4757",
+    "#FFC300", "#FFA726", "#C1AAC0",
+    "#DB5461"
+  };
+
+  private void UpdateColor(ChangeEventArgs e) {
+    RoleBackup.RoleColor = e.Value.ToString();
+    HasChanges = true;
+  }
 
   protected override async Task OnInitializedAsync() {
     RolesHubManager.RolesUpdatedHandler(roles => {
       Role = roles.FirstOrDefault(r => r.Id.Equals(RoleContext.ActualRoleIdSelection));
+
       StateHasChanged();
     });
 
     await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  protected override void OnAfterRender(bool firstRender ) {
+    if (RenderCount <= 1) {
+      RoleBackup = Role.Clone();
+    }
+
+    RenderCount++;
   }
 
   private void UpdateText(ChangeEventArgs e, string update) {
@@ -61,11 +99,25 @@
 
     switch (update) {
       case "role-name":
-        Role.Name = value;
+        RoleBackup.Name = value;
         break;
       case "role-description":
-        Role.Description = value;
+        RoleBackup.Description = value;
         break;
     }
+
+    HasChanges = true;
+  }
+
+  private void RevertChanges() {
+    HasChanges = false;
+    RoleBackup = Role.Clone();
+  }
+
+  private async Task UpdateRole() {
+    HasChanges = false;
+    await RoleService.Update(RoleBackup);
+
+    await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
   }
 }

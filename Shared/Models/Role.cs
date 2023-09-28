@@ -11,4 +11,15 @@ public class Role {
   public int PermissionsCount { get; set; }
   [JsonIgnore]
   public List<RolePermission>? RolePermissions { get; set; }
+
+  public Role Clone() {
+    return new Role() {
+      Id = Id,
+      Name = Name,
+      RoleColor = RoleColor,
+      Description = Description,
+      MembersCount = MembersCount,
+      PermissionsCount = PermissionsCount
+    };
+  }
 }

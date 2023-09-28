@@ -17,37 +17,44 @@
   gap: 12px;
 }
 
-fieldset {
+fieldset, .fieldset-colors {
   display: flex;
   flex-direction: row;
   gap: 20px;
   min-width: 100%;
   margin: 10px 0;
   border-bottom: var(--light-border);
+  padding-left: 0;
   padding-bottom: 30px;
   margin-bottom: 20px;
 }
 
-fieldset input {
-  max-width: 60%;
+fieldset .label, .fieldset-colors .label {
+  max-width: 30%;
   width: 100%;
 }
 
-.fieldset-colors {
+fieldset input, fieldset textarea {
+  max-width: 40%;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .color-boxes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-gap: 10px;
   min-width: 200px;
-  max-width: 200px;
+  max-width: 400px;
   margin: 20px;
 }
 
-.color-box {
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background: var(--light-color);
+.custom-color p {
+  margin-bottom: 10px;
 }
+

@@ -158,6 +158,7 @@ textarea {
     font-family: var(--font-family);
     font-size: var(--regular-text);
     color: var(--text-color);
+    background: var(--special-light-color);
     font-weight: 300;
     min-height: 100px;
     width: 100%;
@@ -168,6 +169,53 @@ textarea {
     overflow-wrap: break-word;
     overflow: hidden;
     outline: none;
+    resize: none;
+}
+
+strong {
+    color: var(--danger-color);
+}
+
+.warning-error {
+    color: var(--danger-color);
+}
+
+.input-error {
+    border: 1px solid var(--danger-color) !important;
+    color: var(--danger-color) !important;
+}
+
+input[type="color"] {
+    border: none;
+    background: var(--special-light-color);
+    max-width: 34px;
+    outline: none;
+    padding: 0 2px;
+}
+
+.color-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    border: var(--light-border);
+}
+
+.color-box:hover {
+    transform: scale(1.2);
+}
+
+.color-box:active {
+    transform: scale(0.8);
+}
+
+.scale-list {
+    transition: background, transform 0.3s ease-in-out;
+}
+
+.scale-list:hover {
+    transform: scale(1.02);
 }
 
 .icon:hover {
@@ -301,6 +349,7 @@ textarea {
     color: var(--text-color);
     font-weight: 300;
     box-sizing: border-box;
+    background: var(--special-light-color);
 }
 
 select {

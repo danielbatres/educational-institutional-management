@@ -12,8 +12,15 @@ public class RoleService : BaseService, IRoleService {
 
     await CheckResponse(response);
   }
+
+  public async Task Update(Role role) {
+    var response = await HttpClient.PutAsJsonAsync("api/role/update", role);
+
+    await CheckResponse(response);
+  }
 }
 
 public interface IRoleService {
   Task Create(Role role); 
+  Task Update(Role role);
 }

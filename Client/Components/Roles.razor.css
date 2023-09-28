@@ -1,9 +1,7 @@
-.article {
-  padding: 34px;
-  width: 100%;
-  min-width: 288px;
-  max-width: 1400px;
-  height: 100%;
+.roles-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 article:last-child {
@@ -22,11 +20,13 @@ article:last-child {
 }
 
 .roles-actions input {
-  width: 68%;
+  max-width: 68%;
+  width: 100%;
 }
 
 .roles-actions button {
-  width: 30%;
+  max-width: 15%;
+  width: 100%;
 }
 
 .roles-settings-container article:last-child {
@@ -34,7 +34,6 @@ article:last-child {
 }
 
 .roles-list {
-  padding: 18px;
   background: var(--background-color);
   border-radius: 10px;
 }
@@ -43,10 +42,23 @@ article:last-child {
   display: flex;
   background: var(--light-color);
   border-radius: 10px;
-  padding: 0px 10px;
+  padding: 10px;
 }
 
-.tags li, .rol-element li {
+.skeleton-load ul {
+  display: flex;
+}
+
+.skeleton-load ul li .skeleton-row {
+  max-height: 25px;
+}
+
+.skeleton-load ul li {
+  padding-right: 20px;
+}
+
+
+.tags li, .rol-element li, .skeleton-load ul li {
   width: 20%;
 }
 
@@ -54,10 +66,41 @@ article:last-child {
   display: flex;
   justify-content: space-between;
   padding:  14px 10px;
+  border-bottom: var(--light-border);
+}
+
+.rol-element:hover {
+  background: var(--special-light-color);
+  border: var(--light-border);
+  border-radius: 10px;
+}
+
+.rol-element li {
+  display: flex;
+  align-items: center;
+}
+
+.tags li:first-child, .tags li:last-child, .rol-element li:first-child, .rol-element li:last-child {
+  justify-content: center;
+  text-align: center;
+}
+
+.rol-element li:nth-child(3), .rol-element li:nth-child(4) {
+  gap: 10px;
 }
 
 .update-rol {
   min-width: 30px;
   min-height: 30px;
   background: var(--primary-color);
+}
+
+.no-roles-results {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
 }

@@ -5,6 +5,7 @@
 }
 
 .right-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -12,6 +13,57 @@
   width: 100%;
   min-height: 100%;
   max-height: 100vh;
+}
+
+
+.status-circle {
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 100%;
+}
+
+.success {
+  border: 1px solid var(--success-color);
+}
+
+.danger {
+  border: 1px solid var(--danger-color);
+}
+
+.success .status-circle {
+  background: var(--light-success-color);
+}
+
+.success .status-circle i {
+  color: var(--success-color);
+}
+
+.danger .status-circle {
+  background: var(--light-danger-color);
+}
+
+.danger .status-circle i {
+  color: var(--danger-color);
+}
+
+.status-circle i {
+  font-size: 1.6rem;
+}
+
+.application-modal-status {
+  position: absolute;
+  min-width: 40%;
+  min-height: 16%;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 8px;
+  background: var(--background-color);
+  z-index: 10000;
+  padding: 20px;
+  animation: disappear 3s linear forwards;
 }
 
 .left-container {
@@ -54,6 +106,13 @@ main {
   font-size: 1.2rem;
   font-weight: 500;
   white-space: nowrap;
+}
+
+@keyframes disappear {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (max-width: 1050px) {

@@ -31,6 +31,8 @@
   private UserContext _userContext { get; set; }
   [Inject]
   private IRolePermissionService _rolePermissionService { get; set; }
+  [Inject]
+  private IRoleService RoleService { get; set; }
   private List<Permission> Permissions { get; set; } = new();
   private List<RolePermission> RolePermissions { get; set; } = new();
   [Parameter]
@@ -51,14 +53,24 @@
   }
 
   private async Task TogglePermission(int index, bool isRolePermission) {
+    var role = Roles.FirstOrDefault(r => r.Id.Equals(_roleContext.ActualRoleIdSelection));
+
+    if (role == null) return;
+    
     if (isRolePermission) {
       await _rolePermissionService.Delete(RolePermissions.FirstOrDefault(rl => rl.PermissionId == Permissions[index].Id).Id);
+
+      role.PermissionsCount -= 1;
     } else {
       await _rolePermissionService.Create(new RolePermission() {
         PermissionId = Permissions[index].Id,
-        RoleId = _roleContext.ActualRoleIdSelection
+        RoleId = role.Id
       });
+      
+      role.PermissionsCount += 1;
     }
+
+    await RoleService.Update(role);
 
     await _rolesHubManager.SendRolesUpdatedAsync(_userContext.User.InstitutionId.ToString());
   }

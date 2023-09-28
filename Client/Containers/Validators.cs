@@ -52,6 +52,16 @@ public class Validators {
     private bool HasSpecialCharacter(string password) {
         return !string.IsNullOrEmpty(password) && password.Any(c => !char.IsLetterOrDigit(c));
     }
+
+    public string IsRequired(string text) {
+        string warningValue = string.Empty;
+        
+        if (string.IsNullOrWhiteSpace(text)) {
+            warningValue = "Este campo es requerido";
+        }
+
+        return warningValue;
+    }
 }
 
 public enum PasswordStrength {

@@ -34,6 +34,7 @@ builder.Services.AddSingleton<ProfileContext>();
 builder.Services.AddSingleton<ContentContext>();
 builder.Services.AddSingleton<SideBarContext>();
 builder.Services.AddSingleton<SettingsContext>();
+builder.Services.AddSingleton<StatusModalContext>();
 builder.Services.AddSingleton<Validators>();
 builder.Services.AddSingleton<UsersHubManager>();
 builder.Services.AddSingleton<RolesHubManager>();
