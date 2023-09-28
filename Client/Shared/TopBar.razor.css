@@ -1,4 +1,5 @@
 .top-container {
+    position: relative;
     min-height: 6%;
     width: 100%;
     display: flex;

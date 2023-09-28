@@ -15,10 +15,6 @@ section article:last-child {
   align-content: center;
 }
 
-input {
-  background: var(--primary-color);
-}
-
 .students-info {
   display: flex;
   flex-wrap: wrap;
@@ -117,7 +113,6 @@ input {
 #filter, .show-option {
   min-width: 20px;
   max-width: 20px;
-  background: var(--primary-color);  
 }
 
 .student-target ul li, .students-fields ul li {
@@ -147,7 +142,6 @@ input {
   width: 30px;
   height: 30px;
   border-radius: 10px;
-  background: var(--primary-color);
   cursor: pointer;
 }
 
@@ -165,6 +159,10 @@ input {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.gray-button {
+  color: var(--dark-color);
 }
 
 @media (max-width: 1440px) {

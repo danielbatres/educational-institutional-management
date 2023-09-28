@@ -1,0 +1,24 @@
+.modal-title p span {
+    color: var(--primary-color);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px 0;
+}
+
+form fieldset input {
+    width: 100%;
+}
+
+.color-box-container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.create-subject-button {
+    display: flex;
+    justify-content: right;
+}

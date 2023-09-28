@@ -193,6 +193,15 @@ input[type="color"] {
     padding: 0 2px;
 }
 
+.color-boxes {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px;
+    min-width: 200px;
+    max-width: 400px;
+    margin: 20px;
+}  
+
 .color-box {
     width: 24px;
     height: 24px;

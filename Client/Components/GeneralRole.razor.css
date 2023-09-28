@@ -45,15 +45,6 @@ fieldset input, fieldset textarea {
   gap: 8px;
 }
 
-.color-boxes {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-gap: 10px;
-  min-width: 200px;
-  max-width: 400px;
-  margin: 20px;
-}
-
 .custom-color p {
   margin-bottom: 10px;
 }

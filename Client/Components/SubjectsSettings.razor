@@ -1,37 +1,46 @@
 <SettingsModule>
-  <div class="box-background">
-    <h4>Asignaturas</h4>
-    <p>Secci&oacute;n de materias de la instituci&oacute;n, cada materia puede ser asignada a cualquier curso</p>
-  </div>
+  <div class="subjects-settings-container">
+    <div class="box-background subject-info">
+      <div>
+          <h4>Asignaturas</h4>
+          <p>Secci&oacute;n de materias de la instituci&oacute;n, cada materia puede ser asignada a cualquier curso</p>
+      </div>
+      <div>
+        <button type="button" class="button primary-background-button" @onclick="@SetSubjectCreation">Agregar nueva asignatura</button>
+      </div>
+    </div>
+    <div class="box-background">
+      <ul class="subjects-tags-fields">
+        <li>
+          <p>Color de la materia</p>
+        </li>
+        <li>
+          <p>Nombre de la materia</p>
+        </li>
+        <li>
+          <p>Cursos agregados</p>
+        </li>
+        <li>
+          <p>Acciones</p>
+        </li>
+      </ul>
+      <div>
+        @foreach (var subject in Subjects) {
+          <ul>
+            <li>
+              <p>@subject.Name</p>
+            </li>
+            <li>
+              <div></div>
+            </li>
+            <li>
+              <button type="button" class="gray-button">
 
-  <div class="box-background">
-    <ul class="subjects-tags-fields">
-      <li>
-        <p>Nombre de la materia</p>
-      </li>
-      <li>
-        <p>Color de la materia</p>
-      </li>
-      <li>
-        <p>Acciones</p>
-      </li>
-    </ul>
-    <div>
-      @foreach (var subject in Subjects) {
-        <ul>
-          <li>
-            <p>@subject.Name</p>
-          </li>
-          <li>
-            <div></div>
-          </li>
-          <li>
-            <button type="button" class="gray-button">
-
-            </button>
-          </li>
-        </ul>
-      }
+              </button>
+            </li>
+          </ul>
+        }
+      </div>
     </div>
   </div>
 </SettingsModule>
@@ -43,6 +52,8 @@
   private SubjectHubManager SubjectHubManager { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
   private List<Subject> Subjects { get; set; } = new();
 
   protected override async Task OnInitializedAsync() {
@@ -52,5 +63,10 @@
     });
 
     await SubjectHubManager.SendSubjectsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void SetSubjectCreation() {
+    SettingsContext.SetShowSettingsOption(ShowSettingsOption.AddSubject);
+    SettingsContext.SetShowSettingsModal(true);
   }
 }

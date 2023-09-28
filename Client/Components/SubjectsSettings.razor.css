@@ -1,0 +1,20 @@
+.subjects-settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.subject-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subjects-tags-fields {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--light-color);
+    padding: 6px;
+    border-radius: 8px;
+}

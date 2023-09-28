@@ -1,0 +1,57 @@
+.search-pages-container {
+    position: absolute;
+    top: 170%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    max-height: 670%;
+    width: 100%;
+    overflow-y: auto;
+    background: var(--background-color);
+    border: var(--light-border);
+    border-radius: 8px;
+    z-index: 100000;
+}
+
+.no-search-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.search-pages-container ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: var(--light-border);
+    transition: color, background 0.2s ease-in-out;
+    padding-left: 12px;
+}
+
+.search-pages-container ul li:hover {
+    background: var(--light-color);
+}
+
+.search-pages-container ul li .item-name p:first-child {
+    font-size: var(--small-text);
+}
+
+.search-pages-container ul li .item-name p:last-child {
+    font-size: var(--smaller-text);
+}
+
+.search-pages-container ul li:hover .item-name p {
+    color: var(--dark-color);
+}
+
+.search-pages-container ul li button i {
+    font-size: var(--small-text);
+}
+
+.search-pages-container ul li button {
+    padding: 6px;
+}

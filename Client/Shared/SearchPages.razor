@@ -1,0 +1,130 @@
+<div class="search-pages-container">
+    @if (SearchPagesListFilter.Count.Equals(0)) {
+        <div class="no-search-results">
+        <h4>
+            Sin resultados
+        </h4>
+        <p>
+            No se encontraron resultados de la busqueda
+        </p>
+    </div>
+    } else {
+        <ul>
+        @foreach (var item in SearchPagesListFilter) {
+            <li @onclick="@(() => NavigateTo(item[2]))">
+                <div class="item-name"> 
+                    <p>
+                        @item[0]
+                    </p>
+                    <p>@item[1]</p>
+                </div>
+                <button type="button" class="gray-button">
+                    <i class="fi fi-tr-arrow-up-right-from-square"></i>
+                </button>
+            </li>
+        }
+        </ul>
+    }
+</div>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+    [Inject]
+    private GeneralSearchContext GeneralSearchContext { get; set; }
+    private List<List<string>> SearchPagesListFilter { get; set; }
+    private List<List<string>> SearchPagesList { get; set; } = new();
+    [Parameter]
+    public string InstitutionId { get; set; } = string.Empty;
+
+    protected override void OnInitialized() {
+        GeneralSearchContext.OnChange += HandleStateChange;
+    }
+    
+    private void NavigateTo(string navigation) {
+        NavigationManager.NavigateTo(navigation);
+        GeneralSearchContext.SetShowGeneralSearch(false);
+    }
+
+    private void HandleStateChange() {
+        SearchValue(GeneralSearchContext.SearchValue);
+        
+        StateHasChanged();
+    } 
+
+    private void SearchValue(string searchValue) {
+        if (!string.IsNullOrEmpty(searchValue)) {
+            SearchPagesListFilter.Clear();
+
+            for (int i = 0; i < SearchPagesList.Count; i++) {
+                if (!SearchPagesList[i][0].ToLower().Contains(searchValue.ToLower())) continue;
+                    
+                SearchPagesListFilter.Add(SearchPagesList[i]);
+            }
+        } else {
+            SearchPagesListFilter = SearchPagesList.ToList();
+        }
+    }
+
+    protected override void OnParametersSet() {
+        string baseForRoute = $"/application/{InstitutionId}/";
+        string main = "Menu principal";
+        string settings = "Configuraciones";
+
+        SearchPagesList = new() {
+            new () {
+                "Dashboard > Mi panel", main, $"{baseForRoute}"
+            },
+            new() {
+                "Estudiantes > Ver estudiantes", main, $"{baseForRoute}students"
+            },
+            new() {
+                "Cursos > Ver cursos", main, $"{baseForRoute}courses"
+            },
+            new() {
+                "Estadísticas > Ver cursos", main, $"{baseForRoute}statistics"
+            },
+            new() {
+                "Eventos > Ver estadísticas", main, $"{baseForRoute}events"
+            },
+            new() {
+                "Actividad > Ver actividad", main, $"{baseForRoute}activity"
+            },
+            new() {
+                "Comunicación > Chat general", main, $"{baseForRoute}comunication"
+            },
+            new() {
+                "Entorno > Espacio de trabajo", main, $"{baseForRoute}environment"
+            },
+            new() {
+                "Mi perfil", settings, $"{baseForRoute}settings/my-account"
+            },
+            new() {
+                "Apariencia", settings, $"{baseForRoute}settings/appearance"
+            },
+            new() {
+                "Usuarios", settings, $"{baseForRoute}settings/users"
+            },
+            new() {
+                "Roles", settings, $"{baseForRoute}settings/roles"
+            },
+            new() {
+                "Estudiantes", settings, $"{baseForRoute}settings/students"
+            },
+            new() {
+                "Asignaturas", settings, $"{baseForRoute}settings/subjects"
+            },
+            new() {
+                "Pagos", settings, $"{baseForRoute}settings/payments"
+            },
+            new() {
+                "Institución", settings, $"{baseForRoute}settings/institution"
+            },
+            new() {
+                "Plan de pago", settings, $"{baseForRoute}settings/payment-plan"
+            }
+        };
+
+        SearchPagesListFilter = SearchPagesList.ToList();
+    }
+}

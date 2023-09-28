@@ -7,11 +7,12 @@
     </div>
     <div class="right-side-container">
         <div class="search">
+            @if (GeneralSearchContext.ShowGeneralSearch) { <SearchPages InstitutionId="@UserContext.User.InstitutionId.ToString()"/> }
             <i class="fi fi-tr-search-location"></i>
-            <input type="text" placeholder="Buscar" class="input">
+            <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar" class="input" @oninput="@UpdateSearchValue" @onclick="@(() => GeneralSearchContext.SetShowGeneralSearch(true))">
         </div>
         <div class="icons">
-            <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div>
+            <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div> 
             <div class="centered-container"><i class="fi fi-tr-bells"></i></div>
         </div>
         <UserInfoOptions Selection="application" />
@@ -21,10 +22,17 @@
 @code {
     [Inject]
     private ContentContext ContentContext { get; set; }
-    public string UserName { get; set; } = "";
+    [Inject]
+    private GeneralSearchContext GeneralSearchContext { get; set; }
+    [Inject]
+    private UserContext UserContext { get; set; }
 
+    private void UpdateSearchValue(ChangeEventArgs e) {
+        GeneralSearchContext.SetSearchValue(e.Value.ToString());
+    }
     protected override void OnInitialized() {
         ContentContext.OnChange += HandleStateChange;
+        GeneralSearchContext.OnChange += HandleStateChange;
     }
 
     private void HandleStateChange() {
