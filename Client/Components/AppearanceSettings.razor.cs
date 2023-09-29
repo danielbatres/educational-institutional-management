@@ -62,6 +62,13 @@ public partial class AppearanceSettings {
     await UpdateSettings();
   }
 
+  private async Task UpdatePrimaryColor(ChangeEventArgs e) {
+    _userContext.User.Settings.PrimaryColor = e.Value.ToString();
+    _themeContext.SetPrimaryColor(e.Value.ToString());
+
+    await UpdateSettings();
+  }
+
   private void HandleStateChange() {
     StateHasChanged();
   }

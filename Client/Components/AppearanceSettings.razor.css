@@ -1,13 +1,18 @@
 .theme-box {
   min-width: 180px;
   min-height: 180px;
+  max-height: 180px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
   border: var(--light-border);
   margin: 8px 0 12px;
 }
 
 .selected-appearance {
-  border: 1px solid var(--dark-color);
+  border: 1px solid var(--primary-color);
 }
 
 .interface-theme-container {

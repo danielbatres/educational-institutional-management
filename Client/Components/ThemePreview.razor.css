@@ -1,0 +1,57 @@
+.theme-container {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-navbar-theme {
+    max-height: 14%;
+    height: 100%;
+    display: flex;
+    width: 100%;
+}
+
+.main-theme-panel {
+    min-height: 86%;
+    max-height: 86%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-side-bar {
+    height: 100%;
+    width: 28%;
+}
+
+.main-content {
+    height: 100%;
+    width: 72%;
+}
+
+.nav-main {
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    width: 50%;
+}
+
+.single-option {
+    height: 40%;
+    width: 22%;
+    margin: 2px;
+    border-radius: 4px;
+}
+
+.circle-option {
+    width: 10%;
+    height: 40%;
+    background: var(--primary-color);
+    border-radius: 100%;
+}
+
+.primary-background {
+    background: var(--primary-color);
+}

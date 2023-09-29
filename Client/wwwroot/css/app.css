@@ -547,7 +547,7 @@ select {
     position: absolute;
     min-width: 130px;
     min-height: 130px;
-    background-color: var(--white);
+    background: var(--background-color);
     border-radius: 100%;
     top: -50px;
     left: 20px;

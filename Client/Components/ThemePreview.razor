@@ -1,0 +1,76 @@
+<style>
+    .theme-container-@Selection {
+        background: @SelectedPalette.LightBackgroundColor;
+        border-radius: 10px;
+    }
+
+    .main-side-bar-@Selection, .main-navbar-theme-@Selection {
+        border-bottom: 1px solid @SelectedPalette.LightColor;
+        background: @SelectedPalette.BackgroundColor; 
+    }
+
+    .single-option-@Selection {
+        background: @SelectedPalette.LightColor;
+    }
+</style>
+
+<div class="theme-container-@Selection theme-container">
+    <div class="main-navbar-theme-@Selection main-navbar-theme">
+        <div class="nav-main">
+            <div class="single-option primary-background"> 
+
+            </div>
+            <div class="single-option-@Selection single-option">
+
+            </div>
+        </div>
+        <div class="nav-main">
+            <div class="single-option-@Selection single-option" >
+
+            </div>
+            <div class="circle-option">
+
+            </div>
+        </div>
+    </div>
+    <div class="main-theme-panel">
+        <div class="main-side-bar">
+
+        </div>
+        <div class="main-content">
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public AppereanceSelection Selection { get; set; }
+    [Inject]
+    private ThemeContext ThemeContext { get; set; }
+    private Palette SelectedPalette { get; set; } 
+
+    protected override void OnParametersSet() {
+        SetSelectedAppearance();
+    }
+
+    public void SetSelectedAppearance() {
+        switch (Selection) {
+            case AppereanceSelection.LightTheme:
+                SelectedPalette = ThemeContext.LightTheme;
+                break;
+            case AppereanceSelection.AmbientTheme:
+                SelectedPalette = ThemeContext.AmbientTheme;
+                break;
+            case AppereanceSelection.DarkBarLightTheme:
+                SelectedPalette = ThemeContext.DarkBarLightTheme;
+                break;
+            case AppereanceSelection.DarkTheme:
+                SelectedPalette = ThemeContext.DarkTheme;
+                break;
+            case AppereanceSelection.DarkerTheme:
+                SelectedPalette = ThemeContext.DarkerTheme;
+                break;
+        }
+    }
+}
