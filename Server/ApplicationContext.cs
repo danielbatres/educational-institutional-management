@@ -57,6 +57,18 @@ public class ApplicationContext : DbContext {
             new() {
                 Id = 2,
                 Theme = AppereanceSelection.DarkTheme
+            },
+            new() {
+                Id = 3,
+                Theme = AppereanceSelection.DarkerTheme 
+            },
+            new() {
+                Id = 4,
+                Theme = AppereanceSelection.AmbientTheme
+            },
+            new() {
+                Id = 5,
+                Theme = AppereanceSelection.DarkBarLightTheme
             }
         };
 
@@ -188,7 +200,7 @@ public class ApplicationContext : DbContext {
             activity.Property(a => a.Author);
             activity.Property(a => a.Message);
             activity.Property(a => a.UserName);
-            activity.Property(a => a.Date);
+            activity.Property(a => a.Date).HasDefaultValue(DateTime.Now);
         });
 
         modelBuilder.Entity<NotificationVisualization>(notificationVisualization => {
@@ -201,8 +213,9 @@ public class ApplicationContext : DbContext {
             notification.Property(n => n.Id).ValueGeneratedOnAdd();
             notification.Property(n => n.Title).IsRequired();
             notification.Property(n => n.Message).IsRequired();
-            notification.Property(n => n.CreationDate);
-            notification.Property(n => n.Read);
+            notification.Property(n => n.CreationDate).HasDefaultValue(DateTime.Now);
+            notification.Property(n => n.Redirection);
+            notification.Property(n => n.RedirectText);
             notification.HasMany(n => n.NotificationsVisualization).WithOne(nv => nv.Notification).HasForeignKey(nv => nv.NotificationId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -346,6 +359,10 @@ public class ApplicationContext : DbContext {
         
         modelBuilder.Entity<Event>(eventModel => {
             eventModel.HasKey(e => e.Id);
+            eventModel.Property(e => e.Title);
+            eventModel.Property(e => e.Description);
+            eventModel.Property(e => e.Date);
+            eventModel.Property(e => e.ParticipantsCount).HasDefaultValue(0);
         });
         
         modelBuilder.Entity<Statistic>(statistic => {

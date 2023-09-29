@@ -51,7 +51,6 @@ public class StudentContext : BaseContainer {
       LastName = string.Empty,
       PhoneNumber = string.Empty,
       Gender = "Masculino",
-      Photo = string.Empty,
       StudentRegister = new() {
         Id = Guid.NewGuid(),
         CreatedAt = DateTime.Now,

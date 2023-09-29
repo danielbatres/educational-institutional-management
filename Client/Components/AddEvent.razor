@@ -1,0 +1,20 @@
+<div>
+  <h4>Agregar un nuevo evento</h4>
+  <p>Ingresa la informaci&oacute;n del evento para poder agregarlo</p>
+</div>
+<form>
+  <div class="label">
+    <label for="event-title">Nombre del evento</label>
+  </div>
+  <input value="@Event.Title" type="text" id="event-title" class="input" @oninput="@(e => UpdateEvent(e, "title"))">
+  <div class="label">
+    <label for="event-description">Descripci&oacute;n del evento</label>
+  </div>
+  <input type="text" id="event-description" class="input">
+  <p>Una breve explicaci&oacute;n sobre que trata este evento</p>
+</form>
+<div>
+  <button type="button" @onclick="@CreateEvent">
+    Agregar evento
+  </button>
+</div>

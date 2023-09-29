@@ -4,8 +4,8 @@ using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Client.Services;
 
-public class NotificationService : BaseService, INotificationService {
-  public NotificationService(HttpClient httpClient) : base (httpClient) {}
+public class GeneralNotificationService : BaseService, IGeneralNotificationService {
+  public GeneralNotificationService(HttpClient httpClient) : base (httpClient) {}
 
   public async Task<List<GeneralNotification>> Get() {
     var response = await HttpClient.GetAsync("api/generalnotification");
@@ -28,7 +28,7 @@ public class NotificationService : BaseService, INotificationService {
   } 
 }
 
-public interface INotificationService {
+public interface IGeneralNotificationService {
   Task<List<GeneralNotification>> Get();
   Task Create(GeneralNotification notification);
   Task Update(GeneralNotification notification);

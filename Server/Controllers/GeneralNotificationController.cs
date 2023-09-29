@@ -14,7 +14,7 @@ public class GeneralNotificationController : ControllerBase {
   }
 
   [HttpGet]
-  public async Task<IActionResult> Get() {
+  public IActionResult Get() {
     return Ok(_generalNotificationService.Get());
   }
 

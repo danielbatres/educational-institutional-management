@@ -76,6 +76,7 @@ builder.Services.AddScoped<IPaymentSettingsService, PaymentSettingsService>();
 builder.Services.AddScoped<IPaymentRecordService, PaymentRecordService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRatingsListService, RatingsListService>();
+builder.Services.AddScoped<IGeneralNotificationService, GeneralNotificationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

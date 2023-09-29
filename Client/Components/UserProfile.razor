@@ -8,7 +8,8 @@
     <div class="user-info-img">
       <div class="user-photo-container">
         <div class="user-profile-photo centered-container">
-          <div class="user-photo user-no-photo-container"></div>
+          <img src="@ImageSrc"
+            class="user-photo @(string.IsNullOrEmpty(ImageSrc) ? "user-no-photo-container" : "")" alt="@UserContext.User.Name @UserContext.User.LastName"/>
         </div>
       </div>
       <div class="user-name-email">
@@ -105,6 +106,12 @@
       </div>
       <button id="change-password" type="button" class="button primary-background-button">Cambiar
         contrase&ntilde;a</button>
+    </fieldset>
+    <fieldset>
+      <div class="label">
+        <label for="user-photo">Fotograf&iacute;a del usuario</label>
+      </div>
+      <InputFile OnChange="@OnInputFileChange"></InputFile>
     </fieldset>
   </form>
 </article>
