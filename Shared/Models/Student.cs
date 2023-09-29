@@ -8,4 +8,5 @@ public class Student : MainUser {
   public StudentRegister StudentRegister { get; set; }
   public ICollection<Attendance>? Attendances { get; set; }
   public ICollection<FieldInformation>? FieldsInformation { get; set; }
+  public ICollection<PaymentRecord>? PaymentRecords { get; set; }
 }

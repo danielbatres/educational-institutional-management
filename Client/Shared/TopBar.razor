@@ -9,10 +9,10 @@
         <div class="search">
             @if (GeneralSearchContext.ShowGeneralSearch) { <SearchPages InstitutionId="@UserContext.User.InstitutionId.ToString()"/> }
             <i class="fi fi-tr-search-location"></i>
-            <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar" class="input" @oninput="@UpdateSearchValue" @onclick="@(() => GeneralSearchContext.SetShowGeneralSearch(true))">
+            <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar sección" class="input" @oninput="@UpdateSearchValue" @onclick="@SetShow">
         </div>
         <div class="icons">
-            <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div> 
+            <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div>
             <div class="centered-container"><i class="fi fi-tr-bells"></i></div>
         </div>
         <UserInfoOptions Selection="application" />
@@ -33,6 +33,11 @@
     protected override void OnInitialized() {
         ContentContext.OnChange += HandleStateChange;
         GeneralSearchContext.OnChange += HandleStateChange;
+    }
+
+    private void SetShow() {
+        GeneralSearchContext.SetPreventClose(true);
+        GeneralSearchContext.SetShowGeneralSearch(true);
     }
 
     private void HandleStateChange() {

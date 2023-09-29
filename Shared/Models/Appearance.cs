@@ -10,6 +10,9 @@ public class Appearance {
 }
 
 public enum AppereanceSelection {
+  DarkBarLightTheme,
   LightTheme,
-  DarkTheme
+  AmbientTheme,
+  DarkTheme,
+  DarkerTheme
 }

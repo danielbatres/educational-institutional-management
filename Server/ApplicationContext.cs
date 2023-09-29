@@ -33,6 +33,8 @@ public class ApplicationContext : DbContext {
     public DbSet<StudentSettings> StudentSettings { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Statistic> Statistics { get; set; }
+    public DbSet<PaymentSettings> PaymentsSettings { get; set; }
+    public DbSet<PaymentRecord> PaymentsRecord { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base (options) {
         ChangeTracker.LazyLoadingEnabled = true;
@@ -143,14 +145,14 @@ public class ApplicationContext : DbContext {
             role.Property(r => r.RoleColor);
             role.Property(r => r.MembersCount);
             role.Property(r => r.PermissionsCount);
-            role.HasMany(r => r.RolePermissions).WithOne(rp => rp.Role).HasForeignKey(rp => rp.RoleId);
+            role.HasMany(r => r.RolePermissions).WithOne(rp => rp.Role).HasForeignKey(rp => rp.RoleId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Permission>(permission => {
             permission.HasKey(t => t.Id);
             permission.Property(t => t.Name).IsRequired();
             permission.Property(t => t.Description);
-            permission.HasMany(p => p.RolePermissions).WithOne(rp => rp.Permission).HasForeignKey(rp => rp.PermissionId);
+            permission.HasMany(p => p.RolePermissions).WithOne(rp => rp.Permission).HasForeignKey(rp => rp.PermissionId).OnDelete(DeleteBehavior.Cascade);
             permission.HasData(permissionsInit);
         });
 
@@ -162,7 +164,7 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<UserRole>(userRole => {
             userRole.HasKey(ur => ur.Id);
             userRole.Property(ur => ur.Id).ValueGeneratedOnAdd();
-            userRole.HasOne(ur => ur.Role).WithMany().HasForeignKey(ur => ur.RoleId);
+            userRole.HasOne(ur => ur.Role).WithMany().HasForeignKey(ur => ur.RoleId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Appearance>(appearance => {
@@ -175,6 +177,7 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<Settings>(settings => {
             settings.HasKey(s => s.Id);
             settings.Property(s => s.UserId);
+            settings.Property(s => s.PrimaryColor).HasDefaultValue("#4361EE");
             settings.HasOne(s => s.Appearance).WithMany(a => a.Settings).HasForeignKey(s => s.AppearanceId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -200,7 +203,24 @@ public class ApplicationContext : DbContext {
             notification.Property(n => n.Message).IsRequired();
             notification.Property(n => n.CreationDate);
             notification.Property(n => n.Read);
-            notification.HasMany(n => n.NotificationsVisualization).WithOne(nv => nv.Notification).HasForeignKey(nv => nv.NotificationId);
+            notification.HasMany(n => n.NotificationsVisualization).WithOne(nv => nv.Notification).HasForeignKey(nv => nv.NotificationId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<PaymentSettings>(paymentSettings => {
+            paymentSettings.HasKey(p => p.Id);
+            paymentSettings.Property(p => p.PaymentName);
+            paymentSettings.Property(p => p.PaymentDescription);
+            paymentSettings.Property(p => p.Amount);
+            paymentSettings.Property(p => p.DueDate);
+            paymentSettings.Property(p => p.IsRecurring);
+            paymentSettings.Property(p => p.FrequencyMonths);
+            paymentSettings.HasMany(p => p.PaymentRecords).WithOne(pr => pr.PaymentSettings).HasForeignKey(pr => pr.PaymentSettingsId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<PaymentRecord>(paymentRecord => {
+            paymentRecord.HasKey(p => p.Id);
+            paymentRecord.Property(p => p.AmountPaid);
+            paymentRecord.Property(p => p.PaymentDate);
         });
 
         modelBuilder.Entity<SubjectCourse>(subjectCourse => {
@@ -236,7 +256,7 @@ public class ApplicationContext : DbContext {
             course.Property(c => c.Acronym);
             course.Property(c => c.StudentsCount);
             course.HasMany(c => c.Students).WithOne(c => c.Course).HasForeignKey(s => s.CourseId);
-            course.HasMany(c => c.AttendanceSchedules).WithOne(c => c.Course).HasForeignKey(asch => asch.CourseId);
+            course.HasMany(c => c.AttendanceSchedules).WithOne(c => c.Course).HasForeignKey(asch => asch.CourseId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Student>(student => {
@@ -249,9 +269,10 @@ public class ApplicationContext : DbContext {
             student.Property(s => s.Photo);
             student.Property(s => s.UniqueIdentifier);
             student.HasIndex(s => s.UniqueIdentifier).IsUnique();
-            student.HasOne(s => s.StudentRegister).WithOne(sr => sr.Student).HasForeignKey<StudentRegister>(sr => sr.StudentId);
-            student.HasMany(s => s.FieldsInformation).WithOne(fi => fi.Student).HasForeignKey(fi => fi.StudentId);
-            student.HasMany(s => s.Attendances).WithOne(a => a.Student).HasForeignKey(a => a.StudentId);
+            student.HasOne(s => s.StudentRegister).WithOne(sr => sr.Student).HasForeignKey<StudentRegister>(sr => sr.StudentId).OnDelete(DeleteBehavior.Cascade);
+            student.HasMany(s => s.FieldsInformation).WithOne(fi => fi.Student).HasForeignKey(fi => fi.StudentId).OnDelete(DeleteBehavior.Cascade);
+            student.HasMany(s => s.Attendances).WithOne(a => a.Student).HasForeignKey(a => a.StudentId).OnDelete(DeleteBehavior.Cascade);
+            student.HasMany(s => s.PaymentRecords).WithOne(p => p.Student).HasForeignKey(p => p.StudentId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StudentRegister>(studentRegister => {
@@ -265,14 +286,14 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<Subject>(subject => {
             subject.HasKey(s => s.Id);
             subject.Property(s => s.Name);
-            subject.HasMany(s => s.SubjectCourses).WithOne(sc => sc.Subject).HasForeignKey(sc => sc.SubjectId);
+            subject.HasMany(s => s.SubjectCourses).WithOne(sc => sc.Subject).HasForeignKey(sc => sc.SubjectId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<RatingsList>(ratingsList => {
             ratingsList.HasKey(rl => rl.Id);
             ratingsList.Property(rl => rl.ListName);
             ratingsList.Property(rl => rl.Description);
-            ratingsList.HasMany(rl => rl.Ratings).WithOne(r => r.RatingsList).HasForeignKey(r => r.RatingsListId);
+            ratingsList.HasMany(rl => rl.Ratings).WithOne(r => r.RatingsList).HasForeignKey(r => r.RatingsListId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Rating>(rating => {

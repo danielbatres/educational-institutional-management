@@ -6,6 +6,6 @@ namespace edu_institutional_management.Server.Hubs;
 
 public class AttendanceScheduleHub : MainHub {
 	public async Task SendAttendanceScheduleUpdate(string groupName) {
-		await Clients.Groups(groupName).SendAsync("AttendanceScheduleUpdated");
+		await Clients.Group(groupName).SendAsync("AttendanceScheduleUpdated");
 	}
 }

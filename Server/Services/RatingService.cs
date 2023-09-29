@@ -1,4 +1,5 @@
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
@@ -12,9 +13,14 @@ public class RatingService : BaseService, IRatingService {
   }
   
   public async Task Update(Rating rating) {
-    _applicationContext.Ratings.Update(rating);
-    
-    await _applicationContext.SaveChangesAsync();
+    var originalRating = _applicationContext.Ratings.FirstOrDefault(r => r.Id.Equals(rating.Id));
+
+    if (originalRating != null) {
+      _applicationContext.Entry(originalRating).State = EntityState.Detached;
+      _applicationContext.Entry(rating).State = EntityState.Modified;
+
+      await _applicationContext.SaveChangesAsync();
+    }
   }
 }
 

@@ -12,6 +12,6 @@ public class AttendanceHub : MainHub {
 	}
 	
 	public async Task SendAttendanceUpdate(string groupName) {
-		await Clients.Groups(groupName).SendAsync("AttendanceUpdated");
+		await Clients.Group(groupName).SendAsync("AttendanceUpdated");
 	}
 }

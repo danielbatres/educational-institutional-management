@@ -21,6 +21,7 @@ public partial class Bar {
   private string SelectedContainer { get; set; } = "";
   [Parameter]
   public string Styles { get; set; } = string.Empty;
+  public string BackgroundColor { get; set; } = string.Empty;
   [Parameter]
   [EditorRequired]
   public string SideBarOption { get; set; } = string.Empty;
@@ -28,9 +29,11 @@ public partial class Bar {
   public void SetSelectedValues(string navigateTo, string selected) {
     switch (SideBarOption) {
       case "main-menu":
+        BackgroundColor = "background: var(--side-bar-color)";
         SideBarContext.SetSelectedOptionMainMenu(int.Parse(selected));
         break;
       case "settings-menu":
+        BackgroundColor = "background: var(--second-side-bar-color)";
         SideBarContext.SetSelectedOptionSettingsMenu(int.Parse(selected));
         break;
     }

@@ -3,7 +3,6 @@ section {
   width: 100%;
   position: relative;
   transition: width 0.2s ease-in-out;
-  background: var(--background-color);
 }
 
 .sidebar {

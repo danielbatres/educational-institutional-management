@@ -6,6 +6,6 @@ namespace edu_institutional_management.Server.Hubs;
 
 public class StatisticsHub : MainHub {
 	public async Task SendStatisticUpdate(string groupName) {
-		await Clients.Groups(groupName).SendAsync("StatisticsUpdated");
+		await Clients.Group(groupName).SendAsync("StatisticsUpdated");
 	}
 }

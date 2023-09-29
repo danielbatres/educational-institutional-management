@@ -2,7 +2,7 @@
 
 <style>
   :root {
-    --primary-color: @_themeContext.SelectedTheme.PrimaryColor;
+    --primary-color: @_themeContext.PrimaryColor;
     --background-color: @_themeContext.SelectedTheme.BackgroundColor;
     --light-background-color: @_themeContext.SelectedTheme.LightBackgroundColor;
     --light-color: @_themeContext.SelectedTheme.LightColor;
@@ -14,6 +14,8 @@
     --first-loading-color: @_themeContext.SelectedTheme.FirstLoadingColor;
     --second-loading-color: @_themeContext.SelectedTheme.SecondLoadingColor;
     --third-loading-color: @_themeContext.SelectedTheme.ThirdLoadingColor;
+    --side-bar-color: @_themeContext.SelectedTheme.SideBarColor;
+    --second-side-bar-color: @_themeContext.SelectedTheme.SecondSideBarColor;
     --smaller-text: 0.6rem;
     --small-text: 0.85rem;
     --regular-text: 0.95rem;
@@ -35,7 +37,7 @@
 </style>
 
 <div class="page">
-  <div class="application-container">
+  <div class="application-container" @onclick="@RemoveAbsoluteContent">
     <div class="left-container" style="@(Toggle ? "width: 280px;" : "width: 100px;")">
       <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
       <div class="top">
@@ -44,7 +46,7 @@
       </div>
       <div class="bar">
         <CascadingValue Value="@Toggle" Name="Toggle">
-          <Bar SideBarOption="main-menu" IsToggle=@true Menu=@SideBarMenu Styles="max-width: 100%" />
+          <Bar SideBarOption="main-menu" IsToggle=@true Menu=@SideBarMenu Styles="max-width: 100%;" />
         </CascadingValue>
       </div>
     </div>

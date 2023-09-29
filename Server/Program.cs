@@ -43,6 +43,10 @@ builder.Services.AddScoped<ICourseScheduleService, CourseScheduleService>();
 builder.Services.AddScoped<IStatisticService, StatisticService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEmailSenderService, EmailSenderService>();
+builder.Services.AddScoped<IRatingsListService, RatingsListService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IPaymentSettingsService, PaymentSettingsService>();
+builder.Services.AddScoped<IPaymentRecordService, PaymentRecordService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 
@@ -90,6 +94,7 @@ app.MapHub<InstitutionHub>("/institutionHub");
 app.MapHub<SubjectHub>("/subjectHub");
 app.MapHub<CourseHub>("/courseHub");
 app.MapHub<UserRoleHub>("/userRoleHub");
+app.MapHub<PaymentSettingsHub>("/paymentSettingsHub");
 
 app.MapRazorPages();
 app.MapControllers();

@@ -20,6 +20,8 @@ public partial class ApplicationLayout {
   private ISettingsService _settingsService { get; set; }
   [Inject]
   private StatusModalContext StatusModalContext { get; set; }
+  [Inject]
+  private GeneralSearchContext GeneralSearchContext { get; set; }
   public Guid InstitutionId { get; set; } = Guid.Empty;
   [Inject]
   private InstitutionHubManager _institutionHubManager { get; set; }
@@ -74,6 +76,7 @@ public partial class ApplicationLayout {
 
     _themeContext.OnChange += HandleStateChange;
     StatusModalContext.OnChange += HandleStateChange;
+    GeneralSearchContext.OnChange += HandleStateChange;
   }
 
   private void HandleStateChange() {
@@ -91,5 +94,16 @@ public partial class ApplicationLayout {
     _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 
     _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);
+    _themeContext.SetPrimaryColor(_userContext.User.Settings.PrimaryColor);
+  }
+
+  private void RemoveAbsoluteContent() {
+    if (!GeneralSearchContext.PreventClose) {
+      if (GeneralSearchContext.ShowGeneralSearch) {
+        GeneralSearchContext.SetShowGeneralSearch(false);
+      }
+    }
+
+    GeneralSearchContext.SetPreventClose(false);
   }
 }

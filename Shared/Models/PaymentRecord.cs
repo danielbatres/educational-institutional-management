@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace edu_institutional_management.Shared.Models;
 
 public class PaymentRecord {
@@ -5,6 +7,7 @@ public class PaymentRecord {
   public DateTime PaymentDate { get; set; }
   public decimal AmountPaid { get; set; }
   public Guid StudentId { get; set; }
+  [JsonIgnore]
   public Student? Student { get; set; }
   public Guid PaymentSettingsId { get; set; }
   public PaymentSettings? PaymentSettings { get; set; }

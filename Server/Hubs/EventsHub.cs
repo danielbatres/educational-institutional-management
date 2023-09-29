@@ -6,6 +6,6 @@ namespace edu_institutional_management.Server.Hubs;
 
 public class EventsHub : MainHub {
 	public async Task SendEventsUpdate(string groupName) {
-		await Clients.Groups(groupName).SendAsync("EventsUpdated");
+		await Clients.Group(groupName).SendAsync("EventsUpdated");
 	}
 }

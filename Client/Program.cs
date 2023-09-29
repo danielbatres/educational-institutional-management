@@ -72,6 +72,10 @@ builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IAttendanceScheduleService, AttendanceScheduleService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+builder.Services.AddScoped<IPaymentSettingsService, PaymentSettingsService>();
+builder.Services.AddScoped<IPaymentRecordService, PaymentRecordService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IRatingsListService, RatingsListService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 await builder.Build().RunAsync();

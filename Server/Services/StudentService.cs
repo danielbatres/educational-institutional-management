@@ -7,7 +7,7 @@ public class StudentService : BaseService, IStudentService {
   public StudentService(ApplicationContextService applicationContextService) : base (applicationContextService) {}
   
   public IEnumerable<Student> Get() {
-    return _applicationContext.Students.Include(s => s.Attendances).Include(s => s.StudentRegister).Include(s => s.FieldsInformation).Include(s => s.Course);
+    return _applicationContext.Students.Include(s => s.Attendances).Include(s => s.StudentRegister).Include(s => s.FieldsInformation).Include(s => s.Course).Include(s => s.PaymentRecords);
   }
   
   public async Task Create(Student student) {

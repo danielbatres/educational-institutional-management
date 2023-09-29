@@ -20,11 +20,37 @@
             <p>Tema claro (por defecto)</p>
           </div>
           <div>
+            <div class="theme-box @(SelectedAppearance == 4 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(4))">
+            </div>
+            <p>Ambiente claro</p>
+          </div>
+          <div>
+            <div class="theme-box @(SelectedAppearance == 5 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(5))">
+            </div>
+            <p>Barra lateral oscura, tema claro</p>
+          </div>
+          <div>
             <div class="theme-box @(SelectedAppearance == 2 ? "selected-appearance" : "")"
               @onclick="@(() => SetSelectedAppearance(2))">
             </div>
             <p>Tema oscuro</p>
           </div>
+          <div>
+            <div class="theme-box @(SelectedAppearance == 3 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(3))">
+            </div>
+            <p>Tema noche oscura</p>
+          </div>
+        </div>
+      </div>
+      <div class="primary-color-selection box-background">
+        <div class="primary-color-selection-info">
+          <h6>Color principal</h6>
+          <p>Selecciona el color principal para la interfaz</p>
+        </div>
+        <div>
+          @foreach (var color in PrimaryColors) {
+            <div class="color-box" style="background: @color" @onclick="@(() => SetPrimaryColor(color))"></div>
+          }
         </div>
       </div>
     </div>
