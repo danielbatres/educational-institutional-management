@@ -4,60 +4,58 @@
       <h4>Apariencia</h4>
       <p>Cambia la apariencia de tu espacio de trabajo</p>
     </div>
-  </div>
-  <div>
-    <div class="interface-theme-container">
-      <div class="interface-theme box-background">
-        <div class="interface-section">
-          <h6>Tema de la interfaz</h6>
-          <p>Selecciona el tema para la interfaz</p>
-        </div>
-        <div class="interface-section">
-          <div>
-            <div class="theme-box @(SelectedAppearance == 1 ? "selected-appearance" : "" )"
-              @onclick="@(() => SetSelectedAppearance(1))">
-              <ThemePreview Selection="@AppereanceSelection.LightTheme"/>
-            </div>
-            <p>Tema claro (por defecto)</p>
-          </div>
-          <div>
-            <div class="theme-box @(SelectedAppearance == 4 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(4))">
-              <ThemePreview Selection="@AppereanceSelection.AmbientTheme"/>
-            </div>
-            <p>Ambiente claro</p>
-          </div>
-          <div>
-            <div class="theme-box @(SelectedAppearance == 5 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(5))">
-              <ThemePreview Selection="@AppereanceSelection.DarkBarLightTheme"/>
-            </div>
-            <p>Barra lateral oscura, tema claro</p>
-          </div>
-          <div>
-            <div class="theme-box @(SelectedAppearance == 2 ? "selected-appearance" : "")"
-              @onclick="@(() => SetSelectedAppearance(2))">
-              <ThemePreview Selection="@AppereanceSelection.DarkTheme"/>
-            </div>
-            <p>Tema oscuro</p>
-          </div>
-          <div>
-            <div class="theme-box @(SelectedAppearance == 3 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(3))">
-              <ThemePreview Selection="@AppereanceSelection.DarkerTheme"/>
-            </div>
-            <p>Tema noche oscura</p> 
-          </div>
-        </div>
+  </div> 
+  <div class="interface-theme-container">
+    <div class="interface-theme box-background">
+      <div class="interface-section">
+        <h6>Tema de la interfaz</h6>
+        <p>Selecciona el tema para la interfaz</p>
       </div>
-      <div class="primary-color-selection box-background">
-        <div class="primary-color-selection-info">
-          <h6>Color principal</h6>
-          <p>Selecciona el color principal para la interfaz</p>
+      <div class="interface-section">
+        <div>
+          <div class="theme-box @(SelectedAppearance == 1 ? "selected-appearance" : "" )"
+            @onclick="@(() => SetSelectedAppearance(1))">
+            <ThemePreview Selection="@AppereanceSelection.LightTheme"/>
+          </div>
+          <p>Tema claro (por defecto)</p>
         </div>
         <div>
-          @foreach (var color in PrimaryColors) {
-            <div class="color-box" style="background: @color" @onclick="@(() => SetPrimaryColor(color))"></div>
-          }
-          <input type="color" @onchange="@UpdatePrimaryColor">
+          <div class="theme-box @(SelectedAppearance == 4 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(4))">
+            <ThemePreview Selection="@AppereanceSelection.AmbientTheme"/>
+          </div>
+          <p>Ambiente claro</p>
         </div>
+        <div>
+          <div class="theme-box @(SelectedAppearance == 5 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(5))">
+            <ThemePreview Selection="@AppereanceSelection.DarkBarLightTheme"/>
+          </div>
+          <p>Barra lateral oscura</p>
+        </div>
+        <div>
+          <div class="theme-box @(SelectedAppearance == 2 ? "selected-appearance" : "")"
+            @onclick="@(() => SetSelectedAppearance(2))">
+            <ThemePreview Selection="@AppereanceSelection.DarkTheme"/>
+          </div>
+          <p>Tema oscuro</p>
+        </div>
+        <div>
+          <div class="theme-box @(SelectedAppearance == 3 ? "selected-appearance" : "")" @onclick="@(() => SetSelectedAppearance(3))">
+            <ThemePreview Selection="@AppereanceSelection.DarkerTheme"/>
+          </div>
+          <p>Tema noche oscura</p> 
+        </div>
+      </div>
+    </div>
+    <div class="primary-color-selection box-background">
+      <div class="primary-color-selection-info">
+        <h6>Color principal</h6>
+        <p>Selecciona el color principal para la interfaz</p>
+      </div>
+      <div class="color-boxes">
+        @foreach (var color in PrimaryColors) {
+          <div class="color-box" style="background: @color" @onclick="@(() => SetPrimaryColor(color))"></div>
+        }
+        <input type="color" @onchange="@UpdatePrimaryColor">
       </div>
     </div>
   </div>

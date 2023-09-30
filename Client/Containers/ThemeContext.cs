@@ -6,7 +6,7 @@ namespace edu_institutional_management.Client.Containers;
 public class ThemeContext : BaseContainer {
   public Palette LightTheme { get; set; } = new () {
     BackgroundColor = "#FFFFFF",
-    LightBackgroundColor = "#f8f9fc",
+    LightBackgroundColor = "#FFFFFF",
     LightColor = "#ECECEC",
     TextColor = "#a3a5b5",
     LightTextColor = "#a3a4a5",
@@ -16,11 +16,14 @@ public class ThemeContext : BaseContainer {
     SecondLoadingColor = "#e0e0e0",
     ThirdLoadingColor = "#f0f0f0",
     SideBarColor = "#FFFFFF",
-    SecondSideBarColor = "#FFFFFF"
+    SideBarLightColor = "#ECECEC",
+    SecondSideBarColor = "#FFFFFF",
+    SecondSideBarLightColor = "#ECECEC",
+    LogoColor = "#0E1116"
   };
   public Palette DarkBarLightTheme { get; set; } = new() {
     BackgroundColor = "#FFFFFF",
-    LightBackgroundColor = "#f8f9fc",
+    LightBackgroundColor = "#f2f3f5",
     LightColor = "#ECECEC",
     TextColor = "#a3a5b5",
     LightTextColor = "#a3a4a5",
@@ -30,21 +33,25 @@ public class ThemeContext : BaseContainer {
     SecondLoadingColor = "#e0e0e0",
     ThirdLoadingColor = "#f0f0f0",
     SideBarColor = "#101010",
-    SecondSideBarColor = "#FFFFFF"
+    SideBarLightColor = "",
+    SecondSideBarColor = "#FFFFFF",
+    LogoColor = "#FFFFFF"
   };
   public Palette AmbientTheme { get; set; } = new() {
     BackgroundColor = "#FFFFFF",
-    LightBackgroundColor = "hsla(111, 100%, 99%, 1);",
+    LightBackgroundColor = "#FFFFFF",
     LightColor = "#ECECEC",
-    TextColor = "#a3a5b5",
+    TextColor = "#76787d",
     LightTextColor = "#a3a4a5",
     DarkColor = "#0E1116",
+    SpecialLightColor = "#e3e5e8",
     LightPrimaryColor = "#D9DFFF",
     FirstLoadingColor = "#f0f0f0",
     SecondLoadingColor = "#e0e0e0",
     ThirdLoadingColor = "#f0f0f0",
-    SideBarColor = "#FFFFFF",
-    SecondSideBarColor = "#FFFFFF"
+    SideBarColor = "#e3e5e8",
+    SecondSideBarColor = "#f2f3f5",
+    LogoColor = "#0E1116"
   };
   public Palette DarkTheme { get; set; } = new() {
     BackgroundColor = "#1b1c1e",
@@ -59,7 +66,8 @@ public class ThemeContext : BaseContainer {
     SecondLoadingColor = "#242424",
     ThirdLoadingColor = "#3c3c3c",
     SideBarColor = "#101010",
-    SecondSideBarColor = "#1b1c1e"
+    SecondSideBarColor = "#1b1c1e",
+    LogoColor = "#FFFFFF"
   };
   public Palette DarkerTheme { get; set; } = new() {
     BackgroundColor = "#101116",
@@ -73,7 +81,8 @@ public class ThemeContext : BaseContainer {
     SecondLoadingColor = "#242424",
     ThirdLoadingColor = "#3c3c3c",
     SideBarColor = "#101116",
-    SecondSideBarColor = "#101116"
+    SecondSideBarColor = "#101116",
+    LogoColor = "#FFFFFF"
   };
   public string PrimaryColor { get; set; } = string.Empty;
 

@@ -4,12 +4,34 @@
         border-radius: 10px;
     }
 
-    .main-side-bar-@Selection, .main-navbar-theme-@Selection {
+    .main-navbar-theme-@Selection {
         border-bottom: 1px solid @SelectedPalette.LightColor;
         background: @SelectedPalette.BackgroundColor; 
     }
 
+    .main-side-bar-@Selection {
+        background: @SelectedPalette.SideBarColor;
+        border-right: 1px solid @SelectedPalette.LightColor;
+    }
+
     .single-option-@Selection {
+        background: @SelectedPalette.LightColor; 
+    }
+
+    .nav-@Selection {
+        background: @SelectedPalette.LightColor;
+    }
+
+    .main-side-bar .nav-DarkBarLightTheme {
+        background: #222;
+    }
+
+    .box-@Selection {
+        background: @SelectedPalette.BackgroundColor;
+        border: 1px solid @SelectedPalette.LightColor;
+    } 
+
+    .content-text-@Selection div, .single-@Selection {
         background: @SelectedPalette.LightColor;
     }
 </style>
@@ -18,27 +40,64 @@
     <div class="main-navbar-theme-@Selection main-navbar-theme">
         <div class="nav-main">
             <div class="single-option primary-background"> 
-
             </div>
             <div class="single-option-@Selection single-option">
-
             </div>
         </div>
         <div class="nav-main">
             <div class="single-option-@Selection single-option" >
-
             </div>
             <div class="circle-option">
-
             </div>
         </div>
     </div>
     <div class="main-theme-panel">
-        <div class="main-side-bar">
-
+        <div class="main-side-bar-@Selection main-side-bar">
+            <div class="nav-primary">
+            </div>
+            <div class="nav-@Selection nav-item">
+            </div>
+            <div class="nav-@Selection nav-item">
+            </div>
+            <div class="nav-@Selection nav-item">
+            </div>
         </div>
         <div class="main-content">
-
+            <div class="box-@Selection box-preview-content">
+                <div class="single-container">
+                    <div class="single-@Selection single-box-option">
+                    </div>
+                </div>
+                <div class="single-container">
+                    <div class="single-@Selection single-box-option">
+                    </div>
+                </div>
+            </div>
+            <div class="box-@Selection box-preview-content">
+                <div class="single-content">
+                    <div class="single-container">
+                        <div class="single-@Selection single-box-option">
+                        </div>
+                    </div>
+                    <div class="single-container">
+                        <div class="single-@Selection single-box-option">
+                        </div>
+                    </div>
+                </div>
+                <div class="content-text-@Selection content-text">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="status-container">
+                    <div class="green-status">
+                    </div>
+                    <div class="danger-status">
+                    </div>
+                    <div class="warning-status">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

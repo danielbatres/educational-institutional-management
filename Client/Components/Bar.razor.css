@@ -10,7 +10,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid var(--light-color);
+  border-right: 1px solid var(--side-bar-light-color);
 }
 
 .sidebar-container {
@@ -33,7 +33,7 @@ section {
 }
 
 .button-container:hover {
-  background: var(--light-primary-color);
+  background: var(--light-color);
 }
 
 .button-container:hover p,
@@ -73,7 +73,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid var(--light-color);
+  border-top: 1px solid var(--side-bar-light-color);
 }
 
 .settings div {
@@ -95,7 +95,7 @@ section {
 
 .line-over {
   width: 100%;
-  border-bottom: 1px solid var(--light-color);
+  border-bottom: 1px solid var(--side-bar-light-color);
   margin: 5px 3px;
 }
 

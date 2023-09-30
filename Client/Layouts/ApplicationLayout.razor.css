@@ -94,7 +94,7 @@ main {
   padding: 10px;
   background: var(--side-bar-color);
   text-align: center;
-  border: var(--light-border);
+  border: 1px solid var(--side-bar-light-color);
   overflow: hidden;
 }
 

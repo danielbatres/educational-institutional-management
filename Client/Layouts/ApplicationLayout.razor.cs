@@ -28,6 +28,7 @@ public partial class ApplicationLayout {
   private Institution Institution { get; set; } = new();
 
   protected override void OnInitialized() {
+    _themeContext.OnChange += HandleStateChange;
     Toggle = true;
 
     InstitutionId = (Guid)_userContext.User.InstitutionId;
@@ -74,7 +75,6 @@ public partial class ApplicationLayout {
       }
     };
 
-    _themeContext.OnChange += HandleStateChange;
     StatusModalContext.OnChange += HandleStateChange;
     GeneralSearchContext.OnChange += HandleStateChange;
   }
@@ -93,8 +93,8 @@ public partial class ApplicationLayout {
 
     _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 
-    _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);
     _themeContext.SetPrimaryColor(_userContext.User.Settings.PrimaryColor);
+    _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);
   }
 
   private void RemoveAbsoluteContent() {

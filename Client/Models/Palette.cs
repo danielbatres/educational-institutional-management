@@ -13,5 +13,8 @@ public class Palette {
   public string? SecondLoadingColor { get; set; }
   public string? ThirdLoadingColor { get; set; }
   public string? SideBarColor { get; set; }
+  public string? SideBarLightColor { get; set; }
   public string? SecondSideBarColor { get; set; }
+  public string? SecondSideBarLightColor { get; set; }
+  public string? LogoColor { get; set; }
 }

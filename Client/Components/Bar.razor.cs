@@ -29,16 +29,25 @@ public partial class Bar {
   public void SetSelectedValues(string navigateTo, string selected) {
     switch (SideBarOption) {
       case "main-menu":
-        BackgroundColor = "background: var(--side-bar-color)";
         SideBarContext.SetSelectedOptionMainMenu(int.Parse(selected));
         break;
       case "settings-menu":
-        BackgroundColor = "background: var(--second-side-bar-color)";
         SideBarContext.SetSelectedOptionSettingsMenu(int.Parse(selected));
         break;
     }
 
     NavigationManager?.NavigateTo(navigateTo);
+  }
+
+  protected override void OnParametersSet() {
+    switch (SideBarOption) {
+      case "main-menu":
+        BackgroundColor = "background: var(--side-bar-color)";
+        break;
+      case "settings-menu":
+        BackgroundColor = "background: var(--second-side-bar-color)";
+        break;
+    }
   }
 
   protected override void OnInitialized() {

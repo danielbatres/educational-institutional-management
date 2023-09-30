@@ -9,6 +9,7 @@
   border-radius: 10px;
   border: var(--light-border);
   margin: 8px 0 12px;
+  transition: border, 0.1s ease-in-out;
 }
 
 .selected-appearance {
@@ -16,6 +17,9 @@
 }
 
 .interface-theme-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   border-bottom: var(--light-border);
   padding-bottom: 40px;
 }
@@ -42,6 +46,12 @@
 
 .interface-section:last-child {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   text-align: center;
+}
+
+.primary-color-selection {
+  display: flex;
+  justify-content: space-between;
 }
