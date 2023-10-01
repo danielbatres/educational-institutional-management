@@ -1,0 +1,30 @@
+<div class="section-modal-overlay">
+  <div class="section-modal">
+    <i class="fi fi-tr-circle-xmark section-exit-modal" @onclick="@ExitModal"></i>
+    @switch (SectionContext.ShowSectionOption) {
+      case ShowSectionOptions.AddSubjectCourse:
+        <AddSubjectCourse />
+        break;
+      case ShowSectionOptions.AddCourseSchedule:
+        <AddSubjectSchedule />
+        break;
+    }
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private SectionContext SectionContext { get; set; }
+
+  protected override void OnInitialized() {
+    SectionContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+
+  private void ExitModal() {
+    SectionContext.SetShowSectionModal(false);
+  }
+}

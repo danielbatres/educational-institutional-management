@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="settings padding-sides">
-      <div class="@(GetSelectedContainer() == Menu.LastOption[2] ? "selected" : "") button-container @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => SetSelectedValues(Menu.LastOption[3], Menu.LastOption[2]))">
+      <div class="@(GetSelectedContainer() == Menu.LastOption[2] ? "selected" : "") @(SideBarOption.Equals("settings-menu") ? "exit-button" : "") button-container @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "")" @onclick="@(() => SetSelectedValues(Menu.LastOption[3], Menu.LastOption[2]))">
         <i class="@Menu.LastOption[1]"></i>
         @if (IsToggle) {
           @if (Toggle) {

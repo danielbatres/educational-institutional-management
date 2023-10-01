@@ -25,15 +25,20 @@ public partial class UserProfile {
       UserBackup = UserContext.User.Clone();
       NewUser = UserContext.User.Clone();
 
-      if (UserContext.User.Photo != null) {
-        var imageBase64 = Convert.ToBase64String(UserContext.User.Photo);
-        ImageSrc = $"data:image/png;base64,{imageBase64}";
-      }
+      SetUserPhoto();
     }
   }
 
   private void HandleStateChange() {
-    StateHasChanged();
+    SetUserPhoto(); 
+    StateHasChanged(); 
+  }
+
+  private void SetUserPhoto() {
+    if (UserContext.User.Photo != null) {
+      var imageBase64 = Convert.ToBase64String(UserContext.User.Photo);
+      ImageSrc = $"data:image/png;base64,{imageBase64}";
+    }
   }
 
   private async Task UpdateUser() {

@@ -17,14 +17,24 @@
     </div>
   }
   <div class="online-users">
-    @foreach (User user in Users)
-    {
+    @foreach (User user in Users) {
       int index = Users.IndexOf(user);
+      string imageSrc = string.Empty;
+
+      if (user.Photo != null) {
+        var imageBase64 = Convert.ToBase64String(user.Photo);
+        imageSrc = $"data:image/png;base64,{imageBase64}";
+      }
+
       <div>
-        <h5>Nombre del rol - 3</h5>
+        <h5>Administrador - 1</h5>
         <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
           <div class="user-information">
             <div class="user-image">
+              @if (imageSrc != string.Empty) {
+                <img src="@imageSrc"
+                  class="user-photo-online @(string.IsNullOrEmpty(imageSrc) ? "user-no-photo-container" : "")" />
+              }
               @if (user.OnlineStatus.Status)
               {
                 <div class="green-state"></div>
@@ -38,7 +48,7 @@
         </div>
       </div>
     }
-    <button type="button" class="button" @onclick="@Disconnect">Desconectar</button>
+    <button type="button" class="button primary-background-button" @onclick="@Disconnect">Desconectar</button>
   </div>
 </article>
 @code {

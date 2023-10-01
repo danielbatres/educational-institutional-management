@@ -77,8 +77,9 @@
   font-size: 1.4rem;
   position: absolute;
   right: -45px;
-  top: 18px;
+  top: 2%;
   cursor: pointer;
+  z-index: 1;
 }
 
 main {
@@ -90,22 +91,47 @@ main {
 }
 
 .top {
-  height: 6%;
-  padding: 10px;
+  display: flex;
+  gap: 10px;
+  height: 8%;
+  padding: 5px;
+  padding-left: 14px;
   background: var(--side-bar-color);
-  text-align: center;
   border: 1px solid var(--side-bar-light-color);
   overflow: hidden;
 }
 
+.institution-image {
+  min-width: 18%;
+  max-width: 18%;
+  max-height: 75%;
+  border-radius: 8px;
+  align-self: center;
+}
+
+.logo-name {
+  align-self: center;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
 .bar {
-  height: 94%;
+  height: 92%;
 }
 
  h2 {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
+}
+
+.logo-name p {
+  font-size: var(--smaller-text);
+  margin-top: 4px;
 }
 
 @keyframes disappear {

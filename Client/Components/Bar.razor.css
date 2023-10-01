@@ -118,6 +118,22 @@ section {
   color: var(--white);
 }
 
+.settings .exit-button {
+  background: var(--light-danger-color);
+}
+
+.settings .exit-button:hover {
+  background: var(--danger-color);
+}
+
+.settings .exit-button i, .settings .exit-button p {
+  color: var(--danger-color);
+}
+
+.settings .exit-button:hover i, .settings .exit-button:hover p {
+  color: var(--white);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

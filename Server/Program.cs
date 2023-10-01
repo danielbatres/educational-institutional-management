@@ -4,6 +4,7 @@ using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.Configure<FormOptions>(options => {
+  options.MultipartBodyLengthLimit = 52428800;
+});
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddSingleton<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IUserService, UserService>();

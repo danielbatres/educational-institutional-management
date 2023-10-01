@@ -55,13 +55,13 @@
 
 .user-info-data p:first-child {
   color: var(--dark-color);
-  font-weight: 400;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: var(--regular-text);
   margin-bottom: 4px;
 }
 
 .user-info-data p:last-child {
-  font-size: 0.8rem;
+  font-size: var(--small-text);
 }
 
 .user-info div:last-child {

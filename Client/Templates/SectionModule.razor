@@ -1,0 +1,23 @@
+@if (SectionContext.ShowSectionModal) { <SectionModal />}
+
+<section>
+  <article>
+    @ChildContent
+  </article>
+</section>
+
+@code {
+  [Parameter]
+  [EditorRequired]
+  public RenderFragment? ChildContent { get; set; }
+  public SectionContext SectionContext { get; set; }
+
+  protected override void OnInitialized() {
+    SectionContext.SetShowSectionModal(false);
+    SectionContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  }
+}

@@ -7,48 +7,130 @@
       <p>Este es tu panel principal</p>
     </div>
     <div class="counters">
-      <div class="counter"></div>
-      <div class="counter"></div>
-      <div class="counter"></div>
-      <div class="counter"></div>
+      <div class="counter">
+        <div class="counter-section">
+          <div class="counter-icon">
+            <div>
+              <p>Usuarios</p>
+              <h4>@UsersCount</h4>
+            </div>
+            <div class="counter-icon-content centered-container">
+
+            </div>
+          </div>
+          <p class="small">Usuarios totales en la instituci&oacute;n</p>
+        </div>
+      </div>
+      <div class="counter">
+        <div class="counter-first-section">
+          <div class="counter-icon">
+            <div>
+              <p>Estudiantes</p>
+              <h4>@StudentsCount</h4>
+            </div>
+            <div class="counter-icon-content centered-container">
+
+            </div>
+          </div>
+          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
+        </div>
+      </div>
+      <div class="counter">
+        <div class="counter-first-section">
+          <div class="counter-icon">
+            <div>
+              <p>Estudiantes</p>
+              <h4>@StudentsCount</h4>
+            </div>
+            <div class="counter-icon-content centered-container">
+
+            </div>
+          </div>
+          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
+        </div>
+      </div>
+      <div class="counter">
+        <div class="counter-first-section">
+          <div class="counter-icon">
+            <div>
+              <p>Estudiantes</p>
+              <h4>@StudentsCount</h4>
+            </div>
+            <div class="counter-icon-content centered-container">
+
+            </div>
+          </div>
+          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
+        </div>
+      </div>
+    </div>
+    <div class="recent-activity">
+      <div class="recent-activity-info">
+        <div class="recent-activity-info-text">
+          <h4>Actividad reciente</h4>
+          <p>Actividad en los ultimos 60 dias</p>
+        </div> 
+        <div>
+          <button type="button" class="button primary-background-button activity-button" @onclick="@(() => _navigationManager.NavigateTo("/application/{_userContext.User.InstitutionId}/activity"))">
+            <i class="fi fi-tr-book-copy"></i> Ir a actividad
+          </button> 
+        </div>
+      </div>
+      <div class="activity-log">
+        <div class="activity-log-container">
+          @if (Activities != null) {
+            var activityCounts = Activities.GroupBy(log => log.Date.Date).Select(group => new {
+              Date = group.Key,
+              Count = group.Count()
+            }).OrderByDescending(x => x.Count).ToList();
+
+            int maxActivityCount = activityCounts.Any() ? activityCounts.Max(x => x.Count) : 0;
+
+            @for (int i = 59; i >= 0; i--) {
+              DateTime currentDate = DateTime.Now.Date.AddDays(-i);
+
+              var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
+
+              double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
+              
+              <div class="activity-box"
+                style="@(opacity != 0 ? "background-color: var(--primary-color); opacity: @opacity;" : "")">
+                <div class="hover-date">
+                <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
     </div>
   </article>
   <article class="dashboard-side-bar">
-    @if (IsSelected) {
-      <div class="user-target-information" style="top: @SelectedUserTop">
-        <div class="user-preferred-color"></div>
-        <div>
-          <p>@SelectedUser.Name @SelectedUser.LastName</p>
-          <p>@SelectedUser.Register.Email</p>
-        </div>
-        <div>
-          <h5>miembro desde</h5>
-          <p>15/9/2023</p>
-        </div>
-        <div>
-          <h5>roles asignados</h5>  
-        </div>
-      </div>
-    }
     <div class="online-users">
-      @foreach (User user in Users) {
-        int index = Users.IndexOf(user);
-        <div>
-          <h5>Nombre del rol - 3</h5>
-          <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
-            <div class="user-information">
-              <div class="user-image">
-                @if (user.OnlineStatus.Status) { <div class="green-state"></div> }
+      <OnlineUsers />
+    </div>
+    <div class="events">
+      <div class="events-content centered-container">
+        @if (false) {
+          <h4>No hay eventos para mostrar</h4>
+          <p>No hemos encontrado ningun evento</p>
+        }
+
+        @for(int i = 0; i < 4; i++) {
+          <div class="event-card">
+            <h5>Evento</h5>
+            <div class="event-information">
+              <div class="event-image">
+
               </div>
-              <div class="user-info">
-                <p>@user.Name @user.LastName</p>
-                <p>@user.Register.Email</p>
+              <div class="event-info">
+                <h6>Nombre del evento</h6>
+                <p>Descripci&oacute;n breve del evento</p>
               </div>
             </div>
           </div>
-        </div>
-      }
-      <button type="button" class="button" @onclick="@Disconnect">Desconectar</button>
+        }
+      </div>
     </div>
   </article>
 </section>

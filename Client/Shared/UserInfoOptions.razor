@@ -43,14 +43,20 @@
   protected override void OnInitialized() {
     UserContext.OnChange += HandleStateChanged;
 
+    SetUserPhoto();
+  }
+
+  private void HandleStateChanged() {
+    SetUserPhoto();
+    
+    StateHasChanged();
+  }
+
+  private void SetUserPhoto() {
     if (UserContext.User.Photo != null) {
       var imageBase64 = Convert.ToBase64String(UserContext.User.Photo);
       ImageSrc = $"data:image/png;base64,{imageBase64}";
     }
-  }
-
-  private void HandleStateChanged() {
-    StateHasChanged();
   }
 
   private void Exit() {

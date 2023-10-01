@@ -45,7 +45,15 @@
     <div class="left-container" style="@(Toggle ? "width: 280px;" : "width: 100px;")">
       <i class="fi fi-tr-bars-sort icon" @onclick="(() => Toggle = !Toggle)"></i>
       <div class="top">
-        <h2><b>Firmacadem</b></h2>
+        @if (Institution.Photo != null) {
+          <div class="institution-image">
+            <img src="@ImageSrc" alt="@Institution.Name">
+          </div>
+        }
+        <div class="logo-name">
+          <h2><b>Firmacadem</b></h2>
+          <p>@Institution.Name</p>
+        </div>
       </div>
       <div class="bar">
         <CascadingValue Value="@Toggle" Name="Toggle">

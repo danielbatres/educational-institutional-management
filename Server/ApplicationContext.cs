@@ -238,6 +238,7 @@ public class ApplicationContext : DbContext {
 
         modelBuilder.Entity<SubjectCourse>(subjectCourse => {
             subjectCourse.HasKey(s => s.Id);
+            subjectCourse.Property(s => s.UserId);
             subjectCourse.HasMany(sc => sc.RatingsLists).WithOne(rl => rl.SubjectCourse).HasForeignKey(rl => rl.SubjectCourseId);
             subjectCourse.HasMany(sc => sc.CourseSchedules).WithOne(cs => cs.SubjectCourse).HasForeignKey(cs => cs.SubjectCourseId);
         });

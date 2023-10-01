@@ -24,7 +24,7 @@
     <input type="color">
 </form>
 <div class="create-subject-button">
-    <button type="button" class="button primary-background-button" @onclick="@CreateSubject">Crear asignatura</button>
+    <button type="button" class="button primary-background-button" @onclick="@ActionSubject">Crear asignatura</button>
 </div>
 
 @code {
@@ -72,12 +72,11 @@
                 Subject.Name = value;
                 break;
             case "description":
-
                 break;
         }
     }
 
-    private async Task CreateSubject() {
+    private async Task ActionSubject() {
         IsInputWarning = false;
         ValidateField();
         

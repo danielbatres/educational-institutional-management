@@ -8,6 +8,7 @@ public class SubjectCourse {
   [JsonIgnore]
   public Course? Course { get; set; }
   public Guid SubjectId { get; set; }
+  public Guid? UserId { get; set; }
   [JsonIgnore]
   public Subject? Subject { get; set; }
   public ICollection<RatingsList>? RatingsLists { get; set; }

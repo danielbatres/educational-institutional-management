@@ -17,16 +17,12 @@ public partial class CourseSettings {
   [Inject]
   private UserContext _userContext { get; set; }
   [Inject]
-  private ISubjectCourseService _subjectCourseService { get; set; }
-  [Inject]
   private ICourseScheduleService _courseScheduleService { get; set; }
-  private List<Subject> Subjects { get; set; } = new();
   private SubjectCourse SubjectCourse { get; set; }
   private List<SubjectCourse> SubjectsCourse { get; set; } = new();
   private CourseSchedule CourseSchedule { get; set; } = new();
   private List<Course> Courses { get; set; } = new();
   private int RenderCount { get; set; } = 0;
-  private string SubjectId { get; set; } = string.Empty;
   private int NavigationOption { get; set; } 
 
   protected override void OnInitialized() {
@@ -70,21 +66,5 @@ public partial class CourseSettings {
   
     _courseContext.SetNewCourse();
     await _courseHubManager.SendCoursesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-  
-  private async Task CreateNewCourseSubject(Guid subjectId, Guid courseId) {
-    Guid subjectCourseId = Guid.NewGuid();
-      
-    await _subjectCourseService.Create(new () {
-      Id  = subjectCourseId,
-      CourseId = courseId,
-      SubjectId = subjectId
-    });
-    
-    CourseSchedule.SubjectCourseId = subjectCourseId;
-    
-    await _courseScheduleService.Create(CourseSchedule);
-    AssignNewCourseSchedule();
-    SubjectId = string.Empty;
   }
 }

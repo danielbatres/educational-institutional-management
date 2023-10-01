@@ -26,11 +26,7 @@
 
         <form>
           <fieldset>
-            <select id="subject-@index" @bind="@SubjectId">
-              @foreach (var subject in Subjects) {
-                <option value="@subject.Id.ToString()">@subject.Name</option>
-              }
-            </select>
+            
           </fieldset>
           <fieldset>
             <div class="label">
@@ -46,7 +42,7 @@
               <option value="@DayOfWeek.Saturday">Sábado</option>
             </select>
           </fieldset>
-          <fieldset>
+          <fieldset> 
             <div class="label">
               <label for="start-time">Empieza</label>
             </div>
@@ -59,8 +55,6 @@
             <input @bind="@CourseSchedule.EndTime" id="end-time" type="time" class="input">
           </fieldset>
         </form>
-        <button type="button" class="button" @onclick="@(() => CreateNewCourseSubject(Subjects[0].Id, course.Id))">Agregar
-          materia al curso</button>
       }
     </div>
   </div>

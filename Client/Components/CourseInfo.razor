@@ -1,16 +1,4 @@
-<style>
-  section {
-    width: 100%;
-    height: 100%;
-  }
-
-  ul {
-    display: flex;
-    justify-content: space-evenly;
-  }  
-</style>
-
-<section>
+<SectionModule>
   <h4>Curso</h4>
   <p>Informaci&oacute;n del curso</p>
   
@@ -41,11 +29,11 @@
   } else {
     <CourseCalendar />
   }
-</section>
+</SectionModule>
 
 @code {
     [Inject]
-    private edu_institutional_management.Client.Containers.CourseContext _courseContext { get; set; }
+    private CourseContext _courseContext { get; set; }
     private string Selection { get; set; } = "general";
   
   private void SetSelection(string selection) {

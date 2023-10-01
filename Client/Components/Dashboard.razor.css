@@ -12,35 +12,141 @@ article {
 
 section article:first-child {
   width: 82%;
-  padding: 20px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+h4 {
+  margin-bottom: 8px;
 }
 
 .greeting {
-  width: 30%;
+  width: 40%;
   height: 100px;
   border-radius: 10px;
   background: var(--background-color);
-  padding: 20px;
+  padding: 16px;
   border: var(--light-border);
 }
 
 .counters {
-  display: flex;
-  width: 30%;
-  max-height: 300px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 40%;
+  max-height: 35%;
   height: 100%;
   margin: 18px 0;
-  gap: 10px;
+  gap: 16px;
 }
 
 .counter {
-  max-width: 50%;
   width: 100%;
   height: 100%;
   border-radius: 10px;
   background: var(--background-color);
-  max-height: 50%;
   border: var(--light-border);
+  padding: 16px;
+}
+
+.counter-icon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.counter-icon-content {
+  min-width: 40px;
+  max-width: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  border-radius: 10px;
+  background: var(--light-color);
+}
+
+.counter-section h4 {
+ margin: 5px 0;
+}
+
+.small {
+  font-size: 0.78rem;
+}
+
+.recent-activity {
+  background: var(--background-color);
+  border-radius: 10px;
+  border: var(--light-border);
+  height: 40%;
+  width: 40%;
+  padding: 16px;
+}
+
+.recent-activity-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+  border-bottom: var(--light-border);
+}
+
+.recent-activity-info-text p {
+  font-size: var(--small-text);
+}
+
+.activity-log {
+  width: 100%;
+  height: 60%;
+}
+
+.activity-log-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+}
+
+.activity-box {
+  position: relative;
+  width: 100%;
+  min-height: 10%;
+  background: var(--light-color);
+  border-radius: 2px;
+}
+
+.activity-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-button i {
+  color: var(--white);
+}
+
+.activity-button:hover i {
+  color: var(--primary-color);
+}
+
+.hover-date {
+  display: none;
+  position: absolute;
+  top: -150%;
+  padding: 10px;
+  border-radius: 4px;
+  background: var(--background-color);
+  border: var(--light-border);
+  text-transform: capitalize;
+  text-wrap: nowrap;
+  z-index: 10;
+}
+
+.hover-date p {
+  font-size: var(--small-text);
+  color: var(--dark-color);
+}
+
+.activity-box:hover .hover-date {
+  display: block;
 }
 
 section article:last-child {
@@ -52,75 +158,39 @@ section article:last-child {
 
 .online-users {
   height: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 16px 10px;
-  overflow-y: scroll;
 }
 
-.user-information {
+.events {
+  height: 50%;
+  overflow-y: auto;
+}
+
+.events-content {
+  margin: 20px 0;
+  height: 100%;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.event-card {
+  text-align: initial;
+  padding: 10px;
+  border-radius: 10px;
+  border: var(--light-border);
+}
+
+.event-information {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 
-.user-image {
-  position: relative;
+.event-image {
   min-width: 30px;
+  max-width: 30px;
   min-height: 30px;
-  background: var(--light-color);
-  border-radius: 100%;
-}
-
-.green-state {
-  position: absolute;
-  min-width: 10px;
-  min-height: 10px;
-  border-radius: 100%;
-  right: 1px;
-  bottom: 1px;
-  background: var(--success-color);
-}
-
-.user-target-information {
-  position: absolute;
-  min-width: 100%;
-  min-height: 30%;
-  max-height: 50%;
-  display: flex;
-  flex-direction: column;
-  left: -105%;
-  background: var(--background-color);
-  border: 1px solid var(--light-color);
+  max-height: 30px;
   border-radius: 10px;
-  z-index: 10000;
-  cursor: auto;
-}
-
-.user-preferred-color {
-  width: 100%;
-  min-height: 55px;
-  border-radius: 10px 10px 0 0;
   background: var(--light-color);
-}
-
-.user-card {
-  padding: 6px;
-  border-radius: 10px;
-  transition: background 0.1s ease-in-out;
-}
-
-.user-card:hover {
-  cursor: pointer;
-  background: var(--light-color);
-}
-
-.user-info p:first-child {
-  color: var(--dark-color);
-  font-size: 0.8rem;
-}
-
-.user-info p:last-child {
-  font-size: 0.7rem;
 }

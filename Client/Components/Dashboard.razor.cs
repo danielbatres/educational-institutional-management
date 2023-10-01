@@ -20,20 +20,52 @@ public partial class Dashboard {
   private IUserService _userService { get; set; }
   [Inject]
   private SideBarContext SideBarContext { get; set; }
-  private List<User> Users = new();
+  [Inject]
+  private StudentHubManager StudentHubManager { get; set; }
+  [Inject]
+  private ActivityHubManager ActivityHubManager { get; set; }
+  private List<ActivityLog> Activities { get; set; }
+  private int MaxActivityCount { get; set; }
   private User SelectedUser { get; set; } = new();
   private string SelectedUserTop { get; set; } = string.Empty;
+  private int StudentsCount { get; set; } = 0;
+  private int UsersCount { get; set; } = 0;
 
   protected override async Task OnInitializedAsync() {
     SideBarContext.SetSelectedOptionMainMenu(0);
     ContentContext.SetSectionContent("Dashboard", "Mi panel");
 
-    _usersHubManager.UsersUpdatedHandler(users => {
-      Users = users;
-      StateHasChanged();
+    StudentHubManager.StudentsUpdatedHandler(async (students) => {
+      StudentsCount = 0;
+
+      for (int i = 0; i < students.Count; i++) {
+        StudentsCount++;
+        StateHasChanged();
+        await Task.Delay(1);
+      }
     });
 
-    await _usersHubManager.SendUsersUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+    _usersHubManager.UsersUpdatedHandler(async (users) => {
+      UsersCount = 0;
+
+      for (int i = 0; i < users.Count; i++) {
+        UsersCount++;
+        StateHasChanged();
+        await Task.Delay(1);
+      }
+    });
+
+    ActivityHubManager.ActivityUpdatedHandler(activities => {
+      Activities = activities;
+      StateHasChanged();
+      
+    });
+
+    string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+
+    await _usersHubManager.SendUsersUpdatedAsync(groupName);
+    await StudentHubManager.SendStudentsUpdatedAsync(groupName);
+    await ActivityHubManager.SendActivityUpdatedAsync(groupName);
   }
 
   private async Task Disconnect() {
@@ -42,16 +74,5 @@ public partial class Dashboard {
     await _userService.Update(UserContext.User);
 
     await _usersHubManager.SendUsersUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-
-  private void SetSelectedUser(int index) {
-    IsSelected = !IsSelected;
-
-    SelectedUser = Users[index];
-    if (index == 0) {
-      SelectedUserTop = "1%";
-    } else {
-      SelectedUserTop = (index + 1) * 6 + "%";
-    }
   }
 }

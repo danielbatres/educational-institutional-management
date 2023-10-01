@@ -26,6 +26,7 @@ public partial class ApplicationLayout {
   [Inject]
   private InstitutionHubManager _institutionHubManager { get; set; }
   private Institution Institution { get; set; } = new();
+  private string ImageSrc { get; set; } = string.Empty;
 
   protected override void OnInitialized() {
     _themeContext.OnChange += HandleStateChange;
@@ -86,6 +87,12 @@ public partial class ApplicationLayout {
   protected override async Task OnInitializedAsync() {
     _institutionHubManager.InstitutionUpdatedHandler(institution => {
       Institution = institution;
+
+      if (Institution.Photo != null) {
+        var imageBase64 = Convert.ToBase64String(Institution.Photo);
+        ImageSrc = $"data:image/png;base64,{imageBase64}";
+      }
+      
       StateHasChanged();
     });
 

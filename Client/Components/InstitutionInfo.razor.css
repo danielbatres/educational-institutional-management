@@ -1,0 +1,95 @@
+.input-photo-container {
+  position: relative;
+  min-width: 100px;
+  max-width: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  display: inline-block;
+  border-radius: 10px;
+  background: var(--light-color);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.institution-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.institution-information {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.institution-contact-container {
+  display: flex;
+  gap: 14px;
+}
+
+.institution-contact {
+  display: flex;
+  gap: 6px;
+}
+
+.institution-contact i {
+  font-size: 1.17rem;
+}
+
+.edit-image-icon {
+  top: 0;
+  background: var(--light-color);
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
+.edit-image-icon i {
+  font-size: 1.8rem;
+  color: var(--dark-color);
+}
+
+.input-photo-container:hover {
+  opacity: 0.8;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  min-width: 100%;
+  margin: 10px 0;
+  border-bottom: var(--light-border);
+  padding-left: 0;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+fieldset .label {
+  max-width: 30%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+}
+
+fieldset .input-field {
+  max-width: 40%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset .input-field p {
+  text-align: right;
+  margin-bottom: 5px;
+}

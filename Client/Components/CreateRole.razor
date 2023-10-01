@@ -10,9 +10,12 @@
         @Warnings[0][0]
       </p>
     </div>
-    <input value="@Role.Name" type="text" class="input @((bool) Warnings[0][1] ? "input-error" : "")" placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))" >
+    <div class="@((bool) Warnings[0][1] ? "input-container-error" : "")">
+      <input value="@Role.Name" type="text" class="input @((bool) Warnings[0][1] ? "input-error" : "")"
+        placeholder="Ingresar nombre del rol" id="name" @oninput="@(e => Update(e, "name"))">
+    </div>
   </fieldset>
-  <fieldset>
+  <fieldset> 
     <div class="label">
       <label for="description">Descripci&oacute;n del rol</label>
     </div>

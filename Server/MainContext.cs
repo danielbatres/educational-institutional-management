@@ -49,6 +49,7 @@ public class MainContext : DbContext {
             institution.Property(x => x.RegisteredDate);
             institution.Property(x => x.DataBaseConnectionName);
             institution.Property(x => x.WebSite);
+            institution.Property(x => x.Photo);
         });
 
         modelBuilder.Entity<Register>(register => {

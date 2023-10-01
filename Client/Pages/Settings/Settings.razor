@@ -52,10 +52,20 @@
           SideBarContext.SetSelectedOptionSettingsMenu(5);
           <SubjectsSettings />
           break;
+        case "payments":
+          ContentContext.SetSectionContent(SectionName, "Pagos de estudiantes");
+          SideBarContext.SetSelectedOptionSettingsMenu(6);
+          <PaymentsSettings />
+          break;
         case "institution":
           ContentContext.SetSectionContent(SectionName, "Institucion");
           SideBarContext.SetSelectedOptionSettingsMenu(7);
           <InstitutionInfo />
+          break;
+        case "payment-plan":
+          ContentContext.SetSectionContent(SectionName, "Plan de pago");
+          SideBarContext.SetSelectedOptionSettingsMenu(8);
+          <PaymentPlan />
           break;
       }
   </div>
@@ -79,7 +89,7 @@
   private SideBarContext SideBarContext { get; set; }
   private User User = new();
   private Menu Menu { get; set; } = new();
-
+ 
   protected override void OnInitialized() {
     SideBarContext.SetSelectedOptionMainMenu(8);
     SideBarContext.SetSelectedOptionSettingsMenu(0);
@@ -119,7 +129,7 @@
         }, 
         new() {
           new() {
-            "Insitucion", "fi fi-tr-house-chimney", "7", $"/application/{InstitutionId}/settings/institution"
+            "Institución", "fi fi-tr-house-chimney", "7", $"/application/{InstitutionId}/settings/institution"
           },
           new() {
             "Plan de pago", "fi fi-tr-money-check", "8", $"/application/{InstitutionId}/settings/payment-plan"

@@ -1,62 +1,273 @@
-<SettingsModule>
-  <div class="box-background">
-    <h4>Informaci&oacute;n de la instituci&oacute;n</h4>
-    <p>Aqu&iacute; puedes editar la informaci&oacute;n de la instituci&oacute;n</p>
-  </div>
+<style>
+  .edit-image-icon, #input-file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 
-  <form class="box-background">
-    <fieldset>
-      <div class="label">
-        <label for="institution-name">Nombre de la instituci&oacute;n</label>
+  #input-file {
+    opacity: 0;
+    overflow: hidden;
+    color: var(--light-color);
+    left: 0;
+    cursor: pointer;
+  }
+</style>
+
+<SettingsModule>
+  <div class="box-background-container">
+    <div class="institution-info box-background">
+      <div>
+        <div class="input-photo-container" @onmouseenter="@(() => EditImage = true)" @onmouseleave="@(() => EditImage = false)">
+          @if (!ImageSrc.Equals(string.Empty)) {
+            <img src="@ImageSrc" alt="@Institution.Name">
+          }
+          @if (EditImage) {
+            <div class="edit-image-icon centered-container">
+              <i class="fi fi-tr-pen-square"></i>
+            </div>
+          }
+
+          <InputFile class="custom-file-input" id="input-file" OnChange="@OnInputFileChange" /> 
+        </div>
       </div>
-      <input value="@Institution.Name" type="text" class="input" placeholder="Ingresar nombre de la institución" id="institution-name" @oninput="@(e => Update(e, "name"))">
-    </fieldset>
-    <fieldset>
-      <div class="label">
-        <label for="country">Pa&iacute;s de la instituci&oacute;n</label>
+      <div>
+        <h4>@Institution.Name</h4>
+        <div class="institution-contact-container">
+          <div class="institution-contact">
+            <i class="fi fi-tr-circle-envelope"></i>
+            <p>@Institution.Email</p>
+          </div>
+          <div class="institution-contact">
+            <i class="fi fi-tr-link-alt"></i>
+            <p>@Institution.WebSite</p>
+          </div>
+        </div>
       </div>
-      <input type="text" class="input" placeholder="Ingresar país de la institución" id="country">
-    </fieldset>
-    <fieldset>
-      <div class="label">
-        <label for="address">Direcci&oacute;n de la instituci&oacute;n</label>
+    </div>
+    <div class="box-background institution-information">
+      <div>
+        <h4>Informaci&oacute;n de la instituci&oacute;n</h4>
+        <p>Aqu&iacute; puedes editar la informaci&oacute;n de la instituci&oacute;n</p>
       </div>
-      <input type="text" class="input" placeholder="Ingresar dirección de la institución" id="address">
-    </fieldset>
-    <button type="button" @onclick="@UpdateInstitution" class="button">Actualizar instituci&oacute;n</button>
-  </form>
+      <div class="action-buttons">
+        <button type="button" class="transparent-button button @(!HasChanges ? "not-enabled-button" : "")"
+      @onclick="@RevertChanges" disabled="@(!HasChanges)">Cancelar</button>
+        <button type=" button" class="primary-background-button button @(!HasChanges ? "not-enabled-button" : "")"
+          @onclick="@(() => UpdateInstitution(false))" disabled="@(!HasChanges)">Guardar</button>
+      </div>
+    </div>
+
+    <form class="box-background">
+      <fieldset>
+        <div class="label">
+          <label for="institution-name">Nombre de la instituci&oacute;n <strong>*</strong></label>
+          <p>El nombre para la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <p class="warning-error">@Warnings[0][0]</p>
+          <div class="@((bool) Warnings[0][1] ? "input-container-error" : "")">
+            <input value="@InstitutionBackup.Name" type="text"
+              class="input @((bool) Warnings[0][1] ? "input-error" : "")"
+              placeholder="Ingresar nombre de la institución" id="institution-name"
+              @oninput="@(e => Update(e, "name"))">
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="label">
+          <label for="country">Pa&iacute;s de la instituci&oacute;n</label>
+          <p>En que pa&iacute;s se encuentra la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <input value="@InstitutionBackup.Country" type="text" class="input" placeholder="Ingresar país de la institución" id="country" @oninput="@(e => Update(e, "country"))">
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="label">
+          <label for="address">Direcci&oacute;n de la instituci&oacute;n</label>
+          <p>La direcci&oacute;n exacta de la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <input value="@InstitutionBackup.Address" type="text" class="input" placeholder="Ingresar dirección de la institución" id="address" @oninput="@(e => Update(e, "address"))">
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="label">
+          <label for="phone-number">N&uacute;mero de la instituci&oacute;n</label>
+          <p>N&uacute;mero de contacto de la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <input value="@InstitutionBackup.PhoneNumber" type="text" class="input" placeholder="Ingresar número de contacto de la institución" id="phone-number" @oninput="@(e => Update(e, "phone"))">
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="label">
+          <label for="email">Correo electr&oacute;nico de la instituci&oacute;n</label>
+          <p>Correo electr&oacute;nico de contacto de la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <input value="@InstitutionBackup.Email" type="text" class="input" id="email" placeholder="Ingresar correo electrónico de la institución" @oninput="@(e => Update(e, "email"))">
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="label">
+          <label for="website">Sitio web de la instituci&oacute;n</label>
+          <p>Sitio web principal de la instituci&oacute;n</p>
+        </div>
+        <div class="input-field">
+          <input value="@InstitutionBackup.WebSite" type="text" class="input" id="website"
+            placeholder="Ingresar sitio web de la institución" @oninput="@(e => Update(e, "website"))">
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </SettingsModule>
 
 @code {
   [Inject]
-  private UserContext _userContext { get; set; }   
+  private UserContext UserContext { get; set; }   
   [Inject]
-  private InstitutionHubManager _institutionHubManager { get; set; }
+  private InstitutionHubManager InstitutionHubManager { get; set; }
   [Inject]
-  private IInstitutionService _institutionService { get; set; }
+  private IInstitutionService InstitutionService { get; set; }
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
+  [Inject]
+  private IActivityService ActivityService { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
+  [Inject]
+  private Validators Validators { get; set; }
   private Institution Institution { get; set; } = new();
+  private Institution InstitutionBackup { get; set; } = new();
+  private string ImageSrc { get; set; } = string.Empty;
+  private string InputFileMessage { get; set; } = string.Empty; 
+  private bool EditImage { get; set; } = false;
+  private bool HasChanges { get; set; } = false;
+  private int ErrorsCount { get; set; } = 0;
+  private List<List<object>> Warnings { get; set; } = new() {
+    new() { "", false },
+    new() { "", false },
+    new() { "", false }
+  };
+
+  private async Task OnInputFileChange(InputFileChangeEventArgs e) {
+    var imageFile = await e.File.RequestImageFileAsync("image/png", 4920, 4920);
+    using var resizedStream = new MemoryStream();
+
+    await imageFile.OpenReadStream().CopyToAsync(resizedStream);
+    var resizedBytes = resizedStream.ToArray();
+ 
+    InstitutionBackup.Photo = resizedBytes;
+    await UpdateInstitution(true);
+  }
+
+  private void SetChanges() {
+    HasChanges = !InstitutionBackup.Equals(Institution);
+  }
+
+  private List<object> ValidateRequired(string value) {
+    string warning = Validators.IsRequired(value);
+    bool isWarning = false;
+
+    if (!string.IsNullOrEmpty(warning)) {
+      ErrorsCount++;
+      isWarning = true;
+    }
+
+    return new() { warning, isWarning };    
+  }
 
   protected override async Task OnInitializedAsync() {
-    _institutionHubManager.InstitutionUpdatedHandler(institution => {
+    InstitutionHubManager.InstitutionUpdatedHandler(institution => {
       Institution = institution;
+
+      if (Institution.Photo != null) {
+        var imageBase64 = Convert.ToBase64String(Institution.Photo);
+        ImageSrc = $"data:image/png;base64,{imageBase64}";
+      }
+
+      InstitutionBackup = Institution.Clone();
       StateHasChanged();
     });
     
-    await _institutionHubManager.SendInstitutionUpdatedAsync(_userContext.User.InstitutionId.ToString());
+    await InstitutionHubManager.SendInstitutionUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
   }
 
-  private async Task UpdateInstitution() {
-      await _institutionService.Update(Institution);
+  private async Task UpdateInstitution(bool isPhotoUpdate) {
+    LoadingContext.SetLoading(true);
+    LoadingContext.SetLoadingMessage("Actualizando institución...");
+    ErrorsCount = 0;
+
+    Warnings[0] = ValidateRequired(InstitutionBackup.Name);
+
+    if (ErrorsCount != 0) {
+      LoadingContext.SetLoading(false);
+      await StatusModalContext.SetStatus(StatusType.Danger);
+
+      return;
+    }
+
+    await InstitutionService.Update(InstitutionBackup);
+
+    string activityMessage = "Ha actualizado la información general de la institución";
+
+    if (isPhotoUpdate) {
+      activityMessage = "Ha actualizado la imagen principal de la institución";
+    }
+
+    ActivityLog activity = new() {
+      ActionType = ActionType.Update,
+      Author = $"{UserContext.User.Name} {UserContext.User.LastName}",
+      Title = "Ha actualizado la información de la institución",
+      Message = activityMessage,
+      UserName = UserContext.User.UserName
+    };
+
+    await ActivityService.Create(activity);
+
+    HasChanges = false;
+    await Task.Delay(400);
+    LoadingContext.SetLoading(false);
+
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
-  
+
+  private void RevertChanges() {
+    InstitutionBackup = Institution.Clone();
+    HasChanges = false;
+
+    for (int i = 0; i < Warnings.Count; i++) {
+      Warnings[i][0] = "";
+      Warnings[i][1] = false;
+    }
+  }
+
   private void Update(ChangeEventArgs e, string update) {
-    string value = e.Value.ToString();
+    string value = e.Value.ToString() ?? string.Empty;
 
     switch (update) {   
       case "name":
-        Institution.Name = value;
+        InstitutionBackup.Name = value;
+        break;
+      case "country":
+        InstitutionBackup.Country = value;
+        break;
+      case "address":
+        InstitutionBackup.Address = value;
+        break;
+      case "phone":
+        InstitutionBackup.PhoneNumber = value;
+        break;
+      case "email":
+        InstitutionBackup.Email = value;
+        break;
+      case "website":
+        InstitutionBackup.WebSite = value;
         break;
     }
-  
+
+    SetChanges();
   }
 }
