@@ -10,22 +10,26 @@
         case "my-account":
           ContentContext.SetSectionContent(SectionName, "Mi cuenta");
           SideBarContext.SetSelectedOptionSettingsMenu(0);
-          <SettingsModule>
-            <UserProfile />
-            <article>
-              <div>
-                <h5>Roles asignados</h5>
-                <div class="roles">
-                  @for (byte i = 0; i < 10; i++) {
-                    <div class="rol-box">
-                      <div class="rol-color"></div>
-                      <p>Rol asignado</p>
-                    </div>
-                  }
-                </div>
+          <div class="user-profile-container-roles">
+            <div class="user-profile-container-settings">
+              <div class="user-profile-content">
+                <UserProfile />
               </div>
-            </article>
-          </SettingsModule>
+              <article>
+                <div class="asigned-roles">
+                  <h5>Roles asignados</h5>
+                  <div class="roles">
+                    @for (byte i = 0; i < 10; i++) {
+                      <div class="rol-box">
+                        <div class="rol-color"></div>
+                        <p>Rol asignado</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
           break;
         case "roles":
           ContentContext.SetSectionContent(SectionName, "Roles");

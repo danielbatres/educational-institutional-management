@@ -16,7 +16,14 @@ public partial class UserProfile {
   public LoadingContext LoadingContext { get; set; }
   [Inject]
   public IUserService UserService { get; set; }
-  private bool HasChanges = false;
+  private List<string> GradientColors { get; set; } = new() {
+    "linear-gradient(90deg, hsla(39, 100%, 71%, 1) 0%, hsla(216, 100%, 62%, 1) 100%)", "linear-gradient(90deg, hsla(352, 83%, 64%, 1) 0%, hsla(230, 90%, 68%, 1) 100%)",
+    "linear-gradient(90deg, hsla(46, 95%, 56%, 1) 0%, hsla(350, 97%, 65%, 1) 100%)", "linear-gradient(90deg, hsla(247, 23%, 40%, 1) 0%, hsla(42, 100%, 66%, 1) 100%)",
+    "linear-gradient(90deg, hsla(120, 6%, 90%, 1) 0%, hsla(228, 75%, 16%, 1) 100%)", "linear-gradient(90deg, hsla(148, 100%, 47%, 1) 0%, hsla(211, 90%, 47%, 1) 100%)",
+    "linear-gradient(90deg, hsla(148, 89%, 78%, 1) 0%, hsla(210, 81%, 22%, 1) 100%)", "linear-gradient(90deg, hsla(286, 48%, 91%, 1) 0%, hsla(340, 73%, 75%, 1) 50%, hsla(263, 58%, 45%, 1) 100%)"
+  };
+  private bool HasChanges = false; 
+  private bool ShowGradients { get; set; } = false;
 
   protected override void OnInitialized() {
     UserContext.OnChange += HandleStateChange;
@@ -49,6 +56,8 @@ public partial class UserProfile {
     UserBackup = UserContext.User.Clone();
     NewUser = UserContext.User.Clone();
     HasChanges = false;
+    ShowGradients = false;
+    await Task.Delay(500);
     LoadingContext.SetLoading(false);
   }
 
@@ -69,6 +78,13 @@ public partial class UserProfile {
     NewUser = UserBackup.Clone();
 
     HasChanges = false;
+  }
+
+  private void UpdateGradientColor(string color) {
+    if (color != NewUser.PreferredBackgroundColor) {
+      NewUser.PreferredBackgroundColor = color;
+      SetChanges();
+    }
   }
 
   private void UpdateUserName(ChangeEventArgs e) {

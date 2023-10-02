@@ -100,6 +100,7 @@ public class MainContext : DbContext {
             user.Property(x => x.Bio).HasMaxLength(1024);
             user.Property(x => x.Location);
             user.Property(x => x.Photo);
+            user.Property(x => x.PreferredBackgroundColor);
             user.HasOne(u => u.Register).WithOne(r => r.User).HasForeignKey<Register>(r => r.UserId);
             user.HasOne(u => u.Institution).WithMany(i => i.Users).HasForeignKey(u => u.InstitutionId);
             user.HasOne(u => u.OnlineStatus).WithOne(e => e.User).HasForeignKey<OnlineStatus>(e => e.UserId);

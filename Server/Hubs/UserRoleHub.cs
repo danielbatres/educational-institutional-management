@@ -1,4 +1,4 @@
-using edu_institutional_management.Client.Services;
+using edu_institutional_management.Server.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.SignalR;
 
@@ -14,10 +14,10 @@ public class UserRoleHub : MainHub {
   public async Task SendUsersRoleUpdate(string groupName) {
     var userRoles = GetUserRoles();
 
-    await Clients.Group(groupName).SendAsync("UserRoleSUpdated", userRoles);
+    await Clients.Group(groupName).SendAsync("UserRolesUpdated", userRoles);
   }
 
   public List<UserRole> GetUserRoles() {
-    return new();
+    return _userRoleService.Get().ToList();
   }
 }

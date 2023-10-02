@@ -12,6 +12,7 @@ public class User : MainUser {
   public OnlineStatus? OnlineStatus { get; set; }
   public Register? Register { get; set; }
   public Payment? Payment { get; set; }
+  public string? PreferredBackgroundColor { get; set; }
   public ICollection<TelephoneNumber>? TelephoneNumbers { get; set; }
   public ICollection<MembershipRequest>? ReceivedMembershipRequests { get; set; }
   [NotMapped]
@@ -31,6 +32,7 @@ public class User : MainUser {
       PhoneNumber = PhoneNumber,
       BirthDate = BirthDate,
       Location = Location,
+      PreferredBackgroundColor = PreferredBackgroundColor,
       Institution = Institution,
       InstitutionId = InstitutionId,
       OnlineStatus = OnlineStatus,

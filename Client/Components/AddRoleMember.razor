@@ -1,38 +1,142 @@
-<style>
-  .add-role-member {
-    position: absolute;
-    right: -40%;
-    width: 40%;
-    height: 100%;
-    z-index: 1000;
-    background: var(--background-color);
-    transition: right 0.4s ease-in-out;
-  }
-</style>
-
-<div class="add-role-member">
-  
+<div class="modal-title">
+  <h4>Agregar miembro al rol</h4>
+  <p>Selecciona un usuario para agregarlo a este rol</p>
+</div>
+<div class="users-list">
+  <div class="users-selection-tags">
+    <ul>
+      <li>
+        <h5>Foto</h5>
+      </li>
+      <li>
+        <h5>Usuario</h5>
+      </li>
+      <li>
+        <h5>Username</h5>
+      </li>
+      <li>
+        <h5>Acciones</h5>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <div class="users-no-list">
+      @if (false) {
+          @for (int i = 0; i < 6; i++) {
+            <ul>
+              @for (int j = 0; j < 4; j++) {
+                <li>
+                  <div class="skeleton-row"></div>
+                </li>
+              }
+            </ul>
+          }
+      } else {
+        @if (Users.Count == 0) {
+          <div class="no-users">
+            <h4>No hay usuarios para mostrar</h4>
+            <p>No hemos encontrado ning&uacute;n usuario</p>
+          </div>
+        } else {
+          @foreach (User user in Users) {
+              @if (!UsersRole.Any(x => x.UserId.Equals(user.Id) && x.RoleId.Equals(RoleContext.ActualRoleIdSelection))) {
+                <ul>
+                  <li>
+                    <div class="user-image-selection"></div>
+                  </li>
+                  <li class="user-info-selection">
+                    <p>
+                      @user.Name @user.LastName
+                    </p>
+                    <p>
+                      @user.Register.Email
+                    </p>
+                  </li>
+                  <li class="username-user-info">
+                    <p>
+                      @user.UserName.Substring(0, 6)...
+                    </p>
+                  </li>
+                  <li>
+                    <button type="button" class="gray-button" @onclick="@(() => AddMember(user))">
+                      <i class="fi fi-tr-paper-plane-top"></i>
+                    </button>
+                  </li>
+                </ul>
+              }
+          }
+        }
+      }
+    </div>
+  </div>
 </div>
 
 
 @code {
   [Inject]
-  private UsersHubManager _usersHubManager { get; set; }
+  private UsersHubManager UsersHubManager { get; set; }
   [Inject]
-  private UserContext _userContext { get; set; }
-  private List<User> Users { get; set; }
+  private IUserRoleService UserRoleService { get; set; }
+  [Inject]
+  private UserRoleHubManager UserRoleHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private IActivityService ActivityService { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
+  [Inject]
+  private RoleContext RoleContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+  [Inject]
+  private RolesHubManager RolesHubManager { get; set; }
+  private List<User> Users { get; set; } = new();
+  private List<UserRole> UsersRole { get; set; } = new();
+  private Role Role { get; set; } = new();  
 
-    protected override async Task OnInitializedAsync() {
-      _usersHubManager.UsersUpdatedHandler(users => {
-        Users = users;
-        StateHasChanged();
-      });
+  protected override async Task OnInitializedAsync() {
+    UsersHubManager.UsersUpdatedHandler(users => {
+      Users = users;
+      StateHasChanged();
+    });
 
-      await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString());
-    }
+    UserRoleHubManager.UserRolesUpdatedHandler(userRole => {
+      UsersRole = userRole;
+      StateHasChanged();
+    });
 
-    private async Task AddMember() {
+    RolesHubManager.RolesUpdatedHandler(roles => {
+      Role = roles.FirstOrDefault(r => r.Id.Equals(RoleContext.ActualRoleIdSelection));
+      StateHasChanged();
+    });
 
+    string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
 
+    await RolesHubManager.SendRolesUpdatedAsync(groupName);
+    await UsersHubManager.SendUsersUpdatedAsync(groupName);
+    await UserRoleHubManager.SendUserRolesUpdatedAsync(groupName);
+  }
+
+  private async Task AddMember(User user) {
+    UserRole UserRole = new() {
+      UserId = user.Id,
+      RoleId = RoleContext.ActualRoleIdSelection
+    };
+
+    await UserRoleService.Create(UserRole);
+
+    ActivityLog activity = new() {
+      ActionType = ActionType.Create,
+      Author = $"{UserContext.User.Name} {UserContext.User.LastName}",
+      Date = DateTime.Now,
+      Title = $"Ha agregado un miembro en un rol",
+      Message = $"Ha agregado el miembro {user.Name} {user.LastName} al rol {Role.Name}",
+      UserName = UserContext.User.UserName
+    };
+
+    await ActivityService.Create(activity);
+    SettingsContext.SetShowSettingsModal(false);
+    await StatusModalContext.SetStatus(StatusType.Success);
     }
   }

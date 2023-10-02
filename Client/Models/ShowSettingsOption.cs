@@ -4,5 +4,6 @@ public enum ShowSettingsOption {
   SearchUsers,
   SendUserRequest,
   AddSubject,
-  UpdateSubject
+  UpdateSubject,
+  AddRoleMember
 }

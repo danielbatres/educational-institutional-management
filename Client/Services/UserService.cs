@@ -11,10 +11,10 @@ using System.Net;
 namespace edu_institutional_management.Client.Services;
 
 public class UserService : BaseService, IUserService {
-  private readonly UserContext UserContext;
+  private readonly UserContext _userContext;
 
   public UserService(HttpClient httpClient, UserContext userContext) : base(httpClient) {
-    UserContext = userContext;
+    _userContext = userContext;
   }
 
   public async Task Register(User user) {
@@ -22,7 +22,7 @@ public class UserService : BaseService, IUserService {
 
     var response = await HttpClient.PostAsJsonAsync("api/user/create", user);
 
-    await CheckResponse(response);
+    await CheckResponse(response); 
   }
 
   public async Task Update(User user) {
@@ -33,7 +33,7 @@ public class UserService : BaseService, IUserService {
 
       List<User> users = await GetUsers();
       
-      UserContext.SetUser(users.Where(u => u.Id == user.Id).ToList()[0]);
+      _userContext.SetUser(users.Where(u => u.Id == user.Id).ToList()[0]);
     }
   }
 
@@ -78,7 +78,7 @@ public class UserService : BaseService, IUserService {
     void SetLoginInfo(int index) {
       LoginInfo[index][0] = string.Empty;
       LoginInfo[index][1] = true;
-    }
+    } 
 
     if (Users.Count != 0) {
       foreach (var userItem in Users) {
@@ -98,9 +98,9 @@ public class UserService : BaseService, IUserService {
         //var content = await CheckResponseContent(response);
 
         //UserContext.SetUser(JsonSerializer.Deserialize<User>(content, JsonOptions) ?? new());
-        UserContext.SetUser(Users[0]);
+        _userContext.SetUser(Users[0]);
 
-        UserContext.SetIsActiveUser(true);
+        _userContext.SetIsActiveUser(true);
       }
     }
 

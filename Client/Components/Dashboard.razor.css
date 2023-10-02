@@ -59,7 +59,15 @@ h4 {
   min-height: 40px;
   max-height: 40px;
   border-radius: 10px;
-  background: var(--light-color);
+  background: var(--primary-color);
+}
+
+.counter-icon-content i {
+  color: var(--white);
+}
+
+.counter-icon-content i {
+  font-size: 1.4rem;
 }
 
 .counter-section h4 {
@@ -75,7 +83,7 @@ h4 {
   border-radius: 10px;
   border: var(--light-border);
   height: 40%;
-  width: 40%;
+  width: 36%;
   padding: 16px;
 }
 
@@ -102,7 +110,7 @@ h4 {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 2px;
+  gap: 4px;
 }
 
 .activity-box {
@@ -110,13 +118,19 @@ h4 {
   width: 100%;
   min-height: 10%;
   background: var(--light-color);
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 .activity-button {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: var(--small-text);
+}
+
+.activity-log-box {
+  height: 100%;
+  border-radius: 6px;
 }
 
 .activity-button i {

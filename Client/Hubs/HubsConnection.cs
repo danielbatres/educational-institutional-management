@@ -11,8 +11,9 @@ public class HubsConnection {
   private readonly StudentSettingsHubManager _studentSettingsHubManager;
   private readonly SubjectHubManager _subjectHubManager;
   private readonly CourseHubManager _courseHubManager;
+  private readonly UserRoleHubManager _userRoleHubManager;
   
-  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager, SubjectHubManager subjectHubManager, CourseHubManager  courseHubManager) {
+  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager, SubjectHubManager subjectHubManager, CourseHubManager  courseHubManager, UserRoleHubManager userRoleHubManager) {
     _rolesHubManager = rolesHubManager;
     _categoryHubManager = categoryHubManager;
     _studentHubManager = studentHubManager;
@@ -23,6 +24,7 @@ public class HubsConnection {
     _studentSettingsHubManager = studentSettingsHubManager;
     _subjectHubManager = subjectHubManager;
     _courseHubManager = courseHubManager;
+    _userRoleHubManager = userRoleHubManager;
   }
   
   public async Task ConnectHubs(string groupName) {
@@ -36,6 +38,7 @@ public class HubsConnection {
     await _studentSettingsHubManager.StartConnectionAsync();
     await _subjectHubManager.StartConnectionAsync();
     await _courseHubManager.StartConnectionAsync();
+    await _userRoleHubManager.StartConnectionAsync();
 
     await _usersHubManager.JoinGroup(groupName);
     await _rolesHubManager.JoinGroup(groupName);
@@ -47,5 +50,6 @@ public class HubsConnection {
     await _studentSettingsHubManager.JoinGroup(groupName);
     await _subjectHubManager.JoinGroup(groupName);
     await _courseHubManager.JoinGroup(groupName);
+    await _userRoleHubManager.JoinGroup(groupName);
   }
 }

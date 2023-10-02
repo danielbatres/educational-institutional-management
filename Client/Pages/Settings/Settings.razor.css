@@ -12,3 +12,54 @@ section {
   height: 100%;
   width: 100%;
 }
+
+.user-profile-container-roles {
+  width: 100%;
+  height: 100%;
+}
+
+.user-profile-container-settings {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.asigned-roles {
+  padding: 8px 16px;
+}
+
+.roles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rol-box {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  background: var(--light-color);
+  border-radius: 10px;
+}
+
+.rol-color {
+  min-width: 20px;
+  min-height: 20px;
+  background: var(--light-color);
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.user-profile-container-settings article {
+  max-width: 18%;
+  width: 100%;
+  background: var(--background-color);
+  overflow-y: auto;
+  border-left: var(--light-border);
+}
+
+.user-profile-content {
+  overflow-y: auto;
+  min-height: 100%;
+  padding: 16px;
+}

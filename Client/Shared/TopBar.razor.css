@@ -54,6 +54,7 @@ h3 {
 .search input {
     width: 240px;
     background: var(--special-light-color);
+    font-size: var(--small-text);
 }
 
 .user-info {

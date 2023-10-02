@@ -9,7 +9,7 @@
         <div class="search">
             @if (GeneralSearchContext.ShowGeneralSearch) { <SearchPages InstitutionId="@UserContext.User.InstitutionId.ToString()"/> }
             <i class="fi fi-tr-search-location"></i>
-            <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar sección" class="input" @oninput="@UpdateSearchValue" @onclick="@SetShow">
+            <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar sección por nombre" class="input" @oninput="@UpdateSearchValue" @onclick="@SetShow">
         </div>
         <div class="icons">
             <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div>

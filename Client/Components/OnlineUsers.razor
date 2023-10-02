@@ -1,97 +1,101 @@
 <article class="online-side-bar">
-  @if (IsSelected)
-  {
+  @if (IsSelected) {
+    string imageSrc = string.Empty;
+
+    if (SelectedUser.Photo != null) {
+      var imageBase64 = Convert.ToBase64String(SelectedUser.Photo);
+      imageSrc = $"data:image/png;base64,{imageBase64}";
+    }
+
     <div class="user-target-information" style="top: @SelectedUserTop">
-      <div class="user-preferred-color"></div>
-      <div>
-        <p>@SelectedUser.Name @SelectedUser.LastName</p>
-        <p>@SelectedUser.Register.Email</p>
+      <div class="user-preferred-color" style="@(SelectedUser.PreferredBackgroundColor != null ? $"background: {SelectedUser.PreferredBackgroundColor}" : "")">
+        <div class="user-image-target centered-container">
+          @if (imageSrc != string.Empty) {
+            <img src="@imageSrc" alt="@SelectedUser.Name">
+          }
+        </div>
       </div>
-      <div>
-        <h5>miembro desde</h5>
-        <p>15/9/2023</p>
-      </div>
-      <div>
-        <h5>roles asignados</h5>
+      <div class="user-data-container">
+        <div class="user-data-info">
+          <p>@SelectedUser.Name @SelectedUser.LastName</p>
+          <p>@SelectedUser.Register.Email</p>
+        </div>
+        <div class="member-since">
+          <h5>miembro desde</h5>
+          <p>@DateTime.Now.Date</p>
+        </div>
+        <div>
+          <h5>roles asignados</h5>
+        </div>
+        <div class="user-roles">
+          @foreach (var userRole in UserRoles) {
+            if (!userRole.UserId.Equals(SelectedUser.Id)) continue;
+            Role role = Roles.FirstOrDefault(r => r.Id.Equals(userRole.RoleId));
+
+            if (role != null) {
+              <div class="user-role">
+                <div class="user-role-color" style="background: @role.RoleColor;"></div>
+                <p>@role.Name</p>
+              </div>
+            }
+          }
+        </div>
       </div>
     </div>
   }
-  <div class="online-users">
-    @foreach (User user in Users) {
-      int index = Users.IndexOf(user);
-      string imageSrc = string.Empty;
-
-      if (user.Photo != null) {
-        var imageBase64 = Convert.ToBase64String(user.Photo);
-        imageSrc = $"data:image/png;base64,{imageBase64}";
-      }
-
-      <div>
-        <h5>Administrador - 1</h5>
-        <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
-          <div class="user-information">
-            <div class="user-image">
-              @if (imageSrc != string.Empty) {
-                <img src="@imageSrc"
-                  class="user-photo-online @(string.IsNullOrEmpty(imageSrc) ? "user-no-photo-container" : "")" />
-              }
-              @if (user.OnlineStatus.Status)
-              {
-                <div class="green-state"></div>
-              }
+  <div class="online-users" style="@(!Loading ? "gap: 14px;" : "")">
+    @if (Loading) {
+      <div class="skeleton-row first-row">
+      </div>
+      <ul>
+        @for (int i = 0; i < 10; i++) {
+          <li>
+            <div class="load-image">
+              <div class="skeleton-row"></div>
             </div>
-            <div class="user-info">
-              <p>@user.Name @user.LastName</p>
-              <p>@user.Register.Email</p>
+            <div class="load-user-data">
+              <div class="skeleton-row"></div>
+              <div class="skeleton-row"></div>
+            </div>
+          </li>
+        }
+      </ul>
+    } else {
+      @foreach (User user in Users)
+      {
+        int index = Users.IndexOf(user);
+        string imageSrc = string.Empty;
+
+        if (user.Photo != null)
+        {
+          var imageBase64 = Convert.ToBase64String(user.Photo);
+          imageSrc = $"data:image/png;base64,{imageBase64}";
+        }
+
+        <div>
+          <h5>Administrador - 1</h5>
+          <div class="user-card" @onclick="@(() => SetSelectedUser(index))">
+            <div class="user-information">
+              <div class="user-image">
+                @if (imageSrc != string.Empty)
+                {
+                  <img src="@imageSrc"
+                    class="user-photo-online @(string.IsNullOrEmpty(imageSrc) ? "user-no-photo-container" : "")" />
+                }
+                @if (user.OnlineStatus.Status)
+                {
+                  <div class="green-state"></div>
+                }
+              </div>
+              <div class="user-info">
+                <p>@user.Name @user.LastName</p>
+                <p>@user.Register.Email</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
+      <button type="button" class="button primary-background-button" @onclick="@Disconnect">Desconectar</button>
     }
-    <button type="button" class="button primary-background-button" @onclick="@Disconnect">Desconectar</button>
   </div>
 </article>
-@code {
-  private bool IsSelected = false;
-  [Inject]
-  private UsersHubManager _usersHubManager { get; set; }
-  [Inject]
-  private UserContext _userContext { get; set; }
-  [Inject]
-  private IUserService _userService { get; set; }
-  private List<User> Users = new();
-  private User SelectedUser { get; set; } = new();
-  private string SelectedUserTop { get; set; } = string.Empty;
-
-  protected override async Task OnInitializedAsync() {
-    _usersHubManager.UsersUpdatedHandler(users =>
-    {
-      Users = users;
-      StateHasChanged();
-    });
-
-    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-
-  private async Task Disconnect() {
-    _userContext.User.OnlineStatus.Status = false;
-    _userContext.User.OnlineStatus.LastConnection = DateTime.Now;
-    await _userService.Update(_userContext.User);
-
-    await _usersHubManager.SendUsersUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
-  }
-
-  private void SetSelectedUser(int index) {
-    IsSelected = !IsSelected;
-
-    SelectedUser = Users[index];
-    if (index == 0)
-    {
-      SelectedUserTop = "1%";
-    }
-    else
-    {
-      SelectedUserTop = (index + 1) * 6 + "%";
-    }
-  }
-}

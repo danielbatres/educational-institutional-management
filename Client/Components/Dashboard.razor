@@ -14,8 +14,8 @@
               <p>Usuarios</p>
               <h4>@UsersCount</h4>
             </div>
-            <div class="counter-icon-content centered-container">
-
+            <div class="counter-icon-content first-icon centered-container">
+              <i class="fi fi-tr-users-gear"></i>
             </div>
           </div>
           <p class="small">Usuarios totales en la instituci&oacute;n</p>
@@ -28,7 +28,21 @@
               <p>Estudiantes</p>
               <h4>@StudentsCount</h4>
             </div>
-            <div class="counter-icon-content centered-container">
+            <div class="counter-icon-content second-icon centered-container">
+              <i class="fi fi-tr-book-user"></i>
+            </div>
+          </div>
+          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
+        </div>
+      </div>
+      <div class="counter">
+        <div class="counter-first-section">
+          <div class="counter-icon">
+            <div>
+              <p>Estudiantes</p>
+              <h4>@StudentsCount</h4>
+            </div>
+            <div class="counter-icon-content third-icon centered-container">
 
             </div>
           </div>
@@ -42,21 +56,7 @@
               <p>Estudiantes</p>
               <h4>@StudentsCount</h4>
             </div>
-            <div class="counter-icon-content centered-container">
-
-            </div>
-          </div>
-          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
-        </div>
-      </div>
-      <div class="counter">
-        <div class="counter-first-section">
-          <div class="counter-icon">
-            <div>
-              <p>Estudiantes</p>
-              <h4>@StudentsCount</h4>
-            </div>
-            <div class="counter-icon-content centered-container">
+            <div class="counter-icon-content fourth-icon centered-container">
 
             </div>
           </div>
@@ -67,7 +67,7 @@
     <div class="recent-activity">
       <div class="recent-activity-info">
         <div class="recent-activity-info-text">
-          <h4>Actividad reciente</h4>
+          <h6>Actividad reciente</h6>
           <p>Actividad en los ultimos 60 dias</p>
         </div> 
         <div>
@@ -92,11 +92,17 @@
               var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
 
               double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
+              string opacityString = opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
               
-              <div class="activity-box"
-                style="@(opacity != 0 ? "background-color: var(--primary-color); opacity: @opacity;" : "")">
+              <div class="activity-box">
+                <div class="activity-log-box"
+                  style="@(opacity != 0 ? $"background: var(--primary-color); opacity: {opacityString};" : "")">
+                </div>
                 <div class="hover-date">
                 <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
+                @if (activityForDate != null) {
+                  <p>@($"{activityForDate.Count} registros de actividad")</p>
+                }
                 </div>
               </div>
             }

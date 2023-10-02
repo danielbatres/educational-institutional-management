@@ -1,0 +1,77 @@
+.activity-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.activities {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 80%;
+  overflow-y: auto;
+}
+
+.activity-card {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-username {
+  padding: 6px;
+  border-radius: 10px;
+  background: var(--light-color);
+  margin-top: 4px;
+}
+
+.activity-card-item:first-child {
+  width: 10%;
+}
+
+.activity-card-item:nth-child(2) {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.activity-card-item:nth-child(3) {
+  width: 60%;
+}
+
+.activity-card-item:last-child {
+  width: 12%;
+}
+
+.action {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.creation {
+  background: var(--light-success-color);
+}
+
+.creation p {
+  color: var(--success-color);
+}
+
+.update {
+  background: var(--light-warning-color);
+}
+
+.update p {
+  color: var(--warning-color);
+}
+
+.delete {
+  background: var(--light-danger-color);
+}
+
+.delete p {
+  color: var(--danger-color);
+}

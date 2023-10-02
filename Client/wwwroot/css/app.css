@@ -4,6 +4,8 @@
     --white: #FFFFFF;
     --success-color: #3DC13C;
     --danger-color: #F13637;
+    --info-color: #4361EE;
+    --light-info-color: #4362ee3e;
     --light-success-color: #3cc13c45;
     --light-danger-color: #f1363638;
     --light-warning-color: #f3b91b5e;
@@ -549,13 +551,7 @@ select {
     min-height: 26px;
     border-radius: 10px;
     background: var(--light-color);
-    opacity: .6;
     cursor: pointer;
-    transition: opacity .1s ease-in-out;
-}
-
-.edit-color:hover {
-    opacity: .8;
 }
 
 .user-main-info {
@@ -599,7 +595,7 @@ select {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 3px solid rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--light-color);
     border-top: 3px solid transparent;
     animation: spin 1s linear infinite;
     margin-top: 20px;

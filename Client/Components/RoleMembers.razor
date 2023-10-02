@@ -1,0 +1,54 @@
+<div class="box-background">
+  <div>
+    <h6>Miembros asociados a este rol</h6>
+    <p>Agregar miembros para asociarlos a este rol</p>
+  </div>
+  <button type="button" class="button primary-background-button" @onclick="@AddMember">Agregar miembro</button>
+</div>
+<div class="box-background">
+  @if (Users.Count.Equals(0)) {
+    <div class="no-results">
+      <h4>No hay usuarios para mostrar</h4>
+      <p>No hemos encontrado ning&uacute;n usuario en la instituci&oacute;n</p>
+    </div>
+  }
+  @foreach (var user in Users) {
+    @if (!UserRoles.Any(u => u.UserId.Equals(user.Id) && u.RoleId.Equals(RoleContext.ActualRoleIdSelection))) continue; 
+
+    <ul>
+      <li>
+        <div class="user-status">
+        </div>
+      </li>
+      <li>
+        <h5>Datos de usuario</h5>
+        <div class="user-data-list">
+          <div class="user-data-image">
+          </div>
+          <div class="user-data-info">
+            <p>
+              @user.Name @user.LastName
+            </p>
+            <p>
+              @user.UserName
+            </p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <h5>Informaci&oacute;n de contacto</h5>
+        <p>@user.Register.Email</p>
+      </li>
+      <li>
+        <p>@user.PhoneNumber</p>
+      </li>
+      <li>
+        <div class="user-actions">
+          <button type="button" class="gray-button delete-user-button" @onclick="@(() => RemoveMember(user))">
+            <i class="fi fi-tr-rectangle-xmark"></i>
+          </button>
+        </div>
+      </li>
+    </ul>
+  }
+</div>

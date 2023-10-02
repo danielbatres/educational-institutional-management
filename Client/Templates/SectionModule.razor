@@ -10,6 +10,7 @@
   [Parameter]
   [EditorRequired]
   public RenderFragment? ChildContent { get; set; }
+  [Inject]
   public SectionContext SectionContext { get; set; }
 
   protected override void OnInitialized() {

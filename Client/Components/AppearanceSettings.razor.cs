@@ -18,7 +18,11 @@ public partial class AppearanceSettings {
     "#4361EE", "#dfb82e", "#e54664", "#9a3cc9"
   };
 
-  protected override void OnInitialized() {
+  protected override async Task OnInitializedAsync() {
+    if (_userContext.User.InstitutionId != null) {
+      _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
+    }
+
     SelectedAppearance = _userContext.User.Settings.AppearanceId;
     _themeContext.SetSelectedTheme(_userContext.User.Settings.Appearance.Theme);
     _userContext.OnChange += HandleStateChange;

@@ -48,6 +48,7 @@ builder.Services.AddSingleton<InstitutionHubManager>();
 builder.Services.AddSingleton<StudentSettingsHubManager>();
 builder.Services.AddSingleton<SubjectHubManager>();
 builder.Services.AddSingleton<CourseHubManager>();
+builder.Services.AddSingleton<UserRoleHubManager>();
 builder.Services.AddSingleton<HubsConnection>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IUserService, UserService>();

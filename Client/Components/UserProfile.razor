@@ -12,9 +12,18 @@
 </style>
 
 <article class="user-form box-background"> 
-  <div class="user-selected-color">
+  <div class="user-selected-color" style="@(NewUser.PreferredBackgroundColor != null ? $"background: {NewUser.PreferredBackgroundColor};" : "")">
     <div class="edit-color centered-container">
-      <i class="fi fi-tr-pen-circle"></i>
+      <i class="fi fi-tr-pen-circle" @onclick="@(() => ShowGradients = !ShowGradients)">
+        @if (ShowGradients) {
+          <div class="preferred-background-color">
+            @foreach (string gradient in GradientColors) {
+              <div class="gradient-color" style="background: @gradient;" @onclick="@(() => UpdateGradientColor(gradient))">
+              </div>
+            }
+          </div>
+        }
+      </i>
     </div>
   </div>
   <div class="user-main-info">
@@ -34,7 +43,7 @@
   </div>
   <div class="user-information">
     <div>
-      <h4>Informaci&oacute;n de tu cuenta</h4>
+      <h6>Informaci&oacute;n de tu cuenta</h6>
       <p>
         Informaci&oacute;n de tu perfil, modifica el campo que desees para
         realizar cambios

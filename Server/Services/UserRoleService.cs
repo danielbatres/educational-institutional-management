@@ -15,8 +15,8 @@ public class UserRoleService : BaseService, IUserRoleService {
     await _applicationContext.SaveChangesAsync();
   }
   
-  public async Task Delete(Guid userRoleId) {
-    var originalRole = _applicationContext.UserRoles.FirstOrDefault(u => u.Id.Equals(userRoleId));
+  public async Task Delete(Guid userId) {
+    var originalRole = _applicationContext.UserRoles.FirstOrDefault(u => u.UserId.Equals(userId));
     
     if (originalRole != null) {
       _applicationContext.UserRoles.Remove(originalRole);

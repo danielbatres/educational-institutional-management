@@ -58,6 +58,12 @@
   private RoleContext RoleContext { get; set; }
   [Inject]
   private IRoleService RoleService { get; set; }
+  [Inject]
+  private IActivityService ActivityService { get; set; }
+  [Inject]
+  private LoadingContext LoadingContext { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
   private Role Role { get; set; } = new();
   private Role RoleBackup { get; set; } = new();
   private bool HasChanges { get; set; }
@@ -115,9 +121,26 @@
   }
 
   private async Task UpdateRole() {
+    LoadingContext.SetLoadingMessage("Actualizando rol");
+    LoadingContext.SetLoading(true);
     HasChanges = false;
     await RoleService.Update(RoleBackup);
 
     await RolesHubManager.SendRolesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+
+    ActivityLog activity = new() {
+      ActionType = ActionType.Update,
+      Author = $"{UserContext.User.Name} {UserContext.User.LastName}",
+      UserName = UserContext.User.UserName,
+      Title = $"Ha actualizado la información del rol {Role.Name} -> {RoleBackup.Name}",
+      Message = "Ha actualizado la información del rol, revisa la configuración de roles para más detalles",
+      Date = DateTime.Now
+    };
+
+    await ActivityService.Create(activity);
+
+    await Task.Delay(400);
+    LoadingContext.SetLoading(false);
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
 }
