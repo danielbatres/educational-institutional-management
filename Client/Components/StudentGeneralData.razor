@@ -26,9 +26,11 @@
   </fieldset>
   <fieldset>
     <div class="label">
-      <label for="birth-date"></label>
+      <label for="birth-date">
+        Fecha de nacimiento
+      </label>
     </div>
-    <input @bind="@_studentContext.Student.BirthDate" type="date" id="birth-date" class="input">
+      <input @bind="@_studentContext.Student.BirthDate" type="date" id="birth-date" class="input">  
   </fieldset>
   <fieldset>
     <div class="label">
@@ -52,6 +54,13 @@
   [Inject]
   private UserContext _userContext { get; set; }
   private StudentSettings _studentSettings { get; set; } = new();
+  [Inject]
+  private Validators Validators { get; set; }
+  private List<List<object>> Warnings { get; set; } = new() {
+    new() { "", false },
+    new() { "", false },
+    new() { "", false }    
+  };
 
   protected override async Task OnInitializedAsync() {
     _studentSettingsHubManager.StudentSettingsUpdatedHandler(studentSettings => {
@@ -60,6 +69,10 @@
     });
 
     await _studentSettingsHubManager.SendStudentSettingsUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void ValidateField() {
+    
   }
 
   protected override void OnInitialized() {

@@ -35,7 +35,6 @@ public class StudentContext : BaseContainer {
   }
 
   public void SetStudent(Student student) {
-    Console.WriteLine(student.StudentRegister == null);
     Student = student;
 
     NotifyStateChanged();

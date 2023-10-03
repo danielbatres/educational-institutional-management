@@ -686,6 +686,139 @@ fieldset {
     transform: translateX(30px);
 }
 
+.text-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statistic-target {
+    width: 100%;
+    min-width: 288px;
+    max-width: 500px;
+    background: var(--background-color);
+    padding: 20px;
+    border: 1px solid var(--light-color);
+    border-radius: 10px;
+  }
+  
+  .statistic-info {
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--light-color);
+  }
+  
+  .graphic {
+    display: flex;
+    width: 100%;
+  }
+  
+  .graphic-latest {
+    width: 100%;
+  }
+  
+  .graphic-y ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-right: 10px;
+  }
+  
+  .graphic-x ul {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .graphic-statistic {
+    position: relative;
+    height: 100%;
+  }
+  
+  .graphic-background {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 8px 0px;
+  }
+  
+  .line-divisor {
+    width: 100%;
+    border-bottom: 1px solid var(--light-color);
+  }
+  
+  .graphic-data {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .data {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    bottom: 0px;
+  }
+  
+  .data-long {
+    position: absolute;
+    width: 38%;
+    border-radius: 10px;
+    bottom: 0px;
+    padding: 0px 1px;
+  }
+  
+  .first-data {
+    left: 10%;
+    height: 60%;
+    background: var(--light-color);
+  }
+  
+  .second-data {
+    right: 10%;
+    height: 90%;
+    background: var(--primary-color);
+  }
+  
+  .latest-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 45px;
+  }
+  
+  .data-representation {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  
+  .information {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .information div:first-child, .information div:last-child {
+    display: flex;
+    align-items: center;
+  }
+  
+  .first-data-representation {
+    background: var(--light-color);
+  }
+  
+  .second-data-representation {
+    background: var(--primary-color);
+  }
+  
+
 @keyframes loading {
     0% {
         background-position: -200% 0;

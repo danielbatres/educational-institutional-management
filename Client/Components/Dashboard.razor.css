@@ -223,13 +223,19 @@ h4 {
   width: 10%;
 }
 
+.little-box p {
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: var(--light-color);
+  align-self: self-start;
+}
+
 .recent-student-image {
   min-width: 40px;
   max-width: 40px;
   min-height: 40px;
   max-height: 40px;
   border-radius: 100%;
-  background: var(--light-color);
 }
 
 .recent-students-tags ul li p {
@@ -281,11 +287,28 @@ h4 {
   max-width: 30%;
   width: 100%;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.statistic-content {
+  height: 100%;
+}
+
+.statistic-content .statistic-target {
+  height: 100%;
+  padding: 0;
+  border: none;
+  margin: 0;
 }
 
 .statistic-info, .recent-students-info-content, .recent-activity-info-text {
   display: flex;
   gap: 10px;
+}
+
+.statistic-info {
+  margin: 0;
 }
 
 .stand-line {

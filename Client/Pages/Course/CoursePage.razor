@@ -1,4 +1,4 @@
-@page "/application/{InstitutionId}/courses/{CourseId}"
+@page "/application/{InstitutionId}/courses/{CourseOption}"
 @layout ApplicationLayout
 
 <PageTitle>Aplicaci&oacute;n | Cursos</PageTitle>
@@ -9,5 +9,35 @@
   [Parameter]
   public string? InstitutionId { get; set; }
   [Parameter]
-  public string? CourseId { get; set; }
+  public string? CourseOption { get; set; }
+  [Inject]
+  private CourseContext CourseContext { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+
+  protected override void OnParametersSet() {
+    if (CourseOption.Equals("new-course")) {
+      CourseContext.SetCourseOption(ActionType.Create);
+      CourseContext.SetNewCourse();
+    } else {
+      Guid courseId = Guid.Empty;
+
+      try {
+        Guid.Parse(CourseOption);
+      } catch(Exception) {
+        GoBackCourses();
+      }
+
+      if (courseId != Guid.Empty) {
+        CourseContext.SetCurrentCourse(courseId);
+        CourseContext.SetCourseOption(ActionType.Update);
+      }
+    }
+  }
+
+  private void GoBackCourses() {
+    NavigationManager.NavigateTo($"application/{UserContext.User.InstitutionId}/courses");
+  }
 }

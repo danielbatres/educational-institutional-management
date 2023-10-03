@@ -26,6 +26,8 @@ public partial class ShowStudent {
   private IFieldInformationService _fieldInformationService { get; set; }
   private List<Category> _categories = new();
   private int NavigationOption { get; set; } = 0;
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
   private List<Category> Categories {
     get => _categories;
     set {
@@ -59,6 +61,9 @@ public partial class ShowStudent {
     if (_studentContext.ActionStudent.Equals(ActionType.Create)) {
       _studentContext.SetNewStudent();
     }
+
+    StatusModalContext.SetAcceptWarning(false);
+    StatusModalContext.SetShowWarning(false); 
   }
   
   private async Task HandleCategoriesChangeAsync() {

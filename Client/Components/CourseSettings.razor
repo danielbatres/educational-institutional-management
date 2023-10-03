@@ -15,9 +15,7 @@
 
       <label for="guide">Seleccionar gu&iacute;a para el curso</label>
       <select id="guide"></select>
-
-      <button type="button" class="button" @onclick="@CreateNewCourse">Crear curso</button>
-    <div>
+<div>
       @foreach (var course in Courses) {
         int index = Courses.IndexOf(course);
 

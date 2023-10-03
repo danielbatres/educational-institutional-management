@@ -110,7 +110,7 @@
           </ul>
         </div>
         <div class="recent-students-list">
-          @if (false) {
+          @if (Students.Count == 0) {
             <div class="students-no-result">
               <h4>No se encontraron resultados</h4>
               <p>No hemos encontrado estudiantes agregados recientemente</p>
@@ -125,7 +125,7 @@
               }
 
               <ul>
-                <li>
+                <li class="little-box">
                   <p>@student.Id.ToString().Substring(0, 8)</p>
                 </li>
                 <li>
@@ -142,8 +142,12 @@
                 <li>
                   <p>@student.Gender</p>
                 </li>
-                <li>
-                  <p>B3DA</p>
+                <li class="little-box">
+                  @if (student.CourseId != null) {
+
+                  } else {
+                    <p>------</p>
+                  }
                 </li>
                 <li>
                   <div class="recent-student-action centered-container">
@@ -162,8 +166,107 @@
           <div>
             <h6>Grafico estadistico</h6>
             <p>Grafico de estadistico</p>
-          </div>
+          </div> 
         </div>
+        <div class="statistic-content">
+          <div class="statistic-target">
+            <div class="graphic">
+              <div class="graphic-y">
+                <ul>
+                  <li>
+                    <p>10</p>
+                  </li>
+                  <li>
+                    <p>10</p>
+                  </li>
+                  <li>
+                    <p>10</p>
+                  </li>
+                  <li>
+                    <p>10</p>
+                  </li>
+                  <li>
+                    <p>10</p>
+                  </li>
+                  <li>
+                    <p>10</p>
+                  </li>
+                </ul>
+              </div>
+              <div class="graphic-latest">
+                <div class="graphic-statistic centered-container">
+                  <div class="graphic-background">
+                    <div class="line-divisor">
+                    </div>
+                    <div class="line-divisor">
+                    </div>
+                    <div class="line-divisor">
+                    </div>
+                    <div class="line-divisor">
+                    </div>
+                    <div class="line-divisor">
+                    </div>
+                    <div class="line-divisor">
+                    </div>
+                  </div>
+                  <div class="graphic-data">
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                    <div class="data">
+                      <div class="first-data data-long"></div>
+                      <div class="second-data data-long"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="graphic-x">
+                  <ul>
+                    <li>
+                      <p>10</p>
+                    </li>
+                    <li>
+                      <p>10</p>
+                    </li>
+                    <li>
+                      <p>10</p>
+                    </li>
+                    <li>
+                      <p>10</p>
+                    </li>
+                    <li>
+                      <p>10</p>
+                    </li>
+                    <li>
+                      <p>10</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>  
+            <div></div>
+            <div></div>
+          </div>
+          <div></div>
+        </div>  
       </div>
     </div>
   </article>

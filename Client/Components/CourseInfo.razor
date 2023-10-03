@@ -1,42 +1,113 @@
 <SectionModule>
-  <h4>Curso</h4>
-  <p>Informaci&oacute;n del curso</p>
-  
-  <ul>
-    <li @onclick="@(() => SetSelection("general"))">
-      <p>Informacion general del curso</p>
-    </li>
-    <li @onclick="@(() => SetSelection("calendar"))">
-      <p>Calendario del curso</p>
-    </li>
-  </ul>
-  
-  @if (Selection.Equals("general")) {
-    <form>
-      <fieldset>
-        <div class="label">
-          <label for="acronym"></label>  
-        </div>
-        <input @bind="@_courseContext.Course.Acronym" type="text" class="input" id="acronym">
-      </fieldset> 
-      <fieldset>
-        <div class="label">
-          <label for="course-name"></label>  
-        </div>
-        <input @bind="@_courseContext.Course.Name" type="text" class="input" id="course-name">
-      </fieldset>  
-    </form>
-  } else {
-    <CourseCalendar />
-  }
-</SectionModule>
+  <div class="course-info-container">
+    <div class="box-background">
+      @if (CourseContext.CourseOption.Equals(ActionType.Create)) {
+      <h4>Agregar un nuevo curso</h4>
+      <p>Agrega un nuevo curso en la instituci&oacute;n e ingresa los campos correspondientes</p>   
+      }
+    </div>
+    <div class="box-background">
+      <ul class="navigation-bar-options">
+        <li class="@(NavigationOption == 0 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("general"))">
+          <p>Informacion general del curso</p>
+        </li>
+        <li class="@(NavigationOption == 1 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("students-course"))">
+          <p>
+            Listado de estudiantes
+          </p>
+        </li>
+        <li class="@(NavigationOption == 2 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("calendar"))">
+          <p>Calendario del curso</p>
+        </li>
+      </ul>
+    </div>
+      @switch (Selection) {
+        case "general":
+          <div class="course-info-container-content">
+            <div class="box-background course-info-content">
+              <div>
+                <h6>Informaci&oacute;n general del curso</h6>
+                <p>Informaci&oacute;n general para este curso</p>
+              </div>
+              <div>
+                <button type="button" class="button transparent-button">Cancelar</button>
+                <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
+              </div>
+            </div>
+            <div class="general-course-data">
+              <form class="box-background general-course-data-content">
+                <fieldset>
+                  <div class="label">
+                    <label for="acronym">Acronimo del curso</label>  
+                    <p>Acronimo para identificar el curso</p>
+                  </div>
+                  <p class="warning-error"></p>
+                  <input @bind="@CourseContext.Course.Acronym" type="text" class="input" placeholder="Ingresar acronimo del curso" id="acronym">
+                </fieldset> 
+                <fieldset>
+                  <div class="label">
+                    <label for="course-name">Nombre del curso</label>  
+                    <p>Nombre para este curso</p>
+                  </div>
+                  
+                  <p class="warning-error">@Warnings[1][0]</p>
+                  <input @bind="@CourseContext.Course.Name" type="text" class="input" placeholder="Ingresar nombre del curso" id="course-name">
+                </fieldset>
+                <fieldset>
+                  <div class="label">
+                    <label for="course-color">
+                      Color para el curso
+                    </label>
+                    <p>Distingue el curso con un color especial</p>
+                  </div>
+                  <input type="color">
+                </fieldset>
+                <fieldset>
+                  <div class="label">
+                    <label for="guide">
+                      Gu&iacute;a del curso
+                    </label>
+                    <p>Guia encargado de este curso</p>
+                  </div>
+                  <div id="guide">
 
-@code {
-    [Inject]
-    private CourseContext _courseContext { get; set; }
-    private string Selection { get; set; } = "general";
-  
-  private void SetSelection(string selection) {
-    Selection = selection;
-  } 
-}
+                  </div>
+                </fieldset>
+              </form>
+              <div class="subjects-and-guide">
+                <div class="course-guide box-background">
+                  <div>
+                    <h6>Guia del curso</h6>
+                    <p>Selecciona un profesor gu&iacute;a para este curso</p>
+                  </div>
+                  <div>
+                    <button type="button" class="button primary-background-button" @onclick="@AddCourseGuide">Seleccionar guia</button>
+                  </div>
+                </div>
+                <div class="subjects-course box-background">
+                  <div class="course-subjects-info">
+                    <div class="course-subject-info-content">
+                      <div>
+                        <h6>Asignaturas del curso</h6>
+                        <p>Listado de asignaturas de este curso</p>
+                      </div>
+                      <button type="button" class="button primary-background-button" @onclick="@AddSubjectCourse">Agregar asignatura</button>
+                    </div>
+                  </div>
+                  <div class="course-subjects-list">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+          break;
+        case "students-course":
+          break;
+        case "calendar":
+          <div class="box-background">
+            <CourseCalendar />  
+          </div>
+          break;
+      }
+  </div>
+</SectionModule>

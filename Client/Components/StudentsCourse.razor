@@ -1,0 +1,27 @@
+@code {
+    [Inject]
+    private StudentHubManager StudentsHubManager { get; set; }
+    private List<Student> Students { get; set; }
+    private List<Student> FilteredStudents { get; set; } 
+    private UserContext UserContext { get; set; }
+    private int RenderCount { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        StudentsHubManager.StudentsUpdatedHandler(students => {
+            Students = students.ToList();
+            StateHasChanged();
+        });
+
+        string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+
+        await StudentsHubManager.SendStudentsUpdatedAsync(groupName);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (RenderCount == 2) {
+            FilteredStudents = Students.ToList();
+        }
+
+        RenderCount++;
+    }
+}

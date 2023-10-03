@@ -9,11 +9,7 @@ namespace edu_institutional_management.Client.Components;
 
 public partial class CourseSettings {
   [Inject]
-  private ICourseService _courseService { get; set; }
-  [Inject]
   private CourseContext _courseContext { get; set; }
-  [Inject]
-  private CourseHubManager _courseHubManager { get; set; }
   [Inject]
   private UserContext _userContext { get; set; }
   [Inject]
@@ -31,15 +27,7 @@ public partial class CourseSettings {
   }
   
   protected override async Task OnInitializedAsync() {
-    _courseHubManager.CoursesUpdatedHandler(courses => {
-      Courses = courses;
-      StateHasChanged();
-    });
-  
-    string groupName = _userContext.User.InstitutionId.ToString() ?? string.Empty;
-
-    await _courseHubManager.SendCoursesUpdatedAsync(groupName);
-  }
+   }
   
   private void SetNavigationOption(int option) {
     NavigationOption = option;
@@ -59,12 +47,5 @@ public partial class CourseSettings {
       Id = Guid.NewGuid(),
       DayOfWeek = DayOfWeek.Monday
     };
-  }
-  
-  private async Task CreateNewCourse() {
-    await _courseService.Create();
-  
-    _courseContext.SetNewCourse();
-    await _courseHubManager.SendCoursesUpdatedAsync(_userContext.User.InstitutionId.ToString() ?? string.Empty);
   }
 }

@@ -1,32 +1,73 @@
-<FormModule>
+<style>
+  #input-file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  #input-file {
+    opacity: 0;
+    overflow: hidden;
+    color: var(--light-color);
+    left: 0;
+    cursor: pointer;
+  }
+</style>
+
+<SectionModule>
   <div class="show-student-container">
     <div class="box-background student-info">
-    <button type="button" class="button transparent-button centered-container" @onclick="@ExitStudentView">
+    <button type="button" class="goback-button gray-button centered-container" @onclick="@ExitStudentView">
       <i class="fi fi-tr-arrow-small-left"></i>
     </button>
-    <div>
-      <InputFile OnChange="@OnInputFileChange"/> 
+    <div class="student-data">
+      <div class="student-image">
+        @if (_studentContext.Student.Photo != null) {
+          string imageSrc = string.Empty;
+
+          var imageBase64 = Convert.ToBase64String(_studentContext.Student.Photo);
+          imageSrc = $"data:image/png;base64,{imageBase64}";
+        
+          @if (imageSrc != string.Empty) {
+               <img src="@imageSrc" alt="@_studentContext.Student.Name">
+          }
+         }
+        <InputFile id="input-file" OnChange="@OnInputFileChange"/> 
+      </div>
       <div>
-        <h4>@_studentContext.Student.Name @_studentContext.Student.LastName</h4>
-        <p>@_studentContext.Student.StudentRegister.Email</p>
+        @if (_studentContext.ActionStudent.Equals(ActionType.Create)) {
+          <h4>Nuevo estudiante</h4>
+          <p>Agrega la informaci&oacute;n para el nuevo estudiante</p>
+        } else {
+          <h4>@_studentContext.Student.Name @_studentContext.Student.LastName</h4>
+          <p>@_studentContext.Student.StudentRegister?.Email</p>
+        }
       </div>
     </div>
   </div>
-  <div class="box-background">
-    <button type="button" class="button transparent-button" @onclick="@RemoveChanges">Cancelar</button>
-    <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
+  <div class="box-background student-info-content">
+    <div>
+      <h6>Ficha de estudiante</h6>
+      <p>Informaci&oacute;n completa sobre el estudiante</p>
+    </div>
+    <div>
+      <button type="button" class="button transparent-button" @onclick="@RemoveChanges">Cancelar</button>
+      <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
+    </div>
   </div>
-
-  <div class="category-navigation box-background">
-    <ul>
-      <li class="@(NavigationOption == 0 ? "navigation-selection" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 0))">
+  <div class="box-background">
+    <ul class="navigation-bar-options">
+      <li class="@(NavigationOption == 0 ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 0))">
         <p>Datos generales del estudiante</p>
+      </li>
+      <li class="@(NavigationOption == 1 ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 1))">
+        <p>Registro de pagos</p>
       </li>
       @foreach (var category in Categories) {
         Guid cateogoryId = category.Id;
         int index = Categories.IndexOf(category);
 
-        <li class="@(NavigationOption == (index + 1) ? "navigation-selection" : "")" @onclick="@(() => SetNavigationOption(cateogoryId, (index + 1)))">
+        <li class="@(NavigationOption == (index + 2) ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(cateogoryId, (index + 2)))">
           <p>@category.Name</p>
         </li>
       }
@@ -34,7 +75,7 @@
   </div>
 
   @if (!_studentContext.CurrentCategorySelectionId.Equals(Guid.Empty)) {
-    <form id="@_studentContext.CurrentCategorySelectionId">
+    <form id="@_studentContext.CurrentCategorySelectionId" class="box-background">
       @foreach (var field in Categories.FirstOrDefault(c => c.Id == _studentContext.CurrentCategorySelectionId).Fields) {
         int index = Categories.FirstOrDefault(c => c.Id == _studentContext.CurrentCategorySelectionId).Fields.ToList().IndexOf(field);
         FieldInformation fieldInformation = _studentContext.FieldInformations.FirstOrDefault(f => f.FieldId.Equals(field.Id)) ?? new();
@@ -58,7 +99,11 @@
       }
     </form>
   } else {
-    <StudentGeneralData />
+    @if (NavigationOption == 0) {
+      <StudentGeneralData />
+    } else if (NavigationOption == 1) {
+
+    }
   }
   </div>
-</FormModule>
+</SectionModule>

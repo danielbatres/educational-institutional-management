@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="button-side">
-      <button type="button" class="button primary-background-button">Nuevo estudiante</button>
+      <button type="button" class="button primary-background-button" @onclick="@(() => NavigateTo("students/new-student"))">Nuevo estudiante</button>
     </div>
   </div>
   <div class="action-button">
@@ -42,3 +42,24 @@
     </div>
   </div>
 </div>
+
+@code {
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
+
+  protected override void OnInitialized() {
+    UserContext.OnChange += HandleStateChange;
+  }
+
+  private void NavigateTo(string navigate) {
+    string baseRoute = $"/application/{UserContext.User.InstitutionId}/{navigate}";
+
+    NavigationManager.NavigateTo(baseRoute);
+  }
+
+  private void HandleStateChange() {
+    StateHasChanged();
+  } 
+}
