@@ -12,6 +12,7 @@ public class ApplicationContext : DbContext {
     public DbSet<Appearance> Appearances { get; set; }
     public DbSet<Settings> Settings { get; set; }
     public DbSet<ActivityLog> Activities { get; set; }
+    public DbSet<ActivityLogView> ActivitiesLogView { get; set; }
     public DbSet<GeneralNotification> GeneralNotifications { get; set; }
     public DbSet<NotificationVisualization> NotificationsVisualization { get; set; }
     public DbSet<Notification> Notifications { get; set; }
@@ -195,12 +196,19 @@ public class ApplicationContext : DbContext {
 
         modelBuilder.Entity<ActivityLog>(activity => {
             activity.HasKey(a => a.Id);
-            activity.Property(a => a.Id).ValueGeneratedOnAdd();
+            activity.Property(a => a.Id).HasDefaultValue(Guid.NewGuid());
             activity.Property(a => a.ActionType);
             activity.Property(a => a.Author);
             activity.Property(a => a.Message);
             activity.Property(a => a.UserName);
             activity.Property(a => a.Date);
+            activity.HasMany(a => a.ActivityLogViews).WithOne(a => a.Activity).HasForeignKey(a => a.ActivityId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ActivityLogView>(activityLogView => {
+            activityLogView.HasKey(a => a.Id);
+            activityLogView.Property(a => a.Id).HasDefaultValue(Guid.NewGuid());
+            activityLogView.Property(a => a.UserId);
         });
 
         modelBuilder.Entity<NotificationVisualization>(notificationVisualization => {

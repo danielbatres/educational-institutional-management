@@ -19,10 +19,17 @@
                 <div class="asigned-roles">
                   <h5>Roles asignados</h5>
                   <div class="roles">
-                    @for (byte i = 0; i < 10; i++) {
+                    <div class="rol-box">
+                      <div class="rol-color" style="background: var(--special-light-color);"></div>
+                      <p>Todos</p>
+                    </div>
+                    @foreach (var userRole in UserRole) {
+                      if (!userRole.UserId.Equals(UserContext.User.Id)) continue;
+                      Role role = Roles.FirstOrDefault(r => r.Id.Equals(userRole.RoleId));
+
                       <div class="rol-box">
-                        <div class="rol-color"></div>
-                        <p>Rol asignado</p>
+                        <div class="rol-color" style="background: @role.RoleColor;"></div>
+                        <p>@role.Name</p>
                       </div>
                     }
                   </div>
@@ -86,14 +93,37 @@
   [Inject]
   private ContentContext ContentContext { get; set; }
   [Inject]
-  private UserContext _userContext { get; set; }
+  private UserContext UserContext { get; set; }
   [Inject]
   private ISettingsService _settingsService { get; set; }
   [Inject]
   private SideBarContext SideBarContext { get; set; }
+  [Inject]
+  private RolesHubManager RolesHubManager { get; set; }
+  [Inject]
+  private UserRoleHubManager UserRoleHubManager { get; set; }
+  private List<Role> Roles { get; set; } = new();
+  private List<UserRole> UserRole { get; set; } = new();
   private User User = new();
   private Menu Menu { get; set; } = new();
  
+  protected override async Task OnInitializedAsync() {
+    RolesHubManager.RolesUpdatedHandler(roles => {
+      Roles = roles;
+      StateHasChanged();
+    });
+
+    UserRoleHubManager.UserRolesUpdatedHandler(userRole => {
+      UserRole = userRole;
+      StateHasChanged();
+    });
+
+    string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+
+    await RolesHubManager.SendRolesUpdatedAsync(groupName);
+    await UserRoleHubManager.SendUserRolesUpdatedAsync(groupName);
+  }
+
   protected override void OnInitialized() {
     SideBarContext.SetSelectedOptionMainMenu(8);
     SideBarContext.SetSelectedOptionSettingsMenu(0);

@@ -30,7 +30,8 @@
                     <div class="item-bar">
                       <p>@Menu.MenuItems[i][j][0]</p>
                       @if (int.Parse(Menu.MenuItems[i][j][4]) > 0) {
-                        <div class="active-notification centered-container">
+                      <div
+                        class="active-notification centered-container @(GetSelectedContainer() == Menu.MenuItems[i][j][2] ? "selected-notification" : "")">
                           <span>@Menu.MenuItems[i][j][4]</span>
                         </div>
                       }

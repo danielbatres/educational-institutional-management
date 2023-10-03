@@ -144,7 +144,7 @@ ul li p {
 
 .preferred-background-color {
   position: absolute;
-  left: -1330%;
+  left: -1630%;
   top: 140%;
   background: var(--background-color);
   border-radius: 10px;

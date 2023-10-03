@@ -25,6 +25,8 @@ public partial class ApplicationLayout {
   public Guid InstitutionId { get; set; } = Guid.Empty;
   [Inject]
   private InstitutionHubManager _institutionHubManager { get; set; }
+  [Inject]
+  private ActivityHubManager ActivityHubManager { get; set; }
   private Institution Institution { get; set; } = new();
   private string ImageSrc { get; set; } = string.Empty;
 
@@ -34,8 +36,7 @@ public partial class ApplicationLayout {
 
     InstitutionId = (Guid)_userContext.User.InstitutionId;
 
-    SideBarMenu = new()
-    {
+    SideBarMenu = new() {
       MenuLabels = new List<string>() {
         "menu principal", "menu de actividades", "espacio de trabajo"
       },
@@ -96,7 +97,27 @@ public partial class ApplicationLayout {
       StateHasChanged();
     });
 
-    await _institutionHubManager.SendInstitutionUpdatedAsync(_userContext.User.InstitutionId.ToString());
+    ActivityHubManager.ActivityUpdatedHandler(activities => {
+      int activitiesCounter = 0;
+
+      foreach (var activity in activities) {
+        if (activity.ActivityLogViews != null) {
+          if (!activity.ActivityLogViews.Any(a => a.UserId.Equals(_userContext.User.Id))) {
+            activitiesCounter++;
+          }
+        } else {
+          activitiesCounter++;
+        }
+      }
+
+      SideBarMenu.MenuItems[1][1][4] = activitiesCounter.ToString(); 
+      StateHasChanged();
+    });
+
+    string groupName = _userContext.User.InstitutionId.ToString() ?? string.Empty;
+
+    await _institutionHubManager.SendInstitutionUpdatedAsync(groupName);
+    await ActivityHubManager.SendActivityUpdatedAsync(groupName);
 
     _userContext.User.Settings = await _settingsService.GetSettingsByUserId(_userContext.User.Id);
 

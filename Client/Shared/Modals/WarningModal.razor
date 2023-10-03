@@ -1,0 +1,31 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="state-circle-warning centered-container">
+      <i class="fi fi-tr-triangle-warning"></i>
+    </div>
+    <div class="warning-info-modal">
+      <h4>@StatusModalContext.WarningTitle</h4>
+      <p>@StatusModalContext.WarningMessage</p>
+    </div> 
+    <div class="buttons-warning-modal">
+      <button type="button" class="button transparent-button" @onclick="@(() => ExitWarning(false))">Cancelar</button>
+      <button type="button" class="button primary-background-button" @onclick="@(() => ExitWarning(true))">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
+
+  protected override void OnInitialized() {
+    StatusModalContext.OnChange += HandleStateChange;
+  }
+
+  private void HandleStateChange() { StateHasChanged(); }
+
+  private void ExitWarning(bool accept) {
+    StatusModalContext.SetAcceptWarning(accept);
+    StatusModalContext.SetShowWarning(false);
+  }
+}

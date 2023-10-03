@@ -1,0 +1,96 @@
+<div class="counters">
+  <div class="counter">
+    <div class="counter-section">
+      <div class="counter-icon">
+        <div>
+          <p>Usuarios</p>
+          <h4>@UsersCount</h4>
+        </div>
+        <div class="counter-icon-content first-icon centered-container">
+          <i class="fi fi-tr-users-gear"></i>
+        </div>
+      </div>
+      <p class="small">Usuarios totales</p>
+    </div>
+  </div>
+  <div class="counter">
+    <div class="counter-first-section">
+      <div class="counter-icon">
+        <div>
+          <p>Estudiantes</p>
+          <h4>@StudentsCount</h4>
+        </div>
+        <div class="counter-icon-content second-icon centered-container">
+          <i class="fi fi-tr-book-user"></i>
+        </div>
+      </div>
+      <p class="small">Estudiantes totales</p>
+    </div>
+  </div>
+  <div class="counter">
+    <div class="counter-first-section">
+      <div class="counter-icon">
+        <div>
+          <p>Ingresos</p>
+          <h4>@StudentsCount</h4>
+        </div>
+        <div class="counter-icon-content third-icon centered-container">
+          <i class="fi fi-tr-usd-circle"></i>
+        </div>
+      </div>
+      <p class="small">Ingresos totales</p>
+    </div>
+  </div>
+  <div class="counter">
+    <div class="counter-first-section">
+      <div class="counter-icon">
+        <div>
+          <p>Estudiantes</p>
+          <h4>@StudentsCount</h4>
+        </div>
+        <div class="counter-icon-content fourth-icon centered-container">
+
+        </div>
+      </div>
+      <p class="small">Estudiantes totales</p> 
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject]
+  private UsersHubManager _usersHubManager { get; set; }
+  [Inject]
+  private StudentHubManager StudentHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  private int StudentsCount { get; set; } = 0;
+  private int UsersCount { get; set; } = 0;
+
+  protected override async Task OnInitializedAsync( ) {
+    StudentHubManager.StudentsUpdatedHandler(async (students) => {
+      StudentsCount = 0;
+
+      for (int i = 0; i < students.Count; i++) {
+        StudentsCount++;
+        StateHasChanged();
+        await Task.Delay(1);
+      }
+    });
+
+    _usersHubManager.UsersUpdatedHandler(async (users) => {
+      UsersCount = 0;
+
+      for (int i = 0; i < users.Count; i++) {
+        UsersCount++;
+        StateHasChanged();
+        await Task.Delay(1);
+      }
+    });
+
+    string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+
+    await _usersHubManager.SendUsersUpdatedAsync(groupName);
+    await StudentHubManager.SendStudentsUpdatedAsync(groupName);
+  }
+}

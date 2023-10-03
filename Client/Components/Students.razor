@@ -1,187 +1,246 @@
-<section>
-  <article>
-    <div class="students-info">
+<SectionModule>
+  <div class="students-container">
+    <div class="students-info box-background">
       <div>
-        <h3>Estudiantes de la instituci&oacute;n</h3>
+        <h4>Estudiantes de la instituci&oacute;n</h4>
         <p>Busca la informaci&oacute;n de cualquier estudiante de la instituci&oacute;n</p>
       </div>
       <div>
         <div class="centered-container inputs">
-          <button type="button" class="button transparent-button centered-container show-option">
+          <button type="button" class="gray-button centered-container show-option" @onclick="@(() => IsBoxStyle = false)">
             <i class="fi fi-tr-diagram-cells"></i>
           </button>
-          <button type="button" class="button transparent-button centered-container show-option">
+          <button type="button" class="gray-button centered-container show-option" @onclick="@(() => IsBoxStyle = true)">
             <i class="fi fi-tr-rectangles-mixed"></i>
           </button>
-          <input value="@SearchValue" type="text" placeholder="Buscar estudiante" class="input search-input" @onkeydown="SearchStudents" @oninput="@UpdateSearchValue">
+          <input value="@SearchValue" type="text" placeholder="Buscar estudiante" class="input search-input"
+            @onkeydown="SearchStudents" @oninput="@UpdateSearchValue">
           <div>
             <input type="text" class="input" placeholder="Seleccionar curso">
           </div>
-          <button type="button" class="button transparent-button centered-container" id="filter"><i class="fi fi-tr-filters"></i></button>
         </div>
       </div>
     </div>
-  </article>
-  <article>
-    <div class="students-list-container centered-container">
+    <div class="students-list-container centered-container box-background">
       <div class="students-list">
-        <div class="students-fields">
-          <ul>
-            <li>
-              <h5>Identificador</h5>
-            </li>
-            <li>
-              <h5>Foto</h5>
-            </li>
-            <li class="special-width">
-              <h5>Nombre completo</h5>
-            </li>
-            <li class="special-width">
-              <h5>Correo electr&oacute;nico</h5>
-            </li>
-            <li>
-              <h5>Genero</h5>
-            </li>
-            <li>
-              <h5>Edad</h5>
-            </li>
-            <li>
-              <h5>Curso</h5>
-            </li>
-            <li>
-              <h5>Se agrego</h5>
-            </li>
-            <li>
-              <h5>Acciones</h5>
-            </li>
-          </ul>
-        </div>
-        <div class="students">
+        @if (!IsBoxStyle) {
+          <div class="students-fields">
+            <ul>
+              <li>
+                <p>Identificador</p>
+              </li>
+              <li>
+                <p>Foto</p>
+              </li>
+              <li>
+                <p>Nombre completo</p>
+              </li>
+              <li>
+                <p>Correo electr&oacute;nico</p>
+              </li>
+              <li>
+                <p>G&eacute;nero</p>
+              </li>
+              <li>
+                <p>Edad</p>
+              </li>
+              <li>
+                <p>Curso</p>
+              </li>
+              <li>
+                <p>Se agrego</p>
+              </li>
+              <li>
+                <p>Acciones</p>
+              </li>
+            </ul>
+          </div>
+        }
+        <div class="@(IsBoxStyle ? "students-box" : "students")">
           @if (Loading) {
-            <div class="skeleton-container">
               @for (int i = 0; i < 15; i++) {
-                <div class="skeleton-row"></div>
+                <ul class="loading-students">
+                  @for (int j = 0; j < 9; j++) {
+                    <li>
+                      <div class="skeleton-row"></div>
+                    </li>
+                  }
+                </ul>
               }
-            </div>
           } else {
-            @foreach (var student in FilteredStudentsList) {
-              DateTime now = DateTime.Now;
-              int age = now.Year - student.BirthDate.Value.Year;
-              string identifier = StudentSettings.DefaultIdentifier ? $"{student.Id.ToString().Substring(0, 6)}..." : student.UniqueIdentifier != null && student.UniqueIdentifier.Equals(string.Empty) ? "--------" : student.UniqueIdentifier ?? string.Empty;
+            if (FilteredStudentsList.Count == 0) {
+              <div class="students-no-results">
+                <div class="icon-students-no-results centered-container">
+                  <i class="fi fi-tr-people-poll"></i>
+                </div>
+                <h4>
+                  No hemos encontrado ning&uacute;n resultado en la busqueda
+                </h4>
+                <p>No hemos encontrado ninguna coincidencia en la busqueda de los estudiantes</p>
+              </div>
+            } else {
+              @foreach (var student in FilteredStudentsList)
+              {
+                int index = FilteredStudentsList.IndexOf(student);
+                DateTime now = DateTime.Now;
+                int age = now.Year - student.BirthDate.Value.Year;
+                string identifier = StudentSettings.DefaultIdentifier ? $"{student.Id.ToString().Substring(0, 6)}..." :
+                student.UniqueIdentifier != null && student.UniqueIdentifier.Equals(string.Empty) ? "--------" :
+                student.UniqueIdentifier ?? string.Empty;
 
-              if (student.BirthDate.Value.Date > now.AddYears(-age)) {
-                age--;
+                if (student.BirthDate.Value.Date > now.AddYears(-age))
+                {
+                  age--;
+                }
+
+                string imageSrc = string.Empty;
+
+                if (student.Photo != null) {
+                  var imageBase64 = Convert.ToBase64String(student.Photo);
+                  imageSrc = $"data:image/png;base64,{imageBase64}";
+                }
+
+                <div class="@(IsBoxStyle ? "student-target-box" : "student-target")"
+                  style="@(index <= currentStudentIndex ? "opacity: 1;" : "opacity: 0;")">
+                  <ul>
+                    <li title="@(StudentSettings.DefaultIdentifier ? $"{student.Id}" : $"{identifier}")">
+                      <p>@identifier</p>
+                    </li>
+                    <li>
+                      <div class="student-image @(imageSrc == string.Empty ? "user-no-photo-container" : "")">
+                        @if (imageSrc != string.Empty) {
+                          <img src="@imageSrc" alt="@student.Name">
+                        }
+                      </div>
+                    </li>
+                    <li>
+                      @if (IsBoxStyle) { <h5>Informaci&oacute;n del estudiante</h5> }
+                      <p>
+                        @student.Name @student.LastName
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        @student.StudentRegister.Email
+                      </p>
+                    </li>
+                    <li>
+                      @if (IsBoxStyle)
+                      {
+                        <h5>G&eacute;nero</h5>
+                      }
+                      <p>
+                        @student.Gender
+                      </p>
+                    </li>
+                    <li>
+                      @if (IsBoxStyle)
+                      {
+                        <h5>Edad</h5>
+                      }
+                      <p>
+                        @age
+                      </p>
+                    </li>
+                    <li>
+                      @if (IsBoxStyle)
+                      {
+                        <h5>Curso</h5>
+                      }
+                      <p class="course">
+                        BBBB
+                      </p>
+                    </li>
+                    <li>
+                      @if (IsBoxStyle)
+                      {
+                        <h5>Fecha de creaci&oacute;n</h5>
+                      }
+                      <p>
+                        @student.StudentRegister.CreatedAt
+                      </p>
+                    </li>
+                    <li>
+                      <div class="action centered-container" @onclick="@(() => SetShowStudent(student))">
+                        @if (IsBoxStyle) {
+                          <p>Editar</p>
+                        }
+                        <i class="fi fi-tr-pen-square"></i>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               }
+              @if (false)
+              {
+                @for (int i = 0; i < 10; i++)
+                {
+                  int index = i;
 
-              <div class="student-target">
-                <ul>
-                  <li title="@(StudentSettings.DefaultIdentifier ? $"{student.Id}" : $"{identifier}")">
-                    <p>@identifier</p>
-                  </li>
-                  <li>
-                    <div class="student-image"></div>
-                  </li>
-                  <li class="special-width">
-                    <p>
-                      @student.Name @student.LastName
-                    </p>
-                  </li>
-                  <li class="special-width">
-                    <p>
-                      @student.StudentRegister.Email
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      @student.Gender
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      @age
-                    </p>
-                  </li>
-                  <li>
-                    <p class="course">
-                      BBBB
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      @student.StudentRegister.CreatedAt
-                    </p>
-                  </li>
-                  <li>
-                    <div class="action" @onclick="@(() => SetShowStudent(student))">
-                      <i></i>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            }
-
-            @for (int i = 0; i < 10; i++) {
-              int index = i;
-
-              <div class="student-target" style="@(index <= currentStudentIndex ? "opacity: 1;" : "opacity: 0;")">
-                <ul>
-                  <li>
-                    <p>123456</p>
-                  </li>
-                  <li>
-                    <div class="student-image"></div>
-                  </li>
-                  <li class="special-width">
-                    <p>
-                      Nombre completo del estudiante
-                    </p>
-                  </li>
-                  <li class="special-width">
-                    <p>
-                      correoelectronico@delestudiante.com
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      Masculino
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      20
-                    </p>
-                  </li>
-                  <li>
-                    <p class="course">
-                      BBBB
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      20/7/2023
-                    </p>
-                  </li>
-                  <li>
-                    <div class="action" @onclick="@(() => _navigationManager.NavigateTo($"{BaseRoute}1231"))">
-                      <i></i>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                  <div class="student-target" style="@(index <= currentStudentIndex ? "opacity: 1;" : "opacity: 0;")">
+                    <ul>
+                      <li>
+                        <p>123456</p>
+                      </li>
+                      <li>
+                        <div class="student-image"></div>
+                      </li>
+                      <li>
+                        <p>
+                          Nombre completo del estudiante
+                        </p>
+                      </li>
+                      <li>
+                        <p>
+                          correoelectronico@delestudiante.com
+                        </p>
+                      </li>
+                      <li>
+                        <p>
+                          Masculino
+                        </p>
+                      </li>
+                      <li>
+                        <p>
+                          20
+                        </p>
+                      </li>
+                      <li>
+                        <p class="course">
+                          BBBB
+                        </p>
+                      </li>
+                      <li>
+                        <p>
+                          20/7/2023
+                        </p>
+                      </li>
+                      <li>
+                        <div class="action" @onclick="@(() => _navigationManager.NavigateTo($"{BaseRoute}1231"))">
+                          <i></i>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                }
+              }
             }
           }
         </div>
       </div>
     </div>
-    <div class="students-list-options">
+    <div class="students-list-options box-background">
       <div class="students-list-options-pages">
         <p>P&aacute;gina 1 de 1</p>
-        <button type="button" class="button primary-background-button" @onclick="@(() => _navigationManager.NavigateTo($"{BaseRoute}new-student"))">Agregar un nuevo estudiante</button>
+        <p>Mostrando resultados <span class="results">@FilteredStudentsList.Count</span></p>
+        <button type="button" class="button primary-background-button"
+          @onclick="@(() => _navigationManager.NavigateTo($"{BaseRoute}new-student"))">Agregar un nuevo
+          estudiante</button>
       </div>
       <div class="buttons">
         <button type="button" class="gray-button">P&aacute;gina anterior</button>
         <button type="button" class="gray-button">P&aacute;gina siguiente</button>
       </div>
     </div>
-  </article>
-</section>
+  </div>
+</SectionModule>

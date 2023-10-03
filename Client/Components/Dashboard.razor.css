@@ -13,77 +13,60 @@ article {
 section article:first-child {
   width: 82%;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 h4 {
   margin-bottom: 8px;
 }
 
-.greeting {
-  width: 40%;
-  height: 100px;
-  border-radius: 10px;
-  background: var(--background-color);
-  padding: 16px;
-  border: var(--light-border);
+.first-dashboard-side, .second-dashboard-side {
+  display: flex;
+  gap: 16px;
+  height: 50%;
 }
 
-.counters {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.main-statistic-side {
   width: 40%;
-  max-height: 35%;
-  height: 100%;
-  margin: 18px 0;
+}
+
+.activity-action-side {
+  width: 60%;
+  display: flex;
   gap: 16px;
 }
 
-.counter {
+.greeting {
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 33%;
   border-radius: 10px;
   background: var(--background-color);
-  border: var(--light-border);
   padding: 16px;
+  border: var(--light-border);
 }
 
-.counter-icon {
-  display: flex;
-  justify-content: space-between;
-}
-
-.counter-icon-content {
-  min-width: 40px;
-  max-width: 40px;
-  min-height: 40px;
-  max-height: 40px;
-  border-radius: 10px;
-  background: var(--primary-color);
-}
-
-.counter-icon-content i {
-  color: var(--white);
-}
-
-.counter-icon-content i {
-  font-size: 1.4rem;
-}
-
-.counter-section h4 {
- margin: 5px 0;
-}
-
-.small {
-  font-size: 0.78rem;
+.hour {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  text-transform: capitalize;
 }
 
 .recent-activity {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: var(--background-color);
   border-radius: 10px;
   border: var(--light-border);
-  height: 40%;
-  width: 36%;
+  max-width: 50%;
+  width: 100%;
+  height: 100%;
   padding: 16px;
 }
 
@@ -109,7 +92,7 @@ h4 {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 4px;
 }
 
@@ -161,6 +144,154 @@ h4 {
 
 .activity-box:hover .hover-date {
   display: block;
+}
+
+.activity-button-side {
+  display: flex;
+  justify-content: right;
+}
+
+.recent-students,
+.statistic {
+  border-radius: 10px;
+  background: var(--background-color);
+  border: var(--light-border);
+}
+
+.recent-students {
+  max-width: 75%;
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.recent-students-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.recent-students-tags ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 18px 0 10px;
+  border-bottom: var(--light-border);
+}
+
+.recent-students-tags ul li {
+  display: flex;
+  gap: 5px;
+}
+
+.recent-students-tags ul li:first-child, .recent-students-list ul li:first-child {
+  width: 15%;
+}
+
+.recent-students-tags ul li:nth-child(2), .recent-students-list ul li:nth-child(2) {
+  width: 10%;
+}
+
+.recent-students-list ul li:nth-child(3) p:first-child {
+  color: var(--dark-color);
+}
+
+.recent-students-list ul li:nth-child(3) p:last-child {
+  font-size: var(--small-text);
+}
+
+.recent-students-tags ul li:nth-child(3),
+.recent-students-list ul li:nth-child(3) {
+  width: 40%;
+}
+
+.recent-students-tags ul li:nth-child(4),
+.recent-students-list ul li:nth-child(4) {
+  width: 15%;
+}
+
+.recent-students-tags ul li:nth-child(5),
+.recent-students-list ul li:nth-child(5) {
+  width: 10%;
+}
+
+.recent-students-tags ul li:nth-child(6),
+.recent-students-list ul li:nth-child(6) {
+  width: 10%;
+}
+
+.recent-student-image {
+  min-width: 40px;
+  max-width: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  border-radius: 100%;
+  background: var(--light-color);
+}
+
+.recent-students-tags ul li p {
+  font-size: var(--small-text);
+}
+
+.recent-students-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.students-no-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.recent-students-list ul {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: var(--light-border);
+}
+
+.recent-students-list ul li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recent-student-action {
+  min-width: 26px;
+  max-width: 26px;
+  min-height: 26px;
+  max-height: 26px;
+  border-radius: 8px;
+  background: var(--primary-color);
+  align-self: center;
+  cursor: pointer;
+}
+
+.recent-student-action i {
+  color: var(--white);
+}
+
+.statistic {
+  max-width: 30%;
+  width: 100%;
+  padding: 16px;
+}
+
+.statistic-info, .recent-students-info-content, .recent-activity-info-text {
+  display: flex;
+  gap: 10px;
+}
+
+.stand-line {
+  width: 10px;
+  border-radius: 8px;
+  background: var(--primary-color);
 }
 
 section article:last-child {

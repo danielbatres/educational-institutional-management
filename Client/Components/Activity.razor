@@ -3,8 +3,17 @@
 <SectionModule>
   <div class="activity-container">
     <div class="box-background activities-info">
-      <h4>Registro de actividades</h4>
-      <p>Los cambios que se hagan dentro de la instituci&oacute;n se veran reflejados en esta secci&oacute;n</p>
+      <div>
+        <h4>Registro de actividades</h4>
+        <p>Los cambios que se hagan dentro de la instituci&oacute;n se veran reflejados en esta secci&oacute;n</p>
+      </div>
+      <div>
+        <button type="button"
+          class="button primary-background-button @(Activities.Any(a => a.ActivityLogViews.Any(ar => ar.UserId.Equals(_userContext.User.Id))) ? "not-enabled-button" : "")"
+          @onclick="@SetActivityRead"
+          >Marcar
+          actividad como leida</button> 
+      </div>
     </div>
     <div class="activities" @ref="ActivityContainer">
         @foreach (var activity in Activities) {
@@ -55,6 +64,10 @@
   private ActivityHubManager _activityHubManager { get; set; }
   [Inject]
   private UserContext _userContext { get; set; }
+  [Inject]
+  private IActivityLogViewService _activityLogViewService { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
   private ElementReference ActivityContainer;
   
   protected override async Task OnInitializedAsync() {
@@ -67,7 +80,21 @@
   }
 
   protected override async Task OnAfterRenderAsync(bool firstRender) {
-    if (firstRender) 
-      await JSRuntime.InvokeVoidAsync("scrollToBottom", ActivityContainer);
+    await JSRuntime.InvokeVoidAsync("scrollToBottom", ActivityContainer);
+  }
+
+  private async Task SetActivityRead() {
+    foreach (var activity in Activities) {
+      if (activity.ActivityLogViews != null) {
+        if (!activity.ActivityLogViews.Any(a => a.UserId.Equals(_userContext.User.Id))) {
+          await _activityLogViewService.Create(new() {
+            ActivityId = activity.Id,
+            UserId = _userContext.User.Id
+          });
+        }
+      }
+    }
+
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
 }

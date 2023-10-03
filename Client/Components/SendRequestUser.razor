@@ -47,6 +47,8 @@
   private UserContext _userContext { get; set; }
   [Inject]
   private SettingsContext SettingsContext { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
 
   protected override void OnInitialized() {
     CreateNewRequest();
@@ -69,7 +71,7 @@
     await _membershipRequestService.Create(MembershipRequest);
 
     SettingsContext.SetShowSettingsModal(false);
-    // Crear una validación ya que solo se puede enviar una solicitud de ingreso por institución
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
 
   private void UpdateMessage(ChangeEventArgs e) {

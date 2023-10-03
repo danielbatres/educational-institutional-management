@@ -8,6 +8,7 @@
     transition: right 0.4s ease-in-out;
     padding: 24px;
     border-left: var(--light-border);
+    overflow-y: auto;
 }
 
 .exit-button {

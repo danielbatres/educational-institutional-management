@@ -51,6 +51,7 @@ builder.Services.AddScoped<IRatingsListService, RatingsListService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IPaymentSettingsService, PaymentSettingsService>();
 builder.Services.AddScoped<IPaymentRecordService, PaymentRecordService>();
+builder.Services.AddScoped<IActivityLogViewService, ActivityLogViewService>();
 builder.Services.AddSqlServer<MainContext>(builder.Configuration.GetConnectionString("cnMain"));
 builder.Services.AddSingleton<ApplicationContextService>();
 

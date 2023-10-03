@@ -1,9 +1,18 @@
 <FormModule>
-  <button type="button" class="button transparent-button centered-container" @onclick="@ExitStudentView">
-    <i class="fi fi-tr-arrow-small-left"></i>
-  </button>
-
-  <div>
+  <div class="show-student-container">
+    <div class="box-background student-info">
+    <button type="button" class="button transparent-button centered-container" @onclick="@ExitStudentView">
+      <i class="fi fi-tr-arrow-small-left"></i>
+    </button>
+    <div>
+      <InputFile OnChange="@OnInputFileChange"/> 
+      <div>
+        <h4>@_studentContext.Student.Name @_studentContext.Student.LastName</h4>
+        <p>@_studentContext.Student.StudentRegister.Email</p>
+      </div>
+    </div>
+  </div>
+  <div class="box-background">
     <button type="button" class="button transparent-button" @onclick="@RemoveChanges">Cancelar</button>
     <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
   </div>
@@ -23,8 +32,6 @@
       }
     </ul>
   </div>
-
-  <h4>Nombre del estudiante</h4>
 
   @if (!_studentContext.CurrentCategorySelectionId.Equals(Guid.Empty)) {
     <form id="@_studentContext.CurrentCategorySelectionId">
@@ -53,4 +60,5 @@
   } else {
     <StudentGeneralData />
   }
+  </div>
 </FormModule>

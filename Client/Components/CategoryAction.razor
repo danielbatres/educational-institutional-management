@@ -1,7 +1,9 @@
-<h4>Crear categoria</h4>
-<p>Crear categoria para guardar la informaci&oacute;n de los estudiantes</p>
+<div class="category-action-info">
+  <h6>Crear categoria</h6>
+  <p>Crear categoria para guardar la informaci&oacute;n de los estudiantes</p>
+</div>
 
-<form id="create-category">
+<form id="category-action">
   <fieldset>
     <div class="label">
       <label for="category-name">Nombre de la categor&iacute;a</label>
@@ -14,39 +16,64 @@
     </div>
     <input value="@Category.Description" type="text" class="input" placeholder="Ingresar descripción de la categoría" id="category-description" @oninput="@(e => Update(e, "description"))">
   </fieldset>
-  <button type="button" class="button primary" @onclick="@AddField">Agregar campo</button>
+    <button type="button" class="button primary-background-button" @onclick="@AddField">Agregar campo</button>
+  <div class="fields">
+    @foreach (var field in Fields)
+    {
+      int index = Fields.IndexOf(field);
 
-  @foreach (var field in Fields) {
-    int index = Fields.IndexOf(field);
-
-    <div>
-      <label for="field-@index">Nombre del campo</label>
-      <input value="@Fields[index].Name" type="text" class="input" id="field-@index" placeholder="Ingresar nombre del campo" @oninput="@(e => UpdateField(e, index))">
-
-      <label for="select-@index">Tipo del campo</label>
-      <select id="select-@index" @bind="@Fields[index].FieldType">
-        <option value="@FieldType.Text">Texto</option>
-        <option value="@FieldType.Number">Num&eacute;rico</option>
-        <option value="@FieldType.List">Lista</option>
-      </select>
-
-      @if (Fields[index].FieldType == FieldType.List) {
-        <button type="button" class="button" @onclick="@(() => AddOption(index))">Agregar nueva opci&oacute;n</button>
-        @foreach (var option in Fields[index].Options) {
-            int indexOption = Fields[index].Options.ToList().IndexOf(option);
-
-            <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text" placeholder="Ingresar nombre de la opción" class="input" @oninput="@(e => UpdateOption(e, index, indexOption))">
-            <button type="button" class="button" @onclick="@(() => RemoveOption(index, option))">
+      <div class="field">
+        <div class="field-main-info">
+          <div class="field-name">
+            <div class="label">
+              <label for="field-@index">Nombre del campo</label>
+            </div>
+            <input value="@Fields[index].Name" type="text" class="input" id="field-@index"
+              placeholder="Ingresar nombre del campo" @oninput="@(e => UpdateField(e, index))">
+          </div>
+          <div class="field-type">
+            <div class="label">
+              <label for="select-@index">Tipo del campo</label>
+            </div>
+            <select id="select-@index" @bind="@Fields[index].FieldType">
+              <option value="@FieldType.Text">Texto</option>
+              <option value="@FieldType.Number">Num&eacute;rico</option>
+              <option value="@FieldType.List">Lista</option>
+            </select>
+          </div>
+          <div>
+            <p class="remove-text">del</p>
+            <button type="button" class="gray-button removeat-button" @onclick="@(() => Fields.RemoveAt(index))">
               <i class="fi fi-tr-rectangle-xmark"></i>
             </button>
-        }
-      }
+          </div>
+        </div>
+          @if (Fields[index].FieldType == FieldType.List) {
+            <div class="options">
+              <button type="button" class="button primary-background-button" @onclick="@(() => AddOption(index))">Agregar
+                nueva
+                opci&oacute;n</button>
+                @if (Fields[index].Options.Count != 0) {
+                  <div class="options-list">
+                    @foreach (var option in Fields[index].Options) {
+                      int indexOption = Fields[index].Options.ToList().IndexOf(option);
 
-      <button type="button" class="button" @onclick="@(() => Fields.RemoveAt(index))">
-        <i class="fi fi-tr-rectangle-xmark"></i>  
-      </button>
-    </div>
-  }
+                      <div class="option-field-options">
+                        <input value="@Fields[index].Options.ElementAtOrDefault(indexOption).Name" type="text"
+                          placeholder="Ingresar nombre de la opción" class="input"
+                          @oninput="@(e => UpdateOption(e, index, indexOption))">
+                        <button type="button" class="gray-button" @onclick="@(() => RemoveOption(index, option))">
+                          <i class="fi fi-tr-rectangle-xmark"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+            </div>
+          }
+        </div>
+    }
+  </div>
 
-  <button type="button" class="button" @onclick="@CreateNewCategory">Crear categor&iacute;a</button>
+  <button type="button" class="button primary-background-button" @onclick="@CreateNewCategory">Crear categor&iacute;a</button>
 </form>

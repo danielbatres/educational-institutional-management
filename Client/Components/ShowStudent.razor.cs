@@ -3,6 +3,7 @@ using edu_institutional_management.Client.Services;
 using edu_institutional_management.Client.Containers;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace edu_institutional_management.Client.Components;
 
@@ -113,7 +114,16 @@ public partial class ShowStudent {
       ExitStudentView();
     }
   }
-  
+
+  private async Task OnInputFileChange(InputFileChangeEventArgs e) {
+    var imageFile = await e.File.RequestImageFileAsync("image/png", 1920, 1920);
+    var imageBytes = new byte[imageFile.Size];
+    await imageFile.OpenReadStream().ReadAsync(imageBytes);
+
+    _studentContext.Student.Photo = imageBytes;
+    await SaveChanges();
+  }
+
   private async Task CreateNewStudent() {
     await _studentService.Create();
     

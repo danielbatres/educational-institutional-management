@@ -1,18 +1,10 @@
-section {
-  width: 100%;
-  min-height: 100%;
-}
-
-section article:first-child {
-  height: 8%;
-}
-
-section article:last-child {
-  height: 92%;
+.students-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-content: center;
+  height: 100%;
+  width: 100%;
+  gap: 16px;
 }
 
 .students-info {
@@ -21,10 +13,9 @@ section article:last-child {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-height: 12%;
   height: 100%;
-  background: var(--light-background-color);
-  padding: 0px 20px;
-  border-bottom: 1px solid var(--light-color);
+  padding: 16px;
 }
 
 .search-input {
@@ -37,7 +28,8 @@ section article:last-child {
 
 .students-list-container {
   width: 100%;
-  height: 90%;
+  max-height: 75%;
+  height: 100%;
   padding: 20px;
 }
 
@@ -47,7 +39,8 @@ section article:last-child {
   max-width: 1600px;
   height: 100%;
   border-radius: 10px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .students-actions-container {
@@ -71,18 +64,37 @@ section article:last-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 5px;
+  padding: 0 0 14px;
 }
 
 .students-fields ul li p {
-  font-size: 0.85rem;
-  text-transform: uppercase;
+  font-size: var(--small-text);
 }
 
 .students {
   display: flex;
   flex-direction: column;
   padding: 10px 0;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.students-list .students-box {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.student-target-box {
+  width: 20%;
+  border: var(--light-border);
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.student-target-box ul {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 .student-target {
@@ -97,7 +109,7 @@ section article:last-child {
   background: var(--light-color);
 }
 
-.student-target ul {
+.student-target ul, .loading-students {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -115,17 +127,87 @@ section article:last-child {
   max-width: 20px;
 }
 
-.student-target ul li, .students-fields ul li {
+.student-target ul li, .students-fields ul li, .loading-students li {
   display: flex;
-  width: 8.5714%;
+}
+
+.loading-students li .skeleton-row {
+  width: 90%;
+  height: 20px;
+}
+
+.student-target ul li:first-child, .students-fields ul li:first-child, .loading-students li:first-child {
+  width: 8.3%;
+}
+
+.student-target ul li:first-child p, .student-target-box ul li:first-child p {
+  padding: 4px 6px;
+  background: var(--light-color);
+  border-radius: 8px;
+}
+
+.student-target ul li:nth-child(2), .students-fields ul li:nth-child(2), .loading-students li:nth-child(2) {
+  width: 8.3%;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-students li:nth-child(2) .skeleton-row {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  justify-self: center;
+}
+
+.student-target ul li:nth-child(3),
+.students-fields ul li:nth-child(3), .loading-students li:nth-child(3) {
+  max-width: 25%;
+  width: 100%;
+}
+
+.student-target ul li:nth-child(3) p, .student-target-box ul li:nth-child(3) p {
+  color: var(--dark-color);
+}
+
+.student-target ul li:nth-child(4),
+.students-fields ul li:nth-child(4), .loading-students li:nth-child(4) {
+  max-width: 25%;
+  width: 100%;
+}
+
+.student-target ul li:nth-child(5),
+.students-fields ul li:nth-child(5), .loading-students li:nth-child(5) {
+  width: 8.3%;
+}
+
+.student-target ul li:nth-child(6),
+.students-fields ul li:nth-child(6), .loading-students li:nth-child(6) {
+  width: 8.3%;
+}
+
+.loading-students li:nth-child(6) .skeleton-row {
+  width: 30px;
+}
+
+.student-target ul li:nth-child(7),
+.students-fields ul li:nth-child(7), .loading-students li:nth-child(7) {
+  width: 8.3%;
+}
+
+.student-target ul li:nth-child(8),
+.students-fields ul li:nth-child(8),
+.loading-students li:nth-child(8) {
+  width: 8.3%;
+}
+
+.student-target ul li:last-child,
+.students-fields ul li:last-child,
+.loading-students li:last-child { 
+  width: 8.3%;
 }
 
 .student-target ul li:last-child, .students-fields ul li:last-child {
   justify-content: right;
-}
-
-.student-target .special-width, .students-fields .special-width {
-  width: 20%;
 }
 
 .student-target ul li p {
@@ -138,21 +220,39 @@ section article:last-child {
   background: var(--light-color);
 }
 
+.student-target-box .action {
+  max-width: 100%;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.student-target-box .action p {
+  color: var(--white);
+}
+
 .action {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  min-width: 30px;
+  max-width: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  border-radius: 8px;
+  background: var(--primary-color);
   cursor: pointer;
+}
+
+.action i {
+  color: var(--white);
 }
 
 .students-list-options {
   display: flex;
-  height: 10%;
+  max-height: 8%;
+  height: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
-  background: var(--light-background-color);
-  border-top: 1px solid var(--light-color);
 }
 
 .students-list-options-pages {
@@ -163,6 +263,36 @@ section article:last-child {
 
 .gray-button {
   color: var(--dark-color);
+}
+
+.students-no-results {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-students-no-results {
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 100%;
+  background: var(--light-info-color);
+  margin-bottom: 20px;
+}
+
+.icon-students-no-results i {
+  font-size: 2.4rem;
+  color: var(--info-color);
+}
+
+.results {
+  padding: 5px;
+  border-radius: 8px;
+  background: var(--light-color);
 }
 
 @media (max-width: 1440px) {

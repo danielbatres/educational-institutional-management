@@ -25,10 +25,10 @@ public partial class Students {
   private List<Student> StudentsList { get; set; } = new();
   private List<Student> FilteredStudentsList { get; set; } = new();
   private string SearchValue { get; set; } = string.Empty;
+  private bool IsBoxStyle { get; set; }
+  private int RenderCount { get; set; } = 0;
 
   protected override async Task OnInitializedAsync() {
-    await Task.Delay(500);
-
     _studentHubManager.StudentsUpdatedHandler(students => {
       StudentsList = students;
       StateHasChanged();
@@ -43,11 +43,18 @@ public partial class Students {
 
     await _studentHubManager.SendStudentsUpdatedAsync(groupName);
     await _studentSettingsHubManager.SendStudentSettingsUpdatedAsync(groupName);
-    
-    Loading = false;
 
+    await Task.Delay(500);
+    Loading = false;
     await ShowStudentsOneByOne();
-    FilteredStudentsList = StudentsList.ToList();
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender) {
+    if (RenderCount.Equals(2)) {
+      FilteredStudentsList = StudentsList.ToList();
+    }
+
+    RenderCount++;
   }
 
   private async Task SearchStudents(KeyboardEventArgs e) {

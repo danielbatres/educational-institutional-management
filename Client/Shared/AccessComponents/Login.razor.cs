@@ -3,6 +3,7 @@ using edu_institutional_management.Client.Services;
 using edu_institutional_management.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 
 namespace edu_institutional_management.Client.Shared.AccessComponents;
 
@@ -17,6 +18,8 @@ public partial class Login {
   private LoginContext LoginContext { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
+  [Inject]
+  private IJSRuntime JSRuntime { get; set; }
   private bool RememberMe { get; set; } = false;
   private List<List<object>> LoginInfo { get; set; } = new() {
     new List<object> { "", true },
@@ -62,7 +65,7 @@ public partial class Login {
       LoginContext.SetShowLoginStateModal(true, "Usuario autenticado correctamente", "¡Inicio de sesión exitoso!");
 
       if (UserContext.User.InstitutionId != null) {
-        NavigationManager.NavigateTo($"/application/{UserContext.User.InstitutionId}");
+        await JSRuntime.InvokeVoidAsync("location.reload");
       } else {
         NavigationManager.NavigateTo("/");
       }

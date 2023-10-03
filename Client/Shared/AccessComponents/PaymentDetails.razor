@@ -1,3 +1,5 @@
+@inject IJSRuntime JSRuntime
+
 <AccessComponent Title="Detalles de pago" Description="Ingresa los detalles de pago" MaxWidth="max-width: 470px;">
   <form>
     <div class="label">
@@ -74,7 +76,7 @@
     await HubsConnection.ConnectHubs(InstitutionContext.Institution.Id.ToString());
 
     LoadingContext.SetLoading(false);
-    UserContext.NavigateToInstitution(InstitutionContext.Institution.Id);
+    await JSRuntime.InvokeVoidAsync("location.reload");
   }
 
   private void HandleStateChange() {

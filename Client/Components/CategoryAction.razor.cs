@@ -19,10 +19,16 @@ public partial class CategoryAction {
   private UserContext _userContext { get; set; }
   [Inject]
   private IOptionService _optionService { get; set; }
+  [Inject]
+  private Validators Validators { get; set; }
   private Category Category { get; set; } = new();
   private List<Field> Fields { get; set; } = new();
   [Parameter]
   public string ActionOption { get; set; } = string.Empty;
+  private List<List<object>> Warnings { get; set; } = new() {
+    new() { "", false },
+    new() { "", false }
+  };
 
   protected override void OnInitialized() {
     _studentContext.OnChange += HandleStateChange;
@@ -75,6 +81,7 @@ public partial class CategoryAction {
       if (field.Options != null) {
         if (!field.Options.Count.Equals(0)) {
           foreach (var option in field.Options) {
+            if (option.Name.Equals(string.Empty)) continue;
             await _optionService.Create(option);
           }
         }

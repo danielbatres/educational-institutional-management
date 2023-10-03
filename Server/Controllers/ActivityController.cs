@@ -20,4 +20,35 @@ public class ActivityController : ControllerBase {
 
     return Ok();
   }
+
+  [HttpPost]
+  [Route("create-activity-example")]
+  public async Task<IActionResult> Create() {
+    for (int i = 0; i < 59; i++) {
+      await CreateActivity(2, i);
+
+      if (i == 4 || i == 10 || i == 3 || i == 6 || i == 17) {
+        await CreateActivity(i, i);
+      }
+
+      if (i == 10 || i == 24 || i == 30 || i == 26 || i == 22 || i == 48 || i == 20 || i == 38) {
+        await CreateActivity(i / 2, i);
+      }
+    }
+    
+    return Ok();
+  }
+
+  private async Task CreateActivity(int times, int index) {
+    for (int i = 0; i < times; i++) {
+      await _activityService.Create(new() {
+        ActionType = ActionType.Create,
+        Author = "John Doe",
+        Title = "Activity example",
+        Message = "Activity example",
+        UserName = "John Doe",
+        Date = DateTime.Now.AddDays(-index)
+      });
+    }
+  }
 }

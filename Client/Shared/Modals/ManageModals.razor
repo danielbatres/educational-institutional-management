@@ -4,6 +4,8 @@
 
 @if (InstitutionContext.ShowRegisterModal) { <NotRegistered /> }
 
+@if (StatusModalContext.ShowWarning) { <WarningModal /> }
+
 @code{
   [Inject]
   private LoginContext LoginContext { get; set; }
@@ -11,11 +13,14 @@
   private LoadingContext LoadingContext { get; set; }
   [Inject]
   private RegisterInstitutionContext InstitutionContext { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
 
   protected override void OnInitialized() {
     LoadingContext.OnChange += HandleStateChange;
     LoginContext.OnChange += HandleStateChange;
     InstitutionContext.OnChange += HandleStateChange;
+    StatusModalContext.OnChange += HandleStateChange;
   }
 
   private void HandleStateChange() {

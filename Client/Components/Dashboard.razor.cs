@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 namespace edu_institutional_management.Client.Components;
 
 public partial class Dashboard {
-  private bool IsSelected = false;
+  private bool IsSelected { get; set; } = false;
   [Inject]
   private ContentContext ContentContext { get; set; }
   [Inject]
@@ -25,40 +25,35 @@ public partial class Dashboard {
   [Inject]
   private ActivityHubManager ActivityHubManager { get; set; }
   private List<ActivityLog> Activities { get; set; }
+  private List<Student> Students { get; set; } = new();
   private int MaxActivityCount { get; set; }
   private User SelectedUser { get; set; } = new();
   private string SelectedUserTop { get; set; } = string.Empty;
-  private int StudentsCount { get; set; } = 0;
-  private int UsersCount { get; set; } = 0;
+  private string FormattedDateTime { get; set; } = string.Empty;
+
+  private async Task UpdateClock() {
+    while (true) {
+      var currentDateTime = DateTime.Now;
+
+      FormattedDateTime = currentDateTime.ToString("dddd d, MMMM yyyy HH:mm");
+
+      await Task.Delay(1000);
+      StateHasChanged();
+    }
+  }
 
   protected override async Task OnInitializedAsync() {
     SideBarContext.SetSelectedOptionMainMenu(0);
     ContentContext.SetSectionContent("Dashboard", "Mi panel");
 
-    StudentHubManager.StudentsUpdatedHandler(async (students) => {
-      StudentsCount = 0;
-
-      for (int i = 0; i < students.Count; i++) {
-        StudentsCount++;
-        StateHasChanged();
-        await Task.Delay(1);
-      }
-    });
-
-    _usersHubManager.UsersUpdatedHandler(async (users) => {
-      UsersCount = 0;
-
-      for (int i = 0; i < users.Count; i++) {
-        UsersCount++;
-        StateHasChanged();
-        await Task.Delay(1);
-      }
-    });
-
     ActivityHubManager.ActivityUpdatedHandler(activities => {
       Activities = activities;
       StateHasChanged();
-      
+    });
+
+    StudentHubManager.StudentsUpdatedHandler(students => {
+      Students = students;
+      StateHasChanged();
     });
 
     string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
@@ -66,6 +61,8 @@ public partial class Dashboard {
     await _usersHubManager.SendUsersUpdatedAsync(groupName);
     await StudentHubManager.SendStudentsUpdatedAsync(groupName);
     await ActivityHubManager.SendActivityUpdatedAsync(groupName);
+
+    await UpdateClock();
   }
 
   private async Task Disconnect() {

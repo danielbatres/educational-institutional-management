@@ -1,112 +1,168 @@
 <section>
   <article>
-    <div class="greeting">
-      <h4>
-        Hola, @UserContext.User.Name
-      </h4>
-      <p>Este es tu panel principal</p>
-    </div>
-    <div class="counters">
-      <div class="counter">
-        <div class="counter-section">
-          <div class="counter-icon">
-            <div>
-              <p>Usuarios</p>
-              <h4>@UsersCount</h4>
-            </div>
-            <div class="counter-icon-content first-icon centered-container">
-              <i class="fi fi-tr-users-gear"></i>
-            </div>
-          </div>
-          <p class="small">Usuarios totales en la instituci&oacute;n</p>
+    <div class="first-dashboard-side">
+      <div class="main-statistic-side">
+        <div class="greeting">
+          <h4>
+            Hola, @UserContext.User.Name
+          </h4>
+          <p>Este es tu panel principal</p>
+          <p class="hour">@FormattedDateTime</p>
         </div>
+        <Counters />
       </div>
-      <div class="counter">
-        <div class="counter-first-section">
-          <div class="counter-icon">
-            <div>
-              <p>Estudiantes</p>
-              <h4>@StudentsCount</h4>
-            </div>
-            <div class="counter-icon-content second-icon centered-container">
-              <i class="fi fi-tr-book-user"></i>
-            </div>
-          </div>
-          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
-        </div>
-      </div>
-      <div class="counter">
-        <div class="counter-first-section">
-          <div class="counter-icon">
-            <div>
-              <p>Estudiantes</p>
-              <h4>@StudentsCount</h4>
-            </div>
-            <div class="counter-icon-content third-icon centered-container">
-
-            </div>
-          </div>
-          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
-        </div>
-      </div>
-      <div class="counter">
-        <div class="counter-first-section">
-          <div class="counter-icon">
-            <div>
-              <p>Estudiantes</p>
-              <h4>@StudentsCount</h4>
-            </div>
-            <div class="counter-icon-content fourth-icon centered-container">
-
-            </div>
-          </div>
-          <p class="small">Estudiantes totales en la instituci&oacute;n</p>
-        </div>
-      </div>
-    </div>
-    <div class="recent-activity">
-      <div class="recent-activity-info">
-        <div class="recent-activity-info-text">
-          <h6>Actividad reciente</h6>
-          <p>Actividad en los ultimos 60 dias</p>
-        </div> 
-        <div>
-          <button type="button" class="button primary-background-button activity-button" @onclick="@(() => _navigationManager.NavigateTo("/application/{_userContext.User.InstitutionId}/activity"))">
-            <i class="fi fi-tr-book-copy"></i> Ir a actividad
-          </button> 
-        </div>
-      </div>
-      <div class="activity-log">
-        <div class="activity-log-container">
-          @if (Activities != null) {
-            var activityCounts = Activities.GroupBy(log => log.Date.Date).Select(group => new {
-              Date = group.Key,
-              Count = group.Count()
-            }).OrderByDescending(x => x.Count).ToList();
-
-            int maxActivityCount = activityCounts.Any() ? activityCounts.Max(x => x.Count) : 0;
-
-            @for (int i = 59; i >= 0; i--) {
-              DateTime currentDate = DateTime.Now.Date.AddDays(-i);
-
-              var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
-
-              double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
-              string opacityString = opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
-              
-              <div class="activity-box">
-                <div class="activity-log-box"
-                  style="@(opacity != 0 ? $"background: var(--primary-color); opacity: {opacityString};" : "")">
-                </div>
-                <div class="hover-date">
-                <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
-                @if (activityForDate != null) {
-                  <p>@($"{activityForDate.Count} registros de actividad")</p>
-                }
-                </div>
+      <div class="activity-action-side">
+        <ActionButtons />
+        <div class="recent-activity">
+          <div class="recent-activity-info">
+            <div class="recent-activity-info-text">
+              <div class="stand-line">
               </div>
+              <div>
+                <h6>Actividad reciente</h6>
+                <p>Actividad en los ultimos 60 dias</p>
+              </div>
+            </div>
+          </div>
+          <div class="activity-log">
+            <div class="activity-log-container">
+              @if (Activities != null)
+              {
+                var activityCounts = Activities.GroupBy(log => log.Date.Date).Select(group => new
+                {
+                  Date = group.Key,
+                  Count = group.Count()
+                }).OrderByDescending(x => x.Count).ToList();
+
+                int maxActivityCount = activityCounts.Any() ? activityCounts.Max(x => x.Count) : 0;
+
+                @for (int i = 59; i >= 0; i--)
+                {
+                  DateTime currentDate = DateTime.Now.Date.AddDays(-i);
+
+                  var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
+
+                  double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
+                  string opacityString = opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+
+                  <div class="activity-box">
+                    <div class="activity-log-box"
+                      style="@(opacity != 0 ? $"background: var(--primary-color); opacity: {opacityString};" : "")">
+                    </div>
+                    <div class="hover-date">
+                      <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
+                      @if (activityForDate != null)
+                      {
+                        <p>@($"{activityForDate.Count} registros de actividad")</p>
+                      }
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+          <div class="activity-button-side">
+            <button type="button" class="button primary-background-button activity-button"
+              @onclick="@(() => _navigationManager.NavigateTo("/application/{_userContext.User.InstitutionId}/activity"))">
+              <i class="fi fi-tr-book-copy"></i> Ir a actividad
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="second-dashboard-side">
+      <div class="recent-students">
+        <div class="recent-students-info">
+          <div class="recent-students-info-content">
+            <div class="stand-line">
+            </div>
+            <div>
+              <h6>Estudiantes agregados recientemente</h6>
+              <p>Estudiantes que se agregaron recientemente</p>
+            </div>
+          </div>
+          <button type="button" class="button search-student-button primary-background-button">
+            <i class="fi fi-ts-search-location"></i>Buscar estudiante
+          </button>
+        </div>
+        <div class="recent-students-tags">
+          <ul>
+            <li>
+              <p>Identificador</p>
+            </li>
+            <li>
+              <p>Foto</p>
+            </li>
+            <li>
+              <p>Informaci&oacute;n del estudiante</p>
+              <i class="fi fi-tr-angle-double-small-down"></i>
+            </li>
+            <li> 
+              <p>G&eacute;nero</p>
+            </li>
+            <li>
+              <p>Curso</p>
+              <i class="fi fi-tr-angle-double-small-down"></i>
+            </li>
+            <li>
+              <p>Acciones</p>
+            </li>
+          </ul>
+        </div>
+        <div class="recent-students-list">
+          @if (false) {
+            <div class="students-no-result">
+              <h4>No se encontraron resultados</h4>
+              <p>No hemos encontrado estudiantes agregados recientemente</p>
+            </div>
+          } else {
+            @foreach (var student in Students) {
+              string imageSrc = string.Empty;
+
+              if (student.Photo != null) {
+                var imageBase64 = Convert.ToBase64String(student.Photo);
+                imageSrc = $"data:image/png;base64,{imageBase64}";
+              }
+
+              <ul>
+                <li>
+                  <p>@student.Id.ToString().Substring(0, 8)</p>
+                </li>
+                <li>
+                  <div class="recent-student-image @(imageSrc == string.Empty ? "user-no-photo-container" : "")">
+                    @if (imageSrc != string.Empty) {
+                      <img src="@imageSrc" alt="@student.Name">
+                    }
+                  </div>
+                </li>
+                <li>
+                  <p>@student.Name</p>
+                  <p>@student.StudentRegister.Email</p>
+                </li>
+                <li>
+                  <p>@student.Gender</p>
+                </li>
+                <li>
+                  <p>B3DA</p>
+                </li>
+                <li>
+                  <div class="recent-student-action centered-container">
+                    <i class="fi fi-tr-pen-square"></i> 
+                  </div>
+                </li>
+              </ul>
             }
           }
+        </div>
+      </div>
+      <div class="statistic">
+        <div class="statistic-info">
+          <div class="stand-line">
+          </div>
+          <div>
+            <h6>Grafico estadistico</h6>
+            <p>Grafico de estadistico</p>
+          </div>
         </div>
       </div>
     </div>

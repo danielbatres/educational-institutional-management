@@ -1,4 +1,5 @@
 using edu_institutional_management.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace edu_institutional_management.Server.Services;
 
@@ -12,7 +13,7 @@ public class ActivityService : BaseService, IActivityService {
   }
 
   public IEnumerable<ActivityLog> Get() {
-    return _applicationContext.Activities;
+    return _applicationContext.Activities.Include(a => a.ActivityLogViews);
   }
 }
 
