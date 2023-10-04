@@ -38,7 +38,7 @@ section {
 }
 
 .communication-side-bar ul li p, .communication-side-bar ul li i {
-  color: var(--dark-color);
+  color: var(--white);
 }
 
 .communication-chat {
@@ -53,6 +53,7 @@ section {
 .chat-info {
   padding: 20px;
   border-bottom: var(--light-border);
+  background: var(--background-color);
 }
 
 .chat-info p {
@@ -60,8 +61,10 @@ section {
 }
 
 .user-image-message {
-  min-width: 30px;
-  min-height: 30px;
+  min-width: 34px;
+  max-width: 34px;
+  min-height: 34px;
+  max-height: 30px;
   border-radius: 100%;
 }
 
@@ -89,6 +92,7 @@ section {
   background: var(--background-color);
   padding: 10px;
   border-radius: 10px;
+  border: var(--light-border);
 }
 
 .message p {
@@ -110,6 +114,7 @@ section {
   gap: 20px;
   padding: 20px 20px 40px;
   border-top: var(--light-border);
+  background: var(--background-color);
 }
 
 .user-name-message {
@@ -126,12 +131,11 @@ section {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: var(--dark-color);
 }
 
 .send-button i {
   padding-top: 4px;
-  color: var(--dark-color);
+  color: var(--white);
 }
 
 .typing {

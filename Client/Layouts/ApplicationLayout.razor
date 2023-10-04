@@ -50,8 +50,8 @@
             <img src="@ImageSrc" alt="@Institution.Name">
           </div>
         }
-        <div class="logo-name">
-          <h2><b>Firmacadem</b></h2>
+        <div class="logo-name" style="@(Institution.Photo == null ? "text-align: center; width: 100%;" : "")">
+          <h2 style="@(Institution.Photo == null ? "font-size: 1.2rem" : "")"><b>Firmacadem</b></h2>
           <p>@Institution.Name</p>
         </div>
       </div>

@@ -29,9 +29,10 @@
   <div class="user-main-info">
     <div class="user-info-img">
       <div class="user-photo-container">
-        <div class="user-profile-photo centered-container">
-          <img src="@ImageSrc"
-            class="user-photo @(string.IsNullOrEmpty(ImageSrc) ? "user-no-photo-container" : "")" />
+        <div class="user-profile-photo centered-container @(ImageSrc == string.Empty ? "user-no-photo-container" : "")">
+          @if (ImageSrc != string.Empty) {
+            <img src="@ImageSrc" class="user-photo" />
+          }
             <InputFile id="input-file" OnChange="@OnInputFileChange"></InputFile>
         </div>
       </div>

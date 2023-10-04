@@ -279,21 +279,22 @@
         @if (false) {
           <h4>No hay eventos para mostrar</h4>
           <p>No hemos encontrado ningun evento</p>
-        }
+        } else {
+          @for (int i = 0; i < 4; i++)
+          {
+            <div class="event-card">
+              <h5>Evento</h5>
+              <div class="event-information">
+                <div class="event-image">
 
-        @for(int i = 0; i < 4; i++) {
-          <div class="event-card">
-            <h5>Evento</h5>
-            <div class="event-information">
-              <div class="event-image">
-
+                </div>
+                <div class="event-info">
+                  <h6>Nombre del evento</h6>
+                  <p>Descripci&oacute;n breve del evento</p>
+                </div>
               </div>
-              <div class="event-info">
-                <h6>Nombre del evento</h6>
-                <p>Descripci&oacute;n breve del evento</p>
-              </div>
-            </div>
-          </div>
+            </div> 
+          }
         }
       </div>
     </div>

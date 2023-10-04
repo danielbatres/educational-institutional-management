@@ -14,14 +14,11 @@
       <button type="button" class="button transparent-button" @onclick="@CheckRegisterUser">Conseguir</button>
       <div class="plan-benefits">
         <ul>
-          <li>
-            <div class="plan-benefit-option"></div>
-            <p>Guarda hasta 3,000 estudiantes</p>
-          </li>
-          @for (int i = 0; i < 12; i++) {
+          @foreach (var benefit in Benefits)
+          {
             <li>
               <div class="plan-benefit-option"></div>
-              <p>Beneficio del plan de servicio</p>
+              <p>@benefit</p>
             </li>
           }
         </ul>
@@ -44,14 +41,11 @@
       <button class="button get-plan metallic-button" type="button" @onclick="@CheckRegisterUser">Conseguir</button>
       <div class="plan-benefits">
         <ul>
-          <li>
-            <div class="plan-benefit-option"></div>
-            <p>Guarda hasta 3,000 estudiantes</p>
-          </li>
-          @for (int i = 0; i < 12; i++) {
+          @foreach (var benefit in Benefits)
+          {
             <li>
               <div class="plan-benefit-option"></div>
-              <p>Beneficio del plan de servicio</p>
+              <p>@benefit</p>
             </li>
           }
         </ul>
@@ -69,14 +63,10 @@
       <button type="button" class="button transparent-button" @onclick="@CheckRegisterUser">Conseguir</button>
       <div class="plan-benefits">
         <ul>
-          <li>
-            <div class="plan-benefit-option"></div>
-            <p>Guarda hasta 3,000 estudiantes</p>
-          </li>
-          @for (int i = 0; i < 12; i++) {
+          @foreach (var benefit in Benefits) {
             <li>
               <div class="plan-benefit-option"></div>
-              <p>Beneficio del plan de servicio</p>
+              <p>@benefit</p>
             </li>
           }
         </ul>
@@ -90,7 +80,19 @@
   public UserContext UserContext { get; set; } 
   [Inject]
   public RegisterInstitutionContext InstitutionContext { get; set;}
-  
+  private List<string> Benefits { get; set; } = new() {
+    "Guarda todos los estudiantes de tu institución",
+    "Manten registro de los estudiantes activos e inactivos",
+    "Roles de usuario personalizables",
+    "Configuración de categorias de información para estudiantes",
+    "Registro de cursos de la institución",
+    "Registro de actividad y control de acciones",
+    "Agenda de eventos personalizada",
+    "Registro de calificaciones",
+    "Generación de estadísticos de información",
+    "Comunicación en tiempo real con tu equipo de trabajo"
+  };
+
   private void CheckRegisterUser() {
     if (UserContext.User == null) {
       InstitutionContext.SetShowRegisterModal(true);

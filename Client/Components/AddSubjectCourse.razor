@@ -8,79 +8,93 @@
       <label for="subject-selection"></label>
     </div>
     <select id="subject-selection" @bind="@SubjectId">
+      <option disabled selected value="">Selecciona una opci&oacute;n</option>
       @foreach (var subject in Subjects) {
         <option value="@subject.Id.ToString()">@subject.Name</option>
       }
     </select>
   </fieldset>
-  <div class="users-list">
-    <div class="users-selection-tags">
-      <ul>
-        <li>
-          <h5>Foto</h5>
-        </li>
-        <li>
-          <h5>Usuario</h5>
-        </li>
-        <li>
-          <h5>Username</h5>
-        </li>
-        <li>
-          <h5>Acciones</h5>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <div class="users-list">
-        @if (Loading) {
-          @for (int i = 0; i < 6; i++) {
-            <ul>
-              @for (int j = 0; j < 4; j++) {
-                <li>
-                  <div class="skeleton-row"></div>
-                </li>
-              }
-            </ul>
-          }
-        } else {
-          @if (Users.Count == 0) {
-            <div class="no-users">
-              <h4>No hay usuarios para mostrar</h4>
-              <p>No hemos encontrado ning&uacute;n usuario</p>
-            </div>
-          } else {
-            @foreach (User user in Users) {
-              User selectedUser = user;
-
+  @if (false) {
+    <div class="users-list">
+      <div class="users-selection-tags">
+        <ul>
+          <li>
+            <h5>Foto</h5>
+          </li>
+          <li>
+            <h5>Usuario</h5>
+          </li>
+          <li>
+            <h5>Username</h5>
+          </li>
+          <li>
+            <h5>Acciones</h5>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="users-list">
+          @if (Loading)
+          {
+            @for (int i = 0; i < 6; i++)
+            {
               <ul>
-                <li>
-                  <div class="user-image-selection"></div>
-                </li>
-                <li class="user-info-selection">
-                  <p>
-                    @user.Name @user.LastName
-                  </p>
-                  <p>
-                    @user.Register.Email
-                  </p>
-                </li>
-                <li class="username-user-info">
-                  <p>
-                    @user.UserName.Substring(0, 6)...
-                  </p>
-                </li>
-                <li>
-                  <button type="button" class="gray-button @(SelectedUser.Id.Equals(selectedUser.Id) ? "selected-user-button" : "")" @onclick="@(() => SelectedUser = selectedUser)">
-                    <i class="fi fi-tr-paper-plane-top"></i>
-                  </button>
-                </li>
+                @for (int j = 0; j < 4; j++)
+                {
+                  <li>
+                    <div class="skeleton-row"></div>
+                  </li>
+                }
               </ul>
             }
           }
-        }
+          else
+          {
+            @if (Users.Count == 0)
+            {
+              <div class="no-users">
+                <h4>No hay usuarios para mostrar</h4>
+                <p>No hemos encontrado ning&uacute;n usuario</p>
+              </div>
+            }
+            else
+            {
+              @foreach (User user in Users)
+              {
+                User selectedUser = user;
+
+                <ul>
+                  <li>
+                    <div class="user-image-selection"></div>
+                  </li>
+                  <li class="user-info-selection">
+                    <p>
+                      @user.Name @user.LastName
+                    </p>
+                    <p>
+                      @user.Register.Email
+                    </p>
+                  </li>
+                  <li class="username-user-info">
+                    <p>
+                      @user.UserName.Substring(0, 6)...
+                    </p>
+                  </li>
+                  <li>
+                    <button type="button"
+                      class="gray-button @(SelectedUser.Id.Equals(selectedUser.Id) ? "selected-user-button" : "")"
+                      @onclick="@(() => SelectedUser = selectedUser)">
+                      <i class="fi fi-tr-paper-plane-top"></i>
+                    </button>
+                  </li>
+                </ul>
+              }
+            }
+          }
+        </div>
       </div>
     </div>
-  </div>
+  }
 </form>
 <div>
   <button type="button" class="button" @onclick="@CreateNewCourseSubject">Agregar asignatura al curso</button>

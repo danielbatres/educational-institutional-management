@@ -3,23 +3,18 @@
     <p>Agregar una nueva asignatura para la instituci&oacute;n <span>(puedes agregar una asignatura en la secci&oacute;n de cursos)</span></p>
 </div> 
 <form>
-    <div class="label">
+    <div class="label label-name">
         <label for="subject-name">Nombre de la asignatura <strong>*</strong></label>
     </div>
-    <input value="@Subject.Name" type="text" class="input " placeholder="Ingresar nombre de la asignatura" id="subject-name" @oninput="@(e => UpdateField(e, "name"))">
+    <input value="@Subject.Name" type="text" class="input @(IsInputWarning ? "input-error" : "")" placeholder="Ingresar nombre de la asignatura" id="subject-name" @oninput="@(e => UpdateField(e, "name"))">
     <div class="label">
         <label for="subject-description">
             Descripci&oacute;n de la asignatura
         </label>
     </div>
     <input type="text" class="input" placeholder="Ingresar descripción de la asignatura" id="subject-description" @oninput="@(e => UpdateField(e, "description"))">
-    <div>
+    <div class="label">
         <label for="subject-color">Seleccionar color para la asignatura <strong>*</strong></label>
-    </div>
-    <div class="color-boxes">
-        @for (int i = 0; i < 12; i++) {
-            <div class="color-box"></div>
-        }
     </div>
     <input type="color">
 </form>

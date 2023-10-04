@@ -21,10 +21,17 @@
         <p>Este es el chat general de la instituci&oacute;n, todos los miembros pueden enviar mensajes aqu&iacute;</p>
         <b class="typing">@Typing</b>
       </div>
-      <div class="messages" @ref="messagesContainer">
+      <div class="messages box-background" @ref="messagesContainer">
         @foreach (var message in ChatMessages.OrderBy(c => c.TimeStamp)) {
           User user = Users.Find(u => u.Id == message.UserId);
           int index = ChatMessages.IndexOf(message);
+
+          string imageSrc = string.Empty;
+
+          if (user.Photo != null) {
+            var imageBase64 = Convert.ToBase64String(user.Photo);
+            imageSrc = $"data:image/png;base64,{imageBase64}";
+          }
 
           if (user != null) {
             if ((index - 1) >= 0) {
@@ -38,7 +45,11 @@
             }
             <div class="message-card">
               <div>
-                <div class="user-image-message user-no-photo-container"></div>
+                <div class="user-image-message @(imageSrc == string.Empty ? "user-no-photo-container" : "")">
+                  @if (imageSrc != string.Empty) {
+                    <img src="@imageSrc" alt="@user.Name"/>
+                  }
+                </div>
               </div>
               <div class="message-container">
                 <div class="user-message-info">

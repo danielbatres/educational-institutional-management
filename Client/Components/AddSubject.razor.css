@@ -13,6 +13,15 @@ form fieldset input {
     width: 100%;
 }
 
+.label-name {
+    margin-top: 0;
+}
+
+.label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .color-box-container {
     display: grid;
     grid-template-columns: repeat(9, 1fr);

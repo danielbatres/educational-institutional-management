@@ -32,7 +32,7 @@
       <div class="counter-icon">
         <div>
           <p>Ingresos</p>
-          <h4>@StudentsCount</h4>
+          <h4>0</h4>
         </div>
         <div class="counter-icon-content third-icon centered-container">
           <i class="fi fi-tr-usd-circle"></i>
@@ -46,10 +46,10 @@
       <div class="counter-icon">
         <div>
           <p>Cursos</p>
-          <h4>@StudentsCount</h4>
+          <h4>@CoursesCount</h4>
         </div>
         <div class="counter-icon-content fourth-icon centered-container">
-
+          <i class="fi fi-tr-chalkboard-user"></i>
         </div>
       </div>
       <p class="small">Cursos totales</p> 
@@ -64,33 +64,32 @@
   private StudentHubManager StudentHubManager { get; set; }
   [Inject]
   private UserContext UserContext { get; set; }
+  [Inject]
+  private CourseHubManager CourseHubManager { get; set; }
   private int StudentsCount { get; set; } = 0;
   private int UsersCount { get; set; } = 0;
+  private int CoursesCount { get; set; } = 0;
 
   protected override async Task OnInitializedAsync( ) {
-    StudentHubManager.StudentsUpdatedHandler(async (students) => {
-      StudentsCount = 0;
-
-      for (int i = 0; i < students.Count; i++) {
-        StudentsCount++;
-        StateHasChanged();
-        await Task.Delay(1);
-      }
+    StudentHubManager.StudentsUpdatedHandler(students => {
+      StudentsCount = students.Count;
+      StateHasChanged();
     });
 
-    _usersHubManager.UsersUpdatedHandler(async (users) => {
-      UsersCount = 0;
+    _usersHubManager.UsersUpdatedHandler(users => {
+      UsersCount = users.Count;
+      StateHasChanged();
+    });
 
-      for (int i = 0; i < users.Count; i++) {
-        UsersCount++;
-        StateHasChanged();
-        await Task.Delay(1);
-      }
+    CourseHubManager.CoursesUpdatedHandler(courses => {
+      CoursesCount = courses.Count;
+      StateHasChanged();
     });
 
     string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
 
     await _usersHubManager.SendUsersUpdatedAsync(groupName);
     await StudentHubManager.SendStudentsUpdatedAsync(groupName);
+    await CourseHubManager.SendCoursesUpdatedAsync(groupName);
   }
 }

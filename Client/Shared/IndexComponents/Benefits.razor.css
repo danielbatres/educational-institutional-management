@@ -31,3 +31,9 @@ h4 {
   font-size: var(--title);
   margin-bottom: 10px;
 }
+
+.image-container-benefit {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

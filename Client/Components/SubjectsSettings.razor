@@ -24,18 +24,22 @@
           <p>Acciones</p>
         </li>
       </ul>
-      <div>
+      <div class="subjects-list">
         @foreach (var subject in Subjects) {
           <ul>
+            <li>
+              <div class="color-box">
+              </div>
+            </li>
             <li>
               <p>@subject.Name</p>
             </li>
             <li>
-              <div></div>
+              <p>0</p>
             </li>
             <li>
-              <button type="button" class="gray-button">
-
+              <button type="button" class="gray-button centered-container edit-button">
+                <i class="fi fi-tr-pen-square"></i>
               </button>
             </li>
           </ul>

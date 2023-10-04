@@ -80,9 +80,13 @@
 }
 
 .students-list .students-box {
+  display: flex;
+  align-items: self-start;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 16px;
   height: 100%;
+  width: 100%;
 }
 
 .student-target-box {

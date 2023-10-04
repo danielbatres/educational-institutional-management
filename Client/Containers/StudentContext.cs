@@ -9,6 +9,25 @@ public class StudentContext : BaseContainer {
   public bool CategoryCreation { get; set; }
   public Student Student { get; set; } = new();
   public List<FieldInformation> FieldInformations { get; set; } = new();
+  public List<List<object>> Warnings { get; set; } = new() {
+    new() { "", false },
+    new() { "", false },
+    new() { "", false },
+    new() { "", false }
+  };
+  public int ErrorsCount { get; set; }
+
+  public void SetWarnings(int index, List<object> options) {
+    Warnings[index] = options;
+
+    NotifyStateChanged();
+  }
+
+  public void SetErrorsCount(int count) {
+    ErrorsCount = count;
+
+    NotifyStateChanged();
+  }
 
   public void SetActionType(ActionType action) {
     ActionStudent = action;
@@ -45,7 +64,7 @@ public class StudentContext : BaseContainer {
 
     Student = new() {
       Id = newStudentId,
-      UniqueIdentifier = string.Empty,
+      UniqueIdentifier = $"{Guid.NewGuid()}",
       Name = string.Empty,
       LastName = string.Empty,
       PhoneNumber = string.Empty,

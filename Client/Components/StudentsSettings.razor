@@ -77,7 +77,7 @@
               
               <ul>
                 <li>
-                  <p>1002</p>
+                  <p>@field.Id.ToString().Substring(0, 8)</p>
                 </li>
                 <li>
                   <p>@field.Name</p>
@@ -101,60 +101,5 @@
           </div>
         </div>
       }
-      <div class="box-background">
-        <div class="category-info">
-        <div>
-          <h4>Datos generales del estudiante</h4>
-          <p>Estos datos se agregar&aacute;n para la informaci&oacute;n general del estudiante</p>
-        </div>
-        <button type="button" class="button primary-background-button">Actualizar categoria</button>
-      </div>
-      <div class="categories-list-fields">
-        <ul>
-          <li>
-            <p>Identificador del campo</p>  
-          </li>
-          <li>
-            <p>Nombre del campo</p>  
-          </li>
-          <li>
-            <p>Requerido</p>  
-          </li>
-          <li>
-            <p>Campo privado</p>  
-          </li>
-          <li>
-            <p>Tipo del campo</p>  
-          </li>
-          <li>
-            <p>Acciones</p>  
-          </li>  
-        </ul>  
-      </div>
-      <div class="fields">
-        <ul>
-          <li>
-            <p>10002</p>  
-          </li>
-          <li>
-            <p>Nombre</p>  
-          </li>
-          <li>
-            <input type="checkbox">  
-          </li>
-          <li>
-            <input type="checkbox">  
-          </li>
-          <li>
-            <p>Texto</p>  
-          </li>
-          <li>
-            <button class="gray-button">
-              <i class="fi fi-tr-pen-square"></i>
-            </button>
-          </li>
-        </ul>  
-      </div>
-    </div>
   </div>
 </SettingsModule>

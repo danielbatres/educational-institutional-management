@@ -18,3 +18,30 @@
     padding: 6px;
     border-radius: 8px;
 }
+
+.subjects-tags-fields li, .subjects-list ul li {
+    width: 25%;
+    display: flex;
+    
+}
+
+.subjects-tags-fields li:first-child, .subjects-tags-fields li:last-child, .subjects-list ul li:first-child, .subjects-list ul li:last-child {
+    justify-content: center;
+}
+
+.subjects-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.subjects-list ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: var(--light-border);
+}
+
+.edit-button i {
+    color: var(--white);
+}

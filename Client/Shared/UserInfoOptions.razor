@@ -15,7 +15,11 @@
       </ul>
     </div>
   }
-  <img src="@ImageSrc" class="user-image @(string.IsNullOrEmpty(ImageSrc) ? "user-no-photo-container" : "")" />
+  <div class="user-image @(ImageSrc == string.Empty ? "user-no-photo-container" : "")">
+    @if (ImageSrc != string.Empty) {
+      <img src="@ImageSrc" />
+    }
+  </div>
   <div class="user-info-data">
     <p>@($"{UserContext.User.Name} {UserContext.User.LastName}")</p>
     <p>@($"{UserContext.User.Register.Email}")</p>

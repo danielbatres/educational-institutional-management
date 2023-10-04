@@ -12,10 +12,7 @@
       </div>
     }
   </section>
-  <section>
-    <div>
-
-    </div>
+  <section class="image-container-benefit" style="background-image: url(@BackgroundImage);">
   </section>
 </LandingComponents>
 
@@ -24,4 +21,6 @@
   public List<string[]> BenefitsList { get; set; } = new();
   [Parameter]
   public bool MakeReverse { get; set; }
+  [Parameter]
+  public string BackgroundImage { get; set; }
 }
