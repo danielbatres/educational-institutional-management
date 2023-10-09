@@ -39,14 +39,6 @@
   Description="Selecciona una opcion de registro y completa los campos para crear tu cuenta"
   MaxWidth="max-width: 470px;">
   <form>
-    <button type="button" class="button google-button" @onclick="@GoogleSignIn">
-      <div class="google-logo"></div>Registrarme con Google
-    </button>
-    <div class="or-line">
-      <div class="straight-line"></div>
-      <p>o</p>
-      <div class="straight-line"></div>
-    </div>
     <div class="fullname">
       <div class="f-name">
         <div class="label">
@@ -97,12 +89,8 @@
         Registrarme
       </button>
       <p>
-        ¿Ya tienes una cuenta? <b @onclick="@(() => NavigationManager.NavigateTo("/access"))">Iniciar sesi&oacute;n</b>
+        ¿Ya tienes una cuenta? <b @onclick="@(() => NavigationManager.NavigateTo("/access/login"))">Iniciar sesi&oacute;n</b>
       </p>
-    </div>
-    <div class="terms-and-conditions">
-      <input @bind="@IsAccepted" type="checkbox">
-      <p>Acepto los <b>terminos y condiciones</b> y la <b>politica de privacidad</b></p>
     </div>
   </form>
 </AccessComponent>

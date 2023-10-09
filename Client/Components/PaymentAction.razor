@@ -1,0 +1,83 @@
+<div class="modal-title">
+  <h4>
+    @(ActionType.Equals("create") ? "Agregar nueva opción de pago" : "Actualizar opción de pago")
+  </h4>
+  <p>Opciones de pago para los estudiantes de la instituci&oacute;n</p>
+</div>
+<form>
+  <fieldset>
+    <div class="label">
+      <label for="payment-name">Nombre del pago <strong>*</strong></label>
+    </div>
+    <input value="@PaymentSettingsContext.PaymentSettings.PaymentName" type="text" class="input @(IsInputWarning ? "input-error" : "")" id="payment-name" @oninput="@(e => UpdatePaymentSettings(e, "name"))" placeholder="Ingresar nombre para la opción de pago">
+  </fieldset>
+  <fieldset>
+    <div class="label">
+      <label for="payment-description">Descripci&oacute;n del pago</label>
+    </div>
+    <input value="@PaymentSettingsContext.PaymentSettings.PaymentDescription" type="text" class="input" id="payment-description" @oninput="@(e => UpdatePaymentSettings(e, "description"))" placeholder="Ingresar descripción de la opción de pago">
+  </fieldset>
+</form>
+<div>
+  <button type="button" class="button" @onclick="@CreateNewPaymentSettings">
+    @(ActionType.Equals("create") ? "Crear opción de pago" : "Actualizar opción de pago")
+  </button>
+</div>
+
+@code {
+  [Parameter]
+  public string ActionType { get; set; } = string.Empty;
+  [Inject]
+  private PaymentSettingsContext PaymentSettingsContext { get; set; }
+  [Inject]
+  private IPaymentSettingsService PaymentSettingsService { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+  [Inject]
+  private PaymentSettingsHubManager PaymentSettingsHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private StatusModalContext StatusModalContext { get; set; }
+  [Inject]
+  private Validators Validators { get; set; } 
+  private bool IsInputWarning { get; set; } = false;
+  private string Warning { get; set; } = string.Empty;
+  
+  private void ValidateField() {
+    IsInputWarning = false;
+    string warning = Validators.IsRequired(PaymentSettingsContext.PaymentSettings.PaymentName);
+    Warning = warning;
+
+    if (warning != string.Empty) {
+      IsInputWarning = true;
+    }
+  }
+
+  private async Task CreateNewPaymentSettings() {
+    ValidateField();
+
+    if (IsInputWarning) {
+      await StatusModalContext.SetStatus(StatusType.Danger);
+
+      return;
+    }
+
+    await PaymentSettingsService.Create(PaymentSettingsContext.PaymentSettings);
+    await PaymentSettingsHubManager.SendPaymentSettingsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+    await StatusModalContext.SetStatus(StatusType.Success);
+  }
+
+  private void UpdatePaymentSettings(ChangeEventArgs e, string changeValue) {
+    string value = e.Value.ToString();
+
+    switch (changeValue) {
+      case "name":
+        PaymentSettingsContext.PaymentSettings.PaymentName = value;
+        break;
+      case "description":
+        PaymentSettingsContext.PaymentSettings.PaymentDescription = value;
+        break;
+    }
+  }
+}

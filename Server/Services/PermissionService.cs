@@ -8,7 +8,6 @@ public class PermissionService : BaseService, IPermissionService {
   public IEnumerable<Permission> Get() {
     return _applicationContext.Permissions;
   }
-
 }
 
 public interface IPermissionService {

@@ -1,0 +1,12 @@
+.user-image-selection {
+  min-width: 38px;
+  max-width: 38px;
+  min-height: 38px;
+  max-height: 38px;
+  border-radius: 100%;
+}
+
+.users-list ul {
+  border-bottom: var(--light-border);
+  padding: 10px 0;
+}

@@ -9,11 +9,11 @@
     
                     </div>
                     <div>
-                        <h4>Primer ventaja</h4>    
+                        <h4>@AdvantageTitles[index]</h4>    
                     </div>
                 </div>
                 <div>
-                    <p>Primer texto de la ventaja, este texto se extiende todo lo que quieras para poder probar el espacio que puede llegar a tener el mensaje que aqui se escribe si</p> 
+                    <p>@AdvantagesText[index]</p> 
                 </div>
             </article>
         }
@@ -21,5 +21,12 @@
 </LandingComponents>
 
 @code {
-    private List<string> Advantanges { get; set; } = new();    
-}
+    private List<string> AdvantagesText { get; set; } = new() {
+        "Crea un ambiente especializado para la administración y organización de tu institución educativa, donde puedes optimizar tus procesos y simplificar la gestión de tareas académicas y administrativas diarias.", 
+        "Asegura la información sensible de tu institución educativa con medidas de seguridad de vanguardia, garantizando la confidencialidad de los datos de estudiantes, profesores y personal.", 
+        "Sé parte de la revolución de la digitalización en el ámbito educativo, adoptando tecnologías avanzadas que mantienen tu institución actualizada y competitiva en un mundo cada vez más digital."
+    };
+    private List<string> AdvantageTitles { get; set; } = new() {
+        "Mantente profesional", "Asegura la información", "Se parte de la digitalización"
+    };   
+}   

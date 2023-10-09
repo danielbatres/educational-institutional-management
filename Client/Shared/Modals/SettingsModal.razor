@@ -9,7 +9,10 @@
         <SendRequestUser />
         break;
       case ShowSettingsOption.AddSubject:
-        <AddSubject />
+        <AddSubject ActionType="create"/>
+        break;
+      case ShowSettingsOption.UpdateSubject:
+        <AddSubject ActionType="update" />
         break;
       case ShowSettingsOption.AddRoleMember:
         <AddRoleMember />

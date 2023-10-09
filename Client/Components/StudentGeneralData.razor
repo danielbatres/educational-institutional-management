@@ -1,24 +1,36 @@
 <form id="student-general-data" class="box-background">
   @if (!_studentSettings.DefaultIdentifier) {
     <fieldset>
-      <label for="unique-identifier">Identificador &uacute;nico</label>
+      <div class="label">
+        <label for="unique-identifier">Identificador &uacute;nico</label>
+      </div>
       <input @bind="@_studentContext.Student.UniqueIdentifier" type="text" class="input" placeholder="Ingresar identificador único del estudiante" id="unique-identifier">
     </fieldset>
   }
   <fieldset>
-    <label for="student-name">Nombre del estudiante</label>
-    <input @bind="@_studentContext.Student.Name" type="text" class="input" placeholder="Ingresar nombre del estudiante" id="student-name">
+    <div class="label">
+      <label for="student-name">Nombre del estudiante</label>
+    </div>
+    <input @bind="@_studentContext.Student.Name" type="text" class="input @((bool) _studentContext.Warnings[0][1] ? "input-error" : "")" placeholder="Ingresar nombre del estudiante" id="student-name">
   </fieldset>
   <fieldset>
-    <label for="student-last-name">Apellido del estudiante</label>
-    <input @bind="@_studentContext.Student.LastName" type="text" class="input" placeholder="Ingresar apellido del estudiante" id="student-last-name">
+    <div class="label">
+      <label for="student-last-name">Apellido del estudiante</label>
+    </div>
+    <input @bind="@_studentContext.Student.LastName" type="text"
+      class="input @((bool) _studentContext.Warnings[1][1] ? "input-error" : "")"
+      placeholder="Ingresar apellido del estudiante" id="student-last-name">
   </fieldset>
   <fieldset>
-    <label for="phone-number">N&uacute;mero de tel&eacute;fono</label>
+    <div class="label">
+      <label for="phone-number">N&uacute;mero de tel&eacute;fono</label>
+    </div>
     <input type="text" class="input" placeholder="Ingresar número de telefono del estudiante" id="phone-number" required>
   </fieldset>
   <fieldset>
-    <label for="gender">Genero del estudiante</label>
+    <div class="label"> 
+      <label for="gender">Genero del estudiante</label>
+    </div>
     <select id="gender" @bind="@_studentContext.Student.Gender">
       <option value="Masculino">Masculino</option>
       <option value="Femenino">Femenino</option>
@@ -36,13 +48,9 @@
     <div class="label">
       <label for="email">Correo electr&oacute;nico del estudiante</label>
     </div>
-    <input @bind="@_studentContext.Student.StudentRegister.Email" type="email" id="email" class="input" placeholder="Ingresar correo electrónico del estudiante">
-  </fieldset>
-  <fieldset>
-    <div class="label">
-      <label for="password">Contrase&ntilde;a del estudiante</label>
-    </div>
-    <input @bind="@_studentContext.Student.StudentRegister.Password" type="password" id="password" class="input" placeholder="Ingresar contraseña del estudiante">
+    <input @bind="@_studentContext.Student.StudentRegister.Email" type="email" id="email"
+      class="input @((bool) _studentContext.Warnings[2][1] ? "input-error" : "")"
+      placeholder="Ingresar correo electrónico del estudiante">
   </fieldset>
 </form>
 

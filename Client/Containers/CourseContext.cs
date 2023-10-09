@@ -29,7 +29,7 @@ public class CourseContext : BaseContainer {
     Course = new() {
       Id = Guid.NewGuid(),
       Name = string.Empty,
-      Guide = string.Empty,
+      GuideId = Guid.Empty,
       Acronym = string.Empty,
       StudentsCount = 0
     };

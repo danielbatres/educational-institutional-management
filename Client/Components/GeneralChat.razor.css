@@ -71,9 +71,9 @@ section {
 .messages {
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
   overflow-y: auto;
+  margin: 16px;
 }
 
 .message-card {

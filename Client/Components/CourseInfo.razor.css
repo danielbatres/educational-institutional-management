@@ -5,6 +5,7 @@
     gap: 16px;
 }
 
+
 .course-info-content {
     display: flex;
     justify-content: space-between;
@@ -54,6 +55,17 @@ fieldset input, #guide {
     width: 100%;
 }
 
+.input-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-color {
+    align-self: self-start;
+}
+
 .general-course-data .general-course-data-content {
     max-width: 60%;
     width: 100%;
@@ -76,4 +88,31 @@ fieldset input, #guide {
 
 .subjects-course {
     height: 100%;
+}
+
+.course-subjects-list-tags {
+    background: var(--light-color);
+    padding: 4px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.course-subjects-list-content ul {
+    padding: 10px 0;
+    border-bottom: var(--light-border);
+}
+
+.course-subjects-list-tags ul, .course-subjects-list-content ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.course-subjects-list-tags ul li:first-child, .course-subjects-list-tags ul li:last-child, .course-subjects-list-content ul li:first-child, .course-subjects-list-content ul li:last-child {
+    width: 15%;
+}
+
+.course-subjects-list-tags ul li:nth-child(2), .course-subjects-list-content ul li:nth-child(2) {
+    width: 70%;
 }

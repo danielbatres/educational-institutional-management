@@ -16,7 +16,7 @@ public class UserService : IUserService {
   public User? LoginUser(User user) {
     var loggedInUser = _context.Users
         .Include(u => u.Register)
-        .Include(u => u.OnlineStatus)
+        .Include(u => u.OnlineStatus).AsSplitQuery()
         .FirstOrDefault(x => x.Register.Email.Equals(user.Register.Email));
 
     //if (loggedInUser != null && VerifyPassword(loggedInUser.Register.Password, user.Register.Password)) {
@@ -35,7 +35,7 @@ public class UserService : IUserService {
   }
 
   public IEnumerable<User> Get() {
-    return _context.Users.Include(u => u.Register).Include(u => u.OnlineStatus).Include(u => u.Institution).Include(u => u.Payment).Include(u => u.ReceivedMembershipRequests).Include(u => u.TelephoneNumbers);
+    return _context.Users.Include(u => u.Register).Include(u => u.OnlineStatus).Include(u => u.Institution).Include(u => u.Payment).Include(u => u.ReceivedMembershipRequests).Include(u => u.TelephoneNumbers).AsSplitQuery();
   }
 
   public async Task Create(User user) {

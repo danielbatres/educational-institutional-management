@@ -159,7 +159,7 @@ h4 {
 }
 
 .recent-students {
-  max-width: 75%;
+  max-width: 100%;
   width: 100%;
   padding: 16px;
   display: flex;
@@ -325,7 +325,7 @@ section article:last-child {
 }
 
 .online-users {
-  height: 50%;
+  height: 100%;
 }
 
 .events {

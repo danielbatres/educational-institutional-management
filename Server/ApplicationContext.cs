@@ -273,7 +273,7 @@ public class ApplicationContext : DbContext {
 
         modelBuilder.Entity<Course>(course => {
             course.HasKey(c => c.Id);
-            course.Property(c => c.Guide);
+            course.Property(c => c.GuideId);
             course.Property(c => c.Name);
             course.Property(c => c.Acronym);
             course.Property(c => c.StudentsCount);
@@ -308,6 +308,8 @@ public class ApplicationContext : DbContext {
         modelBuilder.Entity<Subject>(subject => {
             subject.HasKey(s => s.Id);
             subject.Property(s => s.Name);
+            subject.Property(s => s.Description);
+            subject.Property(s => s.Color);
             subject.HasMany(s => s.SubjectCourses).WithOne(sc => sc.Subject).HasForeignKey(sc => sc.SubjectId).OnDelete(DeleteBehavior.Cascade);
         });
 

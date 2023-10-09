@@ -7,13 +7,14 @@
         <h4>Registro de actividades</h4>
         <p>Los cambios que se hagan dentro de la instituci&oacute;n se veran reflejados en esta secci&oacute;n</p>
       </div>
-      <div>
-        <button type="button"
-          class="button primary-background-button @(Activities.Any(a => a.ActivityLogViews.Any(ar => ar.UserId.Equals(_userContext.User.Id))) ? "not-enabled-button" : "")"
-          @onclick="@SetActivityRead"
-          >Marcar
-          actividad como leida</button> 
-      </div>
+      @if (false) {
+        <div>
+          <button type="button"
+            class="button primary-background-button @(Activities.Any(a => a.ActivityLogViews.Any(ar => ar.UserId.Equals(_userContext.User.Id))) ? "not-enabled-button" : "")"
+            @onclick="@SetActivityRead">Marcar
+            actividad como leida</button>
+        </div>
+      }
     </div>
     <div class="activities" @ref="ActivityContainer">
         @foreach (var activity in Activities) {

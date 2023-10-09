@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-container">
       <div class="@(!Toggle && IsToggle ? "padding-sides" : "") navigation-container">
-        @for (byte i = 0; i < Menu.MenuLabels?.Count(); i++) { 
+        @for (int i = 0; i < Menu.MenuLabels?.Count; i++) {
           @if (i != 0) {
             <div class="line-over" style="@(!Toggle && IsToggle ? "margin: 20px 0px;" : "")"></div>
           }
@@ -11,14 +11,40 @@
             if (Toggle) {
               <h5>@Menu.MenuLabels?[i].ToUpper()</h5>
             }
-          }
-          else {
+          } else {
             <h5>@Menu.MenuLabels?[i].ToUpper()</h5>
           }
 
-            @for (int j = 0; j < Menu.MenuItems[i].Count(); j++) {
+            @for (int j = 0; j < Menu.MenuItems[i].Count; j++) {
               int ListIndex = i;
               int Index = j;
+              bool isPermission = false;
+
+              @if (!UserContext.User.IsAdmin) {
+                @if (Menu.MenuItems[i][j][5] != string.Empty)
+                {
+                  if (UserRoles.Any(u => u.UserId.Equals(UserContext.User.Id))) {
+                    foreach (var userRole in UserRoles) {
+                      var role = Roles.FirstOrDefault(r => r.Id.Equals(userRole.RoleId));
+
+                      if (userRole.UserId.Equals(UserContext.User.Id) && role != null) {
+                        foreach (var permission in Permissions) {
+
+                          if (role.RolePermissions.Any(r => r.PermissionId.Equals(permission.Id)) &&
+                          ((int) permission.Name).Equals(int.Parse(Menu.MenuItems[i][j][5]))) {
+                            isPermission = true; 
+                            break; 
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+
+                if (!isPermission && Menu.MenuItems[i][j][5] != string.Empty) {
+                  continue;
+                }
+              }
 
               <div
                 class="@(GetSelectedContainer() == Menu.MenuItems[i][j][2] ? "selected" : "") @(!Toggle && IsToggle ? "centered-container no-padding-sides" : "") button-container"

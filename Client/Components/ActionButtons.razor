@@ -24,21 +24,8 @@
       </div>
     </div>
     <div class="button-side">
-      <button type="button" class="button primary-background-button">Nuevo curso</button>
-    </div>
-  </div>
-  <div class="action-button">
-    <i class="fi fi-tr-calendar-day"></i>
-    <div class="action-button-info">
-      <div class="action-stand">
-      </div>
-      <div>
-        <h6>Agendar evento</h6>
-        <p>Agenda un nuevo eventos y asignale participantes</p>
-      </div>
-    </div>
-    <div class="button-side">
-      <button type="button" class="button primary-background-button">Agendar evento</button>
+      <button type="button" class="button primary-background-button"
+        @onclick="@(() => NavigateTo("courses/new-course"))">Nuevo curso</button>
     </div>
   </div>
 </div>

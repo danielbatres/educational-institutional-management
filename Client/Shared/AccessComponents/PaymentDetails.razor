@@ -62,6 +62,7 @@
 
     await InstitutionContext.SetInstitutionUsers();
     UserContext.User.InstitutionId = InstitutionContext.Institution.Id;
+    UserContext.User.IsAdmin = true;
 
     await UserService.Update(UserContext.User);
 

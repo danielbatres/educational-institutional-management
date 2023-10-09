@@ -12,8 +12,9 @@ public class HubsConnection {
   private readonly SubjectHubManager _subjectHubManager;
   private readonly CourseHubManager _courseHubManager;
   private readonly UserRoleHubManager _userRoleHubManager;
+  private readonly PaymentSettingsHubManager _paymentSettingsHubManager;
   
-  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager, SubjectHubManager subjectHubManager, CourseHubManager  courseHubManager, UserRoleHubManager userRoleHubManager) {
+  public HubsConnection(StudentHubManager studentHubManager, ActivityHubManager activityHubManager, ChatHubManager chatHubManager, UsersHubManager usersHubManager, RolesHubManager rolesHubManager, CategoryHubManager categoryHubManager, InstitutionHubManager institutionHubManager, StudentSettingsHubManager studentSettingsHubManager, SubjectHubManager subjectHubManager, CourseHubManager  courseHubManager, UserRoleHubManager userRoleHubManager, PaymentSettingsHubManager paymentSettingsHubManager) {
     _rolesHubManager = rolesHubManager;
     _categoryHubManager = categoryHubManager;
     _studentHubManager = studentHubManager;
@@ -25,6 +26,7 @@ public class HubsConnection {
     _subjectHubManager = subjectHubManager;
     _courseHubManager = courseHubManager;
     _userRoleHubManager = userRoleHubManager;
+    _paymentSettingsHubManager = paymentSettingsHubManager;
   }
   
   public async Task ConnectHubs(string groupName) {
@@ -39,6 +41,7 @@ public class HubsConnection {
     await _subjectHubManager.StartConnectionAsync();
     await _courseHubManager.StartConnectionAsync();
     await _userRoleHubManager.StartConnectionAsync();
+    await _paymentSettingsHubManager.StartConnectionAsync();
 
     await _usersHubManager.JoinGroup(groupName);
     await _rolesHubManager.JoinGroup(groupName);
@@ -51,5 +54,6 @@ public class HubsConnection {
     await _subjectHubManager.JoinGroup(groupName);
     await _courseHubManager.JoinGroup(groupName);
     await _userRoleHubManager.JoinGroup(groupName);
+    await _paymentSettingsHubManager.JoinGroup(groupName);
   }
 }

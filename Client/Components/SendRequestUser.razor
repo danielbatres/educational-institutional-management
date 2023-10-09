@@ -5,7 +5,20 @@
 <div class="destiny-container">
   <h5>Enviar a</h5>
   <div class="destiny">
-    <div class="user-image"></div>
+    <div class="user-image">
+      @{
+        string imageSrc = string.Empty;
+
+        @if (SettingsContext.SelectedUser.Photo != null) {
+          var imageBase64 = Convert.ToBase64String(SettingsContext.SelectedUser.Photo);
+          imageSrc = $"data:image/png;base64,{imageBase64}";
+        }
+
+        @if (imageSrc != string.Empty) {
+          <img src="@imageSrc" alt="@SettingsContext.SelectedUser.Name">
+        }
+      }
+    </div>
     <div class="destiny-user-info">
       <div>
         <p>@SettingsContext.SelectedUser.Name @SettingsContext.SelectedUser.LastName</p>

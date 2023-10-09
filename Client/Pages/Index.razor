@@ -7,12 +7,10 @@
 <Title TitleSent="Ventajas de contratar el servicio" Text="Se parte de la digitalización administrativa" />
 
 <Advantages />
-<Advantages />
 
 <Title TitleSent="Lo que ofrece nuestra aplicacion" Text="Funcionalidades especificas de la plataforma" SectionId="benefits"/>
 
 <Benefits BenefitsList="@BenefitsList" MakeReverse="false" BackgroundImage="https://i.ibb.co/b2K0qDC/Rectangle-248-1.png"/>
-<Benefits BenefitsList="@BenefitsList" MakeReverse="true" BackgroundImage="https://i.ibb.co/cb5CxpT/Rectangle-249-1.png"/>
 
 <Title TitleSent="¿Listo para potenciar tu institucion?" Text="Plan de servicio, inversión mínima a cambio de un impacto de alto valor en la administración" SectionId="pricing"/>
 
@@ -22,9 +20,9 @@
   private List<string[]> BenefitsList { get; } = new();
 
   protected override void OnInitialized() {
-    BenefitsList.Add(new string[] { "Manejo de estudiantes", "LLeva el control de todos los estudiantes, crea categorias, modifica los registros y almacena toda la información que quieras", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Personaliza los cursos", "Crea cursos y asignaturas para poder mantener el control de los horarios y guias especiales para cada uno de ellos", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Registro de calificaciones", "Genera listados de calificaciones de cualquier curso y de cualquier asignatura, evalua el rendimiento con información detallada y al instante", "fi fi-tr-badge-check"});
-    BenefitsList.Add(new string[] { "Genera estadisticos", "Crea estadisticos de la información que consideres util y necesaria para la toma de desiciones", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Manejo de estudiantes", "Lleva el control de todos los estudiantes, crea categorias, modifica los registros y almacena toda la información que quieras", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Personaliza los cursos", "Crea cursos y asignaturas para poder mantener el control de los guias especiales para cada uno de ellos", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Registro de usuarios y sus roles", "Controla los usuarios que tienen acceso a la institución y asignales roles especificos", "fi fi-tr-badge-check"});
+    BenefitsList.Add(new string[] { "Registro de actividad", "Control de actividades recientes dentro de la institución", "fi fi-tr-badge-check"});
   }
 }

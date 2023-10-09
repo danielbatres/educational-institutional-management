@@ -98,6 +98,13 @@
               </div>
             }
             @foreach (var user in UsersListFiltered) {
+              string imageSrc = string.Empty;
+
+              if (user.Photo != null) {
+                var imageBase64 = Convert.ToBase64String(user.Photo);
+                imageSrc = $"data:image/png;base64,{imageBase64}";
+              }
+
               <ul>
                 <li>
                   <div class="user-status">
@@ -107,6 +114,9 @@
                   @if (IsBoxStyle) { <h5>Datos de usuario</h5> }
                   <div class="user-data-list">
                     <div class="user-data-image">
+                      @if (imageSrc != string.Empty) {
+                        <img src="@imageSrc" alt="@user.Name">
+                      }
                     </div>
                     <div class="user-data-info">
                       <p>

@@ -28,7 +28,7 @@
         @foreach (var subject in Subjects) {
           <ul>
             <li>
-              <div class="color-box">
+              <div class="color-box" style="background: @subject.Color;">
               </div>
             </li>
             <li>
@@ -38,7 +38,7 @@
               <p>0</p>
             </li>
             <li>
-              <button type="button" class="gray-button centered-container edit-button">
+              <button type="button" class="gray-button centered-container edit-button" @onclick="@(() => SetSubjectUpdate(subject))">
                 <i class="fi fi-tr-pen-square"></i>
               </button>
             </li>
@@ -70,7 +70,14 @@
   }
 
   private void SetSubjectCreation() {
+    SettingsContext.AssignNewSubject();
     SettingsContext.SetShowSettingsOption(ShowSettingsOption.AddSubject);
+    SettingsContext.SetShowSettingsModal(true);
+  }
+
+  private void SetSubjectUpdate(Subject subject) {
+    SettingsContext.SetShowSettingsOption(ShowSettingsOption.UpdateSubject);
+    SettingsContext.SetSelectedSuject(subject);
     SettingsContext.SetShowSettingsModal(true);
   }
 }

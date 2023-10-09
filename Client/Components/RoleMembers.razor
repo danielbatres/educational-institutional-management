@@ -13,43 +13,45 @@
       <p>No hemos encontrado ning&uacute;n usuario en la instituci&oacute;n</p>
     </div>
   }
-  @foreach (var user in Users) {
-    @if (!UserRoles.Any(u => u.UserId.Equals(user.Id) && u.RoleId.Equals(RoleContext.ActualRoleIdSelection))) continue; 
+  <div class="users-list">
+      @foreach (var user in Users)
+      {
+        @if (!UserRoles.Any(u => u.UserId.Equals(user.Id) && u.RoleId.Equals(RoleContext.ActualRoleIdSelection)))
+          continue;
 
-    <ul>
-      <li>
-        <div class="user-status">
-        </div>
-      </li>
-      <li>
-        <h5>Datos de usuario</h5>
-        <div class="user-data-list">
-          <div class="user-data-image">
-          </div>
-          <div class="user-data-info">
-            <p>
-              @user.Name @user.LastName
-            </p>
-            <p>
-              @user.UserName
-            </p>
-          </div>
-        </div>
-      </li>
-      <li>
-        <p>@user.Register.Email</p>
-      </li>
-      <li>
-        <p>@user.PhoneNumber</p>
-      </li>
-      <li>
-        <div class="user-actions">
-          <button type="button" class="gray-button delete-user-button" @onclick="@(() => RemoveMember(user))">
-            <i class="fi fi-tr-rectangle-xmark"></i>
-          </button>
-        </div>
-      </li>
-    </ul>
-  }
+        <ul>
+          <li>
+          </li>
+          <li>
+            <h5>Datos de usuario</h5>
+            <div class="user-data-list">
+              <div class="user-data-image">
+              </div>
+              <div class="user-data-info">
+                <p>
+                  @user.Name @user.LastName
+                </p>
+                <p>
+                  @user.UserName
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <p>@user.Register.Email</p>
+          </li>
+          <li>
+            <p>@user.PhoneNumber</p>
+          </li>
+          <li>
+            <div class="user-actions">
+              <button type="button" class="gray-button delete-user-button" @onclick="@(() => RemoveMember(user))">
+                <i class="fi fi-tr-rectangle-xmark"></i>
+              </button>
+            </div>
+          </li>
+        </ul>
+      }
+  </div>
 </div>
 </div>

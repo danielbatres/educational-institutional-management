@@ -7,6 +7,7 @@ public class User : MainUser {
   public string UserName { get; set; }
   public string? Bio { get; set; }
   public string? Location { get; set; }
+  public bool IsAdmin { get; set; }
   public Guid? InstitutionId { get; set; }
   public Institution? Institution { get; set; }
   public OnlineStatus? OnlineStatus { get; set; }

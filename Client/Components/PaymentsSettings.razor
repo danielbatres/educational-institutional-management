@@ -11,6 +11,53 @@
         <h6>Informaci&oacute;n de pago de los estudiantes</h6>
         <p>Agrega la informaci&oacute;n de pago para los estudiantes</p>
       </div>
+      <button type="button" class="button primary-background-button" @onclick="@NewPaymentSettings">
+        Crear nueva configuraci&oacute;n de pago
+      </button>
+    </div>
+    <div class="box-background">
+      <div>
+        <ul>
+          <li></li>
+        </ul>
+      </div>
+      <div>
+        @foreach (var payment in PaymentSettings) {
+          <ul>
+            <li>
+              <p>@payment.PaymentName</p>
+            </li>
+          </ul>
+        }
+      </div>
     </div>
   </div>
 </SettingsModule>
+
+@code {
+  [Inject]
+  private PaymentSettingsHubManager PaymentSettingsHubManager { get; set; }
+  [Inject]
+  private UserContext UserContext { get; set; }
+  [Inject]
+  private PaymentSettingsContext PaymentSettingsContext { get; set; }
+  [Inject]
+  private SettingsContext SettingsContext { get; set; }
+  private List<PaymentSettings> PaymentSettings { get; set; }
+
+  protected override async Task OnInitializedAsync() {
+    PaymentSettingsHubManager.PaymentSettingsUpdatedHandler(paymentSettings => {
+      PaymentSettings = paymentSettings;
+      StateHasChanged();
+    });
+
+    await PaymentSettingsHubManager.SendPaymentSettingsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+  }
+
+  private void NewPaymentSettings() {
+    PaymentSettingsContext.SetNewPaymentSettings();
+
+    SettingsContext.SetShowSideFormOptions(ShowSideFormOptions.PaymentCreation);
+    SettingsContext.SetShowSideForm(true);
+  }
+}

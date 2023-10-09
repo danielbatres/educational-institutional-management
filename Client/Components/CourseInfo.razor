@@ -4,20 +4,15 @@
       @if (CourseContext.CourseOption.Equals(ActionType.Create)) {
       <h4>Agregar un nuevo curso</h4>
       <p>Agrega un nuevo curso en la instituci&oacute;n e ingresa los campos correspondientes</p>   
+      } else if (CourseContext.CourseOption.Equals(ActionType.Update)) {
+        <h4>@CourseContext.Course.Name @CourseContext.Course.Acronym</h4>
+        <p>Informaci&oacute;n de este curso</p>
       }
     </div>
     <div class="box-background">
       <ul class="navigation-bar-options">
         <li class="@(NavigationOption == 0 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("general"))">
           <p>Informacion general del curso</p>
-        </li>
-        <li class="@(NavigationOption == 1 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("students-course"))">
-          <p>
-            Listado de estudiantes
-          </p>
-        </li>
-        <li class="@(NavigationOption == 2 ? "selected-navigation" : "")" @onclick="@(() => SetSelection("calendar"))">
-          <p>Calendario del curso</p>
         </li>
       </ul>
     </div>
@@ -30,8 +25,8 @@
                 <p>Informaci&oacute;n general para este curso</p>
               </div>
               <div>
-                <button type="button" class="button transparent-button">Cancelar</button>
-                <button type="button" class="button primary-background-button" @onclick="@SaveChanges">Guardar</button>
+                <button type="button" class="button transparent-button" @onclick="@(() => NavigationManager.NavigateTo($"/application/{UserContext.User.InstitutionId}/courses"))">Cancelar</button>
+                <button type="button" class="button primary-background-button" @onclick="@CourseAction">Guardar</button>
               </div>
             </div>
             <div class="general-course-data">
@@ -41,17 +36,22 @@
                     <label for="acronym">Acronimo del curso <strong>*</strong></label>  
                     <p>Acronimo para identificar el curso</p>
                   </div>
-                  <p class="warning-error"></p>
-                  <input @bind="@CourseContext.Course.Acronym" type="text" class="input" placeholder="Ingresar acronimo del curso" id="acronym">
+                  <div class="input-field">
+                    <p class="warning-error">@Warnings[0][0]</p>
+                  <input @bind="@CourseContext.Course.Acronym" type="text"
+                    class="input @((bool) Warnings[0][1] ? "input-error" : "")" placeholder="Ingresar acronimo del curso" id="acronym">
+                  </div>
                 </fieldset> 
                 <fieldset>
                   <div class="label">
                     <label for="course-name">Nombre del curso <strong>*</strong></label>
                     <p>Nombre para este curso</p>
                   </div>
-                  
-                  <p class="warning-error">@Warnings[1][0]</p>
-                  <input @bind="@CourseContext.Course.Name" type="text" class="input" placeholder="Ingresar nombre del curso" id="course-name">
+                  <div class="input-field">
+                    <p class="warning-error">@Warnings[1][0]</p>
+                    <input @bind="@CourseContext.Course.Name" type="text" class="input @((bool) Warnings[1][1] ? "input-error" : "")"
+                    placeholder="Ingresar nombre del curso" id="course-name">
+                  </div>
                 </fieldset>
                 <fieldset>
                   <div class="label">
@@ -60,18 +60,7 @@
                     <strong>*</strong></label>
                     <p>Distingue el curso con un color especial</p>
                   </div>
-                  <input type="color">
-                </fieldset>
-                <fieldset>
-                  <div class="label">
-                    <label for="guide">
-                      Gu&iacute;a del curso
-                    </label>
-                    <p>Guia encargado de este curso</p>
-                  </div>
-                  <div id="guide">
-
-                  </div>
+                  <input type="color" class="input-color" >
                 </fieldset>
               </form>
               <div class="subjects-and-guide">
@@ -95,6 +84,41 @@
                     </div>
                   </div>
                   <div class="course-subjects-list">
+                    <div class="course-subjects-list-tags">
+                      <ul>
+                        <li>
+                          <p>Color</p>
+                        </li>
+                        <li>
+                          <p>Nombre de la materia</p>
+                        </li>
+                        <li>
+                          <p>Acci&oacute;n</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="course-subjects-list-content">
+                      @foreach (var subject in Subjects) {
+                        if (!SubjectCourses.Any(s => s.SubjectId.Equals(subject.Id))) { continue; }
+
+                        <ul>
+                          <li>
+                            <div class="color-box" style="background: @subject.Color">
+                            </div>
+                          </li>
+                          <li>
+                            <p>
+                              @subject.Name
+                            </p>
+                          </li>
+                          <li>
+                            <button type="button" class="gray-button" @onclick="@(() => RemoveSubject(subject.Id))">
+                              <i class="fi fi-tr-rectangle-xmark"></i>
+                            </button>
+                          </li>
+                        </ul>
+                      }
+                    </div>
                   </div>
                 </div>
               </div>

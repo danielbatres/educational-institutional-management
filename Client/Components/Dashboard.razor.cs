@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components;
 namespace edu_institutional_management.Client.Components;
 
 public partial class Dashboard {
-  private bool IsSelected { get; set; } = false;
   [Inject]
   private ContentContext ContentContext { get; set; }
   [Inject]
@@ -24,11 +23,10 @@ public partial class Dashboard {
   private StudentHubManager StudentHubManager { get; set; }
   [Inject]
   private ActivityHubManager ActivityHubManager { get; set; }
+  [Inject]
+  private NavigationManager NavigationManager { get; set; }
   private List<ActivityLog> Activities { get; set; }
   private List<Student> Students { get; set; } = new();
-  private int MaxActivityCount { get; set; }
-  private User SelectedUser { get; set; } = new();
-  private string SelectedUserTop { get; set; } = string.Empty;
   private string FormattedDateTime { get; set; } = string.Empty;
 
   private async Task UpdateClock() {
@@ -63,6 +61,10 @@ public partial class Dashboard {
     await ActivityHubManager.SendActivityUpdatedAsync(groupName);
 
     await UpdateClock();
+  }
+
+  private void GoStudents() {
+    NavigationManager.NavigateTo($"/application/{UserContext.User.InstitutionId}/students");
   }
 
   private async Task Disconnect() {

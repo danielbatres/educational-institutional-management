@@ -1,5 +1,4 @@
 using System.Text.Json;
-using edu_institutional_management.Client.Services;
 using edu_institutional_management.Shared.Models;
 
 namespace edu_institutional_management.Client.Services;

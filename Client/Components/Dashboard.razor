@@ -4,299 +4,181 @@
       <div class="main-statistic-side">
         <div class="greeting">
           <h4>
-            Hola, @UserContext.User.Name
+            Hola, @UserContext.User?.Name
           </h4>
           <p>Este es tu panel principal</p>
           <p class="hour">@FormattedDateTime</p>
         </div>
-        <Counters />
+        @if (UserContext.User.IsAdmin) {
+          <Counters />
+        }
       </div>
       <div class="activity-action-side">
-        <ActionButtons />
-        <div class="recent-activity">
-          <div class="recent-activity-info">
-            <div class="recent-activity-info-text">
-              <div class="stand-line">
-              </div>
-              <div>
-                <h6>Actividad reciente</h6>
-                <p>Actividad en los ultimos 60 dias</p>
+        @if (UserContext.User.IsAdmin) {
+          <ActionButtons />
+          <div class="recent-activity">
+            <div class="recent-activity-info">
+              <div class="recent-activity-info-text">
+                <div class="stand-line">
+                </div>
+                <div>
+                  <h6>Actividad reciente</h6>
+                  <p>Actividad en los ultimos 60 dias</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="activity-log">
-            <div class="activity-log-container">
-              @if (Activities != null)
-              {
-                var activityCounts = Activities.GroupBy(log => log.Date.Date).Select(group => new
+            <div class="activity-log">
+              <div class="activity-log-container">
+                @if (Activities != null)
                 {
-                  Date = group.Key,
-                  Count = group.Count()
-                }).OrderByDescending(x => x.Count).ToList();
+                  var activityCounts = Activities.GroupBy(log => log.Date.Date).Select(group => new
+                  {
+                    Date = group.Key,
+                    Count = group.Count()
+                  }).OrderByDescending(x => x.Count).ToList();
 
-                int maxActivityCount = activityCounts.Any() ? activityCounts.Max(x => x.Count) : 0;
+                  int maxActivityCount = activityCounts.Any() ? activityCounts.Max(x => x.Count) : 0;
 
-                @for (int i = 59; i >= 0; i--)
-                {
-                  DateTime currentDate = DateTime.Now.Date.AddDays(-i);
+                  @for (int i = 59; i >= 0; i--)
+                  {
+                    DateTime currentDate = DateTime.Now.Date.AddDays(-i);
 
-                  var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
+                    var activityForDate = activityCounts.FirstOrDefault(x => x.Date == currentDate);
 
-                  double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
-                  string opacityString = opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                    double opacity = activityForDate != null ? (double)activityForDate.Count / maxActivityCount : 0;
+                    string opacityString = opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
 
-                  <div class="activity-box">
-                    <div class="activity-log-box"
-                      style="@(opacity != 0 ? $"background: var(--primary-color); opacity: {opacityString};" : "")">
+                    <div class="activity-box">
+                      <div class="activity-log-box"
+                        style="@(opacity != 0 ? $"background: var(--primary-color); opacity: {opacityString};" : "")">
+                      </div>
+                      <div class="hover-date">
+                        <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
+                        @if (activityForDate != null)
+                        {
+                          <p>@($"{activityForDate.Count} registros de actividad")</p>
+                        }
+                      </div>
                     </div>
-                    <div class="hover-date">
-                      <p>@($"{@currentDate.ToString("dddd d, MMMM yyyy")}")</p>
-                      @if (activityForDate != null)
-                      {
-                        <p>@($"{activityForDate.Count} registros de actividad")</p>
-                      }
-                    </div>
-                  </div>
+                  }
                 }
-              }
+              </div>
+            </div>
+            <div class="activity-button-side">
+              <button type="button" class="button primary-background-button activity-button"
+                @onclick="@(() => _navigationManager.NavigateTo("/application/{_userContext.User.InstitutionId}/activity"))">
+                <i class="fi fi-tr-book-copy"></i> Ir a actividad
+              </button>
             </div>
           </div>
-          <div class="activity-button-side">
-            <button type="button" class="button primary-background-button activity-button"
-              @onclick="@(() => _navigationManager.NavigateTo("/application/{_userContext.User.InstitutionId}/activity"))">
-              <i class="fi fi-tr-book-copy"></i> Ir a actividad
-            </button>
-          </div>
-        </div>
+        }
       </div>
     </div>
     <div class="second-dashboard-side">
-      <div class="recent-students">
-        <div class="recent-students-info">
-          <div class="recent-students-info-content">
-            <div class="stand-line">
+      @if (UserContext.User.IsAdmin) {
+        <div class="recent-students">
+          <div class="recent-students-info">
+            <div class="recent-students-info-content">
+              <div class="stand-line">
+              </div>
+              <div>
+                <h6>Estudiantes agregados recientemente</h6>
+                <p>Estudiantes que se agregaron recientemente</p>
+              </div>
             </div>
-            <div>
-              <h6>Estudiantes agregados recientemente</h6>
-              <p>Estudiantes que se agregaron recientemente</p>
-            </div>
+            <button type="button" class="button search-student-button primary-background-button" @onclick="@GoStudents">
+              <i class="fi fi-ts-search-location"></i>Buscar estudiante
+            </button>
           </div>
-          <button type="button" class="button search-student-button primary-background-button">
-            <i class="fi fi-ts-search-location"></i>Buscar estudiante
-          </button>
-        </div>
-        <div class="recent-students-tags">
-          <ul>
-            <li>
-              <p>Identificador</p>
-            </li>
-            <li>
-              <p>Foto</p>
-            </li>
-            <li>
-              <p>Informaci&oacute;n del estudiante</p>
-              <i class="fi fi-tr-angle-double-small-down"></i>
-            </li>
-            <li> 
-              <p>G&eacute;nero</p>
-            </li>
-            <li>
-              <p>Curso</p>
-              <i class="fi fi-tr-angle-double-small-down"></i>
-            </li>
-            <li>
-              <p>Acciones</p>
-            </li>
-          </ul>
-        </div>
-        <div class="recent-students-list">
-          @if (Students.Count == 0) {
-            <div class="students-no-result">
-              <h4>No se encontraron resultados</h4>
-              <p>No hemos encontrado estudiantes agregados recientemente</p>
-            </div>
-          } else {
-            @foreach (var student in Students) {
-              string imageSrc = string.Empty;
-
-              if (student.Photo != null) {
-                var imageBase64 = Convert.ToBase64String(student.Photo);
-                imageSrc = $"data:image/png;base64,{imageBase64}";
-              }
-
-              <ul>
-                <li class="little-box">
-                  <p>@student.Id.ToString().Substring(0, 8)</p>
-                </li>
-                <li>
-                  <div class="recent-student-image @(imageSrc == string.Empty ? "user-no-photo-container" : "")">
-                    @if (imageSrc != string.Empty) {
-                      <img src="@imageSrc" alt="@student.Name">
-                    }
-                  </div>
-                </li>
-                <li>
-                  <p>@student.Name</p>
-                  <p>@student.StudentRegister.Email</p>
-                </li>
-                <li>
-                  <p>@student.Gender</p>
-                </li>
-                <li class="little-box">
-                  @if (student.CourseId != null) {
-
-                  } else {
-                    <p>------</p>
-                  }
-                </li>
-                <li>
-                  <div class="recent-student-action centered-container">
-                    <i class="fi fi-tr-pen-square"></i> 
-                  </div>
-                </li>
-              </ul>
+          <div class="recent-students-tags">
+            <ul>
+              <li>
+                <p>Identificador</p>
+              </li>
+              <li>
+                <p>Foto</p>
+              </li>
+              <li>
+                <p>Informaci&oacute;n del estudiante</p>
+                <i class="fi fi-tr-angle-double-small-down"></i>
+              </li>
+              <li>
+                <p>G&eacute;nero</p>
+              </li>
+              <li>
+                <p>Curso</p>
+                <i class="fi fi-tr-angle-double-small-down"></i>
+              </li>
+              <li>
+                <p>Acciones</p>
+              </li>
+            </ul>
+          </div>
+          <div class="recent-students-list">
+            @if (Students.Count == 0)
+            {
+              <div class="students-no-result">
+                <h4>No se encontraron resultados</h4>
+                <p>No hemos encontrado estudiantes agregados recientemente</p>
+              </div>
             }
-          }
-        </div>
-      </div>
-      <div class="statistic">
-        <div class="statistic-info">
-          <div class="stand-line">
-          </div>
-          <div>
-            <h6>Grafico estadistico</h6>
-            <p>Grafico de estadistico</p>
-          </div> 
-        </div>
-        <div class="statistic-content">
-          <div class="statistic-target">
-            <div class="graphic">
-              <div class="graphic-y">
+            else
+            {
+              @foreach (var student in Students)
+              {
+                string imageSrc = string.Empty;
+
+                if (student.Photo != null)
+                {
+                  var imageBase64 = Convert.ToBase64String(student.Photo);
+                  imageSrc = $"data:image/png;base64,{imageBase64}";
+                }
+
                 <ul>
-                  <li>
-                    <p>10</p>
+                  <li class="little-box">
+                    <p>@student.Id.ToString().Substring(0, 8)</p>
                   </li>
                   <li>
-                    <p>10</p>
+                    <div class="recent-student-image @(imageSrc == string.Empty ? "user-no-photo-container" : "")">
+                      @if (imageSrc != string.Empty)
+                      {
+                        <img src="@imageSrc" alt="@student.Name">
+                      }
+                    </div>
                   </li>
                   <li>
-                    <p>10</p>
+                    <p>@student.Name</p>
+                    <p>@student.StudentRegister.Email</p>
                   </li>
                   <li>
-                    <p>10</p>
+                    <p>@student.Gender</p>
+                  </li>
+                  <li class="little-box">
+                    @if (student.CourseId != null)
+                    {
+
+                    }
+                    else
+                    {
+                      <p>-----</p>
+                    }
                   </li>
                   <li>
-                    <p>10</p>
-                  </li>
-                  <li>
-                    <p>10</p>
+                    <div class="recent-student-action centered-container">
+                      <i class="fi fi-tr-pen-square"></i>
+                    </div>
                   </li>
                 </ul>
-              </div>
-              <div class="graphic-latest">
-                <div class="graphic-statistic centered-container">
-                  <div class="graphic-background">
-                    <div class="line-divisor">
-                    </div>
-                    <div class="line-divisor">
-                    </div>
-                    <div class="line-divisor">
-                    </div>
-                    <div class="line-divisor">
-                    </div>
-                    <div class="line-divisor">
-                    </div>
-                    <div class="line-divisor">
-                    </div>
-                  </div>
-                  <div class="graphic-data">
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                    <div class="data">
-                      <div class="first-data data-long"></div>
-                      <div class="second-data data-long"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="graphic-x">
-                  <ul>
-                    <li>
-                      <p>10</p>
-                    </li>
-                    <li>
-                      <p>10</p>
-                    </li>
-                    <li>
-                      <p>10</p>
-                    </li>
-                    <li>
-                      <p>10</p>
-                    </li>
-                    <li>
-                      <p>10</p>
-                    </li>
-                    <li>
-                      <p>10</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+              }
+            }
           </div>
-          <div>  
-            <div></div>
-            <div></div>
-          </div>
-          <div></div>
-        </div>  
-      </div>
+        </div>
+      }
     </div>
   </article>
   <article class="dashboard-side-bar">
     <div class="online-users">
       <OnlineUsers />
-    </div>
-    <div class="events">
-      <div class="events-content centered-container">
-        @if (false) {
-          <h4>No hay eventos para mostrar</h4>
-          <p>No hemos encontrado ningun evento</p>
-        } else {
-          @for (int i = 0; i < 4; i++)
-          {
-            <div class="event-card">
-              <h5>Evento</h5>
-              <div class="event-information">
-                <div class="event-image">
-
-                </div>
-                <div class="event-info">
-                  <h6>Nombre del evento</h6>
-                  <p>Descripci&oacute;n breve del evento</p>
-                </div>
-              </div>
-            </div> 
-          }
-        }
-      </div>
     </div>
   </article>
 </section>

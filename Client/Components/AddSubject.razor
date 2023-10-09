@@ -1,25 +1,26 @@
 <div class="modal-title">
-    <h4>Agregar una nueva asignatura</h4>
-    <p>Agregar una nueva asignatura para la instituci&oacute;n <span>(puedes agregar una asignatura en la secci&oacute;n de cursos)</span></p>
+    <h4>@($"{(ActionType.Equals("create") ? "Agregar nueva asignatura" : "Actualizar asignatura")}")</h4>
+    <p>@($"{(ActionType.Equals("create") ? "Crear nueva" : "Actualizar")}") asignatura para la
+        instituci&oacute;n <span>(puedes agregar una asignatura en la secci&oacute;n de cursos)</span></p>
 </div> 
 <form>
     <div class="label label-name">
         <label for="subject-name">Nombre de la asignatura <strong>*</strong></label>
     </div>
-    <input value="@Subject.Name" type="text" class="input @(IsInputWarning ? "input-error" : "")" placeholder="Ingresar nombre de la asignatura" id="subject-name" @oninput="@(e => UpdateField(e, "name"))">
+    <input value="@SettingsContext.SelectedSubject.Name" type="text" class="input @(IsInputWarning ? "input-error" : "")" placeholder="Ingresar nombre de la asignatura" id="subject-name" @oninput="@(e => UpdateField(e, "name"))">
     <div class="label">
         <label for="subject-description">
             Descripci&oacute;n de la asignatura
         </label>
     </div>
-    <input type="text" class="input" placeholder="Ingresar descripción de la asignatura" id="subject-description" @oninput="@(e => UpdateField(e, "description"))">
+    <input value="@SettingsContext.SelectedSubject.Description" type="text" class="input" placeholder="Ingresar descripción de la asignatura" id="subject-description" @oninput="@(e => UpdateField(e, "description"))">
     <div class="label">
         <label for="subject-color">Seleccionar color para la asignatura <strong>*</strong></label>
     </div>
-    <input type="color">
+    <input type="color" @bind="@SettingsContext.SelectedSubject.Color">
 </form>
 <div class="create-subject-button">
-    <button type="button" class="button primary-background-button" @onclick="@ActionSubject">Crear asignatura</button>
+    <button type="button" class="button primary-background-button" @onclick="@ActionSubject">@($"{(ActionType.Equals("create") ? "Crear nueva asignatura" : "Actualizar asignatura")}")</button> 
 </div>
 
 @code {
@@ -35,16 +36,15 @@
     private SettingsContext SettingsContext { get; set; }
     [Inject]
     private ISubjectService SubjectService { get; set; }
+    [Inject]
+    private CourseHubManager CourseHubManager { get; set; }
     private bool IsInputWarning { get; set; }
     private string InputErrorWarning { get; set; } = string.Empty;
-    private Subject Subject { get; set; }
-
-    protected override void OnInitialized() {
-        AssignNewSubject();
-    }
+    [Parameter]
+    public string ActionType { get; set; } = string.Empty;
 
     private void ValidateField() {
-        string warning = Validators.IsRequired(Subject.Name);
+        string warning = Validators.IsRequired(SettingsContext.SelectedSubject.Name);
         InputErrorWarning = warning;
 
         if (!string.IsNullOrEmpty(warning)) {
@@ -52,21 +52,15 @@
         }
     }
 
-    private void AssignNewSubject() {
-        Subject = new() {
-            Id = Guid.NewGuid(),
-            Name = string.Empty
-        };
-    }
-
     private void UpdateField(ChangeEventArgs e, string fieldName) {
         string value = e.Value.ToString();
 
         switch (fieldName) {
             case "name":
-                Subject.Name = value;
+                SettingsContext.SelectedSubject.Name = value;
                 break;
             case "description":
+                SettingsContext.SelectedSubject.Description = value;
                 break;
         }
     }
@@ -81,11 +75,24 @@
             return;
         }
 
-        await SubjectService.Create(Subject);
+        switch (ActionType) {
+            case "create":
+                await SubjectService.Create(SettingsContext.SelectedSubject);
+                break;
+            case "update":
+                await SubjectService.Update(SettingsContext.SelectedSubject);
+                break;
+            default:
+                return;
+                break;
+        }
 
-        await SubjectHubManager.SendSubjectsUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+        string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+
+        await SubjectHubManager.SendSubjectsUpdatedAsync(groupName);
+        await CourseHubManager.SendCoursesUpdatedAsync(groupName);
 
         StatusModalContext.SetStatus(StatusType.Success);
-        SettingsContext.SetShowSettingsModal(false);
+        SettingsContext.SetShowSettingsModal(false); 
     }
 }

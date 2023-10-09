@@ -2,6 +2,77 @@
     <h6>Agregar profesor gu&iacute;a al curso</h6>
     <p>Agrega un profesor gu&iacute;a para este curso</p>
 </div>
-<div>
-    
+<div class="users-list">
+    @foreach (User user in Users) {
+        string imageSrc = string.Empty;
+
+        if (user.Photo != null) {
+            var imageBase64 = Convert.ToBase64String(user.Photo);
+            imageSrc = $"data:image/png;base64,{imageBase64}";
+        }
+
+        <ul>
+            <li>
+                <div class="user-image-selection">
+                    @if (imageSrc != string.Empty)
+                    {
+                        <img src="@imageSrc" alt="@user.Name">
+                    }
+                </div>
+            </li>
+            <li class="user-info-selection">
+                <p>
+                    @user.Name @user.LastName
+                </p>
+                <p>
+                    @user.Register.Email
+                </p>
+            </li>
+            <li class="username-user-info">
+                <p>
+                    @user.UserName.Substring(0, 6)...
+                </p>
+            </li>
+            <li>
+                <button type="button" class="gray-button" @onclick="@(() => AddGuide(user.Id))">
+                    <i class="fi fi-tr-paper-plane-top"></i>
+                </button>
+            </li>
+        </ul>
+    }
 </div>
+
+@code {
+    [Inject]
+    private UsersHubManager UsersHubManager { get; set; }
+    private List<User> Users { get; set; } = new();
+    [Inject]
+    private UserContext UserContext { get; set; }
+    [Inject]
+    private CourseContext CourseContext { get; set; }
+    [Inject]
+    private CourseHubManager CourseHubManager { get; set; }
+    [Inject]
+    private ICourseService CourseService { get; set; }
+    [Inject]
+    private StatusModalContext StatusModalContext { get; set; }
+    [Inject]
+    private SectionContext SectionContext { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        UsersHubManager.UsersUpdatedHandler(users => {
+            Users = users.Where(u => !u.Id.Equals(CourseContext.Course.GuideId)).ToList();
+            StateHasChanged();
+        });
+
+        string groupName = UserContext.User.InstitutionId.ToString() ?? string.Empty;
+        await UsersHubManager.SendUsersUpdatedAsync(groupName);
+    }
+
+    private async Task AddGuide(Guid id) {
+        CourseContext.Course.GuideId = id;
+        await CourseService.Update();
+        SectionContext.SetShowSectionModal(false);
+        await CourseHubManager.SendCoursesUpdatedAsync(UserContext.User.InstitutionId.ToString() ?? string.Empty);
+    }
+}

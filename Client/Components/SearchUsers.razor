@@ -44,10 +44,20 @@
         } else {
           @foreach (User user in UsersNoInstitutionFiltered) {
             User selectedUser = user;
+            string imageSrc = string.Empty;
+
+            if (user.Photo != null) {
+              var imageBase64 = Convert.ToBase64String(user.Photo);
+              imageSrc = $"data:image/png;base64,{imageBase64}";
+            }
 
             <ul>
               <li>
-                <div class="user-image-selection"></div>
+                <div class="user-image-selection">
+                  @if (imageSrc != string.Empty) {
+                    <img src="@imageSrc" alt="@user.Name">
+                  }
+                </div>
               </li>
               <li class="user-info-selection">
                 <p>

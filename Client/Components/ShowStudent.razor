@@ -60,14 +60,11 @@
       <li class="@(NavigationOption == 0 ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 0))">
         <p>Datos generales del estudiante</p>
       </li>
-      <li class="@(NavigationOption == 1 ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(Guid.Empty, 1))">
-        <p>Registro de pagos</p>
-      </li>
       @foreach (var category in Categories) {
         Guid cateogoryId = category.Id;
         int index = Categories.IndexOf(category);
 
-        <li class="@(NavigationOption == (index + 2) ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(cateogoryId, (index + 2)))">
+        <li class="@(NavigationOption == (index + 1) ? "selected-navigation" : "")" @onclick="@(() => SetNavigationOption(cateogoryId, (index + 1)))">
           <p>@category.Name</p>
         </li>
       }

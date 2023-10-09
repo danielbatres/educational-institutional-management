@@ -3,6 +3,7 @@ using edu_institutional_management.Shared.Models;
 namespace edu_institutional_management.Client.Containers;
 
 public class StudentContext : BaseContainer {
+  private readonly Validators _validators;
   public ActionType ActionStudent { get; set; }
   public Guid CurrentStudentId { get; set; }
   public Guid CurrentCategorySelectionId { get; set; }
@@ -12,10 +13,33 @@ public class StudentContext : BaseContainer {
   public List<List<object>> Warnings { get; set; } = new() {
     new() { "", false },
     new() { "", false },
-    new() { "", false },
     new() { "", false }
   };
   public int ErrorsCount { get; set; }
+
+  public StudentContext(Validators validators) {
+    _validators = validators;
+  }
+
+  private List<object> ValidateField(string text) {
+    string warning = _validators.IsRequired(text);
+    bool option = false;
+
+    if (warning != string.Empty) {
+      option = true;
+      ErrorsCount++;
+    }
+
+    return new() { warning, option };
+  }
+
+  public void ValidateFields() {
+    ErrorsCount = 0;
+
+    SetWarnings(0, ValidateField(Student.Name));
+    SetWarnings(1, ValidateField(Student.LastName));
+    SetWarnings(2, ValidateField(Student.StudentRegister.Email));
+  }
 
   public void SetWarnings(int index, List<object> options) {
     Warnings[index] = options;

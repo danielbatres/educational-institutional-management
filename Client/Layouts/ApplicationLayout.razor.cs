@@ -38,37 +38,26 @@ public partial class ApplicationLayout {
 
     SideBarMenu = new() {
       MenuLabels = new List<string>() {
-        "menu principal", "menu de actividades", "espacio de trabajo"
+        "menu principal", "menu de actividades"
       },
       MenuItems = new List<List<List<string>>>() {
         new() {
           new() {
-            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}", "0"
+            "Dashboard", "fi fi-tr-dice-d6", "0", $"/application/{InstitutionId}", "0", ""
           },
           new() {
-            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students", "0"
+            "Estudiantes", "fi fi-tr-book-bookmark", "1", $"/application/{InstitutionId}/students", "0", "12"
           },
           new() {
-            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses", "0"
-          },
-          new() {
-            "Estadisticas", "fi fi-tr-chart-simple-horizontal", "3", $"/application/{InstitutionId}/statistics", "0"
+            "Cursos", "fi fi-tr-hockey-puck", "2", $"/application/{InstitutionId}/courses", "0", "14"
           }
         },
         new() {
           new() {
-            "Eventos", "fi fi-tr-calendar-day", "4", $"/application/{InstitutionId}/events", "0"
+            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity", "0", "1"
           },
           new() {
-            "Actividad", "fi fi-tr-book-copy", "5", $"/application/{InstitutionId}/activity", "0"
-          },
-          new() {
-            "Comunicación", "fi fi-tr-comments", "6", $"/application/{InstitutionId}/chat", "0"
-          }
-        },
-        new() {
-          new() {
-            "Entorno", "fi fi-tr-notes", "7", $"/application/{InstitutionId}/workspace", "0"
+            "Comunicación", "fi fi-tr-comments", "6", $"/application/{InstitutionId}/chat", "0", ""
           }
         }
       },
@@ -110,7 +99,7 @@ public partial class ApplicationLayout {
         }
       }
 
-      SideBarMenu.MenuItems[1][1][4] = activitiesCounter.ToString(); 
+      SideBarMenu.MenuItems[1][0][4] = activitiesCounter.ToString(); 
       StateHasChanged();
     });
 

@@ -25,10 +25,10 @@
       Guid courseId = Guid.Empty;
 
       try {
-        Guid.Parse(CourseOption);
+        courseId = Guid.Parse(CourseOption);
       } catch(Exception) {
         GoBackCourses();
-      }
+      } 
 
       if (courseId != Guid.Empty) {
         CourseContext.SetCurrentCourse(courseId);

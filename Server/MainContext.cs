@@ -92,6 +92,7 @@ public class MainContext : DbContext {
 
         modelBuilder.Entity<User>(user => {
             user.HasKey(x => x.Id);
+            user.Property(x => x.IsAdmin);
             user.Property(x => x.UserName).IsRequired().HasMaxLength(100);
             user.HasIndex(x => x.UserName).IsUnique();
             user.Property(x => x.Name).HasMaxLength(100);

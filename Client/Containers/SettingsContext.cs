@@ -9,6 +9,7 @@ public class SettingsContext : BaseContainer {
   public ShowSettingsOption ShowSettingsOption { get; set; }
   public ShowSideFormOptions  ShowSideFormOptions { get; set; }
   public User SelectedUser { get; set; } = new();
+  public Subject SelectedSubject { get; set; } = new();
 
   public void SetShowSettingsModal(bool valueModal) {
     ShowSettingsModal = valueModal;
@@ -37,6 +38,23 @@ public class SettingsContext : BaseContainer {
   public void SetSelectedUser(User user) {
     SelectedUser = user;
     ShowSettingsOption = ShowSettingsOption.SendUserRequest;
+
+    NotifyStateChanged();
+  }
+
+  public void SetSelectedSuject(Subject subject) {
+    SelectedSubject = subject;
+
+    NotifyStateChanged();
+  }
+
+  public void AssignNewSubject() {
+    SelectedSubject = new() {
+      Id = Guid.NewGuid(),
+      Name = string.Empty,
+      Description = string.Empty,
+      Color = string.Empty
+    };
 
     NotifyStateChanged();
   }

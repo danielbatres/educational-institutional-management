@@ -96,22 +96,25 @@ public partial class ShowStudent {
     StateHasChanged();
   }
 
-  private async Task<List<Option>> GetOptions(Guid fieldId) {
-    var options = await _optionService.Get(fieldId);
-
-    return options;
-  }
-
   private void ExitStudentView() {
     _navigationManager.NavigateTo($"/application/{_userContext.User.InstitutionId}/students");
   }
   
   private async Task SaveChanges() {
+    _studentContext.ValidateFields();
+
+    if (_studentContext.ErrorsCount != 0) {
+      await StatusModalContext.SetStatus(StatusType.Danger);
+      return;
+    }
+    
     if (_studentContext.ActionStudent.Equals(ActionType.Create)) {
       await CreateNewStudent();
     } else if (_studentContext.ActionStudent.Equals(ActionType.Update)) {
       await UpdateStudent();
     }
+
+    await StatusModalContext.SetStatus(StatusType.Success);
   }
   
   private void RemoveChanges() {

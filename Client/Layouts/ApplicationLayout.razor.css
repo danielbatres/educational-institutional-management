@@ -26,12 +26,24 @@
   border: 1px solid var(--success-color);
 }
 
+.warning {
+  border: 1px solid var(--warning-color);
+}
+
 .danger {
   border: 1px solid var(--danger-color);
 }
 
 .success .status-circle {
   background: var(--light-success-color);
+}
+
+.warning .status-circle {
+  background-color: var(--light-warning-color);
+}
+
+.warning .status-circle i {
+  color: var(--warning-color);
 }
 
 .success .status-circle i {

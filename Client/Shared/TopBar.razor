@@ -12,8 +12,7 @@
             <input value="@GeneralSearchContext.SearchValue" type="text" placeholder="Buscar sección por nombre" class="input" @oninput="@UpdateSearchValue" @onclick="@SetShow">
         </div>
         <div class="icons">
-            <div class="centered-container"><i class="fi fi-tr-swatchbook"></i></div>
-            <div class="centered-container"><i class="fi fi-tr-bells"></i></div>
+            <div class="centered-container" @onclick="@(() => NavigationManager.NavigateTo($"application/{UserContext.User.InstitutionId}/settings/appearance"))"><i class="fi fi-tr-swatchbook"></i></div>
         </div>
         <UserInfoOptions Selection="application" />
     </div>
@@ -26,6 +25,8 @@
     private GeneralSearchContext GeneralSearchContext { get; set; }
     [Inject]
     private UserContext UserContext { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
 
     private void UpdateSearchValue(ChangeEventArgs e) {
         GeneralSearchContext.SetSearchValue(e.Value.ToString());
